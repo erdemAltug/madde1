@@ -3,16 +3,28 @@
 import * as React from "react";
 import { StreamingMarkdown } from "@/components/analysis/streaming-markdown";
 import { Button } from "@/components/ui/button";
+import { SITE_HOST } from "@/lib/seo/site";
 
-const STORAGE_KEY = "madde1-analysis-markdown";
+const KEYS = [
+  "clause-analysis-markdown",
+  "clause-generator-markdown",
+  "madde1-analysis-markdown",
+  "madde1-generator-markdown",
+] as const;
 
 export default function BaskiPage() {
   const [md, setMd] = React.useState("");
 
   React.useEffect(() => {
     try {
-      const v = sessionStorage.getItem(STORAGE_KEY);
-      setMd(v || "");
+      for (const k of KEYS) {
+        const v = sessionStorage.getItem(k);
+        if (v) {
+          setMd(v);
+          return;
+        }
+      }
+      setMd("");
     } catch {
       setMd("");
     }
@@ -23,7 +35,7 @@ export default function BaskiPage() {
       <div className="mx-auto max-w-3xl px-6 py-10 print:py-6">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-3 print:hidden">
           <h1 className="font-serif text-xl font-semibold text-slate-900">
-            Madde1 — Analiz çıktısı
+            Clause — Analiz çıktısı
           </h1>
           <Button type="button" onClick={() => window.print()}>
             Yazdır / PDF
@@ -38,7 +50,7 @@ export default function BaskiPage() {
           </p>
         )}
         <p className="mt-12 border-t border-slate-200 pt-4 text-center text-xs text-slate-500">
-          Powered by Madde1.tr — Yapay Zeka Hukuk Asistanı
+          Powered by {SITE_HOST} — Yapay Zeka Hukuk Asistanı
         </p>
       </div>
     </div>

@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { FileUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { countSensitivePatterns } from "@/lib/security/mask-sensitive";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,9 @@ type Props = {
   onChange: (v: string) => void;
   onSample: () => void;
   disabled?: boolean;
+  compact?: boolean;
+  /** Yapıştırılan metinde TC / telefon vb. algılanırsa */
+  onSensitivePaste?: (detectedPatternCount: number) => void;
 };
 
 export function ContractInputPanel({
@@ -20,6 +24,8 @@ export function ContractInputPanel({
   onChange,
   onSample,
   disabled,
+  compact,
+  onSensitivePaste,
 }: Props) {
   const [drag, setDrag] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -39,14 +45,14 @@ export function ContractInputPanel({
   return (
     <motion.div
       layout
-      className="flex h-full min-h-[320px] flex-col gap-4 rounded-xl border border-border/80 bg-card/60 p-4 shadow-inner backdrop-blur-sm sm:p-6"
+      className="flex h-full min-h-0 flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
     >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <Label htmlFor="contract" className="text-base text-foreground">
+          <Label htmlFor="contract" className="text-base font-semibold text-slate-900">
             Sözleşme metni
           </Label>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm text-slate-600">
             Türkçe sözleşmenizi yapıştırın veya .txt dosyası sürükleyin.
           </p>
         </div>
@@ -92,11 +98,22 @@ export function ContractInputPanel({
       >
         <Textarea
           id="contract"
+          data-ph-mask
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          onPaste={(e) => {
+            const clip = e.clipboardData?.getData("text/plain") ?? "";
+            if (!clip.trim() || !onSensitivePaste) return;
+            const n = countSensitivePatterns(clip);
+            if (n > 0) onSensitivePaste(n);
+          }}
           disabled={disabled}
           placeholder="Kira, hizmet veya diğer sözleşme metninizi buraya yapıştırın…"
-          className="min-h-[240px] flex-1 resize-none border-0 bg-transparent focus-visible:ring-0 sm:min-h-[360px]"
+          className={
+            compact
+              ? "min-h-[160px] flex-1 resize-none border-0 bg-transparent focus-visible:ring-0 sm:min-h-[220px]"
+              : "min-h-[220px] flex-1 resize-none border-0 bg-transparent focus-visible:ring-0 sm:min-h-[320px]"
+          }
         />
         <button
           type="button"

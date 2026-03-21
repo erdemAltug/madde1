@@ -18,7 +18,7 @@ export function LegalLoadingMessages({ active }: { active: boolean }) {
   if (!active) return null;
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-background/55 backdrop-blur-[2px]">
+    <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-white/75 backdrop-blur-sm">
       <AnimatePresence mode="wait">
         <motion.p
           key={i}
@@ -26,7 +26,7 @@ export function LegalLoadingMessages({ active }: { active: boolean }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.35 }}
-          className="rounded-full border border-primary/30 bg-card/90 px-5 py-2 text-sm font-medium text-primary shadow-lg"
+          className="rounded-full border border-madde-blue/25 bg-white px-5 py-2 text-sm font-bold text-madde-blue shadow-md shadow-madde-blue/10"
         >
           {LEGAL_LOADING_MESSAGES[i]}
         </motion.p>

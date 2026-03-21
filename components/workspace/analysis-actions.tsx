@@ -4,14 +4,17 @@ import * as React from "react";
 import { Copy, Link2, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const STORAGE_KEY = "madde1-analysis-markdown";
+const STORAGE_KEY = "clause-analysis-markdown";
 
 type Props = {
   markdown: string;
   sharePath?: string;
 };
 
-export function AnalysisActions({ markdown, sharePath = "/analiz/kira" }: Props) {
+export function AnalysisActions({
+  markdown,
+  sharePath = "/analiz/kira-sozlesmesi",
+}: Props) {
   const [copied, setCopied] = React.useState<"md" | "link" | null>(null);
 
   const copyMd = async () => {

@@ -20,8 +20,10 @@ function textOf(node: React.ReactNode): string {
 
 function lineTone(
   raw: string,
-): "risk" | "suggest" | "missing" | "risk-heading" | undefined {
+): "risk" | "suggest" | "missing" | "risk-heading" | "summary" | undefined {
+  if (/analiz\s*özeti/i.test(raw) && raw.length < 120) return "summary";
   if (/kritik\s*risk/i.test(raw) && raw.length < 80) return "risk-heading";
+  if (raw.includes("📊")) return "summary";
   if (raw.includes("🔴")) return "risk";
   if (raw.includes("🟢")) return "suggest";
   if (raw.includes("⚪")) return "missing";
@@ -29,15 +31,15 @@ function lineTone(
 }
 
 const mdDark =
-  "prose prose-invert max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-p:text-foreground/90 prose-li:my-1 prose-strong:text-foreground";
+  "prose prose-invert max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-p:text-foreground/90 prose-p:break-words prose-li:my-1 prose-li:break-words prose-strong:text-foreground [overflow-wrap:anywhere]";
 
 const mdLight =
-  "prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-li:my-1";
+  "prose prose-slate max-w-none prose-headings:scroll-mt-24 prose-headings:font-semibold prose-p:break-words prose-li:my-1 prose-li:break-words [overflow-wrap:anywhere]";
 
 export function StreamingMarkdown({
   content,
   className,
-  variant = "dark",
+  variant = "light",
 }: {
   content: string;
   className?: string;
@@ -48,6 +50,32 @@ export function StreamingMarkdown({
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
+          h1: ({ children, ...props }) => {
+            const t = textOf(children);
+            const tone = lineTone(t);
+            return (
+              <h1
+                {...props}
+                className={cn(
+                  "mt-6 mb-4 scroll-mt-24 border-b border-slate-200 pb-2 text-xl font-bold tracking-tight first:mt-0",
+                  tone === "summary" &&
+                    (variant === "dark"
+                      ? "border-blue-500/30 text-blue-100"
+                      : "border-blue-200 text-blue-900"),
+                  tone === "risk-heading" &&
+                    (variant === "dark"
+                      ? "rounded-md border border-red-500/40 bg-red-950/30 px-3 py-2 text-red-100"
+                      : "rounded-md border border-red-300 bg-red-50 px-3 py-2 text-red-900"),
+                  tone === "suggest" &&
+                    (variant === "dark"
+                      ? "border-emerald-500/30 text-emerald-100"
+                      : "border-emerald-200 text-emerald-900"),
+                )}
+              >
+                {children}
+              </h1>
+            );
+          },
           h2: ({ children, ...props }) => {
             const t = textOf(children);
             const tone = lineTone(t);
@@ -92,11 +120,16 @@ export function StreamingMarkdown({
               </li>
             );
           },
+          p: ({ children, ...props }) => (
+            <p {...props} className="break-words [overflow-wrap:anywhere]">
+              {children}
+            </p>
+          ),
           code: ({ className: c, children, ...props }) => (
             <code
               {...props}
               className={cn(
-                "rounded px-1.5 py-0.5 text-[0.85em]",
+                "whitespace-pre-wrap break-all rounded px-1.5 py-0.5 text-[0.85em]",
                 variant === "dark"
                   ? "bg-secondary/80 text-foreground"
                   : "bg-slate-100 text-slate-900",

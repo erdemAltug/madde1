@@ -20,24 +20,24 @@ export function ShinyAnalyzeButton({
       type="button"
       disabled={disabled || loading}
       className={cn(
-        "group relative inline-flex w-full items-center justify-center overflow-hidden rounded-lg px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-lg transition-transform active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 sm:w-auto",
+        "group relative inline-flex w-full items-center justify-center overflow-hidden rounded-lg px-6 py-3.5 text-base font-semibold text-white shadow-md shadow-blue-900/15 transition-transform active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 sm:w-auto",
         className,
       )}
       {...props}
     >
       <span
-        className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-shine"
+        className="absolute inset-0 bg-gradient-to-r from-madde-blue via-[#1a7cff] to-madde-blue bg-[length:200%_auto] animate-shine"
         aria-hidden
       />
       <span
-        className="absolute inset-0 opacity-40 mix-blend-overlay"
+        className="absolute inset-0 opacity-30 mix-blend-overlay"
         style={{
           background:
-            "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.45), transparent 55%)",
+            "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.5), transparent 55%)",
         }}
         aria-hidden
       />
-      <span className="pointer-events-none absolute -inset-1 rounded-lg opacity-70 blur-md bg-gradient-to-r from-cyan-400/30 via-primary/40 to-teal-400/30 group-hover:opacity-100 transition-opacity" />
+      <span className="pointer-events-none absolute -inset-1 rounded-lg bg-madde-blue/25 opacity-50 blur-md transition-opacity group-hover:opacity-80" />
       <span className="relative z-10 flex items-center gap-2">
         {loading ? (
           <Loader2 className="h-5 w-5 animate-spin" aria-hidden />

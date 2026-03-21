@@ -26,31 +26,3 @@ export const LEGAL_LOADING_MESSAGES = [
   "Madde yapısı inceleniyor…",
   "Yükümlülük dengesi kontrol ediliyor…",
 ];
-
-export const CONTRACT_TYPE_SLUGS: Record<
-  string,
-  { title: string; description: string; keywords: string[] }
-> = {
-  kira: {
-    title: "Kira sözleşmesi TBK analizi",
-    description:
-      "Kira sözleşmenizi yapay zeka ile TBK ve güncel düzenlemelere göre ön analizden geçirin.",
-    keywords: [
-      "kira sözleşmesi analizi",
-      "TBK kira",
-      "yapay zeka kira sözleşmesi analizi",
-    ],
-  },
-  "hizmet-sozlesmesi": {
-    title: "Hizmet sözleşmesi hukuki ön inceleme",
-    description:
-      "Hizmet sözleşmelerinde risk ve eksik madde tespiti için Madde1 analiz çalışma alanı.",
-    keywords: ["hizmet sözleşmesi", "TBK hizmet", "hukuki risk analizi AI"],
-  },
-  "tahliye-taahhutnamesi": {
-    title: "Tahliye taahhütnamesi kontrolü",
-    description:
-      "Tahliye taahhütnamesi ve benzeri belgelerde tipik eksiklik ve usul riskleri.",
-    keywords: ["tahliye taahhütnamesi", "kira tahliye", "Madde1 legaltech"],
-  },
-};

@@ -1,26 +1,25 @@
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { openai } from "@ai-sdk/openai";
-import { TBK_CONTRACT_SYSTEM, TAHLIYE_CHECK_SYSTEM } from "@/lib/prompts";
+import {
+  TBK_CONTRACT_SYSTEM,
+  TBK_CONTRACT_REFACTOR_FOLLOWUP,
+  TBK_CONTRACT_SYSTEM_B2C_ANALYSIS,
+  TBK_CONTRACT_SYSTEM_B2C_REFACTOR,
+  TAHLIYE_CHECK_SYSTEM,
+} from "@/lib/prompts";
+import { personaPromptFragment, type PersonaId } from "@/lib/personas";
+import { resolveLegalModel } from "@/lib/ai/models";
 
 export const maxDuration = 60;
-
-function resolveModel() {
-  if (process.env.GROQ_API_KEY) {
-    return groq("llama-3.3-70b-versatile");
-  }
-  if (process.env.OPENAI_API_KEY) {
-    return openai("gpt-4o-mini");
-  }
-  return null;
-}
 
 export async function POST(req: Request) {
   const body = await req.json();
   const messages = body.messages as UIMessage[];
   const mode = (body.mode as string) || "contract";
+  const b2c = Boolean(body.b2c);
+  const persona = (body.persona as PersonaId) || "general";
+  const phase = (body.phase as string) || "analysis";
 
-  const model = resolveModel();
+  const model = resolveLegalModel();
   if (!model) {
     return new Response(
       JSON.stringify({
@@ -31,8 +30,20 @@ export async function POST(req: Request) {
     );
   }
 
-  const system =
-    mode === "tahliye" ? TAHLIYE_CHECK_SYSTEM : TBK_CONTRACT_SYSTEM;
+  let system: string;
+  if (mode === "tahliye") {
+    system = TAHLIYE_CHECK_SYSTEM;
+  } else if (b2c) {
+    if (phase === "refactor") {
+      system = `${TBK_CONTRACT_SYSTEM_B2C_REFACTOR}\n\nPerspektif: ${personaPromptFragment(persona)}`;
+    } else {
+      system = `${TBK_CONTRACT_SYSTEM_B2C_ANALYSIS}\n\nPerspektif: ${personaPromptFragment(persona)}`;
+    }
+  } else if (phase === "refactor") {
+    system = TBK_CONTRACT_REFACTOR_FOLLOWUP;
+  } else {
+    system = TBK_CONTRACT_SYSTEM;
+  }
 
   const modelMessages = await convertToModelMessages(messages);
 

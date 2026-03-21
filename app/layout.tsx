@@ -1,42 +1,47 @@
 import type { Metadata } from "next";
-import { DM_Sans, Literata } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-
-const dmSans = DM_Sans({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const literata = Literata({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-display",
-  display: "swap",
-});
+import { AppProviders } from "@/providers/AppProviders";
+import { SITE_NAME, SITE_URL } from "@/lib/seo/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://madde1.tr"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Madde1 — Yapay zeka ile TBK sözleşme analizi",
-    template: "%s | Madde1",
+    default: `${SITE_NAME} — Yapay zeka ile TBK sözleşme analizi`,
+    template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Kira ve ticari sözleşmelerinizi Türk Borçlar Kanunu çerçevesinde yapay zeka ile ön analizden geçirin. Hukuki risk tespiti ve Madde1 legaltech deneyimi.",
+    "Türkiye'de kira, iş ve ticari sözleşmeler için yapay zeka destekli risk taraması, TBK uyumlu özet ve taslak üretimi.",
   keywords: [
-    "yapay zeka kira sözleşmesi analizi",
-    "hukuki risk analizi AI",
-    "Madde1 legaltech",
+    "sözleşme analizi",
+    "kira sözleşmesi riskleri",
+    "legal AI assistant",
+    "yapay zeka sözleşme analizi",
+    "AI hukuk asistanı Türkiye",
+    "sözleşme üretimi",
+    "LegalTech",
     "TBK analiz",
-    "sözleşme inceleme",
-    "tahliye taahhütnamesi",
   ],
+  icons: {
+    icon: [{ url: "/icon", sizes: "32x32", type: "image/png" }],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: "/manifest.webmanifest",
   openGraph: {
-    title: "Madde1 — AI LegalTech",
-    description:
-      "Türk hukuku odaklı, TBK uyumlu sözleşme analizi ve risk özetleri.",
-    locale: "tr_TR",
     type: "website",
-    siteName: "Madde1",
+    locale: "tr_TR",
+    siteName: SITE_NAME,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} — AI sözleşme analizi`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
   },
   robots: { index: true, follow: true },
 };
@@ -47,11 +52,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className="dark">
+    <html lang="tr">
       <body
-        className={`${dmSans.variable} ${literata.variable} min-h-screen font-sans antialiased`}
+        className={`${GeistSans.variable} min-h-screen font-sans antialiased`}
       >
-        {children}
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

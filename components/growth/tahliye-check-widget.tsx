@@ -19,13 +19,24 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { StreamingMarkdown } from "@/components/analysis/streaming-markdown";
 import { getAssistantText } from "@/lib/message-text";
+import { cn } from "@/lib/utils";
+import { maskSensitiveText } from "@/lib/security/mask-sensitive";
+import { captureEvent } from "@/lib/analytics/capture";
+import { AnalyticsEvents } from "@/lib/analytics/events";
+import { SITE_HOST } from "@/lib/seo/site";
 
-export function TahliyeCheckWidget() {
+export function TahliyeCheckWidget({
+  cardClassName,
+  embedded,
+}: {
+  cardClassName?: string;
+  embedded?: boolean;
+} = {}) {
   const [open, setOpen] = React.useState(false);
   const [draft, setDraft] = React.useState("");
 
   const { messages, sendMessage, setMessages, status, error } = useChat({
-    id: "madde1-tahliye-widget",
+    id: "clause-tahliye-widget",
     transport: new DefaultChatTransport({
       api: "/api/chat",
       body: { mode: "tahliye" },
@@ -38,74 +49,109 @@ export function TahliyeCheckWidget() {
   const run = () => {
     const t = draft.trim();
     if (!t) return;
+    const { text: safe, replacementCount } = maskSensitiveText(t);
+    captureEvent(AnalyticsEvents.FREE_TOOL_USED, {
+      tool: "tahliye_check",
+      surface: embedded ? "bento" : "standalone",
+    });
+    if (replacementCount > 0) {
+      captureEvent(AnalyticsEvents.PRIVACY_MASKING_TOGGLED, {
+        context: "tahliye_widget_send",
+        replacement_count: replacementCount,
+      });
+    }
+    captureEvent(AnalyticsEvents.ANALYSIS_STARTED, {
+      source: "tahliye_widget",
+      embedded,
+      text_length: t.length,
+    });
     setMessages([]);
     window.setTimeout(() => {
-      void sendMessage({ text: t });
+      void sendMessage({ text: safe });
     }, 0);
   };
 
+  const dialogBlock = (
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        if (!o) setMessages([]);
+      }}
+    >
+      <DialogTrigger asChild>
+        <Button
+          className="w-full"
+          size="sm"
+          data-tahliye-trigger=""
+          type="button"
+        >
+          Hemen dene
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-h-[90vh] gap-4 border-slate-200 bg-white sm:max-w-lg">
+        <DialogHeader>
+          <DialogTitle>Taahhütname check-up</DialogTitle>
+          <DialogDescription>
+            Metninizi yapıştırın; yapay zeka tipik risk ve eksikliklere dair
+            ön bir kontrol listesi üretir.
+          </DialogDescription>
+        </DialogHeader>
+        <Textarea
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          disabled={busy}
+          placeholder="Tahliye taahhütnamesi metniniz…"
+          className="min-h-[140px]"
+        />
+        {error ? (
+          <p className="text-sm text-destructive">{error.message}</p>
+        ) : null}
+        <ScrollArea className="max-h-[220px] rounded-md border border-slate-200 bg-slate-50/50 p-3">
+          {out ? (
+            <StreamingMarkdown content={out} variant="light" />
+          ) : (
+            <p className="text-sm text-slate-600">Sonuçlar burada akacak.</p>
+          )}
+        </ScrollArea>
+        <p className="text-center text-[10px] text-slate-500">
+          Powered by {SITE_HOST} — Yapay Zeka Hukuk Asistanı
+        </p>
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            Kapat
+          </Button>
+          <Button type="button" onClick={run} disabled={busy || !draft.trim()}>
+            {busy ? "İnceleniyor…" : "Kontrol et"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+
+  if (embedded) {
+    return (
+      <div className={cn("space-y-3", cardClassName)}>{dialogBlock}</div>
+    );
+  }
+
   return (
-    <Card className="border-border/80 bg-card/50">
+    <Card
+      className={cn(
+        "border-slate-200 bg-white shadow-sm",
+        cardClassName,
+      )}
+    >
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-base font-semibold">
-          <FileWarning className="h-4 w-4 text-primary" />
+        <CardTitle className="flex items-center gap-2 text-base font-semibold text-slate-900">
+          <FileWarning className="h-4 w-4 text-blue-700" />
           Tahliye taahhütnamesi
         </CardTitle>
+        <p className="text-sm text-slate-600">
+          AI ile tipik eksiklik ve usul uyarılarını hızlıca tarayın.
+        </p>
       </CardHeader>
-      <CardContent>
-        <Dialog
-          open={open}
-          onOpenChange={(o) => {
-            setOpen(o);
-            if (!o) setMessages([]);
-          }}
-        >
-          <DialogTrigger asChild>
-            <Button variant="secondary" className="w-full" size="sm">
-              Hızlı AI kontrolü
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-h-[90vh] gap-4 sm:max-w-lg">
-            <DialogHeader>
-              <DialogTitle>Taahhütname check-up</DialogTitle>
-              <DialogDescription>
-                Metninizi yapıştırın; yapay zeka tipik risk ve eksikliklere dair
-                ön bir kontrol listesi üretir.
-              </DialogDescription>
-            </DialogHeader>
-            <Textarea
-              value={draft}
-              onChange={(e) => setDraft(e.target.value)}
-              disabled={busy}
-              placeholder="Tahliye taahhütnamesi metniniz…"
-              className="min-h-[140px]"
-            />
-            {error ? (
-              <p className="text-sm text-destructive">{error.message}</p>
-            ) : null}
-            <ScrollArea className="max-h-[220px] rounded-md border border-border/80 p-3">
-              {out ? (
-                <StreamingMarkdown content={out} />
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  Sonuçlar burada akacak.
-                </p>
-              )}
-            </ScrollArea>
-            <p className="text-center text-[10px] text-muted-foreground">
-              Powered by Madde1.tr — Yapay Zeka Hukuk Asistanı
-            </p>
-            <DialogFooter className="gap-2 sm:gap-0">
-              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                Kapat
-              </Button>
-              <Button type="button" onClick={run} disabled={busy || !draft.trim()}>
-                {busy ? "İnceleniyor…" : "Kontrol et"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </CardContent>
+      <CardContent className="space-y-3">{dialogBlock}</CardContent>
     </Card>
   );
 }

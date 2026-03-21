@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,10 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
       },
       colors: {
+        madde: {
+          blue: "#005BEA",
+          "blue-deep": "#0046B8",
+          green: "#00E676",
+          red: "#FF1744",
+          ink: "#1A202C",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -58,18 +63,9 @@ const config: Config = {
           "0%": { backgroundPosition: "200% center" },
           "100%": { backgroundPosition: "-200% center" },
         },
-        "border-beam": {
-          "100%": { offsetDistance: "100%" },
-        },
-        shimmer: {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
-        },
       },
       animation: {
         shine: "shine 3s linear infinite",
-        "border-beam": "border-beam 4s linear infinite",
-        shimmer: "shimmer 2s ease-in-out infinite",
       },
       backgroundSize: {
         shine: "200% auto",
