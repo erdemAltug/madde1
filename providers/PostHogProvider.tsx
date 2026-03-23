@@ -11,34 +11,36 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     return <>{children}</>;
   }
 
+  // Disable heavy features in development for faster page transitions
+  const isDev = process.env.NODE_ENV === "development";
+
+  // Only enable session recording in production
+  const sessionRecording = !isDev ? {
+    maskAllInputs: true,
+    maskInputOptions: {
+      password: true,
+      textarea: true,
+      select: true,
+    },
+    maskTextSelector: "[data-ph-mask]",
+  } : undefined;
+
+  const options = {
+    api_host: host,
+    person_profiles: "identified_only" as const,
+    capture_pageview: !isDev,
+    capture_pageleave: !isDev,
+    session_recording: sessionRecording,
+    disable_session_recording: isDev,
+    persistence: "localStorage" as const,
+    autocapture: !isDev,
+    cross_subdomain_cookie: false,
+    secure_cookie: process.env.NODE_ENV === "production",
+    debug: isDev,
+  };
+
   return (
-    <PHProvider
-      apiKey={key}
-      options={{
-        api_host: host,
-        person_profiles: "identified_only",
-        capture_pageview: true,
-        capture_pageleave: true,
-        // @ts-expect-error PostHog JS: heatmaps (tipler gecikmeli olabilir)
-        heatmaps: true,
-        /** Oturum kaydı — tüm inputları maskele (KVKK) */
-        session_recording: {
-          maskAllInputs: true,
-          maskInputOptions: {
-            password: true,
-            textarea: true,
-            select: true,
-          },
-          /** Sözleşme metni alanı (`data-ph-mask`) replay’de metin olarak maskelensin */
-          maskTextSelector: "[data-ph-mask]",
-        },
-        disable_session_recording: false,
-        persistence: "localStorage",
-        autocapture: true,
-        cross_subdomain_cookie: false,
-        secure_cookie: process.env.NODE_ENV === "production",
-      }}
-    >
+    <PHProvider apiKey={key} options={options}>
       {children}
     </PHProvider>
   );

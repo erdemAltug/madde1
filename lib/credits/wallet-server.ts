@@ -1,48 +1,58 @@
 import { getSupabaseService } from "@/lib/supabase/service";
 
 export type WalletRow = {
-  device_id: string;
+  id: string;
+  user_id: string;
   credits: number;
   unlimited_until: string | null;
+  created_at: string;
+  updated_at: string;
 };
 
 const TABLE = "user_credits";
 
-export async function getWallet(deviceId: string): Promise<WalletRow | null> {
+export async function getWallet(userId: string): Promise<WalletRow | null> {
   const sb = getSupabaseService();
   if (!sb) return null;
   const { data, error } = await sb
     .from(TABLE)
-    .select("device_id, credits, unlimited_until")
-    .eq("device_id", deviceId)
+    .select("id, user_id, credits, unlimited_until, created_at, updated_at")
+    .eq("user_id", userId)
     .maybeSingle();
   if (error) throw new Error(error.message);
   return data as WalletRow | null;
 }
 
-export async function ensureWallet(deviceId: string): Promise<WalletRow> {
-  const existing = await getWallet(deviceId);
+export async function ensureWallet(userId: string): Promise<WalletRow> {
+  const existing = await getWallet(userId);
   if (existing) return existing;
   const sb = getSupabaseService();
   if (!sb) {
-    return { device_id: deviceId, credits: 0, unlimited_until: null };
+    return { 
+      id: "", 
+      user_id: userId, 
+      credits: 0, 
+      unlimited_until: null,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
   }
   const { data, error } = await sb
     .from(TABLE)
-    .insert({ device_id: deviceId, credits: 0 })
-    .select("device_id, credits, unlimited_until")
+    .insert({ user_id: userId, credits: 0 })
+    .select("id, user_id, credits, unlimited_until, created_at, updated_at")
     .single();
   if (error) throw new Error(error.message);
   return data as WalletRow;
 }
 
 export async function applyCredits(
-  deviceId: string,
+  userId: string,
   deltaCredits: number,
   setUnlimitedDays?: number,
 ): Promise<WalletRow> {
   const sb = getSupabaseService();
-  const row = await ensureWallet(deviceId);
+  const row = await ensureWallet(userId);
   let credits = row.credits + deltaCredits;
   if (credits < 0) credits = 0;
   let unlimited_until = row.unlimited_until;
@@ -53,20 +63,21 @@ export async function applyCredits(
     ).toISOString();
   }
   if (!sb) {
-    return { device_id: deviceId, credits, unlimited_until };
+    return { ...row, credits, unlimited_until };
   }
   const { data, error } = await sb
     .from(TABLE)
     .upsert(
       {
-        device_id: deviceId,
+        id: row.id || undefined,
+        user_id: userId,
         credits,
         unlimited_until,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: "device_id" },
+      { onConflict: "user_id" },
     )
-    .select("device_id, credits, unlimited_until")
+    .select("id, user_id, credits, unlimited_until, created_at, updated_at")
     .single();
   if (error) throw new Error(error.message);
   return data as WalletRow;
@@ -80,10 +91,10 @@ export function isUnlimitedActive(until: string | null): boolean {
 export type ConsumeResult = "ok" | "no_credit" | "no_backend";
 
 /** 1 kredi düş veya sınırsız aktifse geç. Supabase yoksa no_backend. */
-export async function tryConsumeCredit(deviceId: string): Promise<ConsumeResult> {
+export async function tryConsumeCredit(userId: string): Promise<ConsumeResult> {
   const sb = getSupabaseService();
   if (!sb) return "no_backend";
-  const row = await ensureWallet(deviceId);
+  const row = await ensureWallet(userId);
   if (isUnlimitedActive(row.unlimited_until)) return "ok";
   if (row.credits < 1) return "no_credit";
   const next = row.credits - 1;
@@ -93,7 +104,7 @@ export async function tryConsumeCredit(deviceId: string): Promise<ConsumeResult>
       credits: next,
       updated_at: new Date().toISOString(),
     })
-    .eq("device_id", deviceId);
+    .eq("user_id", userId);
   if (error) throw new Error(error.message);
   return "ok";
 }

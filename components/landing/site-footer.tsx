@@ -3,104 +3,110 @@ import { ClauseLogo } from "@/components/brand/clause-logo";
 import { ModelProviderLogos } from "@/components/landing/model-provider-logos";
 import { FREE_TOOLS_NAV } from "@/lib/seo/free-tools-routes";
 import { SITE_HOST } from "@/lib/seo/site";
+import { Scale, FileText, Users, TrendingUp } from "lucide-react";
+
+const POPULAR_SEARCHES = [
+  { label: "Kira Tahliye Analizi", href: "/araclar/tahliye-taahhutnamesi-kontrolu" },
+  { label: "Kıdem Tazminatı Hesaplama", href: "/#fiyatlandirma" },
+  { label: "Kira Artış Oranı", href: "/araclar/kira-artis-hesaplama" },
+  { label: "Damga Vergisi", href: "/araclar/damga-vergisi-hesaplama" },
+];
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-slate-200 bg-slate-50/50 py-10">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:flex-row sm:items-start sm:justify-between sm:px-6 lg:px-8">
-        <div>
-          <ClauseLogo withWordmark size={32} />
-          <p className="mt-2 max-w-xs text-sm font-medium text-slate-600">
-            Ücretsiz özet, şeffaf fiyatlar, TBK odaklı ön analiz.
+    <footer className="border-t border-slate-100 bg-white py-10">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Popular Searches */}
+        <div className="mb-8 pb-8 border-b border-slate-100">
+          <p className="text-xs font-medium uppercase tracking-wide text-slate-400 mb-4">
+            Popüler Hukuki Aramalar
           </p>
-        </div>
-        <div className="flex flex-wrap gap-8 text-sm">
-          <nav aria-label="Ücretsiz araçlar" className="space-y-2">
-            <p className="font-semibold text-slate-900">Ücretsiz araçlar</p>
-            <ul className="space-y-1.5">
-              {FREE_TOOLS_NAV.map((t) => (
-                <li key={t.href}>
-                  <Link
-                    href={t.href}
-                    className="block text-slate-600 hover:text-madde-blue"
-                  >
-                    {t.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/#ucretsiz-araclar"
-              className="block pt-1 text-xs font-semibold text-madde-blue hover:underline"
-            >
-              Bento ızgarasına git
-            </Link>
-          </nav>
-          <div className="space-y-2">
-            <p className="font-semibold text-slate-900">Ürün</p>
-            <Link
-              href="/#ozellikler"
-              className="block text-slate-600 hover:text-madde-blue"
-            >
-              Özellikler
-            </Link>
-            <Link
-              href="/#fiyatlandirma"
-              className="block text-slate-600 hover:text-madde-blue"
-            >
-              Fiyatlandırma
-            </Link>
-            <Link
-              href="/analiz/kira-sozlesmesi"
-              className="block text-slate-600 hover:text-madde-blue"
-            >
-              Kira analizi
-            </Link>
-            <Link
-              href="/blog"
-              className="block text-slate-600 hover:text-madde-blue"
-            >
-              Blog
-            </Link>
+          <div className="flex flex-wrap gap-3">
+            {POPULAR_SEARCHES.map((search) => (
+              <Link
+                key={search.href}
+                href={search.href}
+                prefetch={true}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-full text-sm text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+              >
+                <TrendingUp className="w-3.5 h-3.5" />
+                {search.label}
+              </Link>
+            ))}
           </div>
-          <div className="space-y-2">
-            <p className="font-semibold text-slate-900">Yasal</p>
-            <Link
-              href="/guvenlik"
-              className="block text-slate-600 hover:text-madde-blue"
-            >
-              Gizlilik ve güvenlik
-            </Link>
-            <span className="block text-slate-600">Kullanım şartları</span>
+        </div>
+
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <ClauseLogo withWordmark size={32} />
+            <p className="mt-2 max-w-xs text-sm text-slate-600">
+              Yapay zeka destekli hukuki analiz platformu. Veriye dayalı strateji ve içtihat desteği.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-8 text-sm">
+            <nav aria-label="Ücretsiz araçlar" className="space-y-2">
+              <p className="font-medium text-slate-900">Ücretsiz Araçlar</p>
+              <ul className="space-y-1.5">
+                {FREE_TOOLS_NAV.map((t) => (
+                  <li key={t.href}>
+                    <Link href={t.href} prefetch={true} className="text-slate-600 hover:text-indigo-600">
+                      {t.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <div className="space-y-2">
+              <p className="font-medium text-slate-900">Platform</p>
+              <Link href="/#ozellikler" prefetch={true} className="block text-slate-600 hover:text-indigo-600">
+                Özellikler
+              </Link>
+              <Link href="/#fiyatlandirma" prefetch={true} className="block text-slate-600 hover:text-indigo-600">
+                Fiyatlandırma
+              </Link>
+              <Link href="/analiz/kira-sozlesmesi" prefetch={true} className="block text-slate-600 hover:text-indigo-600">
+                Kira Analizi
+              </Link>
+              <Link href="/blog" prefetch={true} className="block text-slate-600 hover:text-indigo-600">
+                Blog
+              </Link>
+            </div>
+            <div className="space-y-2">
+              <p className="font-medium text-slate-900">Yasal</p>
+              <Link href="/guvenlik" prefetch={true} className="block text-slate-600 hover:text-indigo-600">
+                Gizlilik ve Güvenlik
+              </Link>
+              <span className="block text-slate-600">Kullanım Şartları</span>
+            </div>
           </div>
         </div>
       </div>
+      
       <div className="mx-auto mt-10 max-w-6xl border-t border-slate-100 px-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-slate-500">
-            Model altyapısı
+          <p className="text-[10px] font-medium uppercase tracking-widest text-slate-400">
+            Teknoloji Altyapısı
           </p>
-          <p className="mx-auto mt-2 max-w-lg text-xs font-medium text-slate-600">
-            OpenAI, Claude ve Groq üzerinde çalışan yapı; görev ve yük durumuna
-            göre model seçimi değişebilir.
+          <p className="mx-auto mt-2 max-w-lg text-xs text-slate-600">
+            OpenAI, Claude ve Groq üzerinde çalışan yapay zeka altyapısı.
           </p>
-          <ModelProviderLogos className="mt-8" />
+          <ModelProviderLogos className="mt-6" />
         </div>
-        <div className="mx-auto mt-12 max-w-2xl rounded-xl border border-[#0f766e]/20 bg-[#f0fdf4]/80 px-4 py-3 text-center">
-          <p className="text-xs font-semibold leading-relaxed text-[#0a1628]">
-            Clause, sözleşme metninizi analiz akışı sonrasında kalıcı olarak
-            saklamaz ve üçüncü taraflarla pazarlama amacıyla paylaşmaz. Ayrıntılar{" "}
-            <Link href="/guvenlik" className="text-[#0f766e] underline-offset-2 hover:underline">
-              güvenlik sayfamızda
+        
+        <div className="mx-auto mt-8 max-w-2xl rounded-lg border border-slate-100 bg-slate-50 px-4 py-3 text-center">
+          <p className="text-xs text-slate-600">
+            clause.ai, sözleşme metinlerini analiz sonrası kalıcı olarak saklamaz ve üçüncü taraflarla paylaşmaz.{" "}
+            <Link href="/guvenlik" prefetch={true} className="text-indigo-600 underline-offset-2 hover:underline">
+              Güvenlik Politikamız
             </Link>
-            .
           </p>
         </div>
+        
         <p className="mt-6 text-center text-xs text-slate-500">
-          Powered by {SITE_HOST} — Yapay Zeka Hukuk Asistanı
+          © {new Date().getFullYear()} clause.ai — Yapay Zeka Hukuk Asistanı
         </p>
-        <p className="mt-1 text-center text-xs text-slate-500">
-          Clause — ön analiz aracıdır; hukuki danışmanlık yerine geçmez.
+        <p className="mt-1 text-center text-xs text-slate-400">
+          clause.ai, hukuki danışmanlık yerine geçmez. Kesin sonuç için avukata danışınız.
         </p>
       </div>
     </footer>

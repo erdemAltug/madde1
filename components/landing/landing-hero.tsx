@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FileText, Scale, Shield, Sparkles } from "lucide-react";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { Button } from "@/components/ui/button";
@@ -12,46 +11,35 @@ type Props = {
 
 export function LandingHero({ onOpenAnalyzer }: Props) {
   return (
-    <section className="relative overflow-hidden border-b border-slate-200/80 bg-white">
+    <section className="relative overflow-hidden border-b border-slate-100 bg-white">
       <div
-        className="pointer-events-none absolute inset-0 opacity-90"
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
         aria-hidden
         style={{
-          backgroundImage: `
-            radial-gradient(ellipse 80% 60% at 15% 20%, rgba(0, 91, 234, 0.14), transparent 55%),
-            radial-gradient(circle at 90% 10%, rgba(0, 230, 118, 0.1), transparent 42%),
-            radial-gradient(circle at 70% 80%, rgba(255, 23, 68, 0.06), transparent 45%)
-          `,
+          backgroundImage: `radial-gradient(circle at 1px 1px, rgb(148 163 184) 1px, transparent 0)`,
+          backgroundSize: '24px 24px',
         }}
       />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55 }}
-          className="flex flex-col justify-center"
+        <div
+          className="flex flex-col justify-center animate-in fade-in slide-in-from-bottom-4 duration-300"
         >
-          <p className="text-sm font-bold uppercase tracking-wider text-madde-blue">
-            Türk hukuku çerçevesinde sözleşme güvenliği
-          </p>
-          <h1 className="mt-4 text-balance text-4xl font-bold leading-[1.08] tracking-tight text-madde-ink sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
-            Clause: Yapay zeka ile sözleşme analizi ve kira sözleşmesi risk
-            tespiti —{" "}
-            <span className="text-madde-blue">30 saniyede</span> özet.
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 rounded-full text-xs font-medium text-indigo-700 mb-4">
+            <Scale className="w-3.5 h-3.5" />
+            clause.ai — Türk Hukuk Sistemi
+          </div>
+          <h1 className="mt-4 text-balance text-4xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
+            Veriye Dayalı Hukuki Analiz ve Strateji
           </h1>
-          <p className="mt-5 max-w-xl text-lg font-semibold leading-relaxed text-slate-700">
-            Paranı koru: ücretsiz güven skoru ve özet; detay ve düzeltme metni
-            şeffaf fiyatla.
+          <p className="mt-5 max-w-xl text-lg text-slate-600">
+            Yargıtay içtihatları ve güncel mevzuat ile desteklenen yapay zeka analizi. 
+            Vakanızı detaylandırın ve profesyonel hukuki değerlendirme alın.
           </p>
-          <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-600">
-            Metnini yapıştır; canlı akışla analiz. Hukuki danışmanlık değil —
-            ama ilk savunma hattın.
-          </p>
+          
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button
               size="lg"
-              variant="cta"
-              className="h-12 rounded-xl px-8 text-base"
+              className="h-12 rounded-xl px-8 text-base bg-[#1a1c2e] hover:bg-[#252742]"
               onClick={() => {
                 captureEvent(AnalyticsEvents.HERO_CTA_CLICKED, {
                   placement: "hero",
@@ -59,55 +47,74 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
                 onOpenAnalyzer();
               }}
             >
-              Ücretsiz analiz et
+              <Sparkles className="w-4 h-4 mr-2" />
+              Analizi Başlat
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button
               size="lg"
-              variant="ghost"
-              className="h-12 font-semibold text-madde-ink hover:bg-madde-blue/[0.06]"
+              variant="outline"
+              className="h-12 rounded-xl px-8 text-base font-medium border-slate-200 text-slate-700 hover:bg-slate-50"
               asChild
             >
-              <a href="#nasil-calisir">Nasıl çalışır?</a>
+              <a href="#nasil-calisir">Nasıl Çalışır?</a>
             </Button>
           </div>
-          <p className="mt-6 text-xs text-slate-500">
-            Kesin hukuki sonuç için bir avukata danış. Clause ön tarama ve
-            bilgilendirme sunar.
-          </p>
-        </motion.div>
+          
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-slate-500">
+            <div className="flex items-center gap-1.5">
+              <Shield className="w-3.5 h-3.5 text-emerald-500" />
+              <span>KVKK Uyumlu</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <FileText className="w-3.5 h-3.5 text-emerald-500" />
+              <span>10.000+ Kanun Maddesi</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Scale className="w-3.5 h-3.5 text-emerald-500" />
+              <span>Yargıtay İçtihatları</span>
+            </div>
+          </div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.55, delay: 0.08 }}
-          className="relative hidden lg:flex lg:items-center lg:justify-center"
+        <div
+          className="relative hidden lg:flex lg:items-center lg:justify-center animate-in fade-in zoom-in-95 duration-300 delay-75"
         >
-          <div className="glass-panel relative w-full max-w-md rounded-2xl p-8">
-            <div className="space-y-4 text-sm text-slate-600">
-              <div className="flex items-center gap-2 text-madde-ink">
-                <span className="h-2 w-2 rounded-full bg-[#00E676] shadow-[0_0_10px_rgba(0,230,118,0.7)]" />
-                <span className="font-bold tracking-tight">
-                  Canlı güven skoru + risk özeti
+          <div className="relative w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-xl">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-slate-900">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                <span className="font-medium">
+                  Yapay Zeka Destekli Analiz
                 </span>
               </div>
-              <div className="rounded-xl border border-slate-200/80 bg-white/90 p-4 text-xs leading-relaxed text-slate-600 shadow-inner">
-                <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400">
-                  Örnek özet
+              
+              <div className="rounded-xl border border-slate-100 bg-slate-50 p-4">
+                <p className="text-xs font-medium uppercase tracking-wide text-slate-400 mb-2">
+                  Örnek Analiz
                 </p>
-                <p className="mt-2 font-sans text-sm font-bold text-slate-800">
-                  Güven: %42
-                </p>
-                <p className="mt-1 font-sans text-sm text-slate-700">
-                  3 kritik risk · detaylar 4,99 TL ile açılır
-                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-600">İlgili Kanun Maddesi</span>
+                    <span className="text-xs px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded">TBK 350</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-600">Emsal Karar</span>
+                    <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded">Yargıtay 6. HD</span>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-200">
+                    <span className="text-sm font-medium text-slate-700">Benzerlik Skoru</span>
+                    <span className="text-sm font-semibold text-emerald-600">%78</span>
+                  </div>
+                </div>
               </div>
-              <p className="text-xs text-slate-500">
-                Önemli uyarılar belirgin; metin sade ve okunaklı sunulur.
+              
+              <p className="text-xs text-slate-500 text-center">
+                Vakanıza uygun kanun maddeleri ve emsal kararlar otomatik tespit edilir.
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

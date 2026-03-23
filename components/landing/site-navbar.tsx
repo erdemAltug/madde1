@@ -47,6 +47,7 @@ export function SiteNavbar() {
           href="/"
           className="flex items-center gap-0 text-madde-ink"
           onClick={() => setMobile(false)}
+          prefetch={true}
         >
           <ClauseLogo withWordmark wordmarkClassName="text-[1.15rem]" size={34} />
         </Link>
@@ -57,6 +58,7 @@ export function SiteNavbar() {
               <Link
                 href={l.href}
                 className="text-[13px] font-semibold text-slate-700 hover:text-madde-blue"
+                prefetch={true}
               >
                 {l.label}
               </Link>
@@ -95,6 +97,7 @@ export function SiteNavbar() {
                     href={t.href}
                     className="block px-3 py-2 text-[13px] font-medium text-slate-700 hover:bg-slate-50 hover:text-madde-blue"
                     onClick={() => setToolsOpen(false)}
+                    prefetch={true}
                   >
                     {t.label}
                   </Link>
@@ -111,7 +114,7 @@ export function SiteNavbar() {
             className="border-slate-200 font-semibold text-madde-ink hover:border-madde-blue/30 hover:bg-madde-blue/[0.04]"
             asChild
           >
-            <Link href="/giris">Giriş Yap</Link>
+            <Link href="/giris" prefetch={true}>Giriş Yap</Link>
           </Button>
         </div>
 
@@ -135,6 +138,7 @@ export function SiteNavbar() {
                 href={l.href}
                 className="rounded-md px-3 py-2.5 text-sm font-semibold text-madde-ink hover:bg-slate-50"
                 onClick={() => setMobile(false)}
+                prefetch={true}
               >
                 {l.label}
               </Link>
@@ -164,6 +168,7 @@ export function SiteNavbar() {
                       setMobile(false);
                       setMobileTools(false);
                     }}
+                    prefetch={true}
                   >
                     {t.label}
                   </Link>
@@ -174,6 +179,7 @@ export function SiteNavbar() {
               href="/giris"
               className="mt-2 rounded-md border border-slate-200 px-3 py-2.5 text-center text-sm font-semibold text-madde-ink"
               onClick={() => setMobile(false)}
+              prefetch={true}
             >
               Giriş Yap
             </Link>

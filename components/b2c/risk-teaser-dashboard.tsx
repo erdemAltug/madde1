@@ -95,7 +95,7 @@ export function RiskTeaserDashboard({
 
         <div className="min-w-0 flex-1">
           <p className="text-xs font-bold uppercase tracking-wider text-madde-blue">
-            Ücretsiz ön tarama — merak boşluğu
+            Ücretsiz ön tarama 
           </p>
           <p className="mt-2 text-xl font-bold leading-snug tracking-tight text-madde-ink sm:text-2xl">
             <span className="text-[#FF1744]">
