@@ -39,7 +39,7 @@ export function SiteNavbar() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-slate-200/70 bg-white/75 shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl",
+        "sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl",
       )}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -57,7 +57,7 @@ export function SiteNavbar() {
             <Button key={l.href} variant="ghost" size="sm" asChild>
               <Link
                 href={l.href}
-                className="text-[13px] font-semibold text-slate-700 hover:text-madde-blue"
+                className="text-[13px] font-semibold text-slate-600 hover:text-deep-navy"
                 prefetch={true}
               >
                 {l.label}
@@ -69,7 +69,7 @@ export function SiteNavbar() {
               type="button"
               variant="ghost"
               size="sm"
-              className="text-[13px] font-semibold text-slate-700 hover:text-madde-blue"
+              className="text-[13px] font-semibold text-slate-600 hover:text-deep-navy"
               aria-expanded={toolsOpen}
               aria-haspopup="menu"
               onClick={() => setToolsOpen((v) => !v)}
@@ -85,7 +85,7 @@ export function SiteNavbar() {
             {toolsOpen ? (
               <div
                 role="menu"
-                className="absolute right-0 top-full z-50 mt-1 max-h-[min(70vh,24rem)] w-[min(100vw-2rem,20rem)] overflow-y-auto rounded-xl border border-slate-200 bg-white py-2 shadow-xl shadow-slate-900/10"
+                className="absolute right-0 top-full z-50 mt-1 max-h-[min(70vh,24rem)] w-[min(100vw-2rem,20rem)] overflow-y-auto rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10"
               >
                 <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">
                   Sözleşme analizi
@@ -95,7 +95,7 @@ export function SiteNavbar() {
                     key={t.href}
                     role="menuitem"
                     href={t.href}
-                    className="block px-3 py-2 text-[13px] font-medium text-slate-700 hover:bg-slate-50 hover:text-madde-blue"
+                    className="block px-3 py-2 text-[13px] font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
                     onClick={() => setToolsOpen(false)}
                     prefetch={true}
                   >
@@ -111,7 +111,7 @@ export function SiteNavbar() {
           <Button
             variant="outline"
             size="sm"
-            className="border-slate-200 font-semibold text-madde-ink hover:border-madde-blue/30 hover:bg-madde-blue/[0.04]"
+            className="border-slate-300 font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
             asChild
           >
             <Link href="/giris" prefetch={true}>Giriş Yap</Link>
@@ -120,7 +120,7 @@ export function SiteNavbar() {
 
         <button
           type="button"
-          className="inline-flex rounded-md p-2 text-madde-ink md:hidden"
+          className="inline-flex rounded-md p-2 text-slate-600 md:hidden hover:bg-slate-100"
           aria-expanded={mobile}
           aria-label="Menü"
           onClick={() => setMobile((v) => !v)}
@@ -130,13 +130,13 @@ export function SiteNavbar() {
       </div>
 
       {mobile ? (
-        <div className="border-t border-slate-200 bg-white/95 px-4 py-4 backdrop-blur-md md:hidden">
+        <div className="border-t border-slate-200/60 bg-white/95 px-4 py-4 backdrop-blur-md md:hidden">
           <nav className="flex flex-col gap-1">
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
-                className="rounded-md px-3 py-2.5 text-sm font-semibold text-madde-ink hover:bg-slate-50"
+                className="rounded-md px-3 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
                 onClick={() => setMobile(false)}
                 prefetch={true}
               >
@@ -145,7 +145,7 @@ export function SiteNavbar() {
             ))}
             <button
               type="button"
-              className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm font-semibold text-madde-ink hover:bg-slate-50"
+              className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm font-semibold text-slate-600 hover:bg-slate-50"
               aria-expanded={mobileTools}
               onClick={() => setMobileTools((v) => !v)}
             >
@@ -163,7 +163,7 @@ export function SiteNavbar() {
                   <Link
                     key={t.href}
                     href={t.href}
-                    className="rounded-md py-2 text-[13px] font-medium text-slate-600 hover:text-madde-blue"
+                    className="rounded-md py-2 text-[13px] font-medium text-slate-500 hover:text-deep-navy"
                     onClick={() => {
                       setMobile(false);
                       setMobileTools(false);
@@ -177,7 +177,7 @@ export function SiteNavbar() {
             ) : null}
             <Link
               href="/giris"
-              className="mt-2 rounded-md border border-slate-200 px-3 py-2.5 text-center text-sm font-semibold text-madde-ink"
+              className="mt-2 rounded-md border border-slate-200 px-3 py-2.5 text-center text-sm font-semibold text-slate-600 hover:bg-slate-50"
               onClick={() => setMobile(false)}
               prefetch={true}
             >

@@ -20,22 +20,22 @@ export function ClauseLanding() {
   const [analyzerOpen, setAnalyzerOpen] = React.useState(false);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-white">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#F8FAFC]">
       {/* Optimized background blobs with CSS transforms only */}
       <div
         className="pointer-events-none fixed inset-0 overflow-hidden"
         aria-hidden
       >
         <div 
-          className="page-blob -left-[18%] top-[8%] h-[min(560px,90vw)] w-[min(560px,90vw)] bg-[#005BEA]/[0.075] transition-transform"
+          className="page-blob -left-[18%] top-[8%] h-[min(560px,90vw)] w-[min(560px,90vw)] bg-[#005BEA]/[0.05] transition-transform"
           style={{ willChange: 'transform' }}
         />
         <div 
-          className="page-blob right-[-12%] top-[38%] h-[min(420px,75vw)] w-[min(420px,75vw)] bg-violet-500/[0.07] transition-transform"
+          className="page-blob right-[-12%] top-[38%] h-[min(420px,75vw)] w-[min(420px,75vw)] bg-indigo-500/[0.04] transition-transform"
           style={{ willChange: 'transform' }}
         />
         <div 
-          className="page-blob left-[40%] bottom-[-5%] h-96 w-96 bg-[#005BEA]/[0.045] transition-transform"
+          className="page-blob left-[40%] bottom-[-5%] h-96 w-96 bg-[#005BEA]/[0.03] transition-transform"
           style={{ willChange: 'transform' }}
         />
       </div>
@@ -50,7 +50,7 @@ export function ClauseLanding() {
         <CommonRisksSection />
         <SeoPersonaSections />
         <FreeToolsSection />
-        <div className="border-t border-slate-100 bg-gradient-to-b from-white via-slate-50/30 to-white">
+        <div className="border-t border-slate-200/60 bg-gradient-to-b from-[#F8FAFC] via-slate-50/50 to-[#F8FAFC]">
           <PricingSection />
         </div>
         <BottomCtaBand onOpenAnalyzer={() => setAnalyzerOpen(true)} />

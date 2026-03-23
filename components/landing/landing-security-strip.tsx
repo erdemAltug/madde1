@@ -23,29 +23,29 @@ const items = [
 export function LandingSecurityStrip() {
   return (
     <Reveal>
-      <div className="border-b border-slate-200/80 bg-gradient-to-r from-[#0a1628]/[0.03] via-emerald-50/40 to-[#0a1628]/[0.03] py-4">
+      <div className="border-b border-slate-200/60 bg-gradient-to-r from-slate-50/80 via-emerald-50/50 to-slate-50/80 py-4">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 sm:px-6 lg:flex-row lg:justify-center lg:gap-10 lg:px-8">
           {items.map(({ icon: Icon, label, hint }) => (
             <div
               key={label}
-              className="flex items-center gap-2.5 text-center sm:text-left"
+              className="flex items-center gap-3 text-center sm:text-left"
             >
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#0a1628] text-emerald-300 shadow-sm">
-                <Icon className="h-4 w-4" aria-hidden />
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#0F172A] shadow-md">
+                <Icon className="h-5 w-5 text-emerald-400" aria-hidden />
               </span>
               <div>
-                <p className="text-sm font-bold tracking-tight text-[#0a1628]">
+                <p className="text-sm font-bold tracking-tight text-deep-navy">
                   {label}
                 </p>
-                <p className="text-[11px] font-medium text-slate-600">{hint}</p>
+                <p className="text-[11px] font-semibold text-slate-500">{hint}</p>
               </div>
             </div>
           ))}
         </div>
-        <p className="mt-2 text-center text-[11px] font-medium text-slate-500">
+        <p className="mt-2 text-center text-[11px] font-semibold text-slate-500">
           <Link
             href="/guvenlik"
-            className="font-semibold text-[#0f766e] underline-offset-2 hover:underline"
+            className="text-emerald-600 underline-offset-2 hover:underline"
           >
             Gizlilik ve güvenlik taahhüdümüz
           </Link>{" "}
