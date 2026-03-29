@@ -34,14 +34,6 @@ export function PricingSection() {
         </div>
       </Reveal>
       
-      {/* Beta Banner */}
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 text-center">
-          <p className="text-sm font-medium text-amber-800">
-            🎯 Beta sürümündeyiz, tüm geri bildirimleriniz bizim için değerli
-          </p>
-        </div>
-      </div>
 
       {/* Two columns: Free + Corporate */}
       <div className="mx-auto grid max-w-4xl grid-cols-1 md:grid-cols-2 gap-6 px-4 sm:px-6 lg:px-8 items-stretch">
@@ -62,9 +54,9 @@ export function PricingSection() {
             <CardContent className="flex-1 p-6 pt-2 flex flex-col">
               <ul className="space-y-3 flex-1">
                 {[
-                  "Beta Sürecine Özel: 3 hediye analiz kredisi",
-                  "Beta Sürecine Özel: Temel risk özeti",
-                  "Beta Sürecine Özel: Hızlı sözleşme kontrolü",
+                  "3 analiz kredisi",
+                  "Temel risk özeti",
+                  "Hızlı sözleşme kontrolü",
                   "PDF / yazdır",
                   "TBK + güncel mevzuat özeti",
                 ].map((f) => (
