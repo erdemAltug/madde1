@@ -57,7 +57,7 @@ export default function GirisPage() {
       return;
     }
     
-    router.push("/");
+    router.push("/analiz");
     router.refresh();
   };
 
