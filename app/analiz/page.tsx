@@ -1,12 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, FileUp, Sparkles, Shield, Scale, AlertTriangle, CheckCircle2, Lock, ChevronRight, Info } from "lucide-react";
+import { ArrowLeft, FileUp, Sparkles, Shield, Scale, AlertTriangle, CheckCircle2, Lock, ChevronRight, Info, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { getSupabaseBrowser } from "@/lib/supabase/browser";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 // Analysis categories
 const CATEGORIES = [
@@ -46,12 +49,47 @@ const EXAMPLE_RESULTS = {
 };
 
 export default function AnalysisPage() {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+
+  // Supabase auth state listener
+  useEffect(() => {
+    const supabase = getSupabaseBrowser();
+    if (!supabase) return;
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    const supabase = getSupabaseBrowser();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    setUser(null);
+    setUserMenuOpen(false);
+    router.push("/");
+    router.refresh();
+  };
+
+  const getUserDisplayName = () => {
+    if (!user) return "";
+    return user.user_metadata?.full_name || user.email?.split("@")[0] || "Kullanıcı";
+  };
 
   const handleAnalyze = useCallback(async () => {
     if (!query.trim() || !category) return;
@@ -92,10 +130,39 @@ export default function AnalysisPage() {
             <span className="font-semibold">Ana Sayfa</span>
           </Link>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-slate-500">Ücretsiz Analiz</span>
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/giris">Giriş Yap</Link>
-            </Button>
+            {user ? (
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setUserMenuOpen((v) => !v)}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+                >
+                  <User className="w-4 h-4 text-slate-600" />
+                  <span className="text-sm font-semibold text-slate-700">
+                    {getUserDisplayName()}
+                  </span>
+                </button>
+                {userMenuOpen && (
+                  <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10">
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Çıkış Yap
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <span className="text-sm text-slate-500">Ücretsiz Analiz</span>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href="/giris">Giriş Yap</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </header>
