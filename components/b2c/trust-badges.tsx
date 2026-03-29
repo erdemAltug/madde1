@@ -23,10 +23,7 @@ const COMPACT_ITEMS = [
     icon: Scale,
     text: "Bilgilendirme amaçlıdır; hukuki danışmanlık yerine geçmez",
   },
-  {
-    icon: CreditCard,
-    text: "Ödeme güvenli kanallarla — altyapı hazırlanıyor",
-  },
+  
 ];
 
 type Props = {

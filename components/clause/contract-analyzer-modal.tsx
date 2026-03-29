@@ -38,8 +38,7 @@ export function ContractAnalyzerModal({
           <DialogDescription className="text-sm font-medium leading-relaxed text-slate-600">
             Ücretsiz güven özeti ve risk görünümü; tam analiz ve düzeltme
             önerileri{" "}
-            <span className="font-semibold text-indigo-600">4,99 TL</span>{" "}
-            ile açılır. Bu araç hukuki danışmanlık sunmaz.
+. Bu araç hukuki danışmanlık sunmaz.
           </DialogDescription>
         </DialogHeader>
         <div className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain px-4 py-4 sm:px-6 sm:py-5">

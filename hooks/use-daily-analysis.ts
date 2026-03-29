@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getOrCreateDeviceId } from "@/lib/device-id";
 
 const DAILY_FREE_LIMIT = 3;
 const STORAGE_KEY = "clause-daily-analyses";
