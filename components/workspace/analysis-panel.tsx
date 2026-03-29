@@ -131,7 +131,7 @@ export function AnalysisPanel({
             className={cn(
               "relative min-h-[220px] rounded-xl border border-slate-200/80 bg-slate-50/40 shadow-inner transition-shadow duration-300",
               paywallPulse &&
-                "ring-2 ring-madde-blue/50 ring-offset-2 ring-offset-white",
+                "ring-2 ring-indigo-500/50 ring-offset-2 ring-offset-white",
             )}
           >
             <div
@@ -145,13 +145,13 @@ export function AnalysisPanel({
             </div>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-white from-30% via-white/92 to-transparent px-3 pb-6 pt-28">
               <div className="pointer-events-auto w-full max-w-md text-center">
-                <p className="text-base font-bold tracking-tight text-madde-ink">
+                <p className="text-base font-bold tracking-tight text-slate-900">
                   Bu risklerin detaylı çözümünü ve sizi koruyacak düzeltme
                   metnini görmek için kilidi açın.
                 </p>
                 <Button
                   type="button"
-                  className="mt-4 h-12 w-full bg-madde-blue text-base font-bold text-white shadow-lg shadow-madde-blue/25 hover:bg-madde-blue-deep sm:w-auto sm:px-8"
+                  className="mt-4 h-12 w-full bg-indigo-600 text-base font-bold text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-700 sm:w-auto sm:px-8"
                   onClick={() => onRequestUnlock?.()}
                   disabled={unlockBusy || busy}
                 >

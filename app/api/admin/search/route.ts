@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
     console.log("legal_knowledge sonuc:", legalKnowledge?.length || 0);
 
     // Prepare context from results
-    const lawArticlesContext = (lawArticles || []).map((item: any) => ({
+    const lawArticlesContext = (lawArticles || []).map((item: { id: string; content: string; metadata?: Record<string, unknown>; source?: string; category?: string; similarity: number }) => ({
       type: "kanun_maddesi",
       id: item.id,
       content: item.content,
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
       similarity: item.similarity,
     }));
 
-    const legalKnowledgeContext = (legalKnowledge || []).map((item: any) => {
+    const legalKnowledgeContext = (legalKnowledge || []).map((item: { id: string; full_content?: string; content?: string; metadata?: Record<string, unknown>; category?: string; similarity: number }) => {
       const content = item.full_content || item.content || "";
       return {
         type: "emsal_karar",
@@ -144,8 +144,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate AI report using OpenAI
-    const contextText = context.map((c: any) => {
-      const header = c.type === "kanun_maddesi" 
+    const contextText = context.map((c: { type: string; category?: string; content: string; metadata?: { soru?: string; cevap?: string } }) => {
+      const header = c.type === "kanun_maddesi"
         ? `[KANUN MADDESİ - ${c.category || 'hukuk'}]`
         : `[EMSAL KARAR - ${c.category || 'hukuk'}]`;
       

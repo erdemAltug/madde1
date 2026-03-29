@@ -10,7 +10,7 @@ export const SITE_NAME = "Clause";
 export const SITE_HOST = SITE_URL.replace(/^https?:\/\//, "");
 
 export const SITE_TAGLINE =
-  "Türkiye'de yapay zeka destekli sözleşme analizi, risk taraması ve taslak üretimi";
+  "Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı";
 
 export function absoluteUrl(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
@@ -19,29 +19,30 @@ export function absoluteUrl(path: string): string {
 
 export const defaultHomeMetadata: Metadata = {
   title:
-    "Sözleşme analizi ve kira sözleşmesi riskleri — ücretsiz AI ön tarama | Clause",
+    "Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı | Clause - Sözleşme Analizi AI",
   description:
-    "Sözleşme analizi, kira sözleşmesi riskleri ve legal AI assistant ile TBK odaklı ön inceleme. Ücretsiz güven skoru; detaylı rapor Clause ile. İş ve ticari sözleşmeler.",
+    "Yapay zeka hukuk asistanı ile sözleşme analizi, Yargıtay emsal sorgulama, TBK danışmanlık. Ücretsiz sözleşme risk taraması ve hukuki öneriler. Kira, iş ve ticari sözleşmeler için AI destekli analiz.",
   keywords: [
-    "sözleşme analizi",
-    "kira sözleşmesi riskleri",
-    "legal AI assistant",
-    "yapay zeka sözleşme analizi",
-    "AI hukuk asistanı Türkiye",
-    "sözleşme üretimi yapay zeka",
-    "kira sözleşmesi kontrolü",
-    "iş sözleşmesi fesih maddesi",
-    "sözleşme risk analizi",
+    "yapay zeka hukuk asistanı",
+    "ücretsiz hukuki analiz",
+    "sözleşme analizi AI",
+    "yargıtay emsal sorgulama",
+    "tbk danışmanlık",
+    "kira sözleşmesi analizi",
+    "sözleşme risk taraması",
+    "hukuki yapay zeka türkiye",
+    "yapay zeka avukat",
+    "sözleşme kontrolü",
     "Clause AI",
-    "TBK sözleşme inceleme",
+    "ücretsiz sözleşme analizi",
   ],
   alternates: {
     canonical: absoluteUrl("/"),
   },
   openGraph: {
-    title: `${SITE_NAME} — ${SITE_TAGLINE}`,
+    title: `${SITE_NAME} — Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı`,
     description:
-      "Ücretsiz güven skoru ve özet; şirketler için sözleşme ön kontrolü ve risk taraması.",
+      "Yapay zeka ile sözleşme analizi, Yargıtay içtihatları ve hukuki danışmanlık. Ücretsiz risk taraması.",
     url: absoluteUrl("/"),
     siteName: SITE_NAME,
     locale: "tr_TR",
@@ -51,15 +52,15 @@ export const defaultHomeMetadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} — sözleşme analizi ve legal AI assistant`,
+        alt: `${SITE_NAME} — Yapay Zeka Hukuk Asistanı`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — sözleşme analizi & kira riskleri`,
+    title: `${SITE_NAME} — Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı`,
     description:
-      "Legal AI assistant: kira, iş ve freelance sözleşmelerinde hukuki risk ön taraması.",
+      "AI hukuk asistanı ile sözleşme analizi, Yargıtay emsal ve TBK danışmanlık.",
     images: ["/opengraph-image"],
   },
 };

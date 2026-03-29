@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { getSupabaseBrowser } from "@/lib/supabase/browser";
 import { useRouter } from "next/navigation";
-import { Search, FileText, Library, History, LogOut, ChevronRight, Sparkles, Download, PenLine, Scale, Upload, X, File, AlertCircle, CheckCircle2, BookOpen, FileSignature, Send, Crown } from "lucide-react";
+import { Search, Library, History, LogOut, ChevronRight, Sparkles, Download, PenLine, Scale, Upload, X, File, AlertCircle, CheckCircle2, BookOpen, FileSignature, Crown } from "lucide-react";
 
 interface ContextItem {
   id: string;
@@ -29,6 +29,10 @@ interface HistoryItem {
   query: string;
   report: string;
   created_at: string;
+}
+
+interface UserProfile {
+  email?: string;
 }
 
 type TabType = "analysis" | "petition" | "library" | "history";
@@ -142,12 +146,12 @@ export default function AdminDashboard() {
   const [context, setContext] = useState<ContextItem[]>([]);
   const [petitionText, setPetitionText] = useState<string>("");
   const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState("");
-  const [modalTitle, setModalTitle] = useState("");
   const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, _setModalTitle] = useState("");
+  const [modalContent, _setModalContent] = useState("");
   const router = useRouter();
   const supabase = getSupabaseBrowser();
   const loadingIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -181,17 +185,19 @@ export default function AdminDashboard() {
     }
   };
 
-  const saveToHistory = (query: string, report: string) => {
+  const saveToHistory = useCallback((query: string, report: string) => {
     const newItem: HistoryItem = {
       id: Date.now().toString(),
       query,
       report,
       created_at: new Date().toISOString(),
     };
-    const updated = [newItem, ...history].slice(0, 50);
-    setHistory(updated);
-    localStorage.setItem("legal_history", JSON.stringify(updated));
-  };
+    setHistory((prev) => {
+      const updated = [newItem, ...prev].slice(0, 50);
+      localStorage.setItem("legal_history", JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -201,21 +207,19 @@ export default function AdminDashboard() {
     };
   }, []);
 
-  const startLoadingAnimation = (hasFile: boolean) => {
+  const startLoadingAnimation = useCallback((hasFile: boolean) => {
     setLoadingSteps(hasFile ? LOADING_STEPS_WITH_FILE : LOADING_STEPS);
     setLoadingStep(0);
-    let step = 0;
     if (loadingIntervalRef.current) {
       clearInterval(loadingIntervalRef.current);
     }
     loadingIntervalRef.current = setInterval(() => {
-      step++;
-      if (step >= loadingSteps.length) {
-        step = loadingSteps.length - 1;
-      }
-      setLoadingStep(step);
+      setLoadingStep((prev) => {
+        const maxStep = (hasFile ? LOADING_STEPS_WITH_FILE : LOADING_STEPS).length - 1;
+        return Math.min(prev + 1, maxStep);
+      });
     }, 1500);
-  };
+  }, []);
 
   const stopLoadingAnimation = () => {
     if (loadingIntervalRef.current) {
@@ -257,7 +261,7 @@ export default function AdminDashboard() {
         } else {
           setUploadedFile({ name: data.fileName, size: data.fileSize, content: data.content });
         }
-      } catch (err) {
+      } catch {
         alert("Dosya yüklenirken hata oluştu");
       }
     }
@@ -295,7 +299,7 @@ export default function AdminDashboard() {
       if (data.context) setContext(data.context);
     } catch (err) { alert("Arama hatası: " + (err as Error).message); }
     finally { setLoading(false); stopLoadingAnimation(); }
-  }, [query, uploadedFile]);
+  }, [query, uploadedFile, saveToHistory, startLoadingAnimation]);
 
   const generatePetition = useCallback(async () => {
     if (!report) { alert("Önce bir analiz yapın!"); return; }
@@ -318,10 +322,9 @@ export default function AdminDashboard() {
       setActiveTab("petition");
     } catch (err) { alert("Dilekçe oluşturma hatası: " + (err as Error).message); }
     finally { setLoading(false); stopLoadingAnimation(); }
-  }, [query, report, context, uploadedFile]);
+  }, [query, report, context, uploadedFile, startLoadingAnimation]);
 
   const handleLogout = async () => { if (supabase) await supabase.auth.signOut(); router.push("/admin/login"); };
-  const openModal = (title: string, content: string) => { setModalTitle(title); setModalContent(content); setShowModal(true); };
   const loadFromHistory = (item: HistoryItem) => { setQuery(item.query); setReport(item.report); setActiveTab("analysis"); };
   
   const downloadPDF = () => {

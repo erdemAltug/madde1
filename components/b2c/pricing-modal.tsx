@@ -20,7 +20,7 @@ import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 
-const ORDER: CreditPackageId[] = ["single", "monthly"];
+const ORDER: CreditPackageId[] = ["starter", "pro", "business"];
 
 type Props = {
   open: boolean;
@@ -44,8 +44,8 @@ export function PricingModal({
   purchase,
   title = "Paket seçin",
   description = "Ödeme adımı şimdilik atlanır; seçtiğiniz paket hesabınıza hemen tanımlanır.",
-  emphasize = "single",
-  footerNote = "4,99 TL — tek tam analiz erişimi.",
+  emphasize = "pro",
+  footerNote = "50 token ile detaylı analiz ve iyileştirme.",
   showFairUseDisclaimer = true,
 }: Props) {
   const [busy, setBusy] = React.useState<CreditPackageId | null>(null);
@@ -74,13 +74,19 @@ export function PricingModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] overflow-y-auto border-white/30 bg-white/92 shadow-2xl shadow-slate-900/15 backdrop-blur-2xl sm:max-w-lg">
+      <DialogContent className="max-h-[92vh] overflow-y-auto border-slate-200/60 bg-white shadow-2xl shadow-slate-900/15 sm:max-w-lg relative">
+        {/* Mesh Gradient Background */}
+        <div className="absolute inset-0 -z-10 overflow-hidden rounded-inherit">
+          <div className="absolute -top-20 -left-20 w-60 h-60 bg-indigo-500/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-violet-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl" />
+        </div>
         <DialogHeader>
           <ClauseLogo className="mb-3" size={40} />
-          <DialogTitle className="text-xl font-bold tracking-tight text-madde-ink">
+          <DialogTitle className="text-xl font-bold tracking-tight text-deep-navy">
             {title}
           </DialogTitle>
-          <DialogDescription className="text-sm text-slate-600">
+          <DialogDescription className="text-sm text-slate-600 font-medium">
             {description}
           </DialogDescription>
         </DialogHeader>
@@ -88,49 +94,60 @@ export function PricingModal({
           {ORDER.map((id) => {
             const p = CREDIT_PACKAGES[id];
             const em = emphasize === id;
-            const isSingle = id === "single";
+            const isPro = id === "pro";
+            const isBusiness = id === "business";
             return (
               <div
                 key={id}
                 className={cn(
-                  "rounded-xl border p-4 transition-shadow",
-                  isSingle
+                  "rounded-xl border p-4 transition-shadow soft-elevation",
+                  isBusiness
+                    ? "bg-slate-900 border-slate-800"
+                    : isPro
                     ? cn(
-                        "bg-gradient-to-br from-[#0066FF]/12 via-white to-sky-50/90",
+                        "bg-gradient-to-br from-indigo-50 via-white to-sky-50",
                         em
-                          ? "border-[#0066FF] shadow-lg shadow-[#0066FF]/25 ring-2 ring-[#0066FF]/35"
-                          : "border-[#0066FF]/40",
+                          ? "border-indigo-300 shadow-lg shadow-indigo-200/30 ring-2 ring-indigo-200/30"
+                          : "border-indigo-200/60",
                       )
                     : em
-                      ? "border-madde-blue bg-madde-blue/[0.07] shadow-md shadow-madde-blue/10"
-                      : "border-slate-200 bg-slate-50/50",
+                    ? "border-indigo-200 bg-indigo-50/50 shadow-md"
+                    : "border-slate-200 bg-slate-50/50",
                 )}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="font-bold text-slate-900">{p.label}</p>
-                      {isSingle ? (
-                        <span className="inline-flex items-center gap-0.5 rounded-full bg-[#0066FF] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                      <p className={cn("font-bold", isBusiness ? "text-white" : "text-deep-navy")}>{p.label}</p>
+                      {isPro ? (
+                        <span className="inline-flex items-center gap-0.5 rounded-full bg-indigo-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
                           <Sparkles className="h-3 w-3" aria-hidden />
-                          En popüler
+                          AVUKATLARIN TERCİHİ
                         </span>
                       ) : null}
                     </div>
                     <p
                       className={cn(
                         "text-2xl font-extrabold",
-                        isSingle ? "text-[#0066FF]" : "text-madde-blue",
+                        isBusiness ? "text-white" : "text-indigo-600",
                       )}
                     >
                       {p.priceLabel}
-                      {isSingle ? (
-                        <span className="ml-1.5 text-sm font-bold text-slate-700">
-                          / tek seferlik
+                      {!isBusiness && !p.unlimitedDays ? (
+                        <span className="ml-1.5 text-sm font-bold text-slate-600">
+                          /ay
+                        </span>
+                      ) : null}
+                      {p.unlimitedDays ? (
+                        <span className="ml-1.5 text-sm font-bold text-slate-500">
+                          /ay
                         </span>
                       ) : null}
                     </p>
-                    <p className="mt-1 max-w-[260px] text-xs font-medium leading-snug text-slate-600">
+                    <p className={cn(
+                      "mt-1 max-w-[260px] text-xs font-medium leading-snug",
+                      isBusiness ? "text-slate-400" : "text-slate-600"
+                    )}>
                       {p.blurb}
                     </p>
                   </div>
@@ -138,14 +155,12 @@ export function PricingModal({
                     type="button"
                     size="sm"
                     className={cn(
-                      "min-h-11 shrink-0 px-4 font-bold text-white",
-                      isSingle && "bg-[#0066FF] hover:bg-[#0052CC]",
-                      !isSingle &&
-                        em &&
-                        "bg-madde-blue hover:bg-madde-blue-deep",
-                      !isSingle &&
-                        !em &&
-                        "bg-slate-800 hover:bg-slate-900",
+                      "min-h-11 shrink-0 px-4 font-bold",
+                      isBusiness
+                        ? "bg-slate-700 text-white hover:bg-slate-600"
+                        : isPro
+                        ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                        : "bg-slate-800 text-white hover:bg-slate-900",
                     )}
                     disabled={busy !== null}
                     onClick={() => void run(id)}
@@ -155,7 +170,7 @@ export function PricingModal({
                     ) : (
                       <>
                         <Check className="mr-1.5 h-4 w-4" />
-                        Satın al
+                        {isBusiness ? "İletişime Geç" : "Satın al"}
                       </>
                     )}
                   </Button>
@@ -165,11 +180,11 @@ export function PricingModal({
           })}
         </div>
         {showFairUseDisclaimer ? (
-          <p className="rounded-lg border border-slate-200/80 bg-slate-50/80 px-3 py-2 text-center text-[11px] leading-relaxed text-slate-600">
+          <p className="rounded-lg border border-slate-200/60 bg-slate-50 px-3 py-2 text-center text-[11px] leading-relaxed text-slate-600 font-medium">
             {FAIR_USE_DISCLAIMER}
           </p>
         ) : null}
-        <p className="text-center text-[11px] text-slate-500">{footerNote}</p>
+        <p className="text-center text-[11px] text-slate-500 font-medium">{footerNote}</p>
       </DialogContent>
     </Dialog>
   );

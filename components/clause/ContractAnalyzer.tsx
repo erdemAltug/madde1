@@ -15,10 +15,12 @@ import { cn } from "@/lib/utils";
 import type { PersonaId } from "@/lib/personas";
 import { PersonaPicker } from "@/components/b2c/persona-picker";
 import { TrustBadges } from "@/components/b2c/trust-badges";
-import { PricingModal } from "@/components/b2c/pricing-modal";
+// MVP: Ödeme askıya alındı
+// import { PricingModal } from "@/components/b2c/pricing-modal";
 import { WorkspaceModeTabs, type WorkspaceMode } from "@/components/b2c/workspace-mode-tabs";
 import { ContractGenerator } from "@/components/b2c/contract-generator";
-import { useWallet } from "@/hooks/use-wallet";
+// import { useWallet } from "@/hooks/use-wallet";
+import { useDailyAnalysis } from "@/hooks/use-daily-analysis";
 import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
@@ -43,10 +45,8 @@ export function ContractAnalyzer({
   const [teaser, setTeaser] = React.useState<TeaserData | null>(null);
   const [teaserLoading, setTeaserLoading] = React.useState(false);
   const [detailUnlocked, setDetailUnlocked] = React.useState(false);
-  const [pricingOpen, setPricingOpen] = React.useState(false);
-  const [pricingImproveOpen, setPricingImproveOpen] = React.useState(false);
-  const [unlockBusy, setUnlockBusy] = React.useState(false);
-  const [improveBusy, setImproveBusy] = React.useState(false);
+  const [unlockBusy, _setUnlockBusy] = React.useState(false);
+  const [improveBusy, _setImproveBusy] = React.useState(false);
   const [contract, setContract] = React.useState("");
   const [maskNotice, setMaskNotice] = React.useState<string | null>(null);
 
@@ -56,7 +56,9 @@ export function ContractAnalyzer({
     personaRef.current = persona ?? "general";
   }, [persona]);
 
-  const wallet = useWallet();
+  // MVP: Günlük ücretsiz analiz sistemi
+  const dailyAnalysis = useDailyAnalysis();
+  // const wallet = useWallet(); // MVP: Askıya alındı
 
   const flashMaskNotice = React.useCallback((message: string) => {
     setMaskNotice(message);
@@ -101,6 +103,12 @@ export function ContractAnalyzer({
     const t = contract.trim();
     if (!t) return;
     if (enablePaywall && !persona) return;
+    
+    // MVP: Günlük limit kontrolü
+    if (!dailyAnalysis.canAnalyze()) {
+      alert("Ücretsiz beta kullanım limitiniz doldu. Geri bildirim vermek veya daha fazla kredi için bizimle iletişime geçin.");
+      return;
+    }
 
     const { text: safeText, replacementCount } = maskSensitiveText(t);
     if (replacementCount > 0) {
@@ -158,43 +166,43 @@ export function ContractAnalyzer({
       }
     }
 
+    // Analizi tüket
+    dailyAnalysis.consumeAnalysis();
+    
     window.setTimeout(() => {
       phaseRef.current = "analysis";
       void sendMessage({ text: safeText });
     }, 0);
   };
 
+  // MVP: İyileştirme - ücretsiz (günlük limit dahilinde)
   const runImprove = async () => {
     if (!analysisMd.trim()) return;
     if (enablePaywall && !detailUnlocked) return;
     if (assistantTexts.length >= 2) return;
 
+    // MVP: Günlük limit kontrolü
+    if (!dailyAnalysis.canAnalyze()) {
+      alert("Ücretsiz beta kullanım limitiniz doldu. Geri bildirim vermek veya daha fazla kredi için bizimle iletişime geçin.");
+      return;
+    }
+
     if (!enablePaywall) {
+      dailyAnalysis.consumeAnalysis();
       phaseRef.current = "refactor";
       void sendMessage({ text: IMPROVE_FOLLOWUP_USER_MESSAGE });
       return;
     }
 
-    setImproveBusy(true);
-    try {
-      if (wallet.hasUnlimited() || wallet.credits > 0) {
-        const ok = await wallet.consume();
-        if (!ok) return;
-        phaseRef.current = "refactor";
-        void sendMessage({ text: IMPROVE_FOLLOWUP_USER_MESSAGE });
-        return;
-      }
-      captureEvent(AnalyticsEvents.PAYMENT_INITIATED, {
-        funnel_step: "open_checkout_modal",
-        source: "workspace_improve",
-        intent: "monthly_or_single",
-      });
-      setPricingImproveOpen(true);
-    } finally {
-      setImproveBusy(false);
-    }
+    // MVP: Günlük limiti kullan
+    dailyAnalysis.consumeAnalysis();
+    setDetailUnlocked(true);
+    phaseRef.current = "refactor";
+    void sendMessage({ text: IMPROVE_FOLLOWUP_USER_MESSAGE });
   };
 
+  // MVP: Unlock askıya alındı
+  /*
   const handleUnlock = async () => {
     if (!enablePaywall) {
       setDetailUnlocked(true);
@@ -217,7 +225,20 @@ export function ContractAnalyzer({
       setUnlockBusy(false);
     }
   };
+  */
 
+  const handleUnlock = async () => {
+    // MVP: Ücretsiz - direkt aç
+    if (!dailyAnalysis.canAnalyze()) {
+      alert("Ücretsiz beta kullanım limitiniz doldu. Geri bildirim vermek veya daha fazla kredi için bizimle iletişime geçin.");
+      return;
+    }
+    dailyAnalysis.consumeAnalysis();
+    setDetailUnlocked(true);
+  };
+
+  // MVP: Purchase fonksiyonları askıya alındı
+  /*
   const afterPurchaseUnlock = async () => {
     const ok = await wallet.consume();
     if (ok) setDetailUnlocked(true);
@@ -229,6 +250,7 @@ export function ContractAnalyzer({
     phaseRef.current = "refactor";
     void sendMessage({ text: IMPROVE_FOLLOWUP_USER_MESSAGE });
   };
+  */
 
   const improveDisabled =
     busy ||
@@ -237,8 +259,9 @@ export function ContractAnalyzer({
     (enablePaywall && !detailUnlocked) ||
     assistantTexts.length >= 2;
 
-  const showImprove =
-    !enablePaywall || (wallet.ready && wallet.hasCompletedPurchase);
+  // MVP: Her zaman göster (ücretsiz)
+  const showImprove = true;
+  // const showImprove = !enablePaywall || (wallet.ready && wallet.hasCompletedPurchase);
 
   return (
     <div className={cn("space-y-6", className)}>
@@ -249,7 +272,7 @@ export function ContractAnalyzer({
       />
 
       {mode === "create" ? (
-        <ContractGenerator wallet={wallet} compact={compact} />
+        <ContractGenerator compact={compact} />
       ) : (
         <>
           {maskNotice ? (
@@ -297,16 +320,23 @@ export function ContractAnalyzer({
                 }}
               />
               <div className="flex flex-wrap items-center gap-3">
-                <ShinyAnalyzeButton
-                  loading={busy}
-                  disabled={
-                    !contract.trim() ||
-                    (enablePaywall ? !persona : false)
-                  }
-                  onClick={() => void runAnalysis()}
-                >
-                  Ücretsiz risk taraması başlat
-                </ShinyAnalyzeButton>
+                <div className="flex flex-col gap-1">
+                  <ShinyAnalyzeButton
+                    loading={busy}
+                    disabled={
+                      !contract.trim() ||
+                      (enablePaywall ? !persona : false)
+                    }
+                    onClick={() => void runAnalysis()}
+                  >
+                    Ücretsiz risk taraması başlat
+                  </ShinyAnalyzeButton>
+                  <p className="text-[11px] text-slate-500 font-medium">
+                    {enablePaywall
+                      ? `Günlük ${dailyAnalysis.limit} ücretsiz analiz hakkınız var — kalan: ${dailyAnalysis.remaining}`
+                      : "Tam analiz başlatılıyor..."}
+                  </p>
+                </div>
                 {showImprove ? (
                   <Button
                     type="button"
@@ -337,11 +367,7 @@ export function ContractAnalyzer({
               analysisMd &&
               !refactorMd ? (
                 <p className="text-[11px] leading-relaxed text-slate-600">
-                  Sözleşmeyi iyileştir: ek{" "}
-                  <span className="font-semibold text-madde-blue">
-                    1 kredi (4,99 TL)
-                  </span>{" "}
-                  veya aylık plan — bakiyen yoksa ödeme adımına yönlendirilirsin.
+                  Sözleşmeyi iyileştir: ücretsiz (günlük limit dahilinde)
                 </p>
               ) : null}
             </div>
@@ -373,13 +399,15 @@ export function ContractAnalyzer({
         </>
       )}
 
+      {/* MVP: Ödeme askıya alındı - PricingModal kaldırıldı */}
+      {/*
       <PricingModal
         open={pricingOpen}
         onOpenChange={setPricingOpen}
         purchase={wallet.purchase}
-        emphasize="single"
-        title="Detayı aç — 4,99 TL"
-        description="Bu risklerin çözümünü ve koruyucu düzeltme metnini görmek için tek seferlik erişim. Ödeme adımı atlanır; haklarınız hemen tanımlanır."
+        emphasize="pro"
+        title="Detayı aç — 149,99 TL/Ay"
+        description="50 token ile detaylı mevzuat analizi, AI mütalaası ve dilekçe taslakları. Ödeme adımı atlanır; haklarınız hemen tanımlanır."
         onPurchaseComplete={async () => {
           await afterPurchaseUnlock();
         }}
@@ -389,14 +417,15 @@ export function ContractAnalyzer({
         open={pricingImproveOpen}
         onOpenChange={setPricingImproveOpen}
         purchase={wallet.purchase}
-        emphasize="monthly"
-        title="Sözleşmeyi iyileştir"
-        description="Profesyonel, sade nihai metin için ek erişim veya aylık plan. Seçtiğiniz paket hesabınıza hemen yansır."
-        footerNote="İyileştirme 1 kredi kullanır. Aylık Standart’ta dönem içi sınırsız tur; adil kullanım geçerlidir."
+        emphasize="pro"
+        title="Sözleşmeyi iyileştir — 149,99 TL/Ay"
+        description="50 token ile sınırsız kullanım. Profesyonel, sade nihai metin için aylık plan seçin."
+        footerNote="İyileştirme 3 token kullanır. Profesyonel planda dönem içi sınırsız tur; adil kullanım geçerlidir."
         onPurchaseComplete={async () => {
           await afterPurchaseImprove();
         }}
       />
+      */}
     </div>
   );
 }

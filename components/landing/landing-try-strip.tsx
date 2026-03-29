@@ -3,8 +3,6 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, FileText, Scale, CheckCircle, Lock, Search, Loader2 } from "lucide-react";
-import { captureEvent } from "@/lib/analytics/capture";
-import { AnalyticsEvents } from "@/lib/analytics/events";
 import { Button } from "@/components/ui/button";
 
 type Props = {
@@ -44,7 +42,7 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
       const data = await response.json();
       
       if (data.context && data.context.length > 0) {
-        const freeResults: SearchResult[] = data.context.slice(0, 2).map((item: any, index: number) => ({
+        const freeResults: SearchResult[] = data.context.slice(0, 2).map((item: { id?: string; type: string; category?: string; content?: string; similarity?: number }, index: number) => ({
           id: item.id || index.toString(),
           type: item.type === "kanun_maddesi" ? "kanun" : "emsal",
           title: item.category || (item.type === "kanun_maddesi" ? "Kanun Maddesi" : "Emsal Karar"),
@@ -65,7 +63,7 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
   return (
     <section
       id="dene"
-      className="border-y border-slate-200/60 bg-white py-16"
+      className="border-y border-slate-200/60 bg-white/60 backdrop-blur-sm py-16"
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -93,24 +91,24 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="soft-elevation rounded-2xl overflow-hidden"
+          className="glass-panel rounded-2xl overflow-hidden"
         >
           {/* Input Area */}
           <div className="p-6">
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 align-items-center">
               <div className="flex-1">
                 <textarea
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter" && e.ctrlKey) handleAnalyze(); }}
                   placeholder="Örn: Kiracıyım, ev sahibim beni çıkarıyor. Hangi haklarım var?"
-                  className="w-full min-h-[100px] p-4 text-sm bg-slate-50 border border-slate-200 rounded-xl inset-shadow focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 resize-none placeholder:text-slate-400"
+                  className="w-full min-h-[100px] p-4 text-sm bg-slate-50/80 border border-slate-200/60 rounded-xl inset-shadow focus-ring-indigo resize-none placeholder:text-slate-400 placeholder:font-medium"
                 />
               </div>
               <Button
                 onClick={handleAnalyze}
                 disabled={isLoading || !query.trim()}
-                className="sm:w-auto w-full px-8 py-3 bg-[#1E293B] hover:bg-[#0F172A] hover:-translate-y-0.5 shadow-lg shadow-slate-900/20 rounded-xl font-semibold text-sm"
+                className="sm:w-auto w-full px-8 py-3 btn-gradient-primary rounded-xl font-semibold text-sm hover:-translate-y-0.5"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
@@ -140,21 +138,21 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                   {/* Free Results */}
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
                       İlgili Kanun Maddeleri ve Emsal Kararlar
                     </div>
                     
                     {results.map((result) => (
                       <div
                         key={result.id}
-                        className="p-4 bg-slate-50 rounded-xl border border-slate-200/60"
+                        className="p-4 bg-slate-50/80 rounded-xl border border-slate-200/60"
                       >
                         <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-lg ${result.type === 'kanun' ? 'bg-indigo-100' : 'bg-amber-100'}`}>
+                          <div className={`p-2 rounded-lg ${result.type === 'kanun' ? 'bg-indigo-100' : 'bg-orange-100'}`}>
                             {result.type === 'kanun' ? (
                               <FileText className="w-4 h-4 text-indigo-600" />
                             ) : (
-                              <Scale className="w-4 h-4 text-amber-600" />
+                              <Scale className="w-4 h-4 text-orange-600" />
                             )}
                           </div>
                           <div className="flex-1">
@@ -162,7 +160,7 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                               <span className="text-xs font-semibold text-slate-500">
                                 {result.type === 'kanun' ? 'Kanun Maddesi' : 'Emsal Karar'}
                               </span>
-                              <span className="text-xs px-1.5 py-0.5 bg-slate-200 rounded text-slate-600 font-medium">
+                              <span className="text-xs px-1.5 py-0.5 bg-emerald-100 rounded text-emerald-700 font-semibold">
                                 %{Math.round(result.similarity * 100)}
                               </span>
                             </div>
@@ -192,7 +190,7 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                         </div>
                         <Button
                           onClick={onOpenAnalyzer}
-                          className="mt-4 px-8 py-3 bg-[#1E293B] hover:bg-[#0F172A] rounded-xl font-semibold shadow-lg shadow-indigo-500/20"
+                          className="mt-4 px-8 py-3 btn-gradient-primary rounded-xl font-semibold shadow-lg shadow-indigo-600/20"
                         >
                           <Sparkles className="w-4 h-4 mr-2" />
                           Hukuki Mütalaayı ve Önerileri Gör
@@ -213,15 +211,15 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
         {/* Trust Badges */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500">
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-emerald-600" />
+            <CheckCircle className="w-4 h-4 text-emerald-500" />
             <span className="font-medium">10.000+ Kanun Maddesi</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-emerald-600" />
+            <CheckCircle className="w-4 h-4 text-emerald-500" />
             <span className="font-medium">Yargıtay İçtihatları</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-emerald-600" />
+            <CheckCircle className="w-4 h-4 text-emerald-500" />
             <span className="font-medium">KVKK Uyumlu</span>
           </div>
         </div>

@@ -11,32 +11,43 @@ type Props = {
 
 export function PersonaPicker({ value, onChange, disabled }: Props) {
   return (
-    <div className="space-y-2">
-      <p className="text-sm font-semibold text-slate-900">Kimsin?</p>
-      <p className="text-xs text-slate-600">
-        Analizi senin durumuna göre kişiselleştirelim — ağır hukuk dili yok.
+    <div className="space-y-3">
+      <p className="text-lg font-semibold text-slate-700">
+        Analizi Senin İçin Özelleştirelim (Kimsin?)
       </p>
-      <div className="grid gap-2 sm:grid-cols-2">
-        {PERSONAS.map((p) => (
-          <button
-            key={p.id}
-            type="button"
-            disabled={disabled}
-            onClick={() => onChange(p.id)}
-            className={cn(
-              "rounded-lg border px-3 py-2.5 text-left text-sm transition-colors",
-              value === p.id
-                ? "border-madde-blue bg-madde-blue/[0.06] text-slate-900 ring-1 ring-madde-blue"
-                : "border-slate-200 bg-white text-slate-800 hover:border-slate-300",
-              disabled && "pointer-events-none opacity-50",
-            )}
-          >
-            <span className="font-semibold">{p.label}</span>
-            <span className="mt-0.5 block text-xs font-normal text-slate-600">
-              {p.hint}
-            </span>
-          </button>
-        ))}
+      <div className="grid gap-3 sm:grid-cols-2">
+        {PERSONAS.map((p) => {
+          const Icon = p.icon;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              disabled={disabled}
+              onClick={() => onChange(p.id)}
+              className={cn(
+                "rounded-xl border px-4 py-3 text-left transition-all flex items-start gap-3",
+                value === p.id
+                  ? "border-indigo-600 ring-2 ring-indigo-100 bg-indigo-50"
+                  : "border-slate-100 bg-white hover:border-slate-300 hover:shadow-sm",
+                disabled && "pointer-events-none opacity-50",
+              )}
+            >
+              <div className={cn(
+                "shrink-0 p-2 rounded-lg",
+                value === p.id ? "bg-indigo-100" : "bg-slate-100"
+              )}>
+                <Icon className={cn(
+                  "w-5 h-5",
+                  value === p.id ? "text-indigo-600" : "text-slate-600"
+                )} />
+              </div>
+              <div>
+                <span className="font-semibold text-slate-900 block">{p.label}</span>
+                <span className="text-xs text-slate-500 font-medium">{p.hint}</span>
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

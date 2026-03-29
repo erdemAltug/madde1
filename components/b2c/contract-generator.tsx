@@ -9,10 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { StreamingMarkdown } from "@/components/analysis/streaming-markdown";
 import { cn } from "@/lib/utils";
 import type { ContractTemplateId } from "@/lib/prompts";
-import { PricingModal } from "@/components/b2c/pricing-modal";
-import { useWallet } from "@/hooks/use-wallet";
-import { captureEvent } from "@/lib/analytics/capture";
-import { AnalyticsEvents } from "@/lib/analytics/events";
+// MVP: Ödeme askıya alındı
+// import { PricingModal } from "@/components/b2c/pricing-modal";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
 
 const TEMPLATES: {
@@ -39,14 +37,11 @@ const TEMPLATES: {
 
 const STORAGE_PDF = "clause-generator-markdown";
 
-type WalletApi = ReturnType<typeof useWallet>;
-
 type Props = {
-  wallet: WalletApi;
   compact?: boolean;
 };
 
-export function ContractGenerator({ wallet, compact }: Props) {
+export function ContractGenerator({ compact }: Props) {
   const [step, setStep] = React.useState(0);
   const [template, setTemplate] = React.useState<ContractTemplateId | null>(
     null,
@@ -58,7 +53,6 @@ export function ContractGenerator({ wallet, compact }: Props) {
   const [specialClauses, setSpecialClauses] = React.useState("");
   const [md, setMd] = React.useState("");
   const [genBusy, setGenBusy] = React.useState(false);
-  const [pricingOpen, setPricingOpen] = React.useState(false);
 
   const generate = async () => {
     if (!template) return;
@@ -102,25 +96,7 @@ export function ContractGenerator({ wallet, compact }: Props) {
 
   const openPdf = async () => {
     if (!md.trim()) return;
-    if (wallet.hasUnlimited()) {
-      pushPrint();
-      return;
-    }
-    const ok = await wallet.consume();
-    if (ok) {
-      pushPrint();
-      return;
-    }
-    captureEvent(AnalyticsEvents.PAYMENT_INITIATED, {
-      funnel_step: "open_checkout_modal",
-      source: "contract_generator_pdf",
-    });
-    setPricingOpen(true);
-  };
-
-  const afterPurchase = async () => {
-    const ok = await wallet.consume();
-    if (ok) pushPrint();
+    pushPrint();
   };
 
   return (
@@ -271,15 +247,18 @@ export function ContractGenerator({ wallet, compact }: Props) {
         </div>
       ) : null}
 
+      {/* MVP: Ödeme askıya alındı - PDF indirme ücretsiz */}
+      {/*
       <PricingModal
         open={pricingOpen}
         onOpenChange={setPricingOpen}
-        purchase={wallet.purchase}
-        emphasize="single"
-        title="PDF için kredi al"
+        purchase={wallet?.purchase}
+        emphasize="starter"
+        title="PDF için token al"
         description="Ödeme adımı atlanır; paket tanımlandıktan sonra bir PDF indirimi kullanılır."
         onPurchaseComplete={() => afterPurchase()}
       />
+      */}
     </div>
   );
 }

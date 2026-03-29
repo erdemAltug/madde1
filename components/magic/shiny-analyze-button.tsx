@@ -20,13 +20,13 @@ export function ShinyAnalyzeButton({
       type="button"
       disabled={disabled || loading}
       className={cn(
-        "group relative inline-flex w-full items-center justify-center overflow-hidden rounded-lg px-6 py-3.5 text-base font-semibold text-white shadow-md shadow-blue-900/15 transition-transform active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 sm:w-auto",
+        "group relative inline-flex w-full items-center justify-center overflow-hidden rounded-lg px-6 py-3.5 text-base font-semibold text-white shadow-md shadow-indigo-900/15 transition-transform active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60 sm:w-auto",
         className,
       )}
       {...props}
     >
       <span
-        className="absolute inset-0 bg-gradient-to-r from-madde-blue via-[#1a7cff] to-madde-blue bg-[length:200%_auto] animate-shine"
+        className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 bg-[length:200%_auto] animate-shine"
         aria-hidden
       />
       <span
@@ -37,7 +37,7 @@ export function ShinyAnalyzeButton({
         }}
         aria-hidden
       />
-      <span className="pointer-events-none absolute -inset-1 rounded-lg bg-madde-blue/25 opacity-50 blur-md transition-opacity group-hover:opacity-80" />
+      <span className="pointer-events-none absolute -inset-1 rounded-lg bg-indigo-600/25 opacity-50 blur-md transition-opacity group-hover:opacity-80" />
       <span className="relative z-10 flex items-center gap-2">
         {loading ? (
           <Loader2 className="h-5 w-5 animate-spin" aria-hidden />

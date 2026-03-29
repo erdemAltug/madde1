@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { query, report, context, fileContent, fileName } = await request.json();
+    const { query, report, context, fileContent } = await request.json();
 
     if (!report) {
       return NextResponse.json(
@@ -21,8 +21,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Prepare context from legal knowledge
-    const contextText = context?.map((c: any) => {
-      const header = c.type === "kanun_maddesi" 
+    const contextText = context?.map((c: { type: string; category?: string; content: string; metadata?: { soru?: string; cevap?: string } }) => {
+      const header = c.type === "kanun_maddesi"
         ? `[KANUN MADDESİ - ${c.category || 'hukuk'}]`
         : `[EMSAL KARAR - ${c.category || 'hukuk'}]`;
       
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       return `${header}\n${c.content.substring(0, 2000)}${qa}`;
     }).join("\n\n---\n\n");
 
-    let fileContext = fileContent ? `\n\nYüklenen Belge İçeriği:\n${fileContent.substring(0, 5000)}` : "";
+    const fileContext = fileContent ? `\n\nYüklenen Belge İçeriği:\n${fileContent.substring(0, 5000)}` : "";
 
     const systemPrompt = `Sen uzman bir Türk hukukçususun. Verilen analiz, kanun maddeleri ve (varsa) kullanıcının yüklediği belgeye dayanarak resmi, profesyonel bir dava dilekçesi veya ihtarname taslağı oluştur.`;
 

@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const dbPassword = process.env.SUPABASE_DB_PASSWORD ||
@@ -51,14 +51,14 @@ export async function GET(request: NextRequest) {
     .not("full_content", "is", "null");
 
   // Alternative check: just get any row with embedding not null using filter
-  const { data: anyEmbedding, error: anyEmbedError } = await supabase
+  const { data: anyEmbedding } = await supabase
     .from("legal_knowledge")
     .select("id, embedding")
     .filter("embedding", "cs", "{}") // Attempt to filter for non-null array-like
     .limit(1);
 
   // Direct count approach
-  const { data: embedCheckData, error: embedCheckError } = await supabase.rpc(
+  const { error: embedCheckError } = await supabase.rpc(
     "check_embeddings_exist",
     {}
   );

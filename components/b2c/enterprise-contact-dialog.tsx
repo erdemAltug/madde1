@@ -39,41 +39,43 @@ export function EnterpriseContactDialog({ open, onOpenChange }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-white/30 bg-white/95 backdrop-blur-2xl sm:max-w-md">
+      <DialogContent className="border border-slate-200/60 bg-white sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-madde-ink">
+          <DialogTitle className="text-xl font-bold text-deep-navy">
             Bizimle iletişime geçin
           </DialogTitle>
-          <DialogDescription className="text-sm text-slate-600">
+          <DialogDescription className="text-sm text-slate-600 font-medium">
             Kurumsal çözümler için ekibimiz size dönüş yapsın. Formu doldurup
             WhatsApp veya e-posta ile gönderebilirsiniz.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-3 py-2">
           <div className="grid gap-1.5">
-            <Label htmlFor="ent-name">Ad / unvan</Label>
+            <Label htmlFor="ent-name" className="font-medium">Ad / unvan</Label>
             <Input
               id="ent-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Örn. ACME A.Ş."
+              className="font-medium"
             />
           </div>
           <div className="grid gap-1.5">
-            <Label htmlFor="ent-email">E-posta</Label>
+            <Label htmlFor="ent-email" className="font-medium">E-posta</Label>
             <Input
               id="ent-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="kurumsal@ornek.com"
+              className="font-medium"
             />
           </div>
           <div className="grid gap-1.5">
-            <Label htmlFor="ent-msg">Mesaj</Label>
+            <Label htmlFor="ent-msg" className="font-medium">Mesaj</Label>
             <textarea
               id="ent-msg"
-              className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[100px] w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              className="border border-slate-200/60 bg-slate-50 rounded-md px-3 py-2 text-sm font-medium min-h-[100px] focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Ekip büyüklüğü, entegrasyon ihtiyacı, tahmini hacim…"
@@ -84,7 +86,7 @@ export function EnterpriseContactDialog({ open, onOpenChange }: Props) {
           <Button
             type="button"
             variant="outline"
-            className="font-semibold"
+            className="font-semibold border-slate-300"
             asChild
           >
             <a
@@ -95,14 +97,14 @@ export function EnterpriseContactDialog({ open, onOpenChange }: Props) {
             </a>
           </Button>
           {wa ? (
-            <Button type="button" className="font-bold" asChild>
+            <Button type="button" className="font-bold btn-gradient-primary" asChild>
               <a href={wa} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-4 w-4" />
                 WhatsApp
               </a>
             </Button>
           ) : (
-            <p className="text-center text-[11px] text-slate-500 sm:text-right">
+            <p className="text-center text-[11px] text-slate-500 sm:text-right font-medium">
               WhatsApp için{" "}
               <code className="rounded bg-slate-100 px-1">
                 NEXT_PUBLIC_WHATSAPP_E164

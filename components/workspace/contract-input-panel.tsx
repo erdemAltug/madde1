@@ -45,14 +45,14 @@ export function ContractInputPanel({
   return (
     <motion.div
       layout
-      className="flex h-full min-h-0 flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
+      className="flex h-full min-h-0 flex-col gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
     >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <Label htmlFor="contract" className="text-base font-semibold text-slate-900">
             Sözleşme metni
           </Label>
-          <p className="mt-1 text-sm text-slate-600">
+          <p className="mt-1 text-sm text-slate-500 font-medium">
             Türkçe sözleşmenizi yapıştırın veya .txt dosyası sürükleyin.
           </p>
         </div>
@@ -81,8 +81,8 @@ export function ContractInputPanel({
 
       <div
         className={cn(
-          "relative flex min-h-0 flex-1 flex-col rounded-lg border-2 border-dashed transition-colors",
-          drag ? "border-primary/70 bg-primary/5" : "border-border",
+          "relative flex min-h-0 flex-1 rounded-lg border-2 border-dashed transition-colors",
+          drag ? "border-indigo-500/70 bg-indigo-50/50" : "border-slate-100",
         )}
         onDragOver={(e) => {
           e.preventDefault();
@@ -108,18 +108,18 @@ export function ContractInputPanel({
             if (n > 0) onSensitivePaste(n);
           }}
           disabled={disabled}
-          placeholder="Kira, hizmet veya diğer sözleşme metninizi buraya yapıştırın…"
+          placeholder="Kiracıyım, ev sahibim beni çıkarıyor. Hangi haklarım var?"
           className={
             compact
-              ? "min-h-[160px] flex-1 resize-none border-0 bg-transparent focus-visible:ring-0 sm:min-h-[220px]"
-              : "min-h-[220px] flex-1 resize-none border-0 bg-transparent focus-visible:ring-0 sm:min-h-[320px]"
+              ? "min-h-[180px] flex-1 resize-none border-0 bg-transparent text-sm placeholder:text-slate-400 focus-visible:ring-0"
+              : "min-h-[288px] flex-1 resize-none border-0 bg-transparent text-sm placeholder:text-slate-400 focus-visible:ring-0"
           }
         />
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={disabled}
-          className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-md border border-border bg-background/80 px-3 py-1.5 text-xs font-medium text-muted-foreground backdrop-blur hover:bg-secondary hover:text-secondary-foreground"
+          className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-slate-500 backdrop-blur hover:bg-slate-50 hover:text-slate-700"
         >
           <FileUp className="h-3.5 w-3.5" />
           Dosya yükle

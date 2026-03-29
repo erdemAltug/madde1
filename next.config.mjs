@@ -14,7 +14,9 @@ const nextConfig = {
   },
   
   // Disable sourcemaps in development for faster builds
-  devIndicators: false,
+  devIndicators: {
+    buildActivity: false,
+  },
   
   // Disable react strict mode in dev for faster performance
   reactStrictMode: true,
@@ -33,9 +35,6 @@ const nextConfig = {
   
   // Reduce bundle size by excluding source maps in production
   productionBrowserSourceMaps: false,
-  
-  // Disable build activity indicator
-  disableDotnet: true,
   
   async redirects() {
     return [

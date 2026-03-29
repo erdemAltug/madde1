@@ -15,8 +15,8 @@ const links = [
   { href: "/guvenlik", label: "Güvenlik" },
   { href: "/blog", label: "Blog" },
   { href: "/#ozellikler", label: "Özellikler" },
-  { href: "/#sik-riskler", label: "Sık riskler" },
-  { href: "/#fiyatlandirma", label: "Fiyatlandırma" },
+  { href: "/#sik-riskler", label: "Sözleşme Riskleri" },
+  // { href: "/#fiyatlandirma", label: "Fiyatlandırma" }, // MVP: Ödeme askıya alındı
   { href: "/#ucretsiz-araclar", label: "Ücretsiz araçlar" },
 ];
 
@@ -107,7 +107,20 @@ export function SiteNavbar() {
           </div>
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-3">
+          {/* MVP: Ödeme askıya alındı - Token gösterimi gizlendi */}
+          {/* {wallet.ready && (wallet.credits > 0 || wallet.hasUnlimited()) && (
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200/60">
+              <Coins className="w-4 h-4 text-amber-600" />
+              <span className="text-sm font-semibold text-amber-800">
+                {wallet.hasUnlimited() ? (
+                  <>Sınırsız Token</>
+                ) : (
+                  <>🪙 {wallet.credits} Token</>
+                )}
+              </span>
+            </div>
+          )} */}
           <Button
             variant="outline"
             size="sm"
