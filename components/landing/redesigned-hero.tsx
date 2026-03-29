@@ -120,7 +120,7 @@ export function RedesignedHero({ onOpenAnalyzer }: RedesignedHeroProps) {
                     Sorgu
                   </p>
                   <p className="text-sm text-slate-700 bg-slate-50 rounded-lg p-3 border border-slate-100">
-                    "Kiracı çıkarmak istiyorum, yasal süreç nedir?"
+                    &ldquo;Kiracı çıkarmak istiyorum, yasal süreç nedir?&rdquo;
                   </p>
                 </div>
 

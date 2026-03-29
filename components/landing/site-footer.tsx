@@ -71,7 +71,10 @@ export function SiteFooter() {
               </Link>
             </div>
             <div className="space-y-2">
-              <p className="font-bold text-deep-navy">Yasal</p>
+              <p className="font-bold text-deep-navy">İletişim</p>
+              <a href="mailto:tryclauseai@gmail.com" className="block text-slate-600 font-medium hover:text-deep-navy">
+                tryclauseai@gmail.com
+              </a>
               <Link href="/guvenlik" prefetch={true} className="block text-slate-600 font-medium hover:text-deep-navy">
                 Gizlilik ve Güvenlik
               </Link>

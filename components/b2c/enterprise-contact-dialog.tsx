@@ -90,7 +90,7 @@ export function EnterpriseContactDialog({ open, onOpenChange }: Props) {
             asChild
           >
             <a
-              href={`mailto:kurumsal@tryclause.ai?subject=${encodeURIComponent("Kurumsal Clause talebi")}&body=${encodeURIComponent(body)}`}
+              href={`mailto:tryclauseai@gmail.com?subject=${encodeURIComponent("Kurumsal Clause talebi")}&body=${encodeURIComponent(body)}`}
             >
               <Send className="mr-2 h-4 w-4" />
               E-posta gönder

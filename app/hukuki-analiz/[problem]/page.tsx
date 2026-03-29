@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Scale, Shield, FileText, AlertTriangle, CheckCircle2, ArrowRight, ChevronRight, Lock } from "lucide-react";
+import { Scale, Shield, FileText, AlertTriangle, CheckCircle2, ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -96,7 +96,7 @@ export default function HukukiAnalizPage() {
   const params = useParams();
   const slug = params.problem as string;
   const data = problemData[slug] || problemData["kira-sozlesmesi-feshi"]; // Fallback
-  const [showFullContent, setShowFullContent] = useState(false);
+  const [showFullContent, _setShowFullContent] = useState(false);
 
   const jsonLd = generateJsonLd(data);
 
