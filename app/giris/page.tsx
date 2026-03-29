@@ -2,50 +2,109 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Mail, Lock, AlertCircle, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Mail, Lock, AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ClauseLogo } from "@/components/brand/clause-logo";
+import { getSupabaseBrowser } from "@/lib/supabase/browser";
 
 export default function GirisPage() {
+  const router = useRouter();
   const [isSignUp, setIsSignUp] = React.useState(false);
   const [userType, setUserType] = React.useState<"avukat" | "bireysel">("bireysel");
   const [error, setError] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [name, setName] = React.useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
     
-    // Demo: Show error for invalid inputs
     if (!email || !password) {
       setError("Lütfen tüm alanları doldurun.");
+      setLoading(false);
       return;
     }
     
     if (password.length < 6) {
       setError("Şifre en az 6 karakter olmalıdır.");
+      setLoading(false);
       return;
     }
     
-    // Mock authentication
-    setError("Giriş başarısız. Lütfen bilgilerinizi kontrol edin.");
+    const supabase = getSupabaseBrowser();
+    if (!supabase) {
+      setError("Sistem şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.");
+      setLoading(false);
+      return;
+    }
+    
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    
+    if (signInError) {
+      setError(signInError.message === "Invalid login credentials" 
+        ? "Giriş başarısız. Lütfen e-posta ve şifrenizi kontrol edin." 
+        : signInError.message);
+      setLoading(false);
+      return;
+    }
+    
+    router.push("/");
+    router.refresh();
   };
 
-  const handleSignUp = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
     
     if (!name || !email || !password) {
       setError("Lütfen tüm alanları doldurun.");
+      setLoading(false);
       return;
     }
     
-    // Mock signup
-    setError("Kayıt başarısız. Lütfen daha sonra tekrar deneyin.");
+    if (password.length < 6) {
+      setError("Şifre en az 6 karakter olmalıdır.");
+      setLoading(false);
+      return;
+    }
+    
+    const supabase = getSupabaseBrowser();
+    if (!supabase) {
+      setError("Sistem şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.");
+      setLoading(false);
+      return;
+    }
+    
+    const { error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: name,
+          user_type: userType,
+        },
+      },
+    });
+    
+    if (signUpError) {
+      setError(signUpError.message);
+      setLoading(false);
+      return;
+    }
+    
+    setError("Hesabınız oluşturuldu! E-posta adresinizi onaylayın ve giriş yapın.");
+    setIsSignUp(false);
+    setLoading(false);
   };
 
   return (
@@ -221,9 +280,17 @@ export default function GirisPage() {
 
               <Button
                 type="submit"
+                disabled={loading}
                 className="w-full h-12 rounded-xl font-semibold btn-gradient-primary"
               >
-                {isSignUp ? "Kayıt Ol" : "Giriş Yap"}
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    {isSignUp ? "Kayıt yapılıyor..." : "Giriş yapılıyor..."}
+                  </div>
+                ) : (
+                  isSignUp ? "Kayıt Ol" : "Giriş Yap"
+                )}
               </Button>
             </form>
 

@@ -180,8 +180,8 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                       animate={{ opacity: 1 }}
                       className="relative"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent -mt-20 z-10" />
-                      <div className="pt-6 text-center">
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent -mt-20 z-10 pointer-events-none" />
+                      <div className="pt-6 text-center relative z-20">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 rounded-xl border border-indigo-100">
                           <Lock className="w-4 h-4 text-indigo-600" />
                           <span className="text-sm font-semibold text-indigo-900">
@@ -190,8 +190,7 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                         </div>
                         <Button
                           onClick={onOpenAnalyzer}
-                          disabled={false}
-                          className="mt-4 px-8 py-3 bg-navy-700 hover:bg-navy-800 text-mint-100 rounded-xl font-semibold shadow-lg shadow-navy-700/25"
+                          className="mt-4 px-8 py-3 bg-navy-700 hover:bg-navy-800 text-mint-100 rounded-xl font-semibold shadow-lg shadow-navy-700/25 hover:scale-[1.03] active:scale-[0.98] transition-transform"
                         >
                           <Sparkles className="w-4 h-4 mr-2" />
                           Hukuki Mütalaayı ve Önerileri Gör
