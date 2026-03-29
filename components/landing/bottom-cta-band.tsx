@@ -15,7 +15,7 @@ export function BottomCtaBand({ onOpenAnalyzer }: Props) {
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
         <Reveal>
           <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-            Bugün ücretsiz tara — detay 4,99 TL
+            Bugün ücretsiz tara 
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base font-medium text-white/90">
             Güven skoru + risk özeti anında; paranı koruyacak düzeltmeler bir

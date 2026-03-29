@@ -13,11 +13,37 @@ const config: Config = {
       },
       colors: {
         madde: {
-          blue: "#005BEA",
-          "blue-deep": "#0046B8",
-          green: "#00E676",
-          red: "#FF1744",
-          ink: "#1A202C",
+          blue: "#1E3A5F",           /* Deep navy */
+          "blue-deep": "#0F172A",    /* Darkest navy */
+          "blue-light": "#334155",   /* Lighter navy */
+          green: "#10B981",          /* Mint/emerald */
+          "green-light": "#B8F4E0", /* Light mint */
+          "green-glow": "#D1FAE5",  /* Mint glow */
+          red: "#DC2626",            /* Deep red */
+          ink: "#111827",            /* Deep navy text */
+        },
+        navy: {
+          50: "#F0F4F8",
+          100: "#E2E8F0",
+          200: "#CBD5E1",
+          300: "#94A3B8",
+          400: "#64748B",
+          500: "#475569",
+          600: "#334155",
+          700: "#1E3A5F",
+          800: "#0F172A",
+          900: "#0A1120",
+        },
+        mint: {
+          50: "#ECFDF5",
+          100: "#D1FAE5",
+          200: "#A7F3D0",
+          300: "#6EE7B7",
+          400: "#34D399",
+          500: "#10B981",
+          600: "#059669",
+          700: "#047857",
+          800: "#065F46",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -23,15 +23,15 @@ const items = [
 export function LandingSecurityStrip() {
   return (
     <Reveal>
-      <div className="border-b border-slate-200/60 bg-gradient-to-r from-slate-50/80 via-emerald-50/50 to-slate-50/80 py-4">
+      <div className="border-b border-slate-200/60 bg-gradient-to-r from-slate-50/80 via-mint-50/30 to-slate-50/80 py-4">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 sm:px-6 lg:flex-row lg:justify-center lg:gap-10 lg:px-8">
           {items.map(({ icon: Icon, label, hint }) => (
             <div
               key={label}
               className="flex items-center gap-3 text-center sm:text-left"
             >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#0F172A] shadow-md">
-                <Icon className="h-5 w-5 text-emerald-400" aria-hidden />
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-800 shadow-md">
+                <Icon className="h-5 w-5 text-mint-400" aria-hidden />
               </span>
               <div>
                 <p className="text-sm font-bold tracking-tight text-deep-navy">
@@ -45,7 +45,7 @@ export function LandingSecurityStrip() {
         <p className="mt-2 text-center text-[11px] font-semibold text-slate-500">
           <Link
             href="/guvenlik"
-            className="text-emerald-600 underline-offset-2 hover:underline"
+            className="text-mint-600 underline-offset-2 hover:underline"
           >
             Gizlilik ve güvenlik taahhüdümüz
           </Link>{" "}

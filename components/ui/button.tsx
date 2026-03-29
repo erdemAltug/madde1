@@ -9,8 +9,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        /** Primary CTA: electric blue, hover scale + shine sweep */
-        cta: "relative overflow-hidden bg-[#005BEA] font-bold text-white shadow-lg shadow-[#005BEA]/35 hover:scale-[1.03] hover:bg-[#0046B8] hover:shadow-xl hover:shadow-[#005BEA]/45 active:scale-[0.98] before:pointer-events-none before:absolute before:inset-0 before:-translate-x-full before:skew-x-[-18deg] before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:transition-transform before:duration-500 hover:before:translate-x-full",
+        /** Primary CTA: deep navy with mint accent, premium feel */
+        cta: "relative overflow-hidden bg-navy-700 font-bold text-mint-100 shadow-lg shadow-navy-700/25 hover:scale-[1.03] hover:bg-navy-800 hover:shadow-xl shadow-navy-700/35 active:scale-[0.98] before:pointer-events-none before:absolute before:inset-0 before:-translate-x-full before:skew-x-[-18deg] before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:transition-transform before:duration-500 hover:before:translate-x-full",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:

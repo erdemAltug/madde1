@@ -82,7 +82,7 @@ export function ContractInputPanel({
       <div
         className={cn(
           "relative flex min-h-0 flex-1 rounded-lg border-2 border-dashed transition-colors",
-          drag ? "border-indigo-500/70 bg-indigo-50/50" : "border-slate-100",
+          drag ? "border-mint-500/70 bg-mint-50/50" : "border-slate-200",
         )}
         onDragOver={(e) => {
           e.preventDefault();

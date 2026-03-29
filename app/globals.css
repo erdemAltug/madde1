@@ -4,36 +4,65 @@
 
 @layer base {
   :root {
-    /* Clause Legal-Commerce: beyaz zemin, canlı mavi CTA, elektrik yeşili güven, kırmızı risk */
-    --background: 0 0% 100%;
-    --foreground: 218 17% 14%;
-    --card: 0 0% 100%;
-    --card-foreground: 218 17% 14%;
+    /* Deep Navy + Mint Legal AI Color System */
+    /* Professional, trustworthy, premium feel */
+    
+    /* Background & Foreground */
+    --background: 210 20% 98%;       /* #F5F7FA - Cool off-white */
+    --foreground: 217 33% 11%;        /* #111827 - Deep navy text */
+    
+    /* Card */
+    --card: 0 0% 100%;                /* #FFFFFF - Pure white */
+    --card-foreground: 217 33% 11%;    /* #111827 - Deep navy */
+    
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 218 17% 14%;
-    /* Electric blue #005BEA */
-    --primary: 217 100% 46%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 218 17% 14%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 40%;
-    --accent: 215 100% 96%;
-    --accent-foreground: 215 100% 36%;
+    --popover-foreground: 217 33% 11%;
+    
+    /* Primary - Deep Navy CTA */
+    --primary: 217 55% 18%;           /* #1E3A5F - Deep navy */
+    --primary-foreground: 166 76% 88%; /* #B8F4E0 - Mint */
+    
+    /* Secondary - Light slate */
+    --secondary: 215 25% 95%;         /* #F0F4F8 */
+    --secondary-foreground: 217 33% 11%;
+    
+    /* Muted */
+    --muted: 215 20% 93%;             /* #EDF2F7 */
+    --muted-foreground: 215 16% 45%; /* #64748B */
+    
+    /* Accent - Mint highlight */
+    --accent: 166 76% 90%;            /* #B8F4E0 - Light mint */
+    --accent-foreground: 160 84% 25%; /* #0D7C5F - Deep mint */
+    
+    /* Destructive - Subtle red for errors */
     --destructive: 348 100% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 215 100% 46%;
+    
+    /* Border & Input */
+    --border: 214 26% 88%;            /* #E2E8F0 */
+    --input: 214 26% 88%;
+    --ring: 160 84% 35%;              /* #10B981 - Mint ring */
+    
+    /* Radius */
     --radius: 0.625rem;
-    --madde-blue: #005bea;
-    --madde-green: #00e676;
-    --madde-red: #ff1744;
-    --madde-ink: #1a202c;
-    /* New depth colors */
-    --deep-navy: #0F172A;
-    --royal-blue: #2563EB;
-    --soft-bg: #F8FAFC;
+    
+    /* Custom brand colors */
+    --madde-blue: #1E3A5F;            /* Deep navy (replaces electric blue) */
+    --madde-green: #10B981;           /* Emerald/mint (trust indicator) */
+    --madde-red: #DC2626;             /* Deep red (risk indicator) */
+    --madde-ink: #111827;             /* Deep navy text */
+    
+    /* Depth palette */
+    --deep-navy: #0F172A;             /* Darkest navy */
+    --navy-primary: #1E3A5F;          /* Primary navy */
+    --navy-light: #334155;            /* Lighter navy */
+    --mint-primary: #10B981;          /* Primary mint */
+    --mint-light: #B8F4E0;            /* Light mint */
+    --mint-glow: #D1FAE5;             /* Mint glow */
+    --surface-elevated: #FFFFFF;
+    --surface-base: #F5F7FA;
+    --surface-muted: #EDF2F7;
   }
 }
 
@@ -42,7 +71,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#F8FAFC] text-[#1A202C] antialiased;
+    @apply bg-[var(--surface-base)] text-[var(--foreground)] antialiased;
   }
 }
 
@@ -134,63 +163,76 @@
 
   /* Deep navy text */
   .text-deep-navy {
-    color: #0F172A;
+    color: var(--deep-navy);
   }
 
-  /* Gradient mesh background */
+  /* Gradient mesh background - navy inspired */
   .mesh-gradient {
     background: 
-      radial-gradient(at 40% 20%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
-      radial-gradient(at 80% 50%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+      radial-gradient(at 40% 20%, rgba(30, 58, 95, 0.12) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(30, 58, 95, 0.08) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, rgba(16, 185, 129, 0.06) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(30, 58, 95, 0.1) 0px, transparent 50%);
   }
 
-  /* Rainbow border for premium cards */
-  .rainbow-border {
+  /* Premium border - mint accent */
+  .premium-border {
     position: relative;
     background: white;
     border-radius: 0.75rem;
   }
   
-  .rainbow-border::before {
+  .premium-border::before {
     content: '';
     position: absolute;
     inset: -2px;
     border-radius: 0.875rem;
     background: linear-gradient(
       135deg,
-      #6366f1,
-      #8b5cf6,
-      #d946ef,
-      #f43f5e,
-      #f97316,
-      #eab308,
-      #22c55e,
-      #06b6d4,
-      #3b82f6,
-      #6366f1
+      #1E3A5F,
+      #10B981,
+      #1E3A5F
     );
-    background-size: 400% 400%;
-    animation: rainbow 8s ease infinite;
+    background-size: 200% 200%;
+    animation: premium-shift 6s ease infinite;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
-  @keyframes rainbow {
+  @keyframes premium-shift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
 
-  /* Primary gradient button */
+  /* Primary CTA button - Deep Navy */
   .btn-gradient-primary {
-    @apply bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-lg shadow-indigo-600/25;
+    @apply bg-navy-700 hover:bg-navy-800 text-mint-100 shadow-lg shadow-navy-700/20;
   }
 
-  /* Focus ring with color */
-  .focus-ring-indigo {
-    @apply focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2 focus:ring-offset-indigo-50;
+  /* Focus ring with mint color */
+  .focus-ring-mint {
+    @apply focus:outline-none focus:ring-2 focus:ring-[var(--mint-primary)]/50 focus:ring-offset-2 focus:ring-offset-white;
+  }
+
+  /* Mint accent glow */
+  .mint-glow {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+  }
+
+  /* Navy accent glow */
+  .navy-glow {
+    box-shadow: 0 0 20px rgba(30, 58, 95, 0.15);
+  }
+
+  /* Risk indicator - subtle red */
+  .risk-indicator {
+    @apply bg-red-50 text-red-700 border-red-200;
+  }
+
+  /* Trust badge - mint */
+  .trust-badge {
+    @apply bg-[var(--mint-light)] text-[var(--accent-foreground)] border-[var(--mint-primary)]/20;
   }
 }
