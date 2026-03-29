@@ -2,11 +2,14 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronDown, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ClauseLogo } from "@/components/brand/clause-logo";
 import { cn } from "@/lib/utils";
 import { getSozlesmeAnaliziNavLinks } from "@/lib/seo/sozlesme-analizi-pages";
+import { getSupabaseBrowser } from "@/lib/supabase/browser";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const sozlesmeToolLinks = getSozlesmeAnaliziNavLinks();
 
@@ -21,20 +24,62 @@ const links = [
 ];
 
 export function SiteNavbar() {
+  const router = useRouter();
   const [mobile, setMobile] = React.useState(false);
   const [toolsOpen, setToolsOpen] = React.useState(false);
   const [mobileTools, setMobileTools] = React.useState(false);
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+  const [user, setUser] = React.useState<SupabaseUser | null>(null);
   const toolsRef = React.useRef<HTMLDivElement>(null);
+  const userMenuRef = React.useRef<HTMLDivElement>(null);
 
+  // Supabase auth state listener
+  React.useEffect(() => {
+    const supabase = getSupabaseBrowser();
+    if (!supabase) return;
+
+    // Initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Close user menu when clicking outside
   React.useEffect(() => {
     const onDoc = (e: MouseEvent) => {
       if (!toolsRef.current?.contains(e.target as Node)) {
         setToolsOpen(false);
       }
+      if (!userMenuRef.current?.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
     };
     document.addEventListener("click", onDoc);
     return () => document.removeEventListener("click", onDoc);
   }, []);
+
+  const handleLogout = async () => {
+    const supabase = getSupabaseBrowser();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
+    setUser(null);
+    setUserMenuOpen(false);
+    router.push("/");
+    router.refresh();
+  };
+
+  const getUserDisplayName = () => {
+    if (!user) return "";
+    return user.user_metadata?.full_name || user.email?.split("@")[0] || "Kullanıcı";
+  };
 
   return (
     <header
@@ -108,27 +153,49 @@ export function SiteNavbar() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          {/* MVP: Ödeme askıya alındı - Token gösterimi gizlendi */}
-          {/* {wallet.ready && (wallet.credits > 0 || wallet.hasUnlimited()) && (
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200/60">
-              <Coins className="w-4 h-4 text-amber-600" />
-              <span className="text-sm font-semibold text-amber-800">
-                {wallet.hasUnlimited() ? (
-                  <>Sınırsız Token</>
-                ) : (
-                  <>🪙 {wallet.credits} Token</>
-                )}
-              </span>
+          {user ? (
+            <div className="relative" ref={userMenuRef}>
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen((v) => !v)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+              >
+                <User className="w-4 h-4 text-slate-600" />
+                <span className="text-sm font-semibold text-slate-700">
+                  {getUserDisplayName()}
+                </span>
+                <ChevronDown className={cn("w-4 h-4 text-slate-500 transition-transform", userMenuOpen && "rotate-180")} />
+              </button>
+              {userMenuOpen && (
+                <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10">
+                  <Link
+                    href="/analiz"
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
+                    onClick={() => setUserMenuOpen(false)}
+                  >
+                    Analizlerim
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Çıkış Yap
+                  </button>
+                </div>
+              )}
             </div>
-          )} */}
-          <Button
-            variant="outline"
-            size="sm"
-            className="border-slate-300 font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-            asChild
-          >
-            <Link href="/giris" prefetch={true}>Giriş Yap</Link>
-          </Button>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-slate-300 font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
+              asChild
+            >
+              <Link href="/giris" prefetch={true}>Giriş Yap</Link>
+            </Button>
+          )}
         </div>
 
         <button
@@ -188,14 +255,43 @@ export function SiteNavbar() {
                 ))}
               </div>
             ) : null}
-            <Link
-              href="/giris"
-              className="mt-2 rounded-md border border-slate-200 px-3 py-2.5 text-center text-sm font-semibold text-slate-600 hover:bg-slate-50"
-              onClick={() => setMobile(false)}
-              prefetch={true}
-            >
-              Giriş Yap
-            </Link>
+            {user ? (
+              <>
+                <div className="flex items-center gap-2 px-3 py-2">
+                  <User className="w-5 h-5 text-slate-500" />
+                  <span className="text-sm font-semibold text-slate-700">
+                    {getUserDisplayName()}
+                  </span>
+                </div>
+                <Link
+                  href="/analiz"
+                  className="rounded-md px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
+                  onClick={() => setMobile(false)}
+                >
+                  Analizlerim
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleLogout();
+                    setMobile(false);
+                  }}
+                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-semibold text-red-600 hover:bg-red-50"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Çıkış Yap
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/giris"
+                className="mt-2 rounded-md border border-slate-200 px-3 py-2.5 text-center text-sm font-semibold text-slate-600 hover:bg-slate-50"
+                onClick={() => setMobile(false)}
+                prefetch={true}
+              >
+                Giriş Yap
+              </Link>
+            )}
           </nav>
         </div>
       ) : null}
