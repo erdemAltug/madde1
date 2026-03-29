@@ -96,21 +96,13 @@ export function EnterpriseContactDialog({ open, onOpenChange }: Props) {
               E-posta gönder
             </a>
           </Button>
-          {wa ? (
+          {wa && (
             <Button type="button" className="font-bold btn-gradient-primary" asChild>
               <a href={wa} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-4 w-4" />
                 WhatsApp
               </a>
             </Button>
-          ) : (
-            <p className="text-center text-[11px] text-slate-500 sm:text-right font-medium">
-              WhatsApp için{" "}
-              <code className="rounded bg-slate-100 px-1">
-                NEXT_PUBLIC_WHATSAPP_E164
-              </code>{" "}
-              tanımlayın (örn. 905551234567).
-            </p>
           )}
         </div>
       </DialogContent>
