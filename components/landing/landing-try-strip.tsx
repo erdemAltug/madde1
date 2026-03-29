@@ -190,7 +190,8 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                         </div>
                         <Button
                           onClick={onOpenAnalyzer}
-                          className="mt-4 px-8 py-3 btn-gradient-primary rounded-xl font-semibold shadow-lg shadow-indigo-600/20"
+                          disabled={false}
+                          className="mt-4 px-8 py-3 bg-navy-700 hover:bg-navy-800 text-mint-100 rounded-xl font-semibold shadow-lg shadow-navy-700/25"
                         >
                           <Sparkles className="w-4 h-4 mr-2" />
                           Hukuki Mütalaayı ve Önerileri Gör

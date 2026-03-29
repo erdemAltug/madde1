@@ -158,7 +158,7 @@ export function AnalysisPanel({
                   {unlockBusy ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    "4,99 TL ile detayı aç"
+                    "Giriş yap detayı aç"
                   )}
                 </Button>
                 <p className="mt-2 text-[11px] text-slate-500">
