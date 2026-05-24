@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Calculator, FileSearch, Scale } from "lucide-react";
+import { Calculator, FileSearch, Scale, BookOpen } from "lucide-react";
 import { FREE_TOOLS_NAV } from "@/lib/seo/free-tools-routes";
+import { getRelatedLinksForSozlesme } from "@/lib/seo/internal-links";
 import { cn } from "@/lib/utils";
 
 const ANALIZ_LINKS = [
@@ -24,10 +25,14 @@ const ANALIZ_LINKS = [
 export function RelatedToolsSection({
   className,
   headingId = "ilgili-araclar",
+  slug,
 }: {
   className?: string;
   headingId?: string;
+  /** /sozlesme-analizi/[slug] için konuya özel rehber bağlantıları */
+  slug?: string;
 }) {
+  const topicLinks = slug ? getRelatedLinksForSozlesme(slug).slice(0, 4) : [];
   return (
     <section
       className={cn("border-t border-slate-200 bg-slate-50/40", className)}
@@ -44,6 +49,27 @@ export function RelatedToolsSection({
           Dahili bağlantılar: hesaplayıcılardan tam yapay zeka sözleşme analizine
           geçin; kira sözleşmesi riskleri için önce özet, sonra detay.
         </p>
+
+        {topicLinks.length > 0 ? (
+          <div className="mt-6">
+            <h3 className="flex items-center gap-2 text-sm font-extrabold uppercase tracking-wide text-[#005BEA]">
+              <BookOpen className="h-4 w-4" aria-hidden />
+              İlgili rehberler
+            </h3>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {topicLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-[#005BEA]/40 hover:text-[#005BEA]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div>

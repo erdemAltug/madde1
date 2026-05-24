@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { HukukiAnalizPageLayout } from "@/components/seo/hukuki-analiz-page-layout";
+import { RehberPageLayout } from "@/components/seo/rehber-page-layout";
 import {
-  HUKUKI_ANALIZ_SLUGS,
-  getHukukiAnalizConfig,
-} from "@/lib/seo/hukuki-analiz-pages";
+  REHBER_SLUGS,
+  getRehberConfig,
+} from "@/lib/seo/rehber-pages";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
-type Props = { params: { problem: string } };
+type Props = { params: { slug: string } };
 
 export function generateStaticParams() {
-  return HUKUKI_ANALIZ_SLUGS.map((problem) => ({ problem }));
+  return REHBER_SLUGS.map((slug) => ({ slug }));
 }
 
 export function generateMetadata({ params }: Props): Metadata {
-  const cfg = getHukukiAnalizConfig(params.problem);
-  if (!cfg) return { title: "Hukuki konu" };
-  const path = `/hukuki-analiz/${params.problem}`;
+  const cfg = getRehberConfig(params.slug);
+  if (!cfg) return { title: "Rehber" };
+  const path = `/rehber/${params.slug}`;
   return {
     title: cfg.metaTitle,
     description: cfg.metaDescription,
-    keywords: [...cfg.keywords, "hukuki bilgi", SITE_NAME],
+    keywords: [...cfg.keywords, "hukuk rehberi", "Clause", SITE_NAME],
     alternates: { canonical: absoluteUrl(path) },
     openGraph: {
       title: `${cfg.metaTitle} | ${SITE_NAME}`,
@@ -35,8 +35,8 @@ export function generateMetadata({ params }: Props): Metadata {
   };
 }
 
-export default function HukukiAnalizProblemPage({ params }: Props) {
-  const cfg = getHukukiAnalizConfig(params.problem);
+export default function RehberSlugPage({ params }: Props) {
+  const cfg = getRehberConfig(params.slug);
   if (!cfg) notFound();
-  return <HukukiAnalizPageLayout config={cfg} />;
+  return <RehberPageLayout config={cfg} />;
 }

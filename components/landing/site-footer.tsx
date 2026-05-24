@@ -2,23 +2,47 @@ import Link from "next/link";
 import { ClauseLogo } from "@/components/brand/clause-logo";
 import { ModelProviderLogos } from "@/components/landing/model-provider-logos";
 import { FREE_TOOLS_NAV } from "@/lib/seo/free-tools-routes";
+import {
+  REHBER_HUB_LINKS,
+  SOZLESME_ANALIZI_FEATURED,
+  HUKUKI_ANALIZ_LINKS,
+} from "@/lib/seo/internal-links";
 import { TrendingUp } from "lucide-react";
 
 const POPULAR_SEARCHES = [
-  { label: "Kira Tahliye Analizi", href: "/araclar/tahliye-taahhutnamesi-kontrolu" },
-  { label: "Kıdem Tazminatı Hesaplama", href: "/#fiyatlandirma" },
-  { label: "Kira Artış Oranı", href: "/araclar/kira-artis-hesaplama" },
-  { label: "Damga Vergisi", href: "/araclar/damga-vergisi-hesaplama" },
+  {
+    label: "Kira artış hesaplama",
+    href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
+  },
+  {
+    label: "Tahliye taahhütnamesi kontrol",
+    href: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+  },
+  {
+    label: "Kiracı hakları rehberi",
+    href: "/rehber/kiraci-haklari",
+  },
+  {
+    label: "İşten çıkarılınca ne yapılır?",
+    href: "/rehber/isten-cikarilinca-ne-yapilir",
+  },
+  {
+    label: "Kira sözleşmesi analizi",
+    href: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+  },
+  {
+    label: "Damga vergisi hesaplama",
+    href: "/araclar/damga-vergisi-hesaplama",
+  },
 ];
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-slate-200/60 bg-slate-50 py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Popular Searches */}
-        <div className="mb-8 pb-8 border-b border-slate-200/60">
-          <p className="text-xs font-bold uppercase tracking-wide text-slate-500 mb-4">
-            Popüler Hukuki Aramalar
+        <div className="mb-8 border-b border-slate-200/60 pb-8">
+          <p className="mb-4 text-xs font-bold uppercase tracking-wide text-slate-500">
+            Popüler hukuki aramalar
           </p>
           <div className="flex flex-wrap gap-3">
             {POPULAR_SEARCHES.map((search) => (
@@ -26,89 +50,175 @@ export function SiteFooter() {
                 key={search.href}
                 href={search.href}
                 prefetch={true}
-                className="inline-flex items-center gap-2 px-3 py-1.5 bg-white rounded-full text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-colors border border-slate-200"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
               >
-                <TrendingUp className="w-3.5 h-3.5" />
+                <TrendingUp className="h-3.5 w-3.5" aria-hidden />
                 {search.label}
               </Link>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <ClauseLogo withWordmark size={32} />
-            <p className="mt-2 max-w-xs text-sm text-slate-600 font-medium">
-              Yapay zeka destekli hukuki analiz platformu. Veriye dayalı strateji ve içtihat desteği.
+            <p className="mt-2 max-w-xs text-sm font-medium text-slate-600">
+              Herkes için yapay zeka destekli sözleşme ön kontrolü. Avukat yerine geçmez;
+              bilinçli karar için ilk adım.
             </p>
           </div>
-          <div className="flex flex-wrap gap-8 text-sm">
+
+          <div className="grid flex-1 gap-8 text-sm sm:grid-cols-2 lg:grid-cols-4">
             <nav aria-label="Ücretsiz araçlar" className="space-y-2">
-              <p className="font-bold text-deep-navy">Ücretsiz Araçlar</p>
+              <p className="font-bold text-deep-navy">Ücretsiz araçlar</p>
               <ul className="space-y-1.5">
+                <li>
+                  <Link
+                    href="/araclar"
+                    prefetch={true}
+                    className="font-semibold text-madde-blue hover:underline"
+                  >
+                    Tüm araçlar
+                  </Link>
+                </li>
                 {FREE_TOOLS_NAV.map((t) => (
                   <li key={t.href}>
-                    <Link href={t.href} prefetch={true} className="text-slate-600 font-medium hover:text-deep-navy">
+                    <Link
+                      href={t.href}
+                      prefetch={true}
+                      className="text-slate-600 font-medium hover:text-deep-navy"
+                    >
                       {t.label}
                     </Link>
                   </li>
                 ))}
               </ul>
             </nav>
+
+            <nav aria-label="Hukuk rehberleri" className="space-y-2">
+              <p className="font-bold text-deep-navy">Hukuk rehberleri</p>
+              <ul className="space-y-1.5">
+                <li>
+                  <Link
+                    href="/rehber"
+                    prefetch={true}
+                    className="font-semibold text-madde-blue hover:underline"
+                  >
+                    Tüm rehberler
+                  </Link>
+                </li>
+                {REHBER_HUB_LINKS.slice(0, 5).map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      prefetch={true}
+                      className="text-slate-600 font-medium hover:text-deep-navy"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="Sözleşme analizi" className="space-y-2">
+              <p className="font-bold text-deep-navy">Sözleşme analizi</p>
+              <ul className="space-y-1.5">
+                {SOZLESME_ANALIZI_FEATURED.slice(0, 6).map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      prefetch={true}
+                      className="text-slate-600 font-medium hover:text-deep-navy"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
             <div className="space-y-2">
               <p className="font-bold text-deep-navy">Platform</p>
-              <Link href="/#ozellikler" prefetch={true} className="block text-slate-600 font-medium hover:text-deep-navy">
+              <Link
+                href="/hukuki-analiz"
+                prefetch={true}
+                className="block text-slate-600 font-medium hover:text-deep-navy"
+              >
+                Hukuki konular
+              </Link>
+              {HUKUKI_ANALIZ_LINKS.slice(0, 3).map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  prefetch={true}
+                  className="block text-slate-600 font-medium hover:text-deep-navy"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link
+                href="/#ozellikler"
+                prefetch={true}
+                className="block text-slate-600 font-medium hover:text-deep-navy"
+              >
                 Özellikler
               </Link>
-              <Link href="/#fiyatlandirma" prefetch={true} className="block text-slate-600 font-medium hover:text-deep-navy">
-                Fiyatlandırma
-              </Link>
-              <Link href="/analiz/kira-sozlesmesi" prefetch={true} className="block text-slate-600 font-medium hover:text-deep-navy">
-                Kira Analizi
-              </Link>
-              <Link href="/blog" prefetch={true} className="block text-slate-600 font-medium hover:text-deep-navy">
+              <Link
+                href="/blog"
+                prefetch={true}
+                className="block text-slate-600 font-medium hover:text-deep-navy"
+              >
                 Blog
               </Link>
-            </div>
-            <div className="space-y-2">
-              <p className="font-bold text-deep-navy">İletişim</p>
-              <a href="mailto:tryclauseai@gmail.com" className="block text-slate-600 font-medium hover:text-deep-navy">
+              <Link
+                href="/guvenlik"
+                prefetch={true}
+                className="block text-slate-600 font-medium hover:text-deep-navy"
+              >
+                Gizlilik ve güvenlik
+              </Link>
+              <a
+                href="mailto:tryclauseai@gmail.com"
+                className="block text-slate-600 font-medium hover:text-deep-navy"
+              >
                 tryclauseai@gmail.com
               </a>
-              <Link href="/guvenlik" prefetch={true} className="block text-slate-600 font-medium hover:text-deep-navy">
-                Gizlilik ve Güvenlik
-              </Link>
-              <span className="block text-slate-600 font-medium">Kullanım Şartları</span>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="mx-auto mt-10 max-w-6xl border-t border-slate-200/60 px-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
-            Teknoloji Altyapısı
+            Teknoloji altyapısı
           </p>
-          <p className="mx-auto mt-2 max-w-lg text-xs text-slate-600 font-medium">
+          <p className="mx-auto mt-2 max-w-lg text-xs font-medium text-slate-600">
             OpenAI, Claude ve Groq üzerinde çalışan yapay zeka altyapısı.
           </p>
           <ModelProviderLogos className="mt-6" />
         </div>
-        
+
         <div className="mx-auto mt-8 max-w-2xl rounded-lg border border-slate-200/60 bg-white px-4 py-3 text-center">
-          <p className="text-xs text-slate-600 font-medium">
-            clause.ai, sözleşme metinlerini analiz sonrası kalıcı olarak saklamaz ve üçüncü taraflarla paylaşmaz.{" "}
-            <Link href="/guvenlik" prefetch={true} className="text-indigo-600 font-semibold underline-offset-2 hover:underline">
-              Güvenlik Politikamız
+          <p className="text-xs font-medium text-slate-600">
+            Clause, sözleşme metinlerini analiz sonrası kalıcı olarak saklamaz ve üçüncü
+            taraflarla paylaşmaz.{" "}
+            <Link
+              href="/guvenlik"
+              prefetch={true}
+              className="font-semibold text-indigo-600 underline-offset-2 hover:underline"
+            >
+              Güvenlik politikamız
             </Link>
           </p>
         </div>
-        
-        <p className="mt-6 text-center text-xs text-slate-500 font-medium">
-          © {new Date().getFullYear()} clause.ai — Yapay Zeka Hukuk Asistanı
+
+        <p className="mt-6 text-center text-xs font-medium text-slate-500">
+          © {new Date().getFullYear()} Clause — yapay zeka hukuk asistanı
         </p>
-        <p className="mt-1 text-center text-xs text-slate-400 font-medium">
-          clause.ai, hukuki danışmanlık yerine geçmez. Kesin sonuç için avukata danışınız.
+        <p className="mt-1 text-center text-xs font-medium text-slate-400">
+          Clause hukuki danışmanlık yerine geçmez. Kesin sonuç için avukata danışınız.
         </p>
       </div>
     </footer>

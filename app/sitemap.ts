@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { CONTRACT_ANALYSIS_SLUGS } from "@/lib/seo/contract-analysis-pages";
 import { SOZLESME_ANALIZI_SLUGS } from "@/lib/seo/sozlesme-analizi-pages";
+import { REHBER_SLUGS } from "@/lib/seo/rehber-pages";
+import { HUKUKI_ANALIZ_SLUGS } from "@/lib/seo/hukuki-analiz-pages";
 import { FREE_TOOLS_SITEMAP_PATHS } from "@/lib/seo/free-tools-routes";
 import { SITE_URL } from "@/lib/seo/site";
 
@@ -21,20 +23,52 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.88,
     },
-    {
-      url: `${SITE_URL}/baski`,
-      lastModified: lastMod,
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
   ];
 
-  const araclar: MetadataRoute.Sitemap = FREE_TOOLS_SITEMAP_PATHS.map((p) => ({
-    url: `${SITE_URL}${p}`,
-    lastModified: lastMod,
-    changeFrequency: "weekly" as const,
-    priority: 0.9,
-  }));
+  const araclar: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/araclar`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.92,
+    },
+    ...FREE_TOOLS_SITEMAP_PATHS.map((p) => ({
+      url: `${SITE_URL}${p}`,
+      lastModified: lastMod,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
+  ];
+
+  const rehber: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/rehber`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.92,
+    },
+    ...REHBER_SLUGS.map((slug) => ({
+      url: `${SITE_URL}/rehber/${slug}`,
+      lastModified: lastMod,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
+  ];
+
+  const hukukiAnaliz: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/hukuki-analiz`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...HUKUKI_ANALIZ_SLUGS.map((slug) => ({
+      url: `${SITE_URL}/hukuki-analiz/${slug}`,
+      lastModified: lastMod,
+      changeFrequency: "monthly" as const,
+      priority: 0.85,
+    })),
+  ];
 
   const analiz: MetadataRoute.Sitemap = CONTRACT_ANALYSIS_SLUGS.map((slug) => ({
     url: `${SITE_URL}/analiz/${slug}`,
@@ -52,5 +86,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  return [...staticRoutes, ...araclar, ...analiz, ...sozlesmeAnalizi];
+  return [
+    ...staticRoutes,
+    ...araclar,
+    ...rehber,
+    ...hukukiAnaliz,
+    ...analiz,
+    ...sozlesmeAnalizi,
+  ];
 }

@@ -4,6 +4,8 @@ import { SiteFooter } from "@/components/landing/site-footer";
 import { TechTrustStrip } from "@/components/landing/tech-trust-strip";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { RelatedToolsSection } from "@/components/seo/related-tools-section";
+import { InternalLinksSection } from "@/components/seo/internal-links-section";
+import { getRelatedLinksForSozlesme } from "@/lib/seo/internal-links";
 import type { SozlesmeAnaliziPageConfig } from "@/lib/seo/sozlesme-analizi-pages";
 
 type Props = {
@@ -44,7 +46,11 @@ export function SozlesmeAnaliziDashboard({ config }: Props) {
           </div>
         </article>
       </main>
-      <RelatedToolsSection />
+      <RelatedToolsSection slug={config.slug} />
+      <InternalLinksSection
+        links={getRelatedLinksForSozlesme(config.slug)}
+        title="Bu konuyla ilgili rehberler ve araçlar"
+      />
       <aside aria-label="Teknoloji ve güven" className="border-t border-slate-100">
         <TechTrustStrip />
       </aside>
