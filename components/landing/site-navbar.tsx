@@ -15,6 +15,7 @@ const sozlesmeToolLinks = getSozlesmeAnaliziNavLinks();
 
 const links = [
   { href: "/#dene", label: "Hemen dene" },
+  { href: "/rehber", label: "Rehberler" },
   { href: "/guvenlik", label: "Güvenlik" },
   { href: "/blog", label: "Blog" },
   { href: "/#ozellikler", label: "Özellikler" },
