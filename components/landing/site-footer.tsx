@@ -107,7 +107,7 @@ export function SiteFooter() {
                     Tüm rehberler
                   </Link>
                 </li>
-                {REHBER_HUB_LINKS.slice(0, 5).map((link) => (
+                {REHBER_HUB_LINKS.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
@@ -124,7 +124,7 @@ export function SiteFooter() {
             <nav aria-label="Sözleşme analizi" className="space-y-2">
               <p className="font-bold text-deep-navy">Sözleşme analizi</p>
               <ul className="space-y-1.5">
-                {SOZLESME_ANALIZI_FEATURED.slice(0, 6).map((link) => (
+                {SOZLESME_ANALIZI_FEATURED.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
@@ -147,7 +147,7 @@ export function SiteFooter() {
               >
                 Hukuki konular
               </Link>
-              {HUKUKI_ANALIZ_LINKS.slice(0, 3).map((link) => (
+                {HUKUKI_ANALIZ_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}

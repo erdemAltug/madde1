@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 
 /** Üretimde NEXT_PUBLIC_SITE_URL ile canonical / OG uyumu (örn. https://tryclause.ai) */
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://tryclause.ai"
-).replace(/\/$/, "");
+const siteUrlFromEnv = process.env.NEXT_PUBLIC_SITE_URL;
+// Vercel’de NEXT_PUBLIC_SITE_URL set edilmediyse doğru host’u yakalamak için.
+const siteUrlFromVercel = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : undefined;
+
+export const SITE_URL = (siteUrlFromEnv ?? siteUrlFromVercel ?? "https://tryclause.tech").replace(
+  /\/$/,
+  "",
+);
 
 export const SITE_NAME = "Clause";
 

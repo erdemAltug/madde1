@@ -6,7 +6,9 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { RelatedToolsSection } from "@/components/seo/related-tools-section";
 import { InternalLinksSection } from "@/components/seo/internal-links-section";
 import { getRelatedLinksForSozlesme } from "@/lib/seo/internal-links";
+import { buildArticleJsonLd } from "@/lib/seo/faq-schema";
 import type { SozlesmeAnaliziPageConfig } from "@/lib/seo/sozlesme-analizi-pages";
+import { absoluteUrl } from "@/lib/seo/site";
 
 type Props = {
   config: SozlesmeAnaliziPageConfig;
@@ -14,9 +16,19 @@ type Props = {
 
 export function SozlesmeAnaliziDashboard({ config }: Props) {
   const path = `/sozlesme-analizi/${config.slug}`;
+  const articleLd = buildArticleJsonLd({
+    headline: config.h1,
+    description: config.metaDescription,
+    url: absoluteUrl(path),
+    dateModified: new Date().toISOString(),
+  });
 
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
       <SiteNavbar />
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <Breadcrumbs

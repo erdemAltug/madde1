@@ -5,6 +5,8 @@ import { TechTrustStrip } from "@/components/landing/tech-trust-strip";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { RelatedToolsSection } from "@/components/seo/related-tools-section";
 import type { BreadcrumbItem } from "@/components/seo/breadcrumbs";
+import { buildArticleJsonLd } from "@/lib/seo/faq-schema";
+import { absoluteUrl } from "@/lib/seo/site";
 
 type Props = {
   sharePath?: string;
@@ -19,8 +21,19 @@ export function WorkspaceDashboard({
   pageDescription = "Metninizi yapıştırın; TBK ve ilgili mevzuata göre ön analiz sonuçları canlı akışla üretilir.",
   breadcrumbItems,
 }: Props) {
+  const articleLd = buildArticleJsonLd({
+    headline: pageTitle,
+    description: pageDescription,
+    url: absoluteUrl(sharePath),
+    dateModified: new Date().toISOString(),
+  });
+
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
       <SiteNavbar />
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         {breadcrumbItems?.length ? (

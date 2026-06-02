@@ -23,6 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.88,
     },
+    {
+      url: `${SITE_URL}/analiz`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
   ];
 
   const araclar: MetadataRoute.Sitemap = [

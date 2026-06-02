@@ -16,8 +16,10 @@ const sozlesmeToolLinks = getSozlesmeAnaliziNavLinks();
 const links = [
   { href: "/#dene", label: "Hemen dene" },
   { href: "/rehber", label: "Rehberler" },
+  { href: "/hukuki-analiz", label: "Hukuki analiz" },
   { href: "/guvenlik", label: "Güvenlik" },
   { href: "/blog", label: "Blog" },
+  { href: "/analiz", label: "Ücretsiz analiz" },
   { href: "/#ozellikler", label: "Özellikler" },
   { href: "/#sik-riskler", label: "Sözleşme Riskleri" },
   // { href: "/#fiyatlandirma", label: "Fiyatlandırma" }, // MVP: Ödeme askıya alındı
