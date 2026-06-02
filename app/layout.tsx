@@ -13,12 +13,14 @@ export const metadata: Metadata = {
   description:
     "Türkiye'de kira, iş ve ticari sözleşmeler için yapay zeka destekli risk taraması, TBK uyumlu özet ve taslak üretimi.",
   keywords: [
+    "yapay zeka hukuk asistanı",
+    "yapay zeka sözleşme analizi",
+    "yapay zeka hukuk",
+    "legal AI Türkiye",
     "sözleşme analizi",
     "kira sözleşmesi riskleri",
-    "legal AI assistant",
-    "yapay zeka sözleşme analizi",
-    "AI hukuk asistanı Türkiye",
-    "sözleşme üretimi",
+    "AI hukuk asistanı",
+    "hukuki yapay zeka",
     "LegalTech",
     "TBK analiz",
   ],

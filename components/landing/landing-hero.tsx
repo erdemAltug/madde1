@@ -36,11 +36,11 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
             clause.ai — Türk Hukuk Sistemi
           </div>
           <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-deep-navy sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
-            Veriye Dayalı Hukuki Analiz ve Strateji
+            Yapay Zeka Hukuk Asistanı — Sözleşme Analizi ve Risk Taraması
           </h1>
           <p className="mt-5 max-w-xl text-lg text-slate-600 font-medium">
-            Yargıtay içtihatları ve güncel mevzuat ile desteklenen yapay zeka analizi. 
-            Vakanızı detaylandırın ve profesyonel hukuki değerlendirme alın.
+            Legal AI ile kira, iş ve ticari sözleşmelerinizi ücretsiz ön taramadan geçirin.
+            TBK ve güncel mevzuat bağlamında risk özeti; avukat öncesi bilinçli karar.
           </p>
           
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">

@@ -56,7 +56,22 @@ export default function RehberHubPage() {
           )}
         </ul>
 
-        <section className="mt-16 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+        <section className="mt-16 rounded-2xl border border-[#005BEA]/20 bg-gradient-to-br from-slate-50 to-indigo-50/40 p-6">
+          <h2 className="text-lg font-bold text-madde-ink">Yapay zeka hukuk rehberleri</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Legal AI, yapay zeka sözleşme analizi ve ücretsiz hukuk asistanı aramaları için
+            ayrı rehber kümemiz.
+          </p>
+          <Link
+            href="/yapay-zeka-hukuk"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#005BEA] hover:underline"
+          >
+            Yapay zeka hukuk sayfalarına git
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </section>
+
+        <section className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6">
           <h2 className="text-lg font-bold text-madde-ink">Konuya göre hızlı erişim</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {REHBER_HUB_LINKS.map((link) => (

@@ -28,6 +28,11 @@ export {
   type RehberPageConfig,
 } from "./rehber-pages";
 export {
+  YAPAY_ZEKA_HUKUK_PAGES,
+  YAPAY_ZEKA_HUKUK_SLUGS,
+  getYapayZekaHukukConfig,
+} from "./yapay-zeka-hukuk-pages";
+export {
   HUKUKI_ANALIZ_PAGES,
   HUKUKI_ANALIZ_SLUGS,
   getHukukiAnalizConfig,
@@ -40,5 +45,7 @@ export {
   getRelatedLinksForSozlesme,
   getRelatedLinksForRehber,
   getRelatedLinksForHukukiAnaliz,
+  getRelatedLinksForYapayZekaHukuk,
+  YAPAY_ZEKA_HUKUK_LINKS,
   type InternalLink,
 } from "./internal-links";

@@ -26,20 +26,22 @@ export function absoluteUrl(path: string): string {
 
 export const defaultHomeMetadata: Metadata = {
   title:
-    "Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı | Clause - Sözleşme Analizi AI",
+    "Yapay Zeka Hukuk Asistanı — Ücretsiz Sözleşme Analizi AI | Clause Türkiye",
   description:
-    "Yapay zeka hukuk asistanı ile sözleşme analizi, Yargıtay emsal sorgulama, TBK danışmanlık. Ücretsiz sözleşme risk taraması ve hukuki öneriler. Kira, iş ve ticari sözleşmeler için AI destekli analiz.",
+    "Türkiye'nin yapay zeka hukuk asistanı: sözleşme analizi AI, kira ve iş sözleşmesi risk taraması, TBK uyumlu özet. Legal AI assistant ile ücretsiz ön kontrol — günlük hukuki aramalarda hızlı bilgi.",
   keywords: [
     "yapay zeka hukuk asistanı",
+    "yapay zeka sözleşme analizi",
+    "yapay zeka hukuk",
+    "legal AI assistant",
+    "legal AI Türkiye",
+    "hukuki yapay zeka",
     "ücretsiz hukuki analiz",
     "sözleşme analizi AI",
-    "yargıtay emsal sorgulama",
-    "tbk danışmanlık",
-    "kira sözleşmesi analizi",
-    "sözleşme risk taraması",
-    "hukuki yapay zeka türkiye",
     "yapay zeka avukat",
-    "sözleşme kontrolü",
+    "AI hukuk asistanı",
+    "kira sözleşmesi analizi yapay zeka",
+    "sözleşme risk taraması",
     "Clause AI",
     "ücretsiz sözleşme analizi",
   ],

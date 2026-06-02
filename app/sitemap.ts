@@ -4,6 +4,7 @@ import { SOZLESME_ANALIZI_SLUGS } from "@/lib/seo/sozlesme-analizi-pages";
 import { REHBER_SLUGS } from "@/lib/seo/rehber-pages";
 import { HUKUKI_ANALIZ_SLUGS } from "@/lib/seo/hukuki-analiz-pages";
 import { FREE_TOOLS_SITEMAP_PATHS } from "@/lib/seo/free-tools-routes";
+import { YAPAY_ZEKA_HUKUK_SLUGS } from "@/lib/seo/yapay-zeka-hukuk-pages";
 import { SITE_URL } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -11,12 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: lastMod, changeFrequency: "weekly", priority: 1 },
-    {
-      url: `${SITE_URL}/blog`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
     {
       url: `${SITE_URL}/guvenlik`,
       lastModified: lastMod,
@@ -27,7 +22,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${SITE_URL}/analiz`,
       lastModified: lastMod,
       changeFrequency: "weekly",
-      priority: 0.7,
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/sozlesme-analizi`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.93,
+    },
+    {
+      url: `${SITE_URL}/yapay-zeka-hukuk`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.95,
     },
   ];
 
@@ -92,11 +99,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
+  const yapayZekaHukuk: MetadataRoute.Sitemap = [
+    ...YAPAY_ZEKA_HUKUK_SLUGS.map((slug) => ({
+      url: `${SITE_URL}/yapay-zeka-hukuk/${slug}`,
+      lastModified: lastMod,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
+  ];
+
   return [
     ...staticRoutes,
     ...araclar,
     ...rehber,
     ...hukukiAnaliz,
+    ...yapayZekaHukuk,
     ...analiz,
     ...sozlesmeAnalizi,
   ];

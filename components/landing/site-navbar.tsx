@@ -16,6 +16,8 @@ const sozlesmeToolLinks = getSozlesmeAnaliziNavLinks();
 const links = [
   { href: "/#dene", label: "Hemen dene" },
   { href: "/rehber", label: "Rehberler" },
+  { href: "/yapay-zeka-hukuk", label: "Yapay zeka hukuk" },
+  { href: "/sozlesme-analizi", label: "Sözleşme analizi" },
   { href: "/hukuki-analiz", label: "Hukuki analiz" },
   { href: "/guvenlik", label: "Güvenlik" },
   { href: "/blog", label: "Blog" },

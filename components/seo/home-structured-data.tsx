@@ -61,24 +61,25 @@ export function HomeStructuredData() {
   const software = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: `${SITE_NAME} — sözleşme analizi`,
+    name: `${SITE_NAME} — yapay zeka hukuk asistanı`,
     applicationCategory: "BusinessApplication",
+    applicationSubCategory: "LegalTech",
     operatingSystem: "Web",
+    inLanguage: "tr-TR",
     offers: {
       "@type": "Offer",
-      price: "4.99",
+      price: "0",
       priceCurrency: "TRY",
-      description: "Tek seferlik detaylı analiz erişimi",
+      description: "Ücretsiz sözleşme ön tarama",
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      bestRating: "5",
-      worstRating: "1",
-      ratingCount: "284",
-    },
-    description: `${SITE_TAGLINE} Legal AI assistant ile kira ve ticari sözleşme risk ön taraması.`,
+    description: `${SITE_TAGLINE} Yapay zeka sözleşme analizi ve hukuki ön kontrol.`,
     url: SITE_URL,
+    featureList: [
+      "Yapay zeka sözleşme analizi",
+      "Kira sözleşmesi risk taraması",
+      "İş sözleşmesi ön kontrolü",
+      "TBK uyumlu özet",
+    ],
   };
 
   const website = {

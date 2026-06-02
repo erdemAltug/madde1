@@ -6,10 +6,19 @@ import {
   REHBER_HUB_LINKS,
   SOZLESME_ANALIZI_FEATURED,
   HUKUKI_ANALIZ_LINKS,
+  YAPAY_ZEKA_HUKUK_LINKS,
 } from "@/lib/seo/internal-links";
 import { TrendingUp } from "lucide-react";
 
 const POPULAR_SEARCHES = [
+  {
+    label: "Yapay zeka hukuk asistanı",
+    href: "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
+  },
+  {
+    label: "Yapay zeka sözleşme analizi",
+    href: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+  },
   {
     label: "Kira artış hesaplama",
     href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
@@ -68,7 +77,7 @@ export function SiteFooter() {
             </p>
           </div>
 
-          <div className="grid flex-1 gap-8 text-sm sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid flex-1 gap-8 text-sm sm:grid-cols-2 lg:grid-cols-5">
             <nav aria-label="Ücretsiz araçlar" className="space-y-2">
               <p className="font-bold text-deep-navy">Ücretsiz araçlar</p>
               <ul className="space-y-1.5">
@@ -121,9 +130,44 @@ export function SiteFooter() {
               </ul>
             </nav>
 
+            <nav aria-label="Yapay zeka hukuk" className="space-y-2">
+              <p className="font-bold text-deep-navy">Yapay zeka hukuk</p>
+              <ul className="space-y-1.5">
+                <li>
+                  <Link
+                    href="/yapay-zeka-hukuk"
+                    prefetch={true}
+                    className="font-semibold text-madde-blue hover:underline"
+                  >
+                    Tüm AI rehberleri
+                  </Link>
+                </li>
+                {YAPAY_ZEKA_HUKUK_LINKS.slice(0, 5).map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      prefetch={true}
+                      className="text-slate-600 font-medium hover:text-deep-navy"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
             <nav aria-label="Sözleşme analizi" className="space-y-2">
               <p className="font-bold text-deep-navy">Sözleşme analizi</p>
               <ul className="space-y-1.5">
+                <li>
+                  <Link
+                    href="/sozlesme-analizi"
+                    prefetch={true}
+                    className="font-semibold text-madde-blue hover:underline"
+                  >
+                    Tüm analiz türleri
+                  </Link>
+                </li>
                 {SOZLESME_ANALIZI_FEATURED.map((link) => (
                   <li key={link.href}>
                     <Link

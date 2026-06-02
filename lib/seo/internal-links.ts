@@ -106,6 +106,50 @@ export const SOZLESME_ANALIZI_FEATURED: InternalLink[] = [
   },
 ];
 
+/** Yapay zeka + hukuk SEO kümesi */
+export const YAPAY_ZEKA_HUKUK_LINKS: InternalLink[] = [
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
+    label: "Yapay zeka hukuk asistanı",
+    description: "Ücretsiz ön tarama ve risk özeti.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    label: "Yapay zeka sözleşme analizi",
+    description: "AI ile kontrat risk taraması.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-kira-sozlesmesi",
+    label: "Yapay zeka kira sözleşmesi",
+    description: "TBK bağlamında kira analizi.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-is-sozlesmesi",
+    label: "Yapay zeka iş sözleşmesi",
+    description: "Fesih ve tazminat riskleri.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/legal-ai-turkiye",
+    label: "Legal AI Türkiye",
+    description: "Hukuk teknolojisi rehberi.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk",
+    label: "Ücretsiz yapay zeka hukuk",
+    description: "Günlük ücretsiz ön kontrol.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-tahliye-taahhutnamesi",
+    label: "AI tahliye taahhütnamesi",
+    description: "Usul ve içerik kontrolü.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-avukat-mi",
+    label: "Yapay zeka avukat mı?",
+    description: "Doğru beklenti rehberi.",
+  },
+];
+
 /** Hukuki analiz / problem sayfaları */
 export const HUKUKI_ANALIZ_LINKS: InternalLink[] = [
   {
@@ -245,10 +289,50 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   ],
 };
 
+const YAPAY_ZEKA_CLUSTER_MAP: Record<string, string[]> = {
+  "yapay-zeka-hukuk-asistani": [
+    "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk",
+    "/",
+  ],
+  "yapay-zeka-sozlesme-analizi": [
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    "/yapay-zeka-hukuk/yapay-zeka-kira-sozlesmesi",
+    "/rehber/sozlesme-imzalamadan-once",
+  ],
+  "yapay-zeka-kira-sozlesmesi": [
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    "/rehber/kiraci-haklari",
+    "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
+  ],
+  "yapay-zeka-is-sozlesmesi": [
+    "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    "/rehber/isci-haklari",
+    "/rehber/isten-cikarilinca-ne-yapilir",
+  ],
+  "legal-ai-turkiye": [
+    "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
+    "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    "/guvenlik",
+  ],
+  "ucretsiz-yapay-zeka-hukuk": ["/#dene", "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani", "/araclar"],
+  "yapay-zeka-tahliye-taahhutnamesi": [
+    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    "/rehber/tahliye-sureci",
+    "/hukuki-analiz/tahliye-taahhutnamesi",
+  ],
+  "yapay-zeka-avukat-mi": [
+    "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
+    "/rehber/sozlesme-imzalamadan-once",
+    "/",
+  ],
+};
+
 const ALL_LINKS: InternalLink[] = [
   ...REHBER_HUB_LINKS,
   ...SOZLESME_ANALIZI_FEATURED,
   ...HUKUKI_ANALIZ_LINKS,
+  ...YAPAY_ZEKA_HUKUK_LINKS,
   {
     href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
     label: "Kira artış hesaplama",
@@ -266,6 +350,11 @@ const ALL_LINKS: InternalLink[] = [
   },
   { href: "/araclar", label: "Tüm ücretsiz araçlar", description: "Hesaplayıcı ve kontrol araçları." },
   { href: "/rehber", label: "Hukuk rehberleri", description: "Herkes için anlaşılır rehberler." },
+  {
+    href: "/yapay-zeka-hukuk",
+    label: "Yapay zeka hukuk",
+    description: "AI hukuk asistanı ve sözleşme analizi.",
+  },
   { href: "/", label: "Clause — sözleşme analizi", description: "Ücretsiz AI ön tarama." },
 ];
 
@@ -336,4 +425,10 @@ export function getRelatedLinksForHukukiAnaliz(slug: string): InternalLink[] {
     ],
   };
   return resolveLinks(defaults[slug] ?? ["/rehber", "/araclar", "/"]);
+}
+
+export function getRelatedLinksForYapayZekaHukuk(slug: string): InternalLink[] {
+  const cluster = YAPAY_ZEKA_CLUSTER_MAP[slug];
+  if (cluster) return resolveLinks(cluster);
+  return resolveLinks(["/yapay-zeka-hukuk", "/rehber", "/"]);
 }

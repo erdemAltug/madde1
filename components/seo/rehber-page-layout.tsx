@@ -7,22 +7,35 @@ import { FaqSection } from "@/components/seo/faq-section";
 import { InternalLinksSection } from "@/components/seo/internal-links-section";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
 import type { RehberPageConfig } from "@/lib/seo/rehber-pages";
-import { getRelatedLinksForRehber } from "@/lib/seo/internal-links";
+import {
+  getRelatedLinksForRehber,
+  type InternalLink,
+} from "@/lib/seo/internal-links";
 import { buildArticleJsonLd } from "@/lib/seo/faq-schema";
 import { absoluteUrl } from "@/lib/seo/site";
 
 type Props = {
   config: RehberPageConfig;
+  /** Varsayılan: /rehber */
+  basePath?: string;
+  hub?: { name: string; href: string };
+  relatedLinks?: InternalLink[];
 };
 
-export function RehberPageLayout({ config }: Props) {
-  const path = `/rehber/${config.slug}`;
+export function RehberPageLayout({
+  config,
+  basePath = "/rehber",
+  hub = { name: "Hukuk rehberleri", href: "/rehber" },
+  relatedLinks,
+}: Props) {
+  const path = `${basePath}/${config.slug}`;
   const articleLd = buildArticleJsonLd({
     headline: config.h1,
     description: config.metaDescription,
     url: absoluteUrl(path),
     dateModified: config.updatedAt,
   });
+  const links = relatedLinks ?? getRelatedLinksForRehber(config.slug);
 
   return (
     <div className="min-h-screen bg-white">
@@ -34,7 +47,7 @@ export function RehberPageLayout({ config }: Props) {
       <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <Breadcrumbs
           items={[
-            { name: "Hukuk rehberleri", href: "/rehber" },
+            hub,
             { name: config.h1.split("—")[0]?.trim() ?? config.h1, href: path },
           ]}
         />
@@ -78,7 +91,7 @@ export function RehberPageLayout({ config }: Props) {
           <LegalAiDisclaimer className="mt-10" />
         </article>
       </main>
-      <InternalLinksSection links={getRelatedLinksForRehber(config.slug)} />
+      <InternalLinksSection links={links} />
       <SiteFooter />
     </div>
   );
