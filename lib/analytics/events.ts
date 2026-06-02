@@ -11,6 +11,7 @@ export const AnalyticsEvents = {
   PRIVACY_MASKING_TOGGLED: "Privacy_Masking_Toggled",
   AUTH_SIGNUP_COMPLETED: "Auth_Signup_Completed",
   AUTH_LOGIN_COMPLETED: "Auth_Login_Completed",
+  CONTACT_FORM_SUBMITTED: "Contact_Form_Submitted",
 } as const;
 
 export type FreeToolId =

@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { FaqSection } from "@/components/seo/faq-section";
 import { InternalLinksSection } from "@/components/seo/internal-links-section";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
-import type { RehberPageConfig } from "@/lib/seo/rehber-pages";
+import type { RehberPageConfig } from "@/lib/seo/rehber-types";
 import {
   getRelatedLinksForRehber,
   type InternalLink,

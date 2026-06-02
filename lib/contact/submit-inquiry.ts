@@ -58,18 +58,22 @@ export async function submitContactInquiry(
   try {
     await persistInquiry(input);
 
-    const emailed = await sendViaResend(input);
+    await sendViaResend(input);
 
-    Sentry.captureMessage("📩 İletişim formu", {
-      level: "info",
-      tags: { event: "contact_inquiry", source: input.source ?? "web" },
-      extra: {
+    Sentry.withScope((scope) => {
+      scope.setLevel("warning");
+      scope.setTag("event", "contact_inquiry");
+      scope.setTag("source", input.source ?? "web");
+      scope.setUser({ email: input.email, username: input.name });
+      scope.setContext("contact", {
         name: input.name,
         email: input.email,
-        message: input.message.slice(0, 500),
-        emailed,
-        to: CONTACT_EMAIL,
-      },
+        source: input.source ?? "web",
+        message: input.message.slice(0, 2000),
+      });
+      Sentry.captureMessage("📩 YENİ İLETİŞİM TALEBİ", {
+        fingerprint: ["contact-inquiry"],
+      });
     });
 
     return { ok: true };

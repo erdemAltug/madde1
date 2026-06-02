@@ -1,25 +1,15 @@
-export type FaqItem = { question: string; answer: string };
+import { REHBER_EXTENDED_PAGES } from "@/lib/seo/rehber-pages-extended";
 
-export type RehberSection = {
-  title: string;
-  paragraphs: string[];
-};
+export type {
+  FaqItem,
+  RehberSection,
+  RehberPageConfig,
+  BlogPostConfig,
+} from "@/lib/seo/rehber-types";
 
-export type RehberPageConfig = {
-  slug: string;
-  h1: string;
-  metaTitle: string;
-  metaDescription: string;
-  keywords: string[];
-  intro: string;
-  sections: RehberSection[];
-  faqs: FaqItem[];
-  ctaLabel: string;
-  ctaHref: string;
-  updatedAt: string;
-};
+import type { RehberPageConfig } from "@/lib/seo/rehber-types";
 
-const PAGES: RehberPageConfig[] = [
+const BASE_PAGES: RehberPageConfig[] = [
   {
     slug: "kiraci-haklari",
     h1: "Kiracı hakları rehberi — ev ve iş yeri kiracısı için",
@@ -516,6 +506,8 @@ const PAGES: RehberPageConfig[] = [
     updatedAt: "2026-05-01",
   },
 ];
+
+const PAGES: RehberPageConfig[] = [...BASE_PAGES, ...REHBER_EXTENDED_PAGES];
 
 export const REHBER_PAGES: Record<string, RehberPageConfig> = Object.fromEntries(
   PAGES.map((p) => [p.slug, p]),

@@ -2,65 +2,30 @@
  * Merkezi iç linkleme haritası — B2C hukuk SEO için konu kümeleri.
  */
 
+import { REHBER_SLUGS, getRehberConfig } from "@/lib/seo/rehber-pages";
+
 export type InternalLink = {
   href: string;
   label: string;
   description?: string;
 };
 
-/** Tüm rehber sayfaları — footer ve hub için */
-export const REHBER_HUB_LINKS: InternalLink[] = [
-  {
-    href: "/rehber/kiraci-haklari",
-    label: "Kiracı hakları rehberi",
-    description: "Kira, depozito, tahliye ve artış haklarınız.",
-  },
-  {
-    href: "/rehber/isci-haklari",
-    label: "İşçi hakları rehberi",
-    description: "Fesih, tazminat, izin ve ücret hakları.",
-  },
-  {
-    href: "/rehber/tuketici-haklari",
-    label: "Tüketici hakları",
-    description: "Cayma, iade ve mesafeli satış.",
-  },
-  {
-    href: "/rehber/sozlesme-imzalamadan-once",
-    label: "Sözleşme imzalamadan önce",
-    description: "Herkes için kontrol listesi.",
-  },
-  {
-    href: "/rehber/depozito-iadesi",
-    label: "Depozito iadesi",
-    description: "Ne zaman, nasıl geri alınır?",
-  },
-  {
-    href: "/rehber/kira-artisi-haklari",
-    label: "Kira artışı hakları",
-    description: "Oran, bildirim ve itiraz.",
-  },
-  {
-    href: "/rehber/isten-cikarilinca-ne-yapilir",
-    label: "İşten çıkarılınca ne yapılır?",
-    description: "Adım adım hak arama rehberi.",
-  },
-  {
-    href: "/rehber/kidem-ihbar-tazminati",
-    label: "Kıdem ve ihbar tazminatı",
-    description: "Kim, ne kadar alır?",
-  },
-  {
-    href: "/rehber/tahliye-sureci",
-    label: "Tahliye süreci",
-    description: "Kiracı ve ev sahibi için yol haritası.",
-  },
-  {
-    href: "/rehber/mesafeli-satis-cayma",
-    label: "Cayma hakkı rehberi",
-    description: "14 gün kuralı ve istisnalar.",
-  },
-];
+function shortRehberLabel(cfg: NonNullable<ReturnType<typeof getRehberConfig>>): string {
+  const fromH1 = cfg.h1.split("—")[0]?.trim();
+  const fromTitle = cfg.metaTitle.split("—")[0]?.trim();
+  const raw = fromH1 || fromTitle || cfg.h1;
+  return raw.length > 52 ? `${raw.slice(0, 49)}…` : raw;
+}
+
+/** Tüm rehber sayfaları — footer ve hub için (dinamik) */
+export const REHBER_HUB_LINKS: InternalLink[] = REHBER_SLUGS.map((slug) => {
+  const cfg = getRehberConfig(slug)!;
+  return {
+    href: `/rehber/${slug}`,
+    label: shortRehberLabel(cfg),
+    description: cfg.metaDescription.slice(0, 90),
+  };
+});
 
 /** Popüler sözleşme analizi sayfaları — footer ve iç linkler */
 export const SOZLESME_ANALIZI_FEATURED: InternalLink[] = [

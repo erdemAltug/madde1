@@ -1,30 +1,61 @@
 import Link from "next/link";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
 
 export default function BlogIndexPage() {
+  const posts = BLOG_SLUGS.map((slug) => getBlogPost(slug)).filter(Boolean);
+
   return (
     <div className="min-h-screen bg-white">
       <SiteNavbar />
       <main className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
-        <article>
-          <h1 className="text-3xl font-bold tracking-tight text-madde-ink">
+        <header>
+          <h1 className="text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
             Clause blog
           </h1>
           <p className="mt-4 text-base font-medium leading-relaxed text-slate-600">
-            Bu alan, <strong>yapay zeka sözleşme analizi</strong>, TBK yorumları,
-            KOBİ sözleşme yönetimi ve LegalTech trendleri için uzun biçimli
-            makaleleri barındıracak şekilde hazırlandı. Şu an yayında yazı
-            bulunmuyor; içerik takvimi yakında duyurulacak.
+            <strong>Yapay zeka sözleşme analizi</strong>, kira ve iş hukuku, TBK
+            pratikleri ve LegalTech. Uzun kuyruk sorulara net, arama motoru dostu
+            yanıtlar.
           </p>
-          <p className="mt-4 text-sm text-slate-500">
-            Ana sayfaya dönmek için{" "}
-            <Link href="/" className="font-semibold text-madde-blue hover:underline">
-              buraya tıklayın
-            </Link>
-            .
+          <p className="mt-3 text-sm text-slate-500">
+            Daha derin rehberler için{" "}
+            <Link href="/rehber" className="font-semibold text-indigo-600 hover:underline">
+              hukuk rehberleri
+            </Link>{" "}
+            bölümüne bakın.
           </p>
-        </article>
+        </header>
+
+        <ul className="mt-10 divide-y divide-slate-200">
+          {posts.map((post) => (
+            <li key={post!.slug} className="py-6 first:pt-0">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                {post!.publishedAt}
+              </p>
+              <h2 className="mt-1 text-xl font-bold text-madde-ink">
+                <Link
+                  href={`/blog/${post!.slug}`}
+                  className="hover:text-indigo-700"
+                  prefetch={true}
+                >
+                  {post!.h1}
+                </Link>
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                {post!.excerpt}
+              </p>
+              <Link
+                href={`/blog/${post!.slug}`}
+                className="mt-3 inline-block text-sm font-semibold text-indigo-600 hover:underline"
+                prefetch={true}
+              >
+                Devamını oku →
+              </Link>
+            </li>
+          ))}
+        </ul>
       </main>
       <SiteFooter />
     </div>

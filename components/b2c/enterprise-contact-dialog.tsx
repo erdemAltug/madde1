@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { captureEvent } from "@/lib/analytics/capture";
+import { trackContactLeadSubmitted } from "@/lib/analytics/contact-lead";
 
 type Props = {
   open: boolean;
@@ -71,7 +71,7 @@ export function EnterpriseContactDialog({
         return;
       }
 
-      captureEvent("Contact_Form_Submitted", { source });
+      trackContactLeadSubmitted({ name, email, message, source });
       setSent(true);
     } catch {
       setError("Bağlantı hatası. Lütfen tekrar deneyin.");

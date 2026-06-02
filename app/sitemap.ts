@@ -5,6 +5,7 @@ import { REHBER_SLUGS } from "@/lib/seo/rehber-pages";
 import { HUKUKI_ANALIZ_SLUGS } from "@/lib/seo/hukuki-analiz-pages";
 import { FREE_TOOLS_SITEMAP_PATHS } from "@/lib/seo/free-tools-routes";
 import { YAPAY_ZEKA_HUKUK_SLUGS } from "@/lib/seo/yapay-zeka-hukuk-pages";
+import { BLOG_SLUGS } from "@/lib/seo/blog-posts";
 import { SITE_URL } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -108,6 +109,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  const blog: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.88,
+    },
+    ...BLOG_SLUGS.map((slug) => ({
+      url: `${SITE_URL}/blog/${slug}`,
+      lastModified: lastMod,
+      changeFrequency: "monthly" as const,
+      priority: 0.82,
+    })),
+  ];
+
   return [
     ...staticRoutes,
     ...araclar,
@@ -116,5 +132,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...yapayZekaHukuk,
     ...analiz,
     ...sozlesmeAnalizi,
+    ...blog,
   ];
 }

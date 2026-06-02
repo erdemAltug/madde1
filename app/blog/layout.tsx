@@ -6,8 +6,8 @@ const title = "Hukuk ve LegalTech blog — sözleşme analizi içerikleri";
 
 export const metadata: Metadata = {
   title,
-  description: `${SITE_NAME}: sözleşme analizi, kira sözleşmesi riskleri ve legal AI gündemi. Hukuk teknolojisi, TBK ve KOBİ sözleşme yönetimi yazıları kademeli eklenecek.`,
-  robots: { index: false, follow: true },
+  description: `${SITE_NAME} blog: yapay zeka sözleşme analizi, kira ve iş hukuku, TBK pratikleri ve ücretsiz araç rehberleri.`,
+  robots: { index: true, follow: true },
   keywords: [
     "sözleşme analizi blog",
     "legal AI assistant",

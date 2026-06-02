@@ -117,7 +117,7 @@ export function SiteFooter() {
                     Tüm rehberler
                   </Link>
                 </li>
-                {REHBER_HUB_LINKS.map((link) => (
+                {REHBER_HUB_LINKS.slice(0, 12).map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
