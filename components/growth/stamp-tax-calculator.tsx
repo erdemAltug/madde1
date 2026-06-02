@@ -39,8 +39,11 @@ export function StampTaxCalculator({
     captureEvent(AnalyticsEvents.FREE_TOOL_USED, {
       tool: analyticsToolId,
       surface: analyticsSurface ?? "tool_page",
+      tool_input_monthly: monthly,
+      tool_input_months: months,
+      tool_input_per_mille: perMille,
     });
-  }, [analyticsToolId, analyticsSurface]);
+  }, [analyticsToolId, analyticsSurface, monthly, months, perMille]);
 
   const m = Number(monthly.replace(",", ".")) || 0;
   const mo = Number(months.replace(",", ".")) || 0;

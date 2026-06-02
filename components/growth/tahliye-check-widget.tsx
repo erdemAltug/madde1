@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
+import { buildInputAnalyticsProps } from "@/lib/analytics/input-props";
 import { SITE_HOST } from "@/lib/seo/site";
 
 export function TahliyeCheckWidget({
@@ -63,7 +64,8 @@ export function TahliyeCheckWidget({
     captureEvent(AnalyticsEvents.ANALYSIS_STARTED, {
       source: "tahliye_widget",
       embedded,
-      text_length: t.length,
+      masked_fields: replacementCount,
+      ...buildInputAnalyticsProps(t, { source: "tahliye_widget" }),
     });
     setMessages([]);
     window.setTimeout(() => {

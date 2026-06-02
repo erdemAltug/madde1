@@ -65,11 +65,29 @@ export default function AnalysisPage() {
     if (!supabase) return;
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+      const u = session?.user ?? null;
+      setUser(u);
+      if (u) {
+        void import("@/lib/analytics/identify").then(({ identifyAuthUser }) => {
+          identifyAuthUser(u.id, {
+            email: u.email,
+            user_type: u.user_metadata?.user_type as string | undefined,
+          });
+        });
+      }
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      const u = session?.user ?? null;
+      setUser(u);
+      if (u) {
+        void import("@/lib/analytics/identify").then(({ identifyAuthUser }) => {
+          identifyAuthUser(u.id, {
+            email: u.email,
+            user_type: u.user_metadata?.user_type as string | undefined,
+          });
+        });
+      }
     });
 
     return () => subscription.unsubscribe();

@@ -13,54 +13,85 @@ import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const sozlesmeToolLinks = getSozlesmeAnaliziNavLinks();
 
-const links = [
+const primaryLinks = [
   { href: "/#dene", label: "Hemen dene" },
+  { href: "/analiz", label: "Ücretsiz analiz" },
+];
+
+const discoverLinks = [
   { href: "/rehber", label: "Rehberler" },
   { href: "/yapay-zeka-hukuk", label: "Yapay zeka hukuk" },
   { href: "/sozlesme-analizi", label: "Sözleşme analizi" },
   { href: "/hukuki-analiz", label: "Hukuki analiz" },
+  { href: "/araclar", label: "Ücretsiz araçlar" },
   { href: "/guvenlik", label: "Güvenlik" },
   { href: "/blog", label: "Blog" },
-  { href: "/analiz", label: "Ücretsiz analiz" },
   { href: "/#ozellikler", label: "Özellikler" },
-  { href: "/#sik-riskler", label: "Sözleşme Riskleri" },
-  // { href: "/#fiyatlandirma", label: "Fiyatlandırma" }, // MVP: Ödeme askıya alındı
-  { href: "/#ucretsiz-araclar", label: "Ücretsiz araçlar" },
+  { href: "/#sik-riskler", label: "Sözleşme riskleri" },
 ];
+
+const mobileLinks = [
+  { href: "/#dene", label: "Hemen dene" },
+  { href: "/analiz", label: "Ücretsiz analiz" },
+  ...discoverLinks,
+];
+
+function NavLink({
+  href,
+  label,
+  onNavigate,
+}: {
+  href: string;
+  label: string;
+  onNavigate?: () => void;
+}) {
+  return (
+    <Button variant="ghost" size="sm" asChild className="shrink-0">
+      <Link
+        href={href}
+        className="text-[13px] font-semibold text-slate-600 hover:text-deep-navy"
+        prefetch={true}
+        onClick={onNavigate}
+      >
+        {label}
+      </Link>
+    </Button>
+  );
+}
 
 export function SiteNavbar() {
   const router = useRouter();
   const [mobile, setMobile] = React.useState(false);
   const [toolsOpen, setToolsOpen] = React.useState(false);
+  const [discoverOpen, setDiscoverOpen] = React.useState(false);
   const [mobileTools, setMobileTools] = React.useState(false);
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
-  const toolsRef = React.useRef<HTMLDivElement>(null);
+  const menusRef = React.useRef<HTMLDivElement>(null);
   const userMenuRef = React.useRef<HTMLDivElement>(null);
 
-  // Supabase auth state listener
   React.useEffect(() => {
     const supabase = getSupabaseBrowser();
     if (!supabase) return;
 
-    // Initial session check
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  // Close user menu when clicking outside
   React.useEffect(() => {
     const onDoc = (e: MouseEvent) => {
-      if (!toolsRef.current?.contains(e.target as Node)) {
+      if (!menusRef.current?.contains(e.target as Node)) {
         setToolsOpen(false);
+        setDiscoverOpen(false);
       }
       if (!userMenuRef.current?.contains(e.target as Node)) {
         setUserMenuOpen(false);
@@ -70,11 +101,14 @@ export function SiteNavbar() {
     return () => document.removeEventListener("click", onDoc);
   }, []);
 
+  const closeMobile = () => {
+    setMobile(false);
+    setMobileTools(false);
+  };
+
   const handleLogout = async () => {
     const supabase = getSupabaseBrowser();
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
+    if (supabase) await supabase.auth.signOut();
     setUser(null);
     setUserMenuOpen(false);
     router.push("/");
@@ -83,38 +117,129 @@ export function SiteNavbar() {
 
   const getUserDisplayName = () => {
     if (!user) return "";
-    return user.user_metadata?.full_name || user.email?.split("@")[0] || "Kullanıcı";
+    return (
+      user.user_metadata?.full_name ||
+      user.email?.split("@")[0] ||
+      "Kullanıcı"
+    );
   };
 
-  return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl",
-      )}
+  const authBlock = user ? (
+    <div className="relative" ref={userMenuRef}>
+      <button
+        type="button"
+        onClick={() => setUserMenuOpen((v) => !v)}
+        className="flex max-w-[10rem] items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 transition-colors hover:bg-slate-200 sm:max-w-[12rem]"
+      >
+        <User className="h-4 w-4 shrink-0 text-slate-600" />
+        <span className="truncate text-sm font-semibold text-slate-700">
+          {getUserDisplayName()}
+        </span>
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 text-slate-500 transition-transform",
+            userMenuOpen && "rotate-180",
+          )}
+        />
+      </button>
+      {userMenuOpen ? (
+        <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10">
+          <Link
+            href="/analiz"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
+            onClick={() => setUserMenuOpen(false)}
+          >
+            Analizlerim
+          </Link>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+          >
+            <LogOut className="h-4 w-4" />
+            Çıkış Yap
+          </button>
+        </div>
+      ) : null}
+    </div>
+  ) : (
+    <Button
+      variant="outline"
+      size="sm"
+      className="shrink-0 border-slate-300 font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
+      asChild
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <Link href="/giris" prefetch={true}>
+        Giriş yap
+      </Link>
+    </Button>
+  );
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:gap-4 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-0 text-madde-ink"
-          onClick={() => setMobile(false)}
+          className="shrink-0 text-madde-ink"
+          onClick={closeMobile}
           prefetch={true}
         >
           <ClauseLogo withWordmark wordmarkClassName="text-[1.15rem]" size={34} />
         </Link>
 
-        <nav className="hidden items-center gap-0.5 md:flex">
-          {links.map((l) => (
-            <Button key={l.href} variant="ghost" size="sm" asChild>
-              <Link
-                href={l.href}
-                className="text-[13px] font-semibold text-slate-600 hover:text-deep-navy"
-                prefetch={true}
-              >
-                {l.label}
-              </Link>
-            </Button>
+        {/* Desktop nav — lg+ */}
+        <nav
+          className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 lg:flex"
+          aria-label="Ana menü"
+        >
+          {primaryLinks.map((l) => (
+            <NavLink key={l.href} href={l.href} label={l.label} />
           ))}
-          <div className="relative" ref={toolsRef}>
+
+          <div ref={menusRef} className="flex items-center">
+          <div className="relative shrink-0">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="text-[13px] font-semibold text-slate-600 hover:text-deep-navy"
+              aria-expanded={discoverOpen}
+              aria-haspopup="menu"
+              onClick={() => {
+                setDiscoverOpen((v) => !v);
+                setToolsOpen(false);
+              }}
+            >
+              Keşfet
+              <ChevronDown
+                className={cn(
+                  "ml-0.5 h-4 w-4 opacity-70 transition-transform",
+                  discoverOpen && "rotate-180",
+                )}
+              />
+            </Button>
+            {discoverOpen ? (
+              <div
+                role="menu"
+                className="absolute left-0 top-full z-50 mt-1 w-56 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10"
+              >
+                {discoverLinks.map((l) => (
+                  <Link
+                    key={l.href}
+                    role="menuitem"
+                    href={l.href}
+                    className="block px-3 py-2 text-[13px] font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
+                    onClick={() => setDiscoverOpen(false)}
+                    prefetch={true}
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          <div className="relative shrink-0">
             <Button
               type="button"
               variant="ghost"
@@ -122,7 +247,10 @@ export function SiteNavbar() {
               className="text-[13px] font-semibold text-slate-600 hover:text-deep-navy"
               aria-expanded={toolsOpen}
               aria-haspopup="menu"
-              onClick={() => setToolsOpen((v) => !v)}
+              onClick={() => {
+                setToolsOpen((v) => !v);
+                setDiscoverOpen(false);
+              }}
             >
               Araçlar
               <ChevronDown
@@ -155,86 +283,47 @@ export function SiteNavbar() {
               </div>
             ) : null}
           </div>
+          </div>
         </nav>
 
-        <div className="hidden md:flex items-center gap-3">
-          {user ? (
-            <div className="relative" ref={userMenuRef}>
-              <button
-                type="button"
-                onClick={() => setUserMenuOpen((v) => !v)}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
-              >
-                <User className="w-4 h-4 text-slate-600" />
-                <span className="text-sm font-semibold text-slate-700">
-                  {getUserDisplayName()}
-                </span>
-                <ChevronDown className={cn("w-4 h-4 text-slate-500 transition-transform", userMenuOpen && "rotate-180")} />
-              </button>
-              {userMenuOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10">
-                  <Link
-                    href="/analiz"
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
-                    onClick={() => setUserMenuOpen(false)}
-                  >
-                    Analizlerim
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="flex w-full items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Çıkış Yap
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-slate-300 font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-              asChild
-            >
-              <Link href="/giris" prefetch={true}>Giriş Yap</Link>
-            </Button>
-          )}
-        </div>
+        {/* Sağ: giriş + mobil menü — her zaman görünür alan */}
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          <div className="hidden sm:block">{authBlock}</div>
 
-        <button
-          type="button"
-          className="inline-flex rounded-md p-2 text-slate-600 md:hidden hover:bg-slate-100"
-          aria-expanded={mobile}
-          aria-label="Menü"
-          onClick={() => setMobile((v) => !v)}
-        >
-          {mobile ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+          <button
+            type="button"
+            className="inline-flex rounded-md p-2 text-slate-600 hover:bg-slate-100 lg:hidden"
+            aria-expanded={mobile}
+            aria-label="Menü"
+            onClick={() => setMobile((v) => !v)}
+          >
+            {mobile ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {mobile ? (
-        <div className="border-t border-slate-200/60 bg-white/95 px-4 py-4 backdrop-blur-md md:hidden">
-          <nav className="flex flex-col gap-1">
-            {links.map((l) => (
+        <div className="border-t border-slate-200/60 bg-white/95 px-4 py-4 backdrop-blur-md lg:hidden">
+          <nav className="flex flex-col gap-1" aria-label="Mobil menü">
+            {mobileLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 className="rounded-md px-3 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
-                onClick={() => setMobile(false)}
+                onClick={closeMobile}
                 prefetch={true}
               >
                 {l.label}
               </Link>
             ))}
+
             <button
               type="button"
               className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm font-semibold text-slate-600 hover:bg-slate-50"
               aria-expanded={mobileTools}
               onClick={() => setMobileTools((v) => !v)}
             >
-              Araçlar
+              Sözleşme araçları
               <ChevronDown
                 className={cn(
                   "h-4 w-4 opacity-70 transition-transform",
@@ -249,10 +338,7 @@ export function SiteNavbar() {
                     key={t.href}
                     href={t.href}
                     className="rounded-md py-2 text-[13px] font-medium text-slate-500 hover:text-deep-navy"
-                    onClick={() => {
-                      setMobile(false);
-                      setMobileTools(false);
-                    }}
+                    onClick={closeMobile}
                     prefetch={true}
                   >
                     {t.label}
@@ -260,43 +346,43 @@ export function SiteNavbar() {
                 ))}
               </div>
             ) : null}
-            {user ? (
-              <>
-                <div className="flex items-center gap-2 px-3 py-2">
-                  <User className="w-5 h-5 text-slate-500" />
-                  <span className="text-sm font-semibold text-slate-700">
-                    {getUserDisplayName()}
-                  </span>
-                </div>
-                <Link
-                  href="/analiz"
-                  className="rounded-md px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
-                  onClick={() => setMobile(false)}
-                >
-                  Analizlerim
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleLogout();
-                    setMobile(false);
-                  }}
-                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-semibold text-red-600 hover:bg-red-50"
-                >
-                  <LogOut className="w-4 h-4" />
-                  Çıkış Yap
-                </button>
-              </>
-            ) : (
-              <Link
-                href="/giris"
-                className="mt-2 rounded-md border border-slate-200 px-3 py-2.5 text-center text-sm font-semibold text-slate-600 hover:bg-slate-50"
-                onClick={() => setMobile(false)}
-                prefetch={true}
-              >
-                Giriş Yap
-              </Link>
-            )}
+
+            <div className="mt-3 border-t border-slate-200 pt-3 sm:hidden">
+              {user ? (
+                <>
+                  <div className="flex items-center gap-2 px-3 py-2">
+                    <User className="h-5 w-5 text-slate-500" />
+                    <span className="text-sm font-semibold text-slate-700">
+                      {getUserDisplayName()}
+                    </span>
+                  </div>
+                  <Link
+                    href="/analiz"
+                    className="block rounded-md px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+                    onClick={closeMobile}
+                  >
+                    Analizlerim
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void handleLogout();
+                      closeMobile();
+                    }}
+                    className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-semibold text-red-600 hover:bg-red-50"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Çıkış yap
+                  </button>
+                </>
+              ) : (
+                <Button className="w-full font-semibold" asChild>
+                  <Link href="/giris" onClick={closeMobile} prefetch={true}>
+                    Giriş yap
+                  </Link>
+                </Button>
+              )}
+            </div>
           </nav>
         </div>
       ) : null}

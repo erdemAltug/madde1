@@ -19,6 +19,7 @@ import {
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
+import { EnterpriseContactDialog } from "@/components/b2c/enterprise-contact-dialog";
 
 const ORDER: CreditPackageId[] = ["starter", "pro", "business"];
 
@@ -49,8 +50,14 @@ export function PricingModal({
   showFairUseDisclaimer = true,
 }: Props) {
   const [busy, setBusy] = React.useState<CreditPackageId | null>(null);
+  const [contactOpen, setContactOpen] = React.useState(false);
 
   const run = async (id: CreditPackageId) => {
+    if (id === "business") {
+      onOpenChange(false);
+      setContactOpen(true);
+      return;
+    }
     captureEvent(AnalyticsEvents.PAYMENT_INITIATED, {
       funnel_step: "confirm_checkout",
       package_id: id,
@@ -73,6 +80,7 @@ export function PricingModal({
   };
 
   return (
+    <>
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[92vh] overflow-y-auto border-slate-200/60 bg-white shadow-2xl shadow-slate-900/15 sm:max-w-lg relative">
         {/* Mesh Gradient Background */}
@@ -187,5 +195,11 @@ export function PricingModal({
         <p className="text-center text-[11px] text-slate-500 font-medium">{footerNote}</p>
       </DialogContent>
     </Dialog>
+    <EnterpriseContactDialog
+      open={contactOpen}
+      onOpenChange={setContactOpen}
+      source="pricing_modal_business"
+    />
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "@/components/landing/reveal";
+import { ContactUsTrigger } from "@/components/b2c/contact-us-trigger";
 
 /**
  * Kimlere hitap ettiğimizi anlatan SEO dostu metinler (iç pazarlama jargonu yok).
@@ -67,8 +68,11 @@ export function SeoPersonaSections() {
                   Küçük ve orta ölçekli işletmeler
                 </strong>{" "}
                 de aynı araçla maliyetleri öngörülebilir tutar. Kurumsal ölçek,
-                çoklu kullanıcı veya API ihtiyacı için bizimle iletişime
-                geçebilirsiniz.
+                çoklu kullanıcı veya API ihtiyacı için{" "}
+                <ContactUsTrigger source="seo_persona">
+                  bizimle iletişime geçebilirsiniz
+                </ContactUsTrigger>
+                .
               </p>
             </article>
           </Reveal>

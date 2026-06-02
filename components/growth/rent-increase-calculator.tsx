@@ -40,8 +40,10 @@ export function RentIncreaseCalculator({
     captureEvent(AnalyticsEvents.FREE_TOOL_USED, {
       tool: analyticsToolId,
       surface: analyticsSurface ?? "tool_page",
+      tool_input_current_rent: current,
+      tool_input_increase_rate_pct: rate,
     });
-  }, [analyticsToolId, analyticsSurface]);
+  }, [analyticsToolId, analyticsSurface, current, rate]);
 
   const cur = Number(current.replace(",", ".")) || 0;
   const r = Number(rate.replace(",", ".")) || 0;

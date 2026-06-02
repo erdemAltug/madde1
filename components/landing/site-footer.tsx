@@ -9,6 +9,7 @@ import {
   YAPAY_ZEKA_HUKUK_LINKS,
 } from "@/lib/seo/internal-links";
 import { TrendingUp } from "lucide-react";
+import { CONTACT_EMAIL } from "@/lib/site/contact";
 
 const POPULAR_SEARCHES = [
   {
@@ -222,12 +223,10 @@ export function SiteFooter() {
               >
                 Gizlilik ve güvenlik
               </Link>
-              <a
-                href="mailto:tryclauseai@gmail.com"
-                className="block text-slate-600 font-medium hover:text-deep-navy"
-              >
-                tryclauseai@gmail.com
-              </a>
+              <p className="pt-2 font-bold text-deep-navy">İletişim</p>
+              <span className="block text-slate-600 font-medium">
+                {CONTACT_EMAIL}
+              </span>
             </div>
           </div>
         </div>

@@ -9,6 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ClauseLogo } from "@/components/brand/clause-logo";
 import { getSupabaseBrowser } from "@/lib/supabase/browser";
+import { captureEvent } from "@/lib/analytics/capture";
+import { AnalyticsEvents } from "@/lib/analytics/events";
+import { identifyAuthUser } from "@/lib/analytics/identify";
 
 export default function GirisPage() {
   const router = useRouter();
@@ -44,11 +47,12 @@ export default function GirisPage() {
       return;
     }
     
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    
+    const { data: signInData, error: signInError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
     if (signInError) {
       setError(signInError.message === "Invalid login credentials" 
         ? "Giriş başarısız. Lütfen e-posta ve şifrenizi kontrol edin." 
@@ -56,7 +60,17 @@ export default function GirisPage() {
       setLoading(false);
       return;
     }
-    
+
+    if (signInData.user) {
+      identifyAuthUser(signInData.user.id, {
+        email: signInData.user.email,
+        user_type: signInData.user.user_metadata?.user_type as string | undefined,
+      });
+      captureEvent(AnalyticsEvents.AUTH_LOGIN_COMPLETED, {
+        user_type: signInData.user.user_metadata?.user_type ?? "unknown",
+      });
+    }
+
     router.push("/analiz");
     router.refresh();
   };
@@ -85,7 +99,7 @@ export default function GirisPage() {
       return;
     }
     
-    const { error: signUpError } = await supabase.auth.signUp({
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -95,13 +109,21 @@ export default function GirisPage() {
         },
       },
     });
-    
+
     if (signUpError) {
       setError(signUpError.message);
       setLoading(false);
       return;
     }
-    
+
+    if (signUpData.user) {
+      identifyAuthUser(signUpData.user.id, {
+        email,
+        user_type: userType,
+      });
+      captureEvent(AnalyticsEvents.AUTH_SIGNUP_COMPLETED, { user_type: userType });
+    }
+
     setError("Hesabınız oluşturuldu! E-posta adresinizi onaylayın ve giriş yapın.");
     setIsSignUp(false);
     setLoading(false);

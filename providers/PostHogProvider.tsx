@@ -1,6 +1,7 @@
 "use client";
 
 import { PostHogProvider as PHProvider } from "posthog-js/react";
+import { PostHogBootstrap } from "@/components/analytics/posthog-bootstrap";
 
 const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const host =
@@ -41,6 +42,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <PHProvider apiKey={key} options={options}>
+      <PostHogBootstrap />
       {children}
     </PHProvider>
   );

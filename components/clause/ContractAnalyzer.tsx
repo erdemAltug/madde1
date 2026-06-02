@@ -24,7 +24,9 @@ import { useDailyAnalysis } from "@/hooks/use-daily-analysis";
 import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
+import { buildInputAnalyticsProps } from "@/lib/analytics/input-props";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
+import { notifyBetaLimitReached } from "@/lib/site/contact";
 
 export type ContractAnalyzerProps = {
   sharePath?: string;
@@ -52,6 +54,8 @@ export function ContractAnalyzer({
 
   const phaseRef = React.useRef<"analysis" | "refactor">("analysis");
   const personaRef = React.useRef<PersonaId>("general");
+  const lastInputRef = React.useRef("");
+
   React.useEffect(() => {
     personaRef.current = persona ?? "general";
   }, [persona]);
@@ -99,6 +103,46 @@ export function ContractAnalyzer({
     .filter((x) => x.trim().length > 0)
     .join("\n\n---\n\n");
 
+  const prevStatusRef = React.useRef(status);
+
+  React.useEffect(() => {
+    const prev = prevStatusRef.current;
+    prevStatusRef.current = status;
+    if (
+      (prev === "streaming" || prev === "submitted") &&
+      status === "ready" &&
+      messages.length > 0
+    ) {
+      captureEvent(AnalyticsEvents.ANALYSIS_COMPLETED, {
+        phase: phaseRef.current,
+        paywall: enablePaywall,
+        persona: personaRef.current,
+        message_count: messages.length,
+        assistant_chars: analysisMd.length + refactorMd.length,
+        ...buildInputAnalyticsProps(lastInputRef.current, {
+          source: "contract_analyzer",
+        }),
+      });
+    }
+  }, [
+    status,
+    messages.length,
+    enablePaywall,
+    analysisMd.length,
+    refactorMd.length,
+  ]);
+
+  React.useEffect(() => {
+    if (!error) return;
+    captureEvent(AnalyticsEvents.ANALYSIS_ERROR, {
+      phase: phaseRef.current,
+      error_message: error.message?.slice(0, 200),
+      ...buildInputAnalyticsProps(lastInputRef.current, {
+        source: "contract_analyzer",
+      }),
+    });
+  }, [error]);
+
   const runAnalysis = async () => {
     const t = contract.trim();
     if (!t) return;
@@ -106,7 +150,7 @@ export function ContractAnalyzer({
     
     // MVP: Günlük limit kontrolü
     if (!dailyAnalysis.canAnalyze()) {
-      alert("Ücretsiz beta kullanım limitiniz doldu. Geri bildirim vermek veya daha fazla kredi için bizimle iletişime geçin.");
+      notifyBetaLimitReached();
       return;
     }
 
@@ -121,12 +165,14 @@ export function ContractAnalyzer({
       );
     }
 
+    lastInputRef.current = t;
     captureEvent(AnalyticsEvents.ANALYSIS_STARTED, {
       paywall: enablePaywall,
       compact,
       persona: personaRef.current,
-      text_length: t.length,
       masked_fields: replacementCount,
+      mode: phaseRef.current,
+      ...buildInputAnalyticsProps(t, { source: "contract_analyzer" }),
     });
 
     setMessages([]);
@@ -183,7 +229,7 @@ export function ContractAnalyzer({
 
     // MVP: Günlük limit kontrolü
     if (!dailyAnalysis.canAnalyze()) {
-      alert("Ücretsiz beta kullanım limitiniz doldu. Geri bildirim vermek veya daha fazla kredi için bizimle iletişime geçin.");
+      notifyBetaLimitReached();
       return;
     }
 
@@ -230,7 +276,7 @@ export function ContractAnalyzer({
   const handleUnlock = async () => {
     // MVP: Ücretsiz - direkt aç
     if (!dailyAnalysis.canAnalyze()) {
-      alert("Ücretsiz beta kullanım limitiniz doldu. Geri bildirim vermek veya daha fazla kredi için bizimle iletişime geçin.");
+      notifyBetaLimitReached();
       return;
     }
     dailyAnalysis.consumeAnalysis();
