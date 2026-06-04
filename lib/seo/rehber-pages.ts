@@ -1,4 +1,5 @@
 import { REHBER_EXTENDED_PAGES } from "@/lib/seo/rehber-pages-extended";
+import { REHBER_EXTRA_2_PAGES } from "@/lib/seo/rehber-pages-extra-2";
 
 export type {
   FaqItem,
@@ -507,7 +508,11 @@ const BASE_PAGES: RehberPageConfig[] = [
   },
 ];
 
-const PAGES: RehberPageConfig[] = [...BASE_PAGES, ...REHBER_EXTENDED_PAGES];
+const PAGES: RehberPageConfig[] = [
+  ...BASE_PAGES,
+  ...REHBER_EXTENDED_PAGES,
+  ...REHBER_EXTRA_2_PAGES,
+];
 
 export const REHBER_PAGES: Record<string, RehberPageConfig> = Object.fromEntries(
   PAGES.map((p) => [p.slug, p]),

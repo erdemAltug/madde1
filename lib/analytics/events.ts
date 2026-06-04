@@ -12,6 +12,7 @@ export const AnalyticsEvents = {
   AUTH_SIGNUP_COMPLETED: "Auth_Signup_Completed",
   AUTH_LOGIN_COMPLETED: "Auth_Login_Completed",
   CONTACT_FORM_SUBMITTED: "Contact_Form_Submitted",
+  CONTACT_FORM_ERROR: "Contact_Form_Error",
 } as const;
 
 export type FreeToolId =

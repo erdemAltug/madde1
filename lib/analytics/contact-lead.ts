@@ -1,39 +1,33 @@
 import posthog from "posthog-js";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
+import {
+  buildContactLeadProperties,
+  type ContactLeadPayload,
+} from "@/lib/analytics/contact-lead-props";
 
-/** İletişim formu — PostHog Live events / kişi profilinde görünür */
-export function trackContactLeadSubmitted(payload: {
-  name: string;
-  email: string;
-  message: string;
-  source?: string;
-}): void {
-  const excerpt = payload.message.trim().slice(0, 400);
+/** İletişim formu başarılı — tarayıcıda PostHog + identify */
+export function trackContactLeadSubmitted(payload: ContactLeadPayload): void {
+  const built = buildContactLeadProperties(payload, "client");
 
-  captureEvent(AnalyticsEvents.CONTACT_FORM_SUBMITTED, {
-    source: payload.source ?? "enterprise",
-    contact_name: payload.name,
-    contact_email: payload.email,
-    message_preview: excerpt,
-    message_length: payload.message.length,
-  });
+  captureEvent(built.event, built.properties);
 
   if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
 
   try {
-    posthog.identify(payload.email, {
-      email: payload.email,
-      name: payload.name,
-      last_contact_source: payload.source ?? "enterprise",
-    });
-    posthog.capture(AnalyticsEvents.CONTACT_FORM_SUBMITTED, {
-      source: payload.source ?? "enterprise",
-      contact_name: payload.name,
-      contact_email: payload.email,
-      message_preview: excerpt,
-    });
+    posthog.identify(built.distinct_id, built.person);
   } catch {
     /* ignore */
   }
+}
+
+/** Form hata (isteğe bağlı funnel) */
+export function trackContactLeadError(
+  payload: Partial<ContactLeadPayload> & { source?: string; error_message: string },
+): void {
+  captureEvent(AnalyticsEvents.CONTACT_FORM_ERROR, {
+    source: payload.source ?? "enterprise",
+    contact_email: payload.email,
+    error_message: payload.error_message.slice(0, 200),
+  });
 }

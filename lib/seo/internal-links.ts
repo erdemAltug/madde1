@@ -252,6 +252,31 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
     "/rehber/tuketici-haklari",
     "/sozlesme-analizi/mesafeli-satis-sozlesmesi",
   ],
+  "tahliye-taahhutnamesi-rehberi": [
+    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    "/rehber/tahliye-sureci",
+    "/hukuki-analiz/tahliye-taahhutnamesi",
+  ],
+  "deneme-suresi-rehberi": [
+    "/rehber/isci-haklari",
+    "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    "/rehber/isten-cikarilinca-ne-yapilir",
+  ],
+  "yapay-zeka-sozlesme-kontrolu": [
+    "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    "/blog/yapay-zeka-sozlesme-analizi-nasil-calisir",
+    "/#dene",
+  ],
+  "aidat-ve-kira-faturasi": [
+    "/rehber/kiraci-haklari",
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
+  ],
+  "otomatik-yenileme-sozlesme": [
+    "/rehber/sozlesme-imzalamadan-once",
+    "/rehber/tuketici-haklari",
+    "/hukuki-analiz/sozlesme-risk-analizi",
+  ],
 };
 
 const YAPAY_ZEKA_CLUSTER_MAP: Record<string, string[]> = {
@@ -315,6 +340,7 @@ const ALL_LINKS: InternalLink[] = [
   },
   { href: "/araclar", label: "Tüm ücretsiz araçlar", description: "Hesaplayıcı ve kontrol araçları." },
   { href: "/rehber", label: "Hukuk rehberleri", description: "Herkes için anlaşılır rehberler." },
+  { href: "/blog", label: "Clause blog", description: "Sözleşme ve hukuk yazıları." },
   {
     href: "/yapay-zeka-hukuk",
     label: "Yapay zeka hukuk",
@@ -350,6 +376,7 @@ export function getRelatedLinksForRehber(slug: string): InternalLink[] {
   if (cluster) return resolveLinks(cluster);
   return resolveLinks([
     "/rehber/sozlesme-imzalamadan-once",
+    "/blog",
     "/araclar",
     "/",
   ]);

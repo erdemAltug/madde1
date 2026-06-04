@@ -12,7 +12,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { trackContactLeadSubmitted } from "@/lib/analytics/contact-lead";
+import {
+  trackContactLeadError,
+  trackContactLeadSubmitted,
+} from "@/lib/analytics/contact-lead";
 
 type Props = {
   open: boolean;
@@ -67,14 +70,18 @@ export function EnterpriseContactDialog({
       const data = (await res.json()) as { error?: string; success?: boolean };
 
       if (!res.ok) {
-        setError(data.error ?? "Gönderilemedi. Lütfen tekrar deneyin.");
+        const msg = data.error ?? "Gönderilemedi. Lütfen tekrar deneyin.";
+        setError(msg);
+        trackContactLeadError({ name, email, message, source, error_message: msg });
         return;
       }
 
       trackContactLeadSubmitted({ name, email, message, source });
       setSent(true);
     } catch {
-      setError("Bağlantı hatası. Lütfen tekrar deneyin.");
+      const msg = "Bağlantı hatası. Lütfen tekrar deneyin.";
+      setError(msg);
+      trackContactLeadError({ name, email, message, source, error_message: msg });
     } finally {
       setBusy(false);
     }

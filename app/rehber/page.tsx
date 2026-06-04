@@ -71,6 +71,20 @@ export default function RehberHubPage() {
           </Link>
         </section>
 
+        <section className="mt-8 rounded-2xl border border-indigo-200/60 bg-indigo-50/40 p-6">
+          <h2 className="text-lg font-bold text-madde-ink">Blog yazıları</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Güncel makaleler, kontrol listeleri ve yapay zeka sözleşme analizi ipuçları.
+          </p>
+          <Link
+            href="/blog"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#005BEA] hover:underline"
+          >
+            Tüm blog yazıları
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        </section>
+
         <section className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-6">
           <h2 className="text-lg font-bold text-madde-ink">Konuya göre hızlı erişim</h2>
           <div className="mt-4 flex flex-wrap gap-2">

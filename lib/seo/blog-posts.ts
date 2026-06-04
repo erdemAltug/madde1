@@ -1,5 +1,6 @@
 import { createRehberPage } from "@/lib/seo/rehber-factory";
 import type { BlogPostConfig } from "@/lib/seo/rehber-types";
+import { BLOG_EXTRA_POSTS } from "@/lib/seo/blog-posts-extra";
 
 function blog(
   input: Parameters<typeof createRehberPage>[0] & {
@@ -415,11 +416,13 @@ const POSTS: BlogPostConfig[] = [
   }),
 ];
 
+const ALL_POSTS: BlogPostConfig[] = [...POSTS, ...BLOG_EXTRA_POSTS];
+
 export const BLOG_POSTS: Record<string, BlogPostConfig> = Object.fromEntries(
-  POSTS.map((p) => [p.slug, p]),
+  ALL_POSTS.map((p) => [p.slug, p]),
 );
 
-export const BLOG_SLUGS = POSTS.map((p) => p.slug);
+export const BLOG_SLUGS = ALL_POSTS.map((p) => p.slug);
 
 export function getBlogPost(slug: string): BlogPostConfig | undefined {
   return BLOG_POSTS[slug];

@@ -28,6 +28,7 @@
     "geist": "^1.7.0",
     "lucide-react": "^0.577.0",
     "next": "14.2.35",
+    "nodemailer": "^8.0.10",
     "posthog-js": "^1.363.1",
     "react": "^18",
     "react-diff-viewer-continued": "^4.2.0",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",

@@ -1,4 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
+import { buildContactLeadProperties } from "@/lib/analytics/contact-lead-props";
+import { capturePostHogServer } from "@/lib/analytics/posthog-server";
 import { CONTACT_EMAIL } from "@/lib/site/contact";
 import { getSupabaseService } from "@/lib/supabase/service";
 import type { ContactInquiryInput } from "@/lib/contact/schema";
@@ -60,16 +62,35 @@ export async function submitContactInquiry(
 
     await sendViaResend(input);
 
+    const lead = buildContactLeadProperties(
+      {
+        name: input.name,
+        email: input.email,
+        message: input.message,
+        source: input.source,
+      },
+      "server",
+    );
+
+    await capturePostHogServer(
+      lead.distinct_id,
+      lead.event,
+      lead.properties,
+      lead.person,
+    );
+
     Sentry.withScope((scope) => {
       scope.setLevel("warning");
       scope.setTag("event", "contact_inquiry");
       scope.setTag("source", input.source ?? "web");
+      scope.setTag("posthog_event", lead.event);
       scope.setUser({ email: input.email, username: input.name });
       scope.setContext("contact", {
         name: input.name,
         email: input.email,
         source: input.source ?? "web",
         message: input.message.slice(0, 2000),
+        message_preview: lead.properties.message_preview,
       });
       Sentry.captureMessage("📩 YENİ İLETİŞİM TALEBİ", {
         fingerprint: ["contact-inquiry"],
