@@ -13,7 +13,7 @@ export function PricingSection() {
   const [enterpriseOpen, setEnterpriseOpen] = React.useState(false);
 
   const handleFreeStart = () => {
-    router.push("/giris");
+    router.push("/giris?kayit=1");
   };
 
   return (
@@ -48,15 +48,15 @@ export function PricingSection() {
                 0₺<span className="text-sm font-medium text-slate-500">/ay</span>
               </p>
               <p className="text-sm text-slate-500 mt-1 font-medium">
-                3 Analiz Kredisi (Hediye)
+                Kayıt ol — günde 10 analiz
               </p>
             </CardHeader>
             <CardContent className="flex-1 p-6 pt-2 flex flex-col">
               <ul className="space-y-3 flex-1">
                 {[
-                  "3 analiz kredisi",
-                  "Temel risk özeti",
-                  "Hızlı sözleşme kontrolü",
+                  "Günde 10 analiz (kayıtlı)",
+                  "Detaylı risk özeti",
+                  "Sözleşme iyileştirme",
                   "PDF / yazdır",
                   "TBK + güncel mevzuat özeti",
                 ].map((f) => (

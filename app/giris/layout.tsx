@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { twitterSummaryLargeImage } from "@/lib/seo/og";
 import { SITE_NAME, absoluteUrl } from "@/lib/seo/site";
 
@@ -22,5 +23,9 @@ export default function GirisLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#F8FAFC]" />}>
+      {children}
+    </Suspense>
+  );
 }

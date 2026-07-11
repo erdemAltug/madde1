@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, Lock, AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,7 @@ import { identifyAuthUser } from "@/lib/analytics/identify";
 
 export default function GirisPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isSignUp, setIsSignUp] = React.useState(false);
   const [userType, setUserType] = React.useState<"avukat" | "bireysel">("bireysel");
   const [error, setError] = React.useState<string | null>(null);
@@ -22,6 +23,35 @@ export default function GirisPage() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [name, setName] = React.useState("");
+
+  React.useEffect(() => {
+    if (searchParams.get("kayit") === "1") {
+      setIsSignUp(true);
+    }
+    const oauthError = searchParams.get("error");
+    if (oauthError === "oauth") {
+      setError("Google ile giriş tamamlanamadı. Lütfen tekrar deneyin.");
+    }
+  }, [searchParams]);
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    const supabase = getSupabaseBrowser();
+    if (!supabase) {
+      setError("Sistem şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.");
+      return;
+    }
+
+    const redirectTo = `${window.location.origin}/auth/callback?next=/analiz`;
+    const { error: oauthError } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+
+    if (oauthError) {
+      setError(oauthError.message);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,7 +181,7 @@ export default function GirisPage() {
           </h2>
           
           <p className="text-xl text-slate-300 max-w-md">
-            Hukuk özelinde eğitilmiş yapay zeka destekli asistanımızla, sözleşmelerinizi hızlıca analiz edin, riskleri görün ve hukuki süreçlerinizi kolaylaştırın.
+            Sözleşmelerinizi ücretsiz analiz edin. Kayıt ol — günde 10 analiz, geçmiş kayıtları ve PDF indirme.
           </p>
           
           <div className="mt-12 grid grid-cols-2 gap-6 text-left max-w-md">
@@ -198,9 +228,9 @@ export default function GirisPage() {
                 {isSignUp ? "Hesap Oluşturun" : "Hesabınıza Giriş Yapın"}
               </h1>
               <p className="text-slate-500 font-medium">
-                {isSignUp 
-                  ? "Hukuki süreçlerinizi yönetmeye başlayın." 
-                  : "Hukuki süreçlerinizi yönetmeye devam edin."}
+                {isSignUp
+                  ? "Ücretsiz hesap — günde 10 analiz, kredi kartı gerekmez."
+                  : "Hesabınıza giriş yapın ve analizlerinize devam edin."}
               </p>
             </div>
 
@@ -331,6 +361,7 @@ export default function GirisPage() {
               type="button"
               variant="outline"
               className="w-full h-12 rounded-xl font-semibold border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400"
+              onClick={() => void handleGoogleSignIn()}
             >
               <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                 <path

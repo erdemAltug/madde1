@@ -34,6 +34,8 @@ type Props = {
   detailUnlocked?: boolean;
   onRequestUnlock?: () => void;
   unlockBusy?: boolean;
+  isLoggedIn?: boolean;
+  registeredLimit?: number;
   /** Sunucu tarafı kayıt yok sayılır; sohbet ve özet sıfırlanır */
   onRequestServerPurge?: () => void;
 };
@@ -53,6 +55,8 @@ export function AnalysisPanel({
   detailUnlocked,
   onRequestUnlock,
   unlockBusy,
+  isLoggedIn = false,
+  registeredLimit = 10,
   onRequestServerPurge,
 }: Props) {
   const [paywallPulse, setPaywallPulse] = React.useState(false);
@@ -121,7 +125,7 @@ export function AnalysisPanel({
         {!hasAnyPanelContent && !busy ? (
           <p className="text-sm text-slate-600">
             {paywallActive
-              ? "Metnini yapıştır, ücretsiz risk özetini gör; detaylar için kredi kullan."
+              ? "Metnini yapıştır, ücretsiz risk özetini gör; detaylar kayıt sonrası açılır."
               : "Analiz sonuçları akış halinde burada görünecek. Metninizi yapıştırıp analiz ile başlayın."}
           </p>
         ) : null}
@@ -146,8 +150,8 @@ export function AnalysisPanel({
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-white from-30% via-white/92 to-transparent px-3 pb-6 pt-28">
               <div className="pointer-events-auto w-full max-w-md text-center">
                 <p className="text-base font-bold tracking-tight text-slate-900">
-                  Bu risklerin detaylı çözümünü ve sizi koruyacak düzeltme
-                  metnini görmek için kilidi açın.
+                  Risk özeti hazır — detaylı madde analizi ve düzeltme önerileri
+                  kayıtlı kullanıcılara açık.
                 </p>
                 <Button
                   type="button"
@@ -157,13 +161,22 @@ export function AnalysisPanel({
                 >
                   {unlockBusy ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : isLoggedIn ? (
+                    "Detayı aç — ücretsiz"
                   ) : (
-                    "Giriş yap detayı aç"
+                    "Ücretsiz kayıt ol — detayı gör"
                   )}
                 </Button>
-                <p className="mt-2 text-[11px] text-slate-500">
-                  Kredin varsa tek tıkla açılır; yoksa paket seçersin.
-                </p>
+                {!isLoggedIn ? (
+                  <p className="mt-2 text-[11px] text-slate-500">
+                    Kayıt olmadan risk özeti görünür; detay ve iyileştirme için
+                    hesap gerekir. Günde {registeredLimit} analiz, kredi kartı yok.
+                  </p>
+                ) : (
+                  <p className="mt-2 text-[11px] text-slate-500">
+                    Günlük limitinden 1 hak kullanılır.
+                  </p>
+                )}
               </div>
             </div>
           </div>

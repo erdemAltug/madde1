@@ -163,16 +163,27 @@ export function SiteNavbar() {
       ) : null}
     </div>
   ) : (
-    <Button
-      variant="outline"
-      size="sm"
-      className="shrink-0 border-slate-300 font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
-      asChild
-    >
-      <Link href="/giris" prefetch={true}>
-        Giriş yap
-      </Link>
-    </Button>
+    <div className="flex shrink-0 items-center gap-2">
+      <Button
+        variant="ghost"
+        size="sm"
+        className="hidden font-semibold text-slate-600 hover:text-deep-navy sm:inline-flex"
+        asChild
+      >
+        <Link href="/giris" prefetch={true}>
+          Giriş
+        </Link>
+      </Button>
+      <Button
+        size="sm"
+        className="shrink-0 rounded-lg bg-indigo-600 font-semibold text-white hover:bg-indigo-700"
+        asChild
+      >
+        <Link href="/giris?kayit=1" prefetch={true}>
+          Ücretsiz kayıt
+        </Link>
+      </Button>
+    </div>
   );
 
   return (
@@ -376,9 +387,9 @@ export function SiteNavbar() {
                   </button>
                 </>
               ) : (
-                <Button className="w-full font-semibold" asChild>
-                  <Link href="/giris" onClick={closeMobile} prefetch={true}>
-                    Giriş yap
+                <Button className="w-full font-semibold bg-indigo-600 hover:bg-indigo-700" asChild>
+                  <Link href="/giris?kayit=1" onClick={closeMobile} prefetch={true}>
+                    Ücretsiz kayıt ol
                   </Link>
                 </Button>
               )}

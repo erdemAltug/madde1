@@ -21,12 +21,15 @@ import { WorkspaceModeTabs, type WorkspaceMode } from "@/components/b2c/workspac
 import { ContractGenerator } from "@/components/b2c/contract-generator";
 // import { useWallet } from "@/hooks/use-wallet";
 import { useDailyAnalysis } from "@/hooks/use-daily-analysis";
+import { useAuthSession } from "@/hooks/use-auth-session";
+import { SignupNudgeBanner } from "@/components/growth/signup-nudge-banner";
+import { LimitReachedDialog } from "@/components/growth/limit-reached-dialog";
+import { SignupUnlockDialog } from "@/components/growth/signup-unlock-dialog";
 import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { buildInputAnalyticsProps } from "@/lib/analytics/input-props";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
-import { notifyBetaLimitReached } from "@/lib/site/contact";
 
 export type ContractAnalyzerProps = {
   sharePath?: string;
@@ -61,8 +64,15 @@ export function ContractAnalyzer({
   }, [persona]);
 
   // MVP: Günlük ücretsiz analiz sistemi
-  const dailyAnalysis = useDailyAnalysis();
-  // const wallet = useWallet(); // MVP: Askıya alındı
+  const { userId, isLoggedIn, loading: authLoading } = useAuthSession();
+  const dailyAnalysis = useDailyAnalysis(userId);
+  const [limitDialogOpen, setLimitDialogOpen] = React.useState(false);
+  const [signupUnlockOpen, setSignupUnlockOpen] = React.useState(false);
+  const [showSignupNudge, setShowSignupNudge] = React.useState(false);
+
+  const openLimitDialog = React.useCallback(() => {
+    setLimitDialogOpen(true);
+  }, []);
 
   const flashMaskNotice = React.useCallback((message: string) => {
     setMaskNotice(message);
@@ -119,10 +129,14 @@ export function ContractAnalyzer({
         persona: personaRef.current,
         message_count: messages.length,
         assistant_chars: analysisMd.length + refactorMd.length,
+        is_logged_in: isLoggedIn,
         ...buildInputAnalyticsProps(lastInputRef.current, {
           source: "contract_analyzer",
         }),
       });
+      if (!isLoggedIn && !authLoading) {
+        setShowSignupNudge(true);
+      }
     }
   }, [
     status,
@@ -130,6 +144,8 @@ export function ContractAnalyzer({
     enablePaywall,
     analysisMd.length,
     refactorMd.length,
+    isLoggedIn,
+    authLoading,
   ]);
 
   React.useEffect(() => {
@@ -150,7 +166,7 @@ export function ContractAnalyzer({
     
     // MVP: Günlük limit kontrolü
     if (!dailyAnalysis.canAnalyze()) {
-      notifyBetaLimitReached();
+      openLimitDialog();
       return;
     }
 
@@ -229,7 +245,7 @@ export function ContractAnalyzer({
 
     // MVP: Günlük limit kontrolü
     if (!dailyAnalysis.canAnalyze()) {
-      notifyBetaLimitReached();
+      openLimitDialog();
       return;
     }
 
@@ -274,9 +290,12 @@ export function ContractAnalyzer({
   */
 
   const handleUnlock = async () => {
-    // MVP: Ücretsiz - direkt aç
+    if (!isLoggedIn) {
+      setSignupUnlockOpen(true);
+      return;
+    }
     if (!dailyAnalysis.canAnalyze()) {
-      notifyBetaLimitReached();
+      openLimitDialog();
       return;
     }
     dailyAnalysis.consumeAnalysis();
@@ -379,7 +398,7 @@ export function ContractAnalyzer({
                   </ShinyAnalyzeButton>
                   <p className="text-[11px] text-slate-500 font-medium">
                     {enablePaywall
-                      ? `Günlük ${dailyAnalysis.limit} ücretsiz analiz hakkınız var — kalan: ${dailyAnalysis.remaining}`
+                      ? `Günlük ${dailyAnalysis.limit} ücretsiz analiz — kalan: ${dailyAnalysis.remaining}${!isLoggedIn ? " · Kayıt ol → 10/gün" : ""}`
                       : "Tam analiz başlatılıyor..."}
                   </p>
                 </div>
@@ -419,6 +438,15 @@ export function ContractAnalyzer({
             </div>
 
             <div className="min-w-0">
+            {showSignupNudge && !isLoggedIn && analysisMd && !busy ? (
+              <div className="mb-4">
+                <SignupNudgeBanner
+                  remaining={dailyAnalysis.remaining}
+                  guestLimit={dailyAnalysis.guestLimit}
+                  registeredLimit={dailyAnalysis.registeredLimit}
+                />
+              </div>
+            ) : null}
             <AnalysisPanel
               analysisMarkdown={analysisMd}
               refactorMarkdown={refactorMd}
@@ -434,6 +462,8 @@ export function ContractAnalyzer({
               detailUnlocked={detailUnlocked || !enablePaywall}
               onRequestUnlock={() => void handleUnlock()}
               unlockBusy={unlockBusy}
+              isLoggedIn={isLoggedIn}
+              registeredLimit={dailyAnalysis.registeredLimit}
               onRequestServerPurge={() => {
                 setMessages([]);
                 setTeaser(null);
@@ -472,6 +502,18 @@ export function ContractAnalyzer({
         }}
       />
       */}
+      <LimitReachedDialog
+        open={limitDialogOpen}
+        onOpenChange={setLimitDialogOpen}
+        guestLimit={dailyAnalysis.guestLimit}
+        registeredLimit={dailyAnalysis.registeredLimit}
+        isLoggedIn={isLoggedIn}
+      />
+      <SignupUnlockDialog
+        open={signupUnlockOpen}
+        onOpenChange={setSignupUnlockOpen}
+        registeredLimit={dailyAnalysis.registeredLimit}
+      />
     </div>
   );
 }
