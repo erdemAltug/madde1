@@ -20,4 +20,6 @@ export type FreeToolId =
   | "stamp_tax"
   | "tahliye_check"
   | "rent_increase_page"
-  | "stamp_tax_page";
+  | "stamp_tax_page"
+  | "kidem_severance_page"
+  | "ihbar_severance_page";

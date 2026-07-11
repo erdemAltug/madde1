@@ -6,6 +6,7 @@ import { HUKUKI_ANALIZ_SLUGS } from "@/lib/seo/hukuki-analiz-pages";
 import { FREE_TOOLS_SITEMAP_PATHS } from "@/lib/seo/free-tools-routes";
 import { YAPAY_ZEKA_HUKUK_SLUGS } from "@/lib/seo/yapay-zeka-hukuk-pages";
 import { BLOG_SLUGS } from "@/lib/seo/blog-posts";
+import { HAKLARIM_SLUGS } from "@/lib/seo/haklarim-pages";
 import { SITE_URL } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -18,6 +19,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastMod,
       changeFrequency: "monthly",
       priority: 0.88,
+    },
+    {
+      url: `${SITE_URL}/hakkimizda`,
+      lastModified: lastMod,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
+      url: `${SITE_URL}/gizlilik`,
+      lastModified: lastMod,
+      changeFrequency: "monthly",
+      priority: 0.85,
     },
     {
       url: `${SITE_URL}/analiz`,
@@ -124,11 +137,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  const haklarim: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/haklarim`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.91,
+    },
+    ...HAKLARIM_SLUGS.map((slug) => ({
+      url: `${SITE_URL}/haklarim/${slug}`,
+      lastModified: lastMod,
+      changeFrequency: "monthly" as const,
+      priority: 0.88,
+    })),
+  ];
+
   return [
     ...staticRoutes,
     ...araclar,
     ...rehber,
     ...hukukiAnaliz,
+    ...haklarim,
     ...yapayZekaHukuk,
     ...analiz,
     ...sozlesmeAnalizi,

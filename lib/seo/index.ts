@@ -47,5 +47,11 @@ export {
   getRelatedLinksForHukukiAnaliz,
   getRelatedLinksForYapayZekaHukuk,
   YAPAY_ZEKA_HUKUK_LINKS,
+  getRelatedLinksForHaklarim,
   type InternalLink,
 } from "./internal-links";
+export {
+  HAKLARIM_PAGES,
+  HAKLARIM_SLUGS,
+  getHaklarimConfig,
+} from "./haklarim-pages";

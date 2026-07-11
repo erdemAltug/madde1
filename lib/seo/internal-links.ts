@@ -301,10 +301,9 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   ],
   "gunluk-hukuk-ihtiyaclari": [
     "/araclar",
+    "/haklarim",
     "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
     "/rehber/kiraci-haklari",
-    "/rehber/isci-haklari",
-    "/rehber/tuketici-haklari",
   ],
   "kira-borcu-takibi-icra": [
     "/hukuki-analiz/kira-borcu-takibi",
@@ -434,6 +433,18 @@ const ALL_LINKS: InternalLink[] = [
     description: "AI ön tarama.",
   },
   { href: "/araclar", label: "Tüm ücretsiz araçlar", description: "Hesaplayıcı ve kontrol araçları." },
+  {
+    href: "/araclar/kidem-tazminati-hesaplama",
+    label: "Kıdem tazminatı hesaplama",
+    description: "Ücretsiz tahmini hesap.",
+  },
+  {
+    href: "/araclar/ihbar-tazminati-hesaplama",
+    label: "İhbar tazminatı hesaplama",
+    description: "İhbar süresi tahmini.",
+  },
+  { href: "/haklarim", label: "Haklarım", description: "Senaryoya göre hukuki haklar." },
+  { href: "/hakkimizda", label: "Hakkımızda", description: "Clause ve misyon." },
   { href: "/rehber", label: "Hukuk rehberleri", description: "Herkes için anlaşılır rehberler." },
   { href: "/blog", label: "Clause blog", description: "Sözleşme ve hukuk yazıları." },
   {
@@ -535,4 +546,56 @@ export function getRelatedLinksForYapayZekaHukuk(slug: string): InternalLink[] {
   const cluster = YAPAY_ZEKA_CLUSTER_MAP[slug];
   if (cluster) return resolveLinks(cluster);
   return resolveLinks(["/yapay-zeka-hukuk", "/rehber", "/"]);
+}
+
+const HAKLARIM_CLUSTER_MAP: Record<string, string[]> = {
+  "isten-atildim-haklarim": [
+    "/araclar/kidem-tazminati-hesaplama",
+    "/araclar/ihbar-tazminati-hesaplama",
+    "/rehber/isten-cikarilinca-ne-yapilir",
+    "/hukuki-analiz/is-cikarilma-tazminat",
+    "/sozlesme-analizi/is-sozlesmesi-riskleri",
+  ],
+  "kiraci-haklarim": [
+    "/rehber/kiraci-haklari",
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
+    "/haklarim/depozito-haklarim",
+  ],
+  "tuketici-haklarim": [
+    "/rehber/tuketici-haklari",
+    "/rehber/online-alisveris-14-gun-cayma",
+    "/sozlesme-analizi/mesafeli-satis-sozlesmesi",
+  ],
+  "depozito-haklarim": [
+    "/rehber/depozito-iadesi",
+    "/hukuki-analiz/depozito-anlasmazligi",
+    "/rehber/kibris-kira-depozito-anlasmazligi",
+  ],
+  "kira-artisi-haklarim": [
+    "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
+    "/rehber/kira-artisi-haklari",
+    "/blog/kira-artisi-itiraz-nasil-yapilir",
+  ],
+  "freelance-haklarim": [
+    "/sozlesme-analizi/freelance-yazilim-kontrati",
+    "/rehber/freelance-sozlesme-rehberi",
+    "/blog/freelance-sozlesme-fatura-rehberi",
+  ],
+  "is-sozlesmesi-haklarim": [
+    "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    "/rehber/isci-haklari",
+    "/rehber/is-sozlesmesi-ucret-kesintisi",
+  ],
+  "evden-cikarilma-haklarim": [
+    "/rehber/tahliye-sureci",
+    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    "/hukuki-analiz/tahliye-taahhutnamesi",
+  ],
+};
+
+export function getRelatedLinksForHaklarim(slug: string): InternalLink[] {
+  const cluster = HAKLARIM_CLUSTER_MAP[slug];
+  if (cluster) return resolveLinks(cluster);
+  return resolveLinks(["/haklarim", "/rehber", "/araclar", "/"]);
 }

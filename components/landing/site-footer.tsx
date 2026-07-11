@@ -41,8 +41,12 @@ const POPULAR_SEARCHES = [
     href: "/sozlesme-analizi/kira-sozlesmesi-analizi",
   },
   {
-    label: "Damga vergisi hesaplama",
-    href: "/araclar/damga-vergisi-hesaplama",
+    label: "Kıdem tazminatı hesaplama",
+    href: "/araclar/kidem-tazminati-hesaplama",
+  },
+  {
+    label: "İşten atıldım haklarım",
+    href: "/haklarim/isten-atildim-haklarim",
   },
 ];
 
@@ -217,11 +221,25 @@ export function SiteFooter() {
                 Blog
               </Link>
               <Link
+                href="/hakkimizda"
+                prefetch={true}
+                className="block text-slate-600 font-medium hover:text-deep-navy"
+              >
+                Hakkımızda
+              </Link>
+              <Link
+                href="/gizlilik"
+                prefetch={true}
+                className="block text-slate-600 font-medium hover:text-deep-navy"
+              >
+                Gizlilik politikası
+              </Link>
+              <Link
                 href="/guvenlik"
                 prefetch={true}
                 className="block text-slate-600 font-medium hover:text-deep-navy"
               >
-                Gizlilik ve güvenlik
+                Güvenlik ve KVKK
               </Link>
               <p className="pt-2 font-bold text-deep-navy">İletişim</p>
               <span className="block text-slate-600 font-medium">

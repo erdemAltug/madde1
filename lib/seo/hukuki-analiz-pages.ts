@@ -1,4 +1,4 @@
-import type { FaqItem, HukukiAnalizPageConfig } from "./rehber-types";
+import type { HukukiAnalizPageConfig } from "./rehber-types";
 import { HUKUKI_ANALIZ_EXTRA_PAGES } from "./hukuki-analiz-pages-extra";
 
 export type { FaqItem, HukukiAnalizPageConfig } from "./rehber-types";

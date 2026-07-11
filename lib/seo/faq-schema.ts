@@ -42,3 +42,28 @@ export function buildArticleJsonLd(opts: {
     },
   };
 }
+
+export function buildHowToJsonLd(opts: {
+  name: string;
+  description: string;
+  url: string;
+  steps: string[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: opts.name,
+    description: opts.description,
+    inLanguage: "tr-TR",
+    step: opts.steps.map((text, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: `Adım ${i + 1}`,
+      text,
+    })),
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": opts.url,
+    },
+  };
+}
