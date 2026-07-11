@@ -3,15 +3,16 @@ import { SITE_NAME } from "@/lib/seo/site";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl } from "@/lib/seo/site";
 
-const title = "Hukuk rehberleri — herkes için sözleşme ve hak bilgisi";
+const title = "Hukuk rehberleri — günlük hukuk ihtiyaçları ve hak bilgisi";
 const description =
-  "Kiracı, işçi ve tüketici hakları; kira artışı, depozito, tahliye ve işten çıkarma rehberleri. Avukat olmadan önce bilgi, Clause ile ücretsiz sözleşme kontrolü.";
+  "64+ rehber: kiracı, işçi ve tüketici hakları; kira artışı, depozito, tahliye, abonelik iptali ve ücretsiz sözleşme analizi. Günlük hukuk ihtiyaçları için Clause.";
 
 export const metadata: Metadata = {
   title,
   description,
   keywords: [
     "hukuk rehberi",
+    "günlük hukuk ihtiyaçları",
     "kiracı hakları",
     "işçi hakları",
     "tüketici hakları",

@@ -331,4 +331,63 @@ export const BLOG_EXTRA_POSTS: BlogPostConfig[] = [
     ],
     ctaHref: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
   }),
+  blog({
+    slug: "kira-takip-raporu-yapay-zeka-analizi",
+    h1: "Kira takip raporu ve yapay zeka analizi — kiracı ve mal sahibi için",
+    metaTitle: "Kira takip raporu yapay zeka analizi — ücretsiz ön kontrol",
+    metaDescription:
+      "Kira borcu, artış ve depozito takibinde yapay zeka ile sözleşme raporu. Kira takip sürecinde riskli maddeleri yakalayın; ücretsiz AI analizi.",
+    keywords: [
+      "kira takip raporu yapay zeka analizi",
+      "yapay zeka ile kira takibi",
+      "kira takip AI",
+      "kira sözleşmesi rapor analizi",
+    ],
+    excerpt:
+      "Kira takibi sadece ödeme hatırlatması değil — sözleşme maddelerini izlemek de gerekir.",
+    publishedAt: "2026-07-11",
+    intro:
+      "Kira takip araçları çoğunlukla ödeme ve vade hatırlatması sunar. Oysa asıl risk sözleşmedeki artış, fesih ve depozito maddelerinde gizlidir. Yapay zeka kira analizi, 'kira takip raporu' mantığıyla metni periyodik olarak tarayıp risk özetini günceller.",
+    sections: [
+      {
+        title: "Kira takibi neden sözleşme analizi gerektirir?",
+        paragraphs: [
+          "Kira artış bildirimi geldiğinde sözleşmedeki formül ve tavan kontrol edilmelidir. Tahliye veya fesih sürecinde ihbar süreleri sözleşmeden okunur.",
+          "Depozito iadesi veya kesinti anlaşmazlığında sözleşmedeki hasar ve teminat maddeleri belirleyicidir.",
+        ],
+      },
+      {
+        title: "Yapay zeka raporu ne sunar?",
+        paragraphs: [
+          "Clause, kira sözleşmesini madde madde tarar; artış, depozito, tahliye taahhüdü ve fesih başlıklarını özetler.",
+          "Manuel takip yerine AI ön tarama ile 'rapor' niteliğinde risk çerçevesi alırsınız; nihai karar için avukata danışın.",
+        ],
+      },
+      {
+        title: "Pratik kullanım senaryoları",
+        paragraphs: [
+          "Yıllık artış öncesi: sözleşmeyi yeniden taratın, hesaplayıcı ile tutarı karşılaştırın.",
+          "Tahliye öncesi: depozito ve teslim maddelerini kontrol edin; tutanak hazırlayın.",
+          "Uzun süreli kira: otomatik yenileme ve bildirim sürelerini takip listesine alın.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Kira takip uygulaması ile Clause farkı nedir?",
+        answer:
+          "Ödeme takip uygulamaları borç vadesini izler; Clause sözleşme hukuk risklerini analiz eder. İkisi birbirini tamamlar.",
+      },
+      {
+        question: "Rapor periyodik üretilir mi?",
+        answer:
+          "Sözleşme değiştiğinde veya yıllık artış döneminde yeniden tarama önerilir.",
+      },
+      {
+        question: "Ücretsiz mi?",
+        answer: "Günlük ücretsiz ön tarama hakkı mevcuttur.",
+      },
+    ],
+    ctaHref: "/yapay-zeka-hukuk/yapay-zeka-kira-sozlesmesi",
+  }),
 ];

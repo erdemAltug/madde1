@@ -2,7 +2,25 @@
 
 > **Hedef:** Türkçe “yapay zeka sözleşme analizi”, kira/iş hukuku uzun kuyruk aramalarında organik trafik.
 > **Mülk:** [Google Search Console](https://search.google.com/search-console) → `https://tryclause.tech/`
-> **Son güncelleme:** Haziran 2026
+> **Son güncelleme:** Temmuz 2026
+
+---
+
+## GSC anlık durum (Temmuz 2026)
+
+| Metrik | Değer | Yorum |
+|--------|-------|-------|
+| Gösterim trendi | 0–2 → **15/gün** (Haziran sonu) | İndeks ve keşif çalışıyor |
+| Tıklama | 0–1/gün | **CTR sorunu** — title/description optimizasyonu |
+| Top sorgu (gösterim) | `kıbrıs eşya hasar depozitosu anlaşmazlıkları` (10) | Yeni rehber: `/rehber/kibris-kira-depozito-anlasmazligi` |
+| Top sorgu (gösterim) | `kira takip raporu yapay zeka analizi` (8) | Yeni blog + yapay-zeka-kira meta güncellemesi |
+| Top sorgu (gösterim) | `yapay zeka ile kira takibi` (5) | `/yapay-zeka-hukuk/yapay-zeka-kira-sozlesmesi` |
+| Tek tıklama | `ücretsiz olan` (1) | Ücretsiz CTA'ları title'da öne çıkar |
+
+**Hemen yapılacaklar (deploy sonrası):**
+- [ ] GSC → URL denetimi → yeni 3 URL'yi dizine ekle
+- [ ] Haftalık sorgu raporunu izle; 5+ gösterim alan sorgulara içerik ekle
+- [ ] CTR < %3 olan sayfalarda meta title A/B (ücretsiz, 2026, soru formatı)
 
 ---
 
@@ -10,7 +28,7 @@
 
 | Alan | Durum |
 |------|--------|
-| Sitemap URL sayısı | ~**125** (rehber **50**, blog **27**, sözleşme analizi ~22, yapay-zeka-hukuk 8, araçlar, hukuki-analiz vb.) |
+| Sitemap URL sayısı | ~**155** (rehber **64**, blog **40**, sözleşme analizi ~22, yapay-zeka-hukuk 8, hukuki-analiz 9, araçlar vb.) |
 | Programmatic SEO | `/rehber`, `/blog`, `/sozlesme-analizi`, `/yapay-zeka-hukuk`, `/hukuki-analiz`, `/analiz`, `/araclar` |
 | Blog | **index açık**, 15 makale |
 | Canonical | `NEXT_PUBLIC_SITE_URL` → `https://tryclause.tech` |

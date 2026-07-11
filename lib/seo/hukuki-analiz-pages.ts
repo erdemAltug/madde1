@@ -1,23 +1,7 @@
-import type { FaqItem } from "./rehber-pages";
+import type { FaqItem, HukukiAnalizPageConfig } from "./rehber-types";
+import { HUKUKI_ANALIZ_EXTRA_PAGES } from "./hukuki-analiz-pages-extra";
 
-export type HukukiAnalizPageConfig = {
-  slug: string;
-  title: string;
-  metaTitle: string;
-  metaDescription: string;
-  keywords: string[];
-  heroTitle: string;
-  heroSubtitle: string;
-  problemExplanation: string;
-  legalContext: string;
-  risks: string[];
-  solution: string;
-  relatedLaws: { code: string; article: string; title: string }[];
-  exampleScenario: { title: string; situation: string; result: string };
-  faqs: FaqItem[];
-  ctaHref: string;
-  updatedAt: string;
-};
+export type { FaqItem, HukukiAnalizPageConfig } from "./rehber-types";
 
 const PAGES: HukukiAnalizPageConfig[] = [
   {
@@ -238,13 +222,15 @@ const PAGES: HukukiAnalizPageConfig[] = [
   {
     slug: "depozito-anlasmazligi",
     title: "Depozito anlaşmazlığı",
-    metaTitle: "Depozito anlaşmazlığı — iade ve kesinti uyuşmazlığı",
+    metaTitle: "Depozito anlaşmazlığı — eşya hasar depozitosu ve iade",
     metaDescription:
-      "Depozito iade edilmiyor mu? Kesinti gerekçeleri ve kiracı-ev sahibi anlaşmazlığında yapılacaklar. Ücretsiz kira sözleşmesi analizi.",
+      "Depozito iade edilmiyor mu? Eşya hasar depozitosu kesintileri ve kiracı-ev sahibi anlaşmazlığında yapılacaklar. Ücretsiz kira sözleşmesi analizi.",
     keywords: [
       "depozito anlaşmazlığı",
+      "eşya hasar depozitosu",
       "depozito iade edilmiyor",
       "kira depozitosu dava",
+      "kıbrıs depozito anlaşmazlığı",
     ],
     heroTitle: "Depozito iadesinde anlaşmazlık mı yaşıyorsunuz?",
     heroSubtitle: "Kesinti gerekçelerini ve haklarınızı netleştirin",
@@ -328,10 +314,15 @@ const PAGES: HukukiAnalizPageConfig[] = [
   },
 ];
 
-export const HUKUKI_ANALIZ_PAGES: Record<string, HukukiAnalizPageConfig> =
-  Object.fromEntries(PAGES.map((p) => [p.slug, p]));
+const ALL_HUKUKI_ANALIZ_PAGES: HukukiAnalizPageConfig[] = [
+  ...PAGES,
+  ...HUKUKI_ANALIZ_EXTRA_PAGES,
+];
 
-export const HUKUKI_ANALIZ_SLUGS = PAGES.map((p) => p.slug);
+export const HUKUKI_ANALIZ_PAGES: Record<string, HukukiAnalizPageConfig> =
+  Object.fromEntries(ALL_HUKUKI_ANALIZ_PAGES.map((p) => [p.slug, p]));
+
+export const HUKUKI_ANALIZ_SLUGS = ALL_HUKUKI_ANALIZ_PAGES.map((p) => p.slug);
 
 export function getHukukiAnalizConfig(
   slug: string,

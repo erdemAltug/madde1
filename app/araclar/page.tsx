@@ -9,14 +9,15 @@ import { REHBER_HUB_LINKS, SOZLESME_ANALIZI_FEATURED } from "@/lib/seo/internal-
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 
-const title = "Ücretsiz hukuk araçları — hesaplama ve ön kontrol";
+const title = "Günlük hukuk ihtiyaçları — ücretsiz araçlar";
 const description =
-  "Kira artış hesaplama, damga vergisi tahmini ve tahliye taahhütnamesi AI ön kontrolü. Herkes için ücretsiz LegalTech araçları.";
+  "Kira artış hesaplama, damga vergisi tahmini ve tahliye taahhütnamesi AI ön kontrolü. Günlük hukuk ihtiyaçları için ücretsiz LegalTech araçları.";
 
 export const metadata: Metadata = {
   title,
   description,
   keywords: [
+    "günlük hukuk ihtiyaçları",
     "ücretsiz hukuk aracı",
     "kira hesaplama",
     "damga vergisi hesaplama",
@@ -43,11 +44,11 @@ export default function AraclarHubPage() {
         <Breadcrumbs items={[{ name: "Ücretsiz araçlar", href: "/araclar" }]} />
         <header className="max-w-2xl">
           <h1 className="text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Ücretsiz hukuk araçları
+            Günlük hukuk ihtiyaçları için ücretsiz araçlar
           </h1>
           <p className="mt-4 text-base text-slate-600">
-            Hesaplayıcılar ve ön kontrol araçları bilgilendirme amaçlıdır. Sonuçlar tahminî
-            olabilir; sözleşme metniniz için tam analize geçin.
+            Kira, sözleşme ve tahliye gibi günlük hukuki ihtiyaçlarınız için hesaplayıcı ve ön
+            kontrol araçları. Sonuçlar tahminî olabilir; sözleşme metniniz için tam analize geçin.
           </p>
         </header>
 

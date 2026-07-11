@@ -147,6 +147,21 @@ export const HUKUKI_ANALIZ_LINKS: InternalLink[] = [
     label: "Haksız fesih",
     description: "İş ve kira sözleşmelerinde.",
   },
+  {
+    href: "/hukuki-analiz/kira-borcu-takibi",
+    label: "Kira borcu takibi",
+    description: "İcra ve tahsil süreci.",
+  },
+  {
+    href: "/hukuki-analiz/abonelik-iptal-anlasmazligi",
+    label: "Abonelik iptal anlaşmazlığı",
+    description: "Dijital üyelik hakları.",
+  },
+  {
+    href: "/hukuki-analiz/ucret-kesintisi-anlasmazligi",
+    label: "Ücret kesintisi anlaşmazlığı",
+    description: "Maaş kesintisi hakları.",
+  },
 ];
 
 const SOZLESME_CLUSTER_MAP: Record<string, string[]> = {
@@ -224,6 +239,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
     "/rehber/kiraci-haklari",
     "/rehber/tahliye-sureci",
     "/hukuki-analiz/depozito-anlasmazligi",
+    "/rehber/kibris-kira-depozito-anlasmazligi",
     "/sozlesme-analizi/kira-sozlesmesi-analizi",
   ],
   "kira-artisi-haklari": [
@@ -277,6 +293,84 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
     "/rehber/tuketici-haklari",
     "/hukuki-analiz/sozlesme-risk-analizi",
   ],
+  "kibris-kira-depozito-anlasmazligi": [
+    "/rehber/depozito-iadesi",
+    "/hukuki-analiz/depozito-anlasmazligi",
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    "/rehber/kiraci-haklari",
+  ],
+  "gunluk-hukuk-ihtiyaclari": [
+    "/araclar",
+    "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
+    "/rehber/kiraci-haklari",
+    "/rehber/isci-haklari",
+    "/rehber/tuketici-haklari",
+  ],
+  "kira-borcu-takibi-icra": [
+    "/hukuki-analiz/kira-borcu-takibi",
+    "/rehber/kira-sozlesmesi-fesih-bildirimi",
+    "/rehber/kiraci-haklari",
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+  ],
+  "kira-sozlesmesi-fesih-bildirimi": [
+    "/hukuki-analiz/kira-sozlesmesi-feshi",
+    "/rehber/tahliye-sureci",
+    "/rehber/kiraci-haklari",
+    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+  ],
+  "kefil-sorumlulugu-kira": [
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    "/rehber/kiraci-haklari",
+    "/rehber/depozito-iadesi",
+  ],
+  "abonelik-iptal-dijital-hizmet": [
+    "/hukuki-analiz/abonelik-iptal-anlasmazligi",
+    "/rehber/online-alisveris-14-gun-cayma",
+    "/sozlesme-analizi/uyelik-sozlesmesi-dijital",
+    "/rehber/tuketici-haklari",
+  ],
+  "ucretsiz-sozlesme-analizi-nasil": [
+    "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk",
+    "/#dene",
+    "/blog/yapay-zeka-sozlesme-analizi-ucretsiz-rehber",
+  ],
+  "is-sozlesmesi-ucret-kesintisi": [
+    "/hukuki-analiz/ucret-kesintisi-anlasmazligi",
+    "/rehber/isci-haklari",
+    "/sozlesme-analizi/is-sozlesmesi-riskleri",
+  ],
+  "tuketici-sikayet-hatti-rehber": [
+    "/rehber/tuketici-haklari",
+    "/rehber/pazaryeri-tuketici-sikayet",
+    "/blog/tuketici-hakem-heyeti-basvuru-blog",
+  ],
+  "online-alisveris-14-gun-cayma": [
+    "/rehber/mesafeli-satis-cayma",
+    "/sozlesme-analizi/mesafeli-satis-sozlesmesi",
+    "/rehber/tuketici-haklari",
+  ],
+  "yapay-zeka-hukuk-guvenilir-mi": [
+    "/yapay-zeka-hukuk/yapay-zeka-avukat-mi",
+    "/guvenlik",
+    "/blog/gunluk-hukuk-sorulari-yapay-zeka",
+  ],
+  "miras-kira-sozlesmesi-devri": [
+    "/rehber/aile-konutu-kirasi",
+    "/rehber/kiraci-haklari",
+    "/hukuki-analiz/kira-sozlesmesi-feshi",
+  ],
+  "is-yeri-ticari-kira-rehberi": [
+    "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    "/rehber/kira-artisi-haklari",
+    "/rehber/kira-sozlesmesi-damga-vergisi",
+  ],
+  "hukuki-danismanlik-ucretsiz-secenekler": [
+    "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk",
+    "/rehber/gunluk-hukuk-ihtiyaclari",
+    "/araclar",
+    "/blog/ucretsiz-hukuk-asistani-2026-karsilastirma",
+  ],
 };
 
 const YAPAY_ZEKA_CLUSTER_MAP: Record<string, string[]> = {
@@ -294,6 +388,7 @@ const YAPAY_ZEKA_CLUSTER_MAP: Record<string, string[]> = {
     "/sozlesme-analizi/kira-sozlesmesi-analizi",
     "/rehber/kiraci-haklari",
     "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
+    "/blog/kira-takip-raporu-yapay-zeka-analizi",
   ],
   "yapay-zeka-is-sozlesmesi": [
     "/sozlesme-analizi/is-sozlesmesi-riskleri",
@@ -407,12 +502,29 @@ export function getRelatedLinksForHukukiAnaliz(slug: string): InternalLink[] {
     ],
     "depozito-anlasmazligi": [
       "/rehber/depozito-iadesi",
+      "/rehber/kibris-kira-depozito-anlasmazligi",
       "/rehber/kiraci-haklari",
       "/sozlesme-analizi/kira-sozlesmesi-analizi",
     ],
     "haksiz-fesih": [
       "/rehber/isten-cikarilinca-ne-yapilir",
       "/rehber/kiraci-haklari",
+      "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ],
+    "kira-borcu-takibi": [
+      "/rehber/kira-borcu-takibi-icra",
+      "/rehber/kiraci-haklari",
+      "/sozlesme-analizi/kira-sozlesmesi-analizi",
+      "/blog/kira-borcu-ne-zaman-tahliye",
+    ],
+    "abonelik-iptal-anlasmazligi": [
+      "/rehber/abonelik-iptal-dijital-hizmet",
+      "/sozlesme-analizi/uyelik-sozlesmesi-dijital",
+      "/rehber/tuketici-haklari",
+    ],
+    "ucret-kesintisi-anlasmazligi": [
+      "/rehber/is-sozlesmesi-ucret-kesintisi",
+      "/rehber/isci-haklari",
       "/sozlesme-analizi/is-sozlesmesi-riskleri",
     ],
   };

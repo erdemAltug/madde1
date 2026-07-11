@@ -107,12 +107,14 @@ const PAGES: RehberPageConfig[] = [
   },
   {
     slug: "yapay-zeka-kira-sozlesmesi",
-    h1: "Yapay zeka kira sözleşmesi analizi — kiracı ve ev sahibi için",
-    metaTitle: "Yapay zeka kira sözleşmesi analizi — TBK ön kontrol",
+    h1: "Yapay zeka ile kira takibi ve sözleşme analizi",
+    metaTitle: "Yapay zeka ile kira takibi — sözleşme analizi ve rapor",
     metaDescription:
-      "Kira sözleşmenizi yapay zeka ile tarayın: artış, depozito, tahliye ve fesih maddeleri. Ücretsiz kira artış hesaplayıcı ile birlikte kullanın.",
+      "Yapay zeka ile kira takibi: artış, depozito, tahliye ve fesih maddelerini tarayın. Kira takip raporu mantığında ücretsiz AI ön kontrol ve hesaplayıcı.",
     keywords: [
+      "yapay zeka ile kira takibi",
       "yapay zeka kira sözleşmesi",
+      "kira takip raporu yapay zeka",
       "kira sözleşmesi AI analizi",
       "TBK kira yapay zeka",
     ],
@@ -137,6 +139,11 @@ const PAGES: RehberPageConfig[] = [
         question: "Kira artışını AI hesaplar mı?",
         answer:
           "Ayrı ücretsiz kira artış hesaplayıcımız tahmini tutar verir; kesin sonuç için sözleşme metni analiz edilmelidir.",
+      },
+      {
+        question: "Yapay zeka ile kira takibi nasıl yapılır?",
+        answer:
+          "Sözleşmenizi periyodik olarak taratarak artış, depozito ve fesih maddelerindeki riskleri rapor niteliğinde özet alırsınız. Ödeme hatırlatması değil, hukuki madde takibidir.",
       },
     ],
     ctaLabel: "Kira sözleşmesi AI analizi",

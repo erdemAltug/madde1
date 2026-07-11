@@ -2,17 +2,19 @@ import type { Metadata } from "next";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { SITE_NAME, absoluteUrl } from "@/lib/seo/site";
 
-const title = "Hukuk ve LegalTech blog — sözleşme analizi içerikleri";
+const title = "Hukuk blog — günlük hukuk, kira ve AI sözleşme analizi";
 
 export const metadata: Metadata = {
   title,
-  description: `${SITE_NAME} blog: yapay zeka sözleşme analizi, kira ve iş hukuku, TBK pratikleri ve ücretsiz araç rehberleri.`,
+  description: `${SITE_NAME} blog: 40+ yazı — yapay zeka sözleşme analizi, kira ve iş hukuku, günlük hukuk ihtiyaçları, TBK pratikleri ve ücretsiz araç rehberleri.`,
   robots: { index: true, follow: true },
   keywords: [
     "sözleşme analizi blog",
+    "günlük hukuk blog",
     "legal AI assistant",
     "LegalTech Türkiye",
     "TBK yorum",
+    "ücretsiz sözleşme analizi",
   ],
   alternates: {
     canonical: absoluteUrl("/blog"),
