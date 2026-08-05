@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { SITE_NAME, absoluteUrl } from "@/lib/seo/site";
 
-const title = "Hukuk blog — günlük hukuk, kira ve AI sözleşme analizi";
+const title = "Hukuk blog 2026 — günlük sorunlara ücretsiz rehber";
 
 export const metadata: Metadata = {
   title,
-  description: `${SITE_NAME} blog: 40+ yazı — yapay zeka sözleşme analizi, kira ve iş hukuku, günlük hukuk ihtiyaçları, TBK pratikleri ve ücretsiz araç rehberleri.`,
+  description: `${SITE_NAME} blog: 45+ yazı — kira, işçi ve tüketici hakları; tazminat, sözleşme kontrolü ve ücretsiz yapay zeka ön analizi için pratik rehberler.`,
   robots: { index: true, follow: true },
   keywords: [
     "sözleşme analizi blog",

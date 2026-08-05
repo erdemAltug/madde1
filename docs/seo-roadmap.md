@@ -2,7 +2,19 @@
 
 > **Hedef:** Türkçe “yapay zeka sözleşme analizi”, kira/iş hukuku uzun kuyruk aramalarında organik trafik.
 > **Mülk:** [Google Search Console](https://search.google.com/search-console) → `https://tryclause.tech/`
-> **Son güncelleme:** Temmuz 2026
+> **Son güncelleme:** 5 Ağustos 2026
+
+## Ağustos 2026 kapsamlı audit
+
+- Sitemap: yaklaşık **196 URL** (12 yeni derin rehber ve 8 yeni derin blog dahil).
++- Sitemap: yaklaşık **208+ URL** (24 derin rehber + 8 derin blog + `/gunluk-hukuk` hub dahil).
++- Ana sorun URL hacmi değil: **ince içerik, düşük CTR ve zayıf konu bazlı iç linkleme**.
++- Mevcut kısa programmatic sayfalar topluca çoğaltılmayacak; GSC gösterimi alanlar önce 600–1.000+ kelimeye derinleştirilecek.
++- Yeni günlük hukuk kümesi: yıllık izin, maaş gecikmesi, kıdem/ihbar, iş arabuluculuğu, fazla mesai, kira kontrol listesi, tahliye, icra, e-Devlet/UYAP, ayıplı mal ve garanti.
++- Bloglar için ayrı related-link haritası eklendi; generic fallback bağımlılığı azaltıldı.
++- Hub metadata'larında `ücretsiz`, `2026` ve somut fayda dili öne çıkarıldı.
+
+**90 günlük çalışma sırası:** P0 indeks + CTR → P1 içerik derinliği ve kümeler → P2 otorite/backlink. Yeni URL üretmek tek başına başarı metriği değildir.
 
 ---
 
@@ -28,9 +40,9 @@
 
 | Alan | Durum |
 |------|--------|
-| Sitemap URL sayısı | ~**155** (rehber **64**, blog **40**, sözleşme analizi ~22, yapay-zeka-hukuk 8, hukuki-analiz 9, araçlar vb.) |
+| Sitemap URL sayısı | ~**208+** (rehber **90**, blog **48**, sözleşme analizi ~22, yapay-zeka-hukuk 8, hukuki-analiz 9, araçlar vb.) |
 | Programmatic SEO | `/rehber`, `/blog`, `/sozlesme-analizi`, `/yapay-zeka-hukuk`, `/hukuki-analiz`, `/analiz`, `/araclar` |
-| Blog | **index açık**, 15 makale |
+| Blog | **index açık**, 48 makale |
 | Canonical | `NEXT_PUBLIC_SITE_URL` → `https://tryclause.tech` |
 | robots.txt | `/api`, `/giris`, `/admin`, `/baski` kapalı |
 | İç linkler | Footer, hub sayfaları, cluster map (`internal-links.ts`) |

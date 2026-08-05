@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
 import { CONTRACT_ANALYSIS_SLUGS } from "@/lib/seo/contract-analysis-pages";
 import { SOZLESME_ANALIZI_SLUGS } from "@/lib/seo/sozlesme-analizi-pages";
-import { REHBER_SLUGS } from "@/lib/seo/rehber-pages";
+import { REHBER_SLUGS, getRehberConfig } from "@/lib/seo/rehber-pages";
 import { HUKUKI_ANALIZ_SLUGS } from "@/lib/seo/hukuki-analiz-pages";
 import { FREE_TOOLS_SITEMAP_PATHS } from "@/lib/seo/free-tools-routes";
 import { YAPAY_ZEKA_HUKUK_SLUGS } from "@/lib/seo/yapay-zeka-hukuk-pages";
-import { BLOG_SLUGS } from "@/lib/seo/blog-posts";
+import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
 import { HAKLARIM_SLUGS } from "@/lib/seo/haklarim-pages";
 import { SITE_URL } from "@/lib/seo/site";
 
@@ -50,6 +50,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.95,
     },
+    {
+      url: `${SITE_URL}/gunluk-hukuk`,
+      lastModified: lastMod,
+      changeFrequency: "weekly",
+      priority: 0.94,
+    },
   ];
 
   const araclar: MetadataRoute.Sitemap = [
@@ -76,7 +82,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...REHBER_SLUGS.map((slug) => ({
       url: `${SITE_URL}/rehber/${slug}`,
-      lastModified: lastMod,
+      lastModified: new Date(
+        getRehberConfig(slug)?.updatedAt ?? lastMod.toISOString(),
+      ),
       changeFrequency: "monthly" as const,
       priority: 0.85,
     })),
@@ -131,7 +139,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...BLOG_SLUGS.map((slug) => ({
       url: `${SITE_URL}/blog/${slug}`,
-      lastModified: lastMod,
+      lastModified: new Date(
+        getBlogPost(slug)?.updatedAt ?? lastMod.toISOString(),
+      ),
       changeFrequency: "monthly" as const,
       priority: 0.82,
     })),

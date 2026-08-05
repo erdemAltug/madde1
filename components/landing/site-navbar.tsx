@@ -19,6 +19,7 @@ const primaryLinks = [
 ];
 
 const discoverLinks = [
+  { href: "/gunluk-hukuk", label: "Günlük hukuk" },
   { href: "/rehber", label: "Rehberler" },
   { href: "/yapay-zeka-hukuk", label: "Yapay zeka hukuk" },
   { href: "/sozlesme-analizi", label: "Sözleşme analizi" },

@@ -2,6 +2,8 @@ import { REHBER_EXTENDED_PAGES } from "@/lib/seo/rehber-pages-extended";
 import { REHBER_EXTRA_2_PAGES } from "@/lib/seo/rehber-pages-extra-2";
 import { REHBER_GSC_PAGES } from "@/lib/seo/rehber-pages-gsc";
 import { REHBER_BATCH_3_PAGES } from "@/lib/seo/rehber-pages-batch-3";
+import { REHBER_DAILY_DEEP_PAGES } from "@/lib/seo/rehber-pages-daily-deep";
+import { REHBER_DAILY_WAVE_2_PAGES } from "@/lib/seo/rehber-pages-daily-wave-2";
 
 export type {
   FaqItem,
@@ -516,6 +518,8 @@ const PAGES: RehberPageConfig[] = [
   ...REHBER_EXTRA_2_PAGES,
   ...REHBER_GSC_PAGES,
   ...REHBER_BATCH_3_PAGES,
+  ...REHBER_DAILY_DEEP_PAGES,
+  ...REHBER_DAILY_WAVE_2_PAGES,
 ];
 
 export const REHBER_PAGES: Record<string, RehberPageConfig> = Object.fromEntries(

@@ -114,6 +114,15 @@ export function SiteFooter() {
               <ul className="space-y-1.5">
                 <li>
                   <Link
+                    href="/gunluk-hukuk"
+                    prefetch={true}
+                    className="font-semibold text-madde-blue hover:underline"
+                  >
+                    Günlük hukuk merkezi
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/rehber"
                     prefetch={true}
                     className="font-semibold text-madde-blue hover:underline"

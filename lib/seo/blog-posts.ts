@@ -2,6 +2,7 @@ import { createRehberPage } from "@/lib/seo/rehber-factory";
 import type { BlogPostConfig } from "@/lib/seo/rehber-types";
 import { BLOG_EXTRA_POSTS } from "@/lib/seo/blog-posts-extra";
 import { BLOG_BATCH_3_POSTS } from "@/lib/seo/blog-posts-batch-3";
+import { BLOG_DAILY_DEEP_POSTS } from "@/lib/seo/blog-posts-daily-deep";
 
 function blog(
   input: Parameters<typeof createRehberPage>[0] & {
@@ -417,7 +418,12 @@ const POSTS: BlogPostConfig[] = [
   }),
 ];
 
-const ALL_POSTS: BlogPostConfig[] = [...POSTS, ...BLOG_EXTRA_POSTS, ...BLOG_BATCH_3_POSTS];
+const ALL_POSTS: BlogPostConfig[] = [
+  ...POSTS,
+  ...BLOG_EXTRA_POSTS,
+  ...BLOG_BATCH_3_POSTS,
+  ...BLOG_DAILY_DEEP_POSTS,
+];
 
 export const BLOG_POSTS: Record<string, BlogPostConfig> = Object.fromEntries(
   ALL_POSTS.map((p) => [p.slug, p]),

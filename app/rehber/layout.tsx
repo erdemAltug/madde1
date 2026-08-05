@@ -3,9 +3,9 @@ import { SITE_NAME } from "@/lib/seo/site";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl } from "@/lib/seo/site";
 
-const title = "Hukuk rehberleri — günlük hukuk ihtiyaçları ve hak bilgisi";
+const title = "Ücretsiz hukuk rehberleri 2026 — günlük haklarınız";
 const description =
-  "64+ rehber: kiracı, işçi ve tüketici hakları; kira artışı, depozito, tahliye, abonelik iptali ve ücretsiz sözleşme analizi. Günlük hukuk ihtiyaçları için Clause.";
+  "90+ ücretsiz rehber: kiracı, işçi ve tüketici hakları; kira, işten çıkarılma, tazminat ve abonelik sorunları. Günlük hukuk için sade yanıtlar.";
 
 export const metadata: Metadata = {
   title,

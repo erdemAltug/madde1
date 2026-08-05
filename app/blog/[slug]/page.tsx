@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { RehberPageLayout } from "@/components/seo/rehber-page-layout";
 import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
+import { getRelatedLinksForBlog } from "@/lib/seo/internal-links";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
@@ -41,6 +42,7 @@ export default function BlogPostPage({ params }: Props) {
       config={post}
       basePath="/blog"
       hub={{ name: "Blog", href: "/blog" }}
+      relatedLinks={getRelatedLinksForBlog(params.slug)}
     />
   );
 }
