@@ -1,4 +1,5 @@
 import type { RehberPageConfig } from "./rehber-pages";
+import { YAPAY_ZEKA_HUKUK_SEARCH_INTENT_PAGES } from "./yapay-zeka-hukuk-pages-search-intent";
 
 /**
  * Yapay zeka + hukuk arama niyeti için programmatic SEO sayfaları.
@@ -315,6 +316,7 @@ const PAGES: RehberPageConfig[] = [
     ctaHref: "/",
     updatedAt: "2026-06-02",
   },
+  ...YAPAY_ZEKA_HUKUK_SEARCH_INTENT_PAGES,
 ];
 
 export const YAPAY_ZEKA_HUKUK_PAGES: Record<string, RehberPageConfig> =

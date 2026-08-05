@@ -11,6 +11,14 @@ export const KIDEM_TAZMINATI_TOOL_PATH =
   "/araclar/kidem-tazminati-hesaplama" as const;
 export const IHBAR_TAZMINATI_TOOL_PATH =
   "/araclar/ihbar-tazminati-hesaplama" as const;
+export const FAZLA_MESAI_TOOL_PATH =
+  "/araclar/fazla-mesai-ucreti-hesaplama" as const;
+export const YILLIK_IZIN_TOOL_PATH =
+  "/araclar/yillik-izin-hesaplama" as const;
+export const BRUT_NET_MAAS_TOOL_PATH =
+  "/araclar/brut-net-maas-hesaplama" as const;
+export const ISSIZLIK_MAASI_TOOL_PATH =
+  "/araclar/issizlik-maasi-hesaplama" as const;
 
 /** Eski URL’ler next.config redirect ile buraya yönlendirilir */
 export const KIRA_ARTIS_LEGACY_PATH = "/araclar/kira-artis-hesaplama" as const;
@@ -40,6 +48,26 @@ export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
     description: "İhbar süresine göre tahmini ihbar tazminatı.",
   },
   {
+    href: FAZLA_MESAI_TOOL_PATH,
+    label: "Fazla mesai ücreti hesaplama",
+    description: "Brüt ücret ve saat ile tahmini zamlı fazla mesai ücreti.",
+  },
+  {
+    href: YILLIK_IZIN_TOOL_PATH,
+    label: "Yıllık izin hesaplama",
+    description: "Kıdeme göre izin günü ve kullanılmayan gün ücreti tahmini.",
+  },
+  {
+    href: BRUT_NET_MAAS_TOOL_PATH,
+    label: "Brüt net maaş hesaplama 2026",
+    description: "12 aylık SGK, vergi dilimi ve net maaş bordro tahmini.",
+  },
+  {
+    href: ISSIZLIK_MAASI_TOOL_PATH,
+    label: "İşsizlik maaşı hesaplama 2026",
+    description: "Aylık ödenek, ödeme süresi ve toplam tahmini.",
+  },
+  {
     href: DAMGA_VERGISI_TOOL_PATH,
     label: "Damga vergisi hesaplama",
     description: "Kira ve sözleşme bedeli üzerinden kabaca damga tahmini.",
@@ -55,6 +83,10 @@ export const FREE_TOOLS_SITEMAP_PATHS = [
   KIRA_ARTIS_TOOL_PATH,
   KIDEM_TAZMINATI_TOOL_PATH,
   IHBAR_TAZMINATI_TOOL_PATH,
+  FAZLA_MESAI_TOOL_PATH,
+  YILLIK_IZIN_TOOL_PATH,
+  BRUT_NET_MAAS_TOOL_PATH,
+  ISSIZLIK_MAASI_TOOL_PATH,
   DAMGA_VERGISI_TOOL_PATH,
   TAHLIYE_TOOL_PATH,
 ] as const;

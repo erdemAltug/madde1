@@ -73,6 +73,14 @@ const clusters = [
     icon: BriefcaseBusiness,
             links: [
               {
+                href: "/araclar/brut-net-maas-hesaplama",
+                label: "Brüt net maaş hesapla",
+              },
+              {
+                href: "/araclar/issizlik-maasi-hesaplama",
+                label: "İşsizlik maaşı hesapla",
+              },
+              {
                 href: "/rehber/isten-cikarilinca-ne-yapilir",
                 label: "İşten çıkarılınca ne yapılır?",
               },
@@ -85,8 +93,12 @@ const clusters = [
                 label: "Kıdem tazminatı hesapla",
               },
               {
-                href: "/araclar/ihbar-tazminati-hesaplama",
-                label: "İhbar tazminatı hesapla",
+                href: "/araclar/fazla-mesai-ucreti-hesaplama",
+                label: "Fazla mesai ücreti hesapla",
+              },
+              {
+                href: "/araclar/yillik-izin-hesaplama",
+                label: "Yıllık izin hesapla",
               },
             ],
   },

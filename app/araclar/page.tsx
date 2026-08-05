@@ -9,9 +9,9 @@ import { REHBER_HUB_LINKS, SOZLESME_ANALIZI_FEATURED } from "@/lib/seo/internal-
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 
-const title = "Günlük hukuk ihtiyaçları — ücretsiz araçlar";
+const title = "Ücretsiz hesaplama araçları 2026 — maaş, kira, tazminat";
 const description =
-  "Kira artış hesaplama, damga vergisi tahmini ve tahliye taahhütnamesi AI ön kontrolü. Günlük hukuk ihtiyaçları için ücretsiz LegalTech araçları.";
+  "Brüt net maaş, işsizlik maaşı, kira artışı, kıdem, ihbar, fazla mesai ve yıllık izin hesaplama. Günlük hukuk için ücretsiz LegalTech araçları.";
 
 export const metadata: Metadata = {
   title,
@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   keywords: [
     "günlük hukuk ihtiyaçları",
     "ücretsiz hukuk aracı",
+    "brüt net maaş hesaplama 2026",
+    "işsizlik maaşı hesaplama 2026",
     "kira hesaplama",
     "damga vergisi hesaplama",
     "tahliye taahhütnamesi kontrol",

@@ -29,4 +29,8 @@ export type FreeToolId =
   | "rent_increase_page"
   | "stamp_tax_page"
   | "kidem_severance_page"
-  | "ihbar_severance_page";
+  | "ihbar_severance_page"
+  | "fazla_mesai_page"
+  | "yillik_izin_page"
+  | "brut_net_salary_page"
+  | "unemployment_benefit_page";

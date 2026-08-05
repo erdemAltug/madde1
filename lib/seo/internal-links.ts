@@ -123,6 +123,36 @@ export const YAPAY_ZEKA_HUKUK_LINKS: InternalLink[] = [
     label: "Yapay zeka avukat mı?",
     description: "Doğru beklenti rehberi.",
   },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zekaya-hukuki-soru-nasil-sorulur",
+    label: "Yapay zekaya hukuki soru nasıl sorulur",
+    description: "Prompt ve bağlam rehberi.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/chatgpt-sozlesme-analizi-guvenli-mi",
+    label: "ChatGPT sözleşme analizi güvenli mi?",
+    description: "Genel AI vs güvenli analiz.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-ozetleme",
+    label: "Yapay zeka sözleşme özetleme",
+    description: "Risk odaklı özet üretimi.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/hukukcular-icin-yapay-zeka-araclari",
+    label: "Hukukçular için yapay zeka araçları",
+    description: "Büro ve avukat kullanım senaryoları.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/yapay-zeka-hukuk-etik-kvkk",
+    label: "Yapay zeka hukuk etik ve KVKK",
+    description: "Veri ve etik sınırlar.",
+  },
+  {
+    href: "/yapay-zeka-hukuk/ai-sozlesme-risk-puani-nedir",
+    label: "AI sözleşme risk puanı nedir?",
+    description: "Skorun anlamı ve sınırları.",
+  },
 ];
 
 /** Hukuki analiz / problem sayfaları */
@@ -226,7 +256,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   "sozlesme-imzalamadan-once": ["/rehber/sozlesme-cezai-sart", "/rehber/sozlesme-iptal-cayma-farki", "/rehber/yapay-zeka-sozlesme-kontrolu", "/hukuki-analiz/sozlesme-risk-analizi"],
   "depozito-iadesi": ["/rehber/depozito-ne-kadar-alinir", "/rehber/kibris-kira-depozito-anlasmazligi", "/hukuki-analiz/depozito-anlasmazligi", "/blog/depozito-iadesi-yazili-ihtar-ornek"],
   "kira-artisi-haklari": ["/rehber/kiraci-haklari", "/rehber/is-yeri-ticari-kira-rehberi", "/araclar/kira-sozlesmesi-artis-orani-hesaplama", "/blog/kira-artisi-2026-hesaplama-rehberi-blog"],
-  "isten-cikarilinca-ne-yapilir": ["/rehber/kidem-ihbar-tazminati", "/rehber/iscinin-hakli-fesih-hakki", "/hukuki-analiz/is-cikarilma-tazminat", "/araclar/ihbar-tazminati-hesaplama"],
+  "isten-cikarilinca-ne-yapilir": ["/araclar/issizlik-maasi-hesaplama", "/rehber/kidem-ihbar-tazminati", "/hukuki-analiz/is-cikarilma-tazminat", "/araclar/ihbar-tazminati-hesaplama"],
   "kidem-ihbar-tazminati": ["/rehber/isten-cikarilinca-ne-yapilir", "/rehber/iscinin-hakli-fesih-hakki", "/araclar/kidem-tazminati-hesaplama", "/araclar/ihbar-tazminati-hesaplama"],
   "tahliye-sureci": ["/rehber/tahliye-taahhutnamesi-rehberi", "/rehber/kira-feshi-hakli-nedenler", "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol", "/hukuki-analiz/tahliye-taahhutnamesi"],
   "mesafeli-satis-cayma": ["/rehber/online-alisveris-14-gun-cayma", "/rehber/e-ticaret-iade-haklari", "/rehber/tuketici-haklari", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
@@ -239,7 +269,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   "kira-feshi-hakli-nedenler": ["/rehber/kira-sozlesmesi-fesih-bildirimi", "/rehber/tahliye-sureci", "/rehber/kira-sozlesmesi-bildirim-sureleri", "/hukuki-analiz/kira-sozlesmesi-feshi"],
   "aile-konutu-kirasi": ["/rehber/kira-sozlesmesi-bosanma", "/rehber/miras-kira-sozlesmesi-devri", "/rehber/kiraci-haklari", "/sozlesme-analizi/kira-sozlesmesi-analizi"],
   "depozito-ne-kadar-alinir": ["/rehber/depozito-iadesi", "/rehber/kira-garanti-mektubu", "/rehber/kefil-sorumlulugu-kira", "/blog/depozito-kesinti-ornekleri"],
-  "fazla-mesai-ucreti": ["/rehber/isci-haklari", "/rehber/is-sozlesmesi-ucret-kesintisi", "/rehber/iscinin-hakli-fesih-hakki", "/sozlesme-analizi/is-sozlesmesi-riskleri"],
+  "fazla-mesai-ucreti": ["/araclar/fazla-mesai-ucreti-hesaplama", "/rehber/fazla-mesai-reddetme-ve-ucret", "/rehber/isci-haklari", "/sozlesme-analizi/is-sozlesmesi-riskleri"],
   "arac-kiralama-sozlesmesi": ["/rehber/sozlesme-imzalamadan-once", "/rehber/sozlesme-cezai-sart", "/rehber/otomatik-yenileme-sozlesme", "/hukuki-analiz/sozlesme-risk-analizi"],
   "garanti-belgesi-haklari": ["/rehber/tuketici-haklari", "/rehber/e-ticaret-iade-haklari", "/rehber/tuketici-sikayet-hatti-rehber", "/blog/tuketici-hakem-heyeti-basvuru-blog"],
   "e-ticaret-iade-haklari": ["/rehber/mesafeli-satis-cayma", "/rehber/online-alisveris-14-gun-cayma", "/rehber/pazaryeri-tuketici-sikayet", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
@@ -279,7 +309,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   "kefil-sorumlulugu-kira": ["/rehber/kira-garanti-mektubu", "/rehber/kira-borcu-takibi-icra", "/rehber/depozito-ne-kadar-alinir", "/sozlesme-analizi/kira-sozlesmesi-analizi"],
   "abonelik-iptal-dijital-hizmet": ["/rehber/otomatik-yenileme-sozlesme", "/rehber/online-alisveris-14-gun-cayma", "/hukuki-analiz/abonelik-iptal-anlasmazligi", "/sozlesme-analizi/uyelik-sozlesmesi-dijital"],
   "ucretsiz-sozlesme-analizi-nasil": ["/rehber/yapay-zeka-sozlesme-kontrolu", "/rehber/yapay-zeka-hukuk-guvenilir-mi", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/neden-clause-ucretsiz-sozlesme-analizi"],
-  "is-sozlesmesi-ucret-kesintisi": ["/rehber/isci-haklari", "/rehber/fazla-mesai-ucreti", "/rehber/iscinin-hakli-fesih-hakki", "/hukuki-analiz/ucret-kesintisi-anlasmazligi"],
+  "is-sozlesmesi-ucret-kesintisi": ["/araclar/brut-net-maas-hesaplama", "/rehber/isci-haklari", "/rehber/fazla-mesai-ucreti", "/hukuki-analiz/ucret-kesintisi-anlasmazligi"],
   "tuketici-sikayet-hatti-rehber": ["/rehber/tuketici-haklari", "/rehber/pazaryeri-tuketici-sikayet", "/rehber/tuketici-arabuluculuk", "/blog/tuketici-sikayet-2026-adim-adim"],
   "online-alisveris-14-gun-cayma": ["/rehber/mesafeli-satis-cayma", "/rehber/e-ticaret-iade-haklari", "/rehber/pazaryeri-tuketici-sikayet", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
   "yapay-zeka-hukuk-guvenilir-mi": ["/rehber/google-yapay-zeka-hukuk-arama", "/rehber/ucretsiz-sozlesme-analizi-nasil", "/yapay-zeka-hukuk/yapay-zeka-avukat-mi", "/blog/gunluk-hukuk-sorulari-yapay-zeka"],
@@ -287,10 +317,10 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   "is-yeri-ticari-kira-rehberi": ["/rehber/kira-sozlesmesi-damga-vergisi", "/rehber/kira-garanti-mektubu", "/rehber/kira-artisi-haklari", "/araclar/damga-vergisi-hesaplama"],
   "hukuki-danismanlik-ucretsiz-secenekler": ["/rehber/gunluk-hukuk-ihtiyaclari", "/rehber/yapay-zeka-hukuk-guvenilir-mi", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/ucretsiz-hukuk-asistani-2026-karsilastirma"],
   "yillik-izin-haklari-2026": [
+    "/araclar/yillik-izin-hesaplama",
     "/rehber/isci-haklari",
     "/rehber/isten-cikarilinca-ne-yapilir",
     "/sozlesme-analizi/is-sozlesmesi-riskleri",
-    "/araclar/kidem-tazminati-hesaplama",
   ],
   "ihbar-suresi-hesaplama-rehberi": [
     "/araclar/ihbar-tazminati-hesaplama",
@@ -317,9 +347,9 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
     "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
   ],
   "maas-gecikmesi-ne-yapmali": [
+    "/araclar/brut-net-maas-hesaplama",
     "/rehber/isci-haklari",
     "/rehber/is-sozlesmesi-ucret-kesintisi",
-    "/sozlesme-analizi/is-sozlesmesi-riskleri",
     "/hukuki-analiz/ucret-kesintisi-anlasmazligi",
   ],
   "zorunlu-arabuluculuk-is-davasi": [
@@ -329,10 +359,10 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
     "/sozlesme-analizi/is-sozlesmesi-riskleri",
   ],
   "fazla-mesai-reddetme-ve-ucret": [
+    "/araclar/fazla-mesai-ucreti-hesaplama",
     "/rehber/fazla-mesai-ucreti",
     "/rehber/isci-haklari",
     "/sozlesme-analizi/is-sozlesmesi-riskleri",
-    "/rehber/is-sozlesmesi-ucret-kesintisi",
   ],
   "ev-sahibi-keyfi-tahliye-edemez": [
     "/rehber/tahliye-sureci",
@@ -383,10 +413,10 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
     "/araclar/ihbar-tazminati-hesaplama",
   ],
   "isveren-maastan-kesinti-yapabilir-mi": [
+    "/araclar/brut-net-maas-hesaplama",
     "/rehber/is-sozlesmesi-ucret-kesintisi",
     "/rehber/maas-gecikmesi-ne-yapmali",
     "/hukuki-analiz/ucret-kesintisi-anlasmazligi",
-    "/sozlesme-analizi/is-sozlesmesi-riskleri",
   ],
   "kira-depozitosu-bankaya-yatirma": [
     "/rehber/depozito-iadesi",
@@ -504,6 +534,26 @@ const ALL_LINKS: InternalLink[] = [
     label: "İhbar tazminatı hesaplama",
     description: "İhbar süresi tahmini.",
   },
+  {
+    href: "/araclar/fazla-mesai-ucreti-hesaplama",
+    label: "Fazla mesai ücreti hesaplama",
+    description: "Zamlı mesai ücreti tahmini.",
+  },
+  {
+    href: "/araclar/yillik-izin-hesaplama",
+    label: "Yıllık izin hesaplama",
+    description: "İzin günü ve ücret tahmini.",
+  },
+  {
+    href: "/araclar/brut-net-maas-hesaplama",
+    label: "Brüt net maaş hesaplama",
+    description: "2026 SGK ve vergi dilimleriyle 12 aylık bordro.",
+  },
+  {
+    href: "/araclar/issizlik-maasi-hesaplama",
+    label: "İşsizlik maaşı hesaplama",
+    description: "2026 aylık ödenek ve ödeme süresi tahmini.",
+  },
   { href: "/haklarim", label: "Haklarım", description: "Senaryoya göre hukuki haklar." },
   { href: "/hakkimizda", label: "Hakkımızda", description: "Clause ve misyon." },
   { href: "/rehber", label: "Hukuk rehberleri", description: "Herkes için anlaşılır rehberler." },
@@ -592,7 +642,7 @@ const BLOG_CLUSTER_MAP: Record<string, string[]> = {
   "yapay-zeka-sozlesme-analizi-ucretsiz-rehber": ["/rehber/ucretsiz-sozlesme-analizi-nasil", "/rehber/yapay-zeka-sozlesme-kontrolu", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/ucretsiz-sozlesme-analizi-araclari"],
   "gunluk-hukuk-isleri-yapay-zeka-2026": ["/rehber/gunluk-hukuk-ihtiyaclari", "/rehber/hukuki-danismanlik-ucretsiz-secenekler", "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani", "/araclar"],
   "kira-artisi-2026-hesaplama-rehberi-blog": ["/rehber/kira-artisi-haklari", "/rehber/kiraci-haklari", "/araclar/kira-sozlesmesi-artis-orani-hesaplama", "/blog/kira-artisi-2026-ne-kadar"],
-  "isten-cikarildim-ilk-7-gun": ["/rehber/isten-cikarilinca-ne-yapilir", "/rehber/kidem-ihbar-tazminati", "/araclar/kidem-tazminati-hesaplama", "/araclar/ihbar-tazminati-hesaplama"],
+  "isten-cikarildim-ilk-7-gun": ["/araclar/issizlik-maasi-hesaplama", "/rehber/isten-cikarilinca-ne-yapilir", "/araclar/kidem-tazminati-hesaplama", "/araclar/ihbar-tazminati-hesaplama"],
   "depozito-iadesi-yazili-ihtar-ornek": ["/rehber/depozito-iadesi", "/rehber/depozito-ne-kadar-alinir", "/rehber/kibris-kira-depozito-anlasmazligi", "/hukuki-analiz/depozito-anlasmazligi"],
   "sozlesme-okumadan-imzalamayin-kontrol": ["/rehber/sozlesme-imzalamadan-once", "/rehber/sozlesme-cezai-sart", "/rehber/yapay-zeka-sozlesme-kontrolu", "/hukuki-analiz/sozlesme-risk-analizi"],
   "kidem-mi-ihbar-mi-fark-nedir": ["/rehber/kidem-ihbar-tazminati", "/rehber/isten-cikarilinca-ne-yapilir", "/araclar/kidem-tazminati-hesaplama", "/araclar/ihbar-tazminati-hesaplama"],

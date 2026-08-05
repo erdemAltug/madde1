@@ -45,6 +45,22 @@ const POPULAR_SEARCHES = [
     href: "/araclar/kidem-tazminati-hesaplama",
   },
   {
+    label: "Brüt net maaş hesaplama",
+    href: "/araclar/brut-net-maas-hesaplama",
+  },
+  {
+    label: "İşsizlik maaşı hesaplama",
+    href: "/araclar/issizlik-maasi-hesaplama",
+  },
+  {
+    label: "Fazla mesai ücreti hesaplama",
+    href: "/araclar/fazla-mesai-ucreti-hesaplama",
+  },
+  {
+    label: "Yıllık izin hesaplama",
+    href: "/araclar/yillik-izin-hesaplama",
+  },
+  {
     label: "İşten atıldım haklarım",
     href: "/haklarim/isten-atildim-haklarim",
   },

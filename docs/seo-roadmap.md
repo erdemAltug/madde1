@@ -6,15 +6,34 @@
 
 ## Ağustos 2026 kapsamlı audit
 
-- Sitemap: yaklaşık **196 URL** (12 yeni derin rehber ve 8 yeni derin blog dahil).
-+- Sitemap: yaklaşık **208+ URL** (24 derin rehber + 8 derin blog + `/gunluk-hukuk` hub dahil).
-+- Ana sorun URL hacmi değil: **ince içerik, düşük CTR ve zayıf konu bazlı iç linkleme**.
-+- Mevcut kısa programmatic sayfalar topluca çoğaltılmayacak; GSC gösterimi alanlar önce 600–1.000+ kelimeye derinleştirilecek.
-+- Yeni günlük hukuk kümesi: yıllık izin, maaş gecikmesi, kıdem/ihbar, iş arabuluculuğu, fazla mesai, kira kontrol listesi, tahliye, icra, e-Devlet/UYAP, ayıplı mal ve garanti.
-+- Bloglar için ayrı related-link haritası eklendi; generic fallback bağımlılığı azaltıldı.
-+- Hub metadata'larında `ücretsiz`, `2026` ve somut fayda dili öne çıkarıldı.
+- Sitemap: **213 URL** (90 rehber, 48 blog, 9 ücretsiz araç + hub dahil).
+- Ana sorun URL hacmi değil: **ince içerik, düşük CTR ve zayıf konu bazlı iç linkleme**.
+- Mevcut kısa programmatic sayfalar topluca çoğaltılmayacak; GSC gösterimi alanlar önce 600–1.000+ kelimeye derinleştirilecek.
+- Yeni günlük hukuk kümesi: yıllık izin, maaş gecikmesi, kıdem/ihbar, iş arabuluculuğu, fazla mesai, kira kontrol listesi, tahliye, icra, e-Devlet/UYAP, ayıplı mal ve garanti.
+- Bloglar için ayrı related-link haritası eklendi; generic fallback bağımlılığı azaltıldı.
+- Hub metadata'larında `ücretsiz`, `2026` ve somut fayda dili öne çıkarıldı.
 
 **90 günlük çalışma sırası:** P0 indeks + CTR → P1 içerik derinliği ve kümeler → P2 otorite/backlink. Yeni URL üretmek tek başına başarı metriği değildir.
+
+### LegalTech trafik kaması — hesaplayıcıdan AI analize
+
+Geniş hacimli hesaplama sorguları tek başına ürün hedefi değildir. Her araç,
+kullanıcının bir sonraki hukuki sorusuna ve sözleşme analizine bağlanır:
+
+1. `brüt net maaş hesaplama 2026` → bordro/kesinti rehberi → iş sözleşmesi analizi
+2. `işsizlik maaşı hesaplama 2026` → işten çıkarılınca haklar → kıdem/ihbar → kayıt
+3. `fazla mesai hesaplama` → fazla mesai maddesi → iş sözleşmesi risk analizi
+4. `yıllık izin hesaplama` → kullanılmayan izin → fesih/tazminat kümesi
+5. `kira artış hesaplama` → kira sözleşmesi analizi → depozito/tahliye kümesi
+
+**Sonraki araç öncelikleri:**
+
+- P1: netten brüte maaş, bordro kesinti kontrol sihirbazı
+- P1: kıdem + ihbar + izin + işsizlik birleşik “işten ayrılma paketi”
+- P1: kira depozitosu ve teslim tutanağı kontrol listesi
+- P2: tüketici hakem heyeti başvuru sihirbazı (yıllık sınırlar bakım ister)
+- P2: yasal süre/son gün hesaplayıcı (tatil ve tebligat kuralları nedeniyle uzman doğrulaması gerekir)
+- Kaçınılacak: güncel tarifesi doğrulanmadan noter, dava harcı veya kesin alacak hesabı
 
 ---
 
@@ -40,7 +59,7 @@
 
 | Alan | Durum |
 |------|--------|
-| Sitemap URL sayısı | ~**208+** (rehber **90**, blog **48**, sözleşme analizi ~22, yapay-zeka-hukuk 8, hukuki-analiz 9, araçlar vb.) |
+| Sitemap URL sayısı | **213** (rehber **90**, blog **48**, sözleşme analizi ~22, yapay-zeka-hukuk 8, hukuki-analiz 9, ücretsiz araç **9** vb.) |
 | Programmatic SEO | `/rehber`, `/blog`, `/sozlesme-analizi`, `/yapay-zeka-hukuk`, `/hukuki-analiz`, `/analiz`, `/araclar` |
 | Blog | **index açık**, 48 makale |
 | Canonical | `NEXT_PUBLIC_SITE_URL` → `https://tryclause.tech` |
