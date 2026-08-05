@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ClauseLogo } from "@/components/brand/clause-logo";
 import { cn } from "@/lib/utils";
 import { getSozlesmeAnaliziNavLinks } from "@/lib/seo/sozlesme-analizi-pages";
+import { FREE_TOOLS_NAV } from "@/lib/seo/free-tools-routes";
 import { getSupabaseBrowser } from "@/lib/supabase/browser";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
@@ -66,6 +67,7 @@ export function SiteNavbar() {
   const [toolsOpen, setToolsOpen] = React.useState(false);
   const [discoverOpen, setDiscoverOpen] = React.useState(false);
   const [mobileTools, setMobileTools] = React.useState(false);
+  const [mobileCalculators, setMobileCalculators] = React.useState(false);
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [user, setUser] = React.useState<SupabaseUser | null>(null);
   const menusRef = React.useRef<HTMLDivElement>(null);
@@ -105,6 +107,7 @@ export function SiteNavbar() {
   const closeMobile = () => {
     setMobile(false);
     setMobileTools(false);
+    setMobileCalculators(false);
   };
 
   const handleLogout = async () => {
@@ -278,6 +281,31 @@ export function SiteNavbar() {
                 className="absolute right-0 top-full z-50 mt-1 max-h-[min(70vh,24rem)] w-[min(100vw-2rem,20rem)] overflow-y-auto rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10"
               >
                 <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wide text-slate-400">
+                  Hesaplayıcılar
+                </p>
+                {FREE_TOOLS_NAV.map((t) => (
+                  <Link
+                    key={t.href}
+                    role="menuitem"
+                    href={t.href}
+                    className="block px-3 py-2 text-[13px] font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
+                    onClick={() => setToolsOpen(false)}
+                    prefetch={true}
+                  >
+                    {t.label}
+                  </Link>
+                ))}
+                <Link
+                  role="menuitem"
+                  href="/araclar"
+                  className="block px-3 py-2 text-[13px] font-semibold text-[#005BEA] hover:bg-slate-50"
+                  onClick={() => setToolsOpen(false)}
+                  prefetch={true}
+                >
+                  Tüm ücretsiz araçlar →
+                </Link>
+
+                <p className="mt-2 border-t border-slate-100 px-3 pb-1 pt-3 text-[10px] font-bold uppercase tracking-wide text-slate-400">
                   Sözleşme analizi
                 </p>
                 {sozlesmeToolLinks.map((t) => (
@@ -328,6 +356,36 @@ export function SiteNavbar() {
                 {l.label}
               </Link>
             ))}
+
+            <button
+              type="button"
+              className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm font-semibold text-slate-600 hover:bg-slate-50"
+              aria-expanded={mobileCalculators}
+              onClick={() => setMobileCalculators((v) => !v)}
+            >
+              Hesaplayıcılar
+              <ChevronDown
+                className={cn(
+                  "h-4 w-4 opacity-70 transition-transform",
+                  mobileCalculators && "rotate-180",
+                )}
+              />
+            </button>
+            {mobileCalculators ? (
+              <div className="ml-2 flex flex-col gap-0.5 border-l border-slate-200 pl-3">
+                {FREE_TOOLS_NAV.map((t) => (
+                  <Link
+                    key={t.href}
+                    href={t.href}
+                    className="rounded-md py-2 text-[13px] font-medium text-slate-500 hover:text-deep-navy"
+                    onClick={closeMobile}
+                    prefetch={true}
+                  >
+                    {t.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
 
             <button
               type="button"

@@ -56,8 +56,8 @@ const howToLd = buildHowToJsonLd({
   url: canonical,
   steps: [
     "Aylık brüt ücretinizi girin.",
-    "İncelemek istediğiniz ayı seçin.",
-    "Aylık kesintileri ve 12 aylık tahmini net maaş tablosunu inceleyin.",
+    "Ocak-Aralık tüm yılın kesinti ve net maaş tablosunu görün.",
+    "Yıllık net toplamı ve vergi dilimi nedeniyle oluşan net düşüşünü inceleyin.",
   ],
 });
 
@@ -114,8 +114,8 @@ export default function BrutNetMaasHesaplamaPage() {
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
             Brüt ücretinizi girin; SGK, işsizlik, kümülatif gelir vergisi ve
-            damga vergisi kesintilerinden sonra ay ay tahmini net maaşınızı
-            görün.
+            damga vergisi kesintileriyle Ocak&apos;tan Aralık&apos;a tüm yılın
+            net maaş tablosunu ve yıllık toplamı tek ekranda görün.
           </p>
         </header>
 

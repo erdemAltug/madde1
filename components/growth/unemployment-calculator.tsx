@@ -33,7 +33,7 @@ function benefitDays(premiumDays: number): number {
 }
 
 export function UnemploymentCalculator() {
-  const [averageGross, setAverageGross] = React.useState("45000");
+  const [averageGross, setAverageGross] = React.useState("45.000");
   const [premiumDays, setPremiumDays] = React.useState("900");
   const trackedRef = React.useRef(false);
 
@@ -43,6 +43,17 @@ export function UnemploymentCalculator() {
   const grossBenefit = Math.min(gross * 0.4, MAX_GROSS_BENEFIT_2026);
   const stampTax = grossBenefit * STAMP_TAX_RATE;
   const netBenefit = Math.max(0, grossBenefit - stampTax);
+  const monthCount = durationDays / 30;
+  const cappedByCeiling = gross * 0.4 > MAX_GROSS_BENEFIT_2026;
+  const schedule = React.useMemo(
+    () =>
+      Array.from({ length: Math.round(monthCount) }, (_, index) => ({
+        index: index + 1,
+        net: netBenefit,
+        cumulative: netBenefit * (index + 1),
+      })),
+    [monthCount, netBenefit],
+  );
 
   const track = React.useCallback(() => {
     if (trackedRef.current) return;
@@ -127,6 +138,47 @@ export function UnemploymentCalculator() {
             </p>
           </div>
         </div>
+
+        {schedule.length > 0 ? (
+          <div className="overflow-hidden rounded-xl border border-slate-200">
+            <div className="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2.5">
+              <p className="text-xs font-bold text-slate-700">
+                Ödeme takvimi ({schedule.length} ay)
+              </p>
+              {cappedByCeiling ? (
+                <p className="text-[11px] font-semibold text-amber-700">
+                  Tavan uygulandı
+                </p>
+              ) : null}
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[380px] text-left text-xs">
+                <thead className="text-slate-600">
+                  <tr className="border-b border-slate-100">
+                    <th className="px-4 py-2 font-semibold">Ödeme</th>
+                    <th className="px-4 py-2 font-semibold">Net tutar</th>
+                    <th className="px-4 py-2 font-semibold">Kümülatif</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {schedule.map((item) => (
+                    <tr key={item.index} className="hover:bg-slate-50/70">
+                      <td className="px-4 py-2 font-semibold">
+                        {item.index}. ay
+                      </td>
+                      <td className="px-4 py-2 tabular-nums">
+                        {formatTry(item.net)}
+                      </td>
+                      <td className="px-4 py-2 font-semibold tabular-nums text-madde-ink">
+                        {formatTry(item.cumulative)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : null}
 
         <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900">
           Prim günü tek başına yeterli değildir. Feshin nedeni, son 120 günlük
