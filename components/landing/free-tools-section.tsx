@@ -16,7 +16,7 @@ import {
 } from "@/lib/seo/bento-tool-seo-copy";
 import {
   DAMGA_VERGISI_TOOL_PATH,
-  KIRA_ARTIS_TOOL_PATH,
+  KIRA_ANALIZI_TOOL_PATH,
   TAHLIYE_TOOL_PATH,
 } from "@/lib/seo/free-tools-routes";
 import { captureEvent } from "@/lib/analytics/capture";
@@ -173,8 +173,8 @@ export function FreeToolsSection() {
           <Reveal delay={0.05} className="h-full md:col-span-2">
             <ToolShell
               id="arac-kira"
-              title="Kira artış ön hesabı"
-              description="Tek dönem yıllık artış; artış tutarı ve yeni kira tek bakışta. Tam rehber için linke tıklayın."
+              title="Kira zammı & kiracı hakları"
+              description="Ev sahibinin istediği zammı yasal tavanla karşılaştırın; WhatsApp cevabı alın."
               icon={<TrendingUp className="h-5 w-5" aria-hidden />}
               onTry={() => {
                 captureEvent(AnalyticsEvents.FREE_TOOL_USED, {
@@ -186,8 +186,8 @@ export function FreeToolsSection() {
               className="h-full"
               compact
               srSeoText={BENTO_SEO_KIRA_ARTIS}
-              indexPageHref={KIRA_ARTIS_TOOL_PATH}
-              indexPageLabel="Kira sözleşmesi artış oranı — tam sayfa ve rehber"
+              indexPageHref={KIRA_ANALIZI_TOOL_PATH}
+              indexPageLabel="Kira analizi — tavan kontrolü ve cevap metni"
             >
               <div ref={kiraRef}>
                 <RentIncreaseCalculator

@@ -68,10 +68,17 @@ export default function IhbarTazminatiHesaplamaPage() {
           </h1>
           <p className="mt-3 text-base text-slate-600">
             Bildirimsiz fesih varsayımıyla kabaca hesap.{" "}
-            <Link href="/araclar/kidem-tazminati-hesaplama" className="font-semibold text-[#005BEA] hover:underline">
-              Kıdem hesaplayıcı
+            <Link
+              href="/araclar/tazminat-hesaplama"
+              className="font-semibold text-[#005BEA] hover:underline"
+            >
+              Kıdem + ihbar + hak sorgulama
             </Link>{" "}
-            ile birlikte kullanın.
+            veya ayrı{" "}
+            <Link href="/araclar/kidem-tazminati-hesaplama" className="font-semibold text-[#005BEA] hover:underline">
+              kıdem hesaplayıcı
+            </Link>
+            .
           </p>
         </header>
         <IhbarTazminatiCalculator analyticsToolId="ihbar_severance_page" analyticsSurface="tool_page" />

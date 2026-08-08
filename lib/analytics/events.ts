@@ -33,4 +33,8 @@ export type FreeToolId =
   | "fazla_mesai_page"
   | "yillik_izin_page"
   | "brut_net_salary_page"
-  | "unemployment_benefit_page";
+  | "unemployment_benefit_page"
+  | "kira_analizi_page"
+  | "tazminat_hub_page"
+  | "red_flag_scanner_page"
+  | "dilekce_olusturucu_page";

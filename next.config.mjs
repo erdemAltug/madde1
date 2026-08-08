@@ -53,6 +53,11 @@ const nextConfig = {
         destination: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
         permanent: true,
       },
+      {
+        source: "/dilekce-olusturur",
+        destination: "/dilekce-olusturucu",
+        permanent: true,
+      },
     ];
   },
 };

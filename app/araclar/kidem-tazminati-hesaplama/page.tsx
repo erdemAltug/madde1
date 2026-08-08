@@ -67,9 +67,17 @@ export default function KidemTazminatiHesaplamaPage() {
             Kıdem tazminatı hesaplama
           </h1>
           <p className="mt-3 text-base text-slate-600">
-            Tahmini sonuç — kıdem tavanı ve fesih türü sonucu değiştirir.{" "}
+            Tahmini sonuç — kıdem tavanı ve fesih türü sonucu değiştirir. Kıdem +
+            ihbar + istifaya zorlama kontrol listesi için{" "}
+            <Link
+              href="/araclar/tazminat-hesaplama"
+              className="font-semibold text-[#005BEA] hover:underline"
+            >
+              birleşik tazminat hub
+            </Link>
+            ;{" "}
             <Link href="/haklarim/isten-atildim-haklarim" className="font-semibold text-[#005BEA] hover:underline">
-              İşten atıldım haklarım
+              işten atıldım haklarım
             </Link>{" "}
             rehberine bakın.
           </p>

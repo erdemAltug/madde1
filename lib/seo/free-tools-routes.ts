@@ -19,6 +19,11 @@ export const BRUT_NET_MAAS_TOOL_PATH =
   "/araclar/brut-net-maas-hesaplama" as const;
 export const ISSIZLIK_MAASI_TOOL_PATH =
   "/araclar/issizlik-maasi-hesaplama" as const;
+export const KIRA_ANALIZI_TOOL_PATH = "/araclar/kira-analizi" as const;
+export const TAZMINAT_HUB_TOOL_PATH = "/araclar/tazminat-hesaplama" as const;
+export const SOZLESME_TUZAK_TOOL_PATH =
+  "/araclar/sozlesme-tuzak-tarama" as const;
+export const DILEKCE_TOOL_PATH = "/dilekce-olusturucu" as const;
 
 /** Eski URL’ler next.config redirect ile buraya yönlendirilir */
 export const KIRA_ARTIS_LEGACY_PATH = "/araclar/kira-artis-hesaplama" as const;
@@ -32,6 +37,26 @@ export type FreeToolNavItem = {
 };
 
 export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
+  {
+    href: KIRA_ANALIZI_TOOL_PATH,
+    label: "Kira zammı & kiracı hakları analizi",
+    description: "TÜFE tavan + ev sahibine WhatsApp/e-posta cevabı.",
+  },
+  {
+    href: TAZMINAT_HUB_TOOL_PATH,
+    label: "Kıdem & ihbar + hak sorgulama",
+    description: "Tazminat hesabı ve istifaya zorlama kontrol listesi.",
+  },
+  {
+    href: SOZLESME_TUZAK_TOOL_PATH,
+    label: "Sözleşmede 3 gizli tuzak taraması",
+    description: "Kırmızı / sarı / yeşil AI ön tarama.",
+  },
+  {
+    href: DILEKCE_TOOL_PATH,
+    label: "Dilekçe & ihtarname oluşturucu",
+    description: "Tüketici, kira ve depozito taslakları.",
+  },
   {
     href: KIRA_ARTIS_TOOL_PATH,
     label: "Kira sözleşmesi artış oranı hesaplama",
@@ -80,6 +105,10 @@ export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
 ];
 
 export const FREE_TOOLS_SITEMAP_PATHS = [
+  KIRA_ANALIZI_TOOL_PATH,
+  TAZMINAT_HUB_TOOL_PATH,
+  SOZLESME_TUZAK_TOOL_PATH,
+  DILEKCE_TOOL_PATH,
   KIRA_ARTIS_TOOL_PATH,
   KIDEM_TAZMINATI_TOOL_PATH,
   IHBAR_TAZMINATI_TOOL_PATH,

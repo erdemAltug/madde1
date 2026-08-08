@@ -60,14 +60,22 @@ export default function KiraSozlesmesiArtisOraniHesaplamaPage() {
           </h1>
           <p className="mt-3 text-base font-medium text-slate-600">
             Tahmini yeni kira — bilgilendirme amaçlıdır. Kesin hukuki sonuç için
-            avukata danışın.{" "}
+            avukata danışın. Ev sahibinin istediği zammı yasal tavanla
+            karşılaştırmak ve hazır cevap metni almak için{" "}
+            <Link
+              href="/araclar/kira-analizi"
+              className="font-semibold text-madde-blue hover:underline"
+            >
+              kira analizi &amp; cevap taslağı
+            </Link>
+            ; tam metin risk taraması için{" "}
             <Link
               href="/analiz/kira-sozlesmesi"
               className="font-semibold text-madde-blue hover:underline"
             >
-              Kira sözleşmesi yapay zeka analizi
-            </Link>{" "}
-            ile tam metin risk taraması yapın.
+              kira sözleşmesi yapay zeka analizi
+            </Link>
+            .
           </p>
         </header>
 

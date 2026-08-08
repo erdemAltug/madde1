@@ -28,12 +28,19 @@ kullanıcının bir sonraki hukuki sorusuna ve sözleşme analizine bağlanır:
 
 **Sonraki araç öncelikleri:**
 
+- **Canlı (Ağustos 2026 B2C mikro araçlar):**
+  - `/araclar/kira-analizi` — TÜFE tavan vs talep + WhatsApp/e-posta cevabı
+  - `/araclar/tazminat-hesaplama` — kıdem+ihbar + mobbing/istifa kontrol listesi
+  - `/araclar/sozlesme-tuzak-tarama` — kırmızı/sarı/yeşil AI ön tarama
+  - `/dilekce-olusturucu` — tüketici / kira / depozito taslakları
+- P1: PDF/JPG OCR (tuzak tarayıcı)
 - P1: netten brüte maaş, bordro kesinti kontrol sihirbazı
-- P1: kıdem + ihbar + izin + işsizlik birleşik “işten ayrılma paketi”
 - P1: kira depozitosu ve teslim tutanağı kontrol listesi
-- P2: tüketici hakem heyeti başvuru sihirbazı (yıllık sınırlar bakım ister)
+- P2: tüketici hakem heyeti parasal sınır otomatik güncellemesi
 - P2: yasal süre/son gün hesaplayıcı (tatil ve tebligat kuralları nedeniyle uzman doğrulaması gerekir)
 - Kaçınılacak: güncel tarifesi doğrulanmadan noter, dava harcı veya kesin alacak hesabı
+
+**B2C değer kancası:** Kullanıcı “TBK 350” aramaz; “ev sahibi %100 zam yaptı” arar. Her mikro araç anlık insight + kopyalanabilir aksiyon + sticky kayıt CTA + ilgili sözleşme AI analizine bağlanır.
 
 ---
 
