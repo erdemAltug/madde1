@@ -265,9 +265,18 @@ function parseArticleJson(raw: string): GeneratedArticle {
 async function generateWithGemini(prompt: string): Promise<string> {
   const key = process.env.GEMINI_API_KEY?.trim();
   if (!key) throw new Error("GEMINI_API_KEY missing");
-  // Eski: gemini-1.5-pro / gemini-2.0-flash — Yeni: gemini-2.5-flash
+
+  // gemini-2.5-flash yeni kullanıcılara kapalı (404). Alias ile güncel Flash'a bağlan.
+  const rawModel =
+    process.env.GEMINI_CONTENT_MODEL?.trim() || "gemini-flash-latest";
   const model =
-    process.env.GEMINI_CONTENT_MODEL?.trim() || "gemini-2.5-flash";
+    rawModel === "gemini-2.5-flash" ||
+    rawModel === "gemini-2.0-flash" ||
+    rawModel === "gemini-1.5-pro" ||
+    rawModel === "gemini-pro"
+      ? "gemini-flash-latest"
+      : rawModel;
+
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
   const res = await fetch(url, {
     method: "POST",
@@ -314,20 +323,37 @@ async function generateWithAiSdk(prompt: string): Promise<string> {
 }
 
 async function generateArticleRaw(prompt: string): Promise<string> {
-  const hasGemini = Boolean(process.env.GEMINI_API_KEY?.trim());
-  const hasFallback =
+  const hasOpenAiOrGroq =
     Boolean(process.env.OPENAI_API_KEY?.trim()) ||
     Boolean(process.env.GROQ_API_KEY?.trim());
+  const hasGemini = Boolean(process.env.GEMINI_API_KEY?.trim());
+
+  // Gemini free-tier sık 404/429 veriyor → OpenAI/Groq öncelikli
+  if (hasOpenAiOrGroq) {
+    try {
+      return await generateWithAiSdk(prompt);
+    } catch (err) {
+      if (!hasGemini) throw err;
+      const msg = err instanceof Error ? err.message : String(err);
+      console.warn(
+        `[content-engine] OpenAI/Groq failed; trying Gemini. ${msg.slice(0, 160)}`,
+      );
+    }
+  }
 
   if (hasGemini) {
     try {
       return await generateWithGemini(prompt);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      // Free-tier 429 / quota → OpenAI/Groq'a düş
-      if (hasFallback && /\b429\b|quota|Too Many Requests/i.test(msg)) {
+      if (
+        hasOpenAiOrGroq &&
+        /\b429\b|\b404\b|quota|Too Many Requests|NOT_FOUND|no longer available/i.test(
+          msg,
+        )
+      ) {
         console.warn(
-          `[content-engine] Gemini quota/rate-limit; falling back. ${msg.slice(0, 160)}`,
+          `[content-engine] Gemini unavailable; falling back. ${msg.slice(0, 160)}`,
         );
         return generateWithAiSdk(prompt);
       }
@@ -335,12 +361,8 @@ async function generateArticleRaw(prompt: string): Promise<string> {
     }
   }
 
-  if (hasFallback) {
-    return generateWithAiSdk(prompt);
-  }
-
   throw new Error(
-    "Set GEMINI_API_KEY, OPENAI_API_KEY, or GROQ_API_KEY for content generation.",
+    "Set OPENAI_API_KEY, GROQ_API_KEY, or GEMINI_API_KEY for content generation.",
   );
 }
 
