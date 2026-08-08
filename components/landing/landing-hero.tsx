@@ -1,22 +1,29 @@
 "use client";
 
-import { ArrowRight, FileText, Scale, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, Lock, Shield, Trash2, Video, Zap } from "lucide-react";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { Button } from "@/components/ui/button";
+import { SampleAnalysisCard } from "@/components/hero/SampleAnalysisCard";
 
 type Props = {
   onOpenAnalyzer: () => void;
 };
 
+const trustItems = [
+  { icon: Lock, label: "KVKK & GDPA Uyumlu" },
+  { icon: Shield, label: "256-bit Uçtan Uca Şifreleme" },
+  { icon: Trash2, label: "Analiz Sonrası Anlık Veri Silme" },
+] as const;
+
 export function LandingHero({ onOpenAnalyzer }: Props) {
   return (
     <section className="relative overflow-hidden border-b border-slate-200/60 bg-white/80 backdrop-blur-sm">
-      {/* Gradient mesh effect - navy/mint gradient */}
-      <div 
+      <div
         className="absolute inset-0 opacity-50"
         style={{
-          background: 'linear-gradient(135deg, rgba(30, 58, 95, 0.06) 0%, rgba(248, 250, 252, 0) 50%, rgba(16, 185, 129, 0.02) 100%)',
+          background:
+            "linear-gradient(135deg, rgba(37, 99, 235, 0.06) 0%, rgba(248, 250, 252, 0) 50%, rgba(16, 185, 129, 0.02) 100%)",
         }}
       />
       <div
@@ -24,29 +31,27 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
         aria-hidden
         style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, rgb(148 163 184) 1px, transparent 0)`,
-          backgroundSize: '24px 24px',
+          backgroundSize: "24px 24px",
         }}
       />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:py-24">
-        <div
-          className="flex flex-col justify-center animate-in fade-in slide-in-from-bottom-4 duration-300"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-mint-50 rounded-full text-xs font-semibold text-navy-700 mb-4 border border-mint-200">
-            <Scale className="w-3.5 h-3.5" />
+        <div className="flex flex-col justify-center animate-in fade-in slide-in-from-bottom-4 duration-300">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-[var(--cta-primary)]">
+            <Zap className="h-3.5 w-3.5" />
             clause.ai — Türk Hukuk Sistemi
           </div>
           <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-deep-navy sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
             Yapay Zeka Hukuk Asistanı — Sözleşme Analizi ve Risk Taraması
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-slate-600 font-medium">
-            Legal AI ile kira, iş ve ticari sözleşmelerinizi ücretsiz ön taramadan geçirin.
-            TBK ve güncel mevzuat bağlamında risk özeti; avukat öncesi bilinçli karar.
+          <p className="mt-5 max-w-xl text-lg font-medium text-slate-600">
+            Legal AI ile kira, iş ve ticari sözleşmelerinizi ücretsiz ön taramadan
+            geçirin. Riskleri sade dilde görün; avukat öncesi bilinçli karar verin.
           </p>
-          
+
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button
               size="lg"
-              className="h-12 rounded-xl px-8 text-base font-semibold bg-navy-700 hover:bg-navy-800 text-mint-100 shadow-lg shadow-navy-700/25"
+              className="h-14 rounded-xl bg-[var(--cta-primary)] px-8 text-base font-bold text-white shadow-[0_0_24px_rgba(37,99,235,0.45)] transition-all hover:bg-[#1d4ed8] hover:shadow-[0_0_32px_rgba(37,99,235,0.55)] hover:scale-[1.02] active:scale-[0.98]"
               onClick={() => {
                 captureEvent(AnalyticsEvents.HERO_CTA_CLICKED, {
                   placement: "hero",
@@ -54,73 +59,53 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
                 onOpenAnalyzer();
               }}
             >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Analizi Başlat
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Zap className="mr-1 h-4 w-4" />
+              Ücretsiz Sözleşme Analizi Yap
+              <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="h-12 rounded-xl px-8 text-base font-semibold border-slate-300 text-slate-700 hover:bg-slate-50 hover:border-slate-400"
+              className="h-14 rounded-xl border-2 border-slate-300 px-8 text-base font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
               asChild
             >
-              <a href="#nasil-calisir">Nasıl Çalışır?</a>
+              <a href="#nasil-calisir">
+                <Video className="mr-1 h-4 w-4" />
+                1 Dakikada Nasıl Çalışır?
+              </a>
             </Button>
           </div>
-          
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-500">
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-mint-500" />
-              <span className="font-medium">KVKK Uyumlu</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FileText className="w-4 h-4 text-slate-600" />
-              <span className="font-medium">10.000+ Kanun Maddesi</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Scale className="w-4 h-4 text-navy-600" />
-              <span className="font-medium">Yargıtay İçtihatları</span>
-            </div>
+
+          <div
+            className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] font-medium text-slate-500 sm:text-[13px]"
+            role="list"
+            aria-label="Güven göstergeleri"
+          >
+            {trustItems.map((item, i) => (
+              <span key={item.label} className="contents" role="listitem">
+                {i > 0 ? (
+                  <span className="hidden text-slate-300 sm:inline" aria-hidden>
+                    ·
+                  </span>
+                ) : null}
+                <span className="inline-flex items-center gap-1.5">
+                  <item.icon
+                    className="h-3.5 w-3.5 shrink-0 text-[var(--cta-primary)]"
+                    aria-hidden
+                  />
+                  {item.label}
+                </span>
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-10 lg:hidden">
+            <SampleAnalysisCard />
           </div>
         </div>
 
-        <div
-          className="relative hidden lg:flex lg:items-center lg:justify-center animate-in fade-in zoom-in-95 duration-300 delay-75"
-        >
-          <div className="glass-panel relative w-full max-w-md rounded-2xl p-8 border border-slate-200/80">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-slate-800">
-                <span className="h-2 w-2 rounded-full bg-mint-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-                <span className="font-semibold">
-                  Yapay Zeka Destekli Analiz
-                </span>
-              </div>
-              
-              <div className="rounded-xl border border-navy-100 bg-slate-50/80 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-navy-500 mb-2">
-                  Örnek Analiz
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-slate-600">İlgili Kanun Maddesi</span>
-                    <span className="text-xs px-2 py-0.5 bg-navy-100 text-navy-700 rounded font-semibold">TBK 350</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-slate-600">Emsal Karar</span>
-                    <span className="text-xs px-2 py-0.5 bg-orange-100 text-orange-700 rounded font-semibold">Yargıtay 6. HD</span>
-                  </div>
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-200">
-                    <span className="text-sm font-semibold text-slate-700">Benzerlik Skoru</span>
-                    <span className="text-sm font-bold text-mint-600">%88</span>
-                  </div>
-                </div>
-              </div>
-              
-              <p className="text-sm text-slate-500 text-center font-medium">
-                Vakanıza uygun kanun maddeleri ve emsal kararlar otomatik tespit edilir.
-              </p>
-            </div>
-          </div>
+        <div className="relative hidden animate-in fade-in zoom-in-95 duration-300 delay-75 lg:flex lg:items-center lg:justify-center">
+          <SampleAnalysisCard />
         </div>
       </div>
     </section>

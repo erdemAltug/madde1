@@ -52,6 +52,7 @@
     --madde-green: #10B981;           /* Emerald/mint (trust indicator) */
     --madde-red: #DC2626;             /* Deep red (risk indicator) */
     --madde-ink: #111827;             /* Deep navy text */
+    --cta-primary: #2563eb;           /* Royal blue — primary CTA accent */
     
     /* Depth palette */
     --deep-navy: #0F172A;             /* Darkest navy */
