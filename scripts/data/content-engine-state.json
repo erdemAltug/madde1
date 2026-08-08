@@ -1,6 +1,8 @@
 {
-  "usedTopicIds": [],
-  "lastGeneratedAt": null,
-  "lastSlug": null,
-  "poolCursor": 0
+  "usedTopicIds": [
+    "kira-zam-2026"
+  ],
+  "lastGeneratedAt": "2026-08-08T15:11:25.352Z",
+  "lastSlug": "ev-sahibi-kiraya-yuzde-kac-zam-yapabilir-2026",
+  "poolCursor": 1
 }
