@@ -11,8 +11,8 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 type Props = { params: { slug: string } };
 
 export function generateStaticParams() {
-  const slugs = new Set([...BLOG_SLUGS, ...getMdxBlogSlugs()]);
-  return [...slugs].map((slug) => ({ slug }));
+  const slugs = Array.from(new Set(BLOG_SLUGS.concat(getMdxBlogSlugs())));
+  return slugs.map((slug) => ({ slug }));
 }
 
 export function generateMetadata({ params }: Props): Metadata {

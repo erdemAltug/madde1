@@ -131,7 +131,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  const blogSlugs = [...new Set([...BLOG_SLUGS, ...getMdxBlogSlugs()])];
+  const blogSlugs = Array.from(new Set(BLOG_SLUGS.concat(getMdxBlogSlugs())));
   const mdxBySlug = Object.fromEntries(
     getAllMdxBlogPosts().map((p) => [p.slug, p]),
   );
