@@ -1,0 +1,35 @@
+name: Scheduled Automated SEO Blog Generator
+
+on:
+  schedule:
+    # Her Salı ve Cuma günü Türkiye saatiyle 09:00'da çalışır (06:00 UTC)
+    - cron: '0 6 * * 2,5'
+  workflow_dispatch: # GitHub UI üzerinden manuel tetiklemeye izin verir
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate AI SEO Article
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npx ts-node scripts/generate-seo-post.ts
+
+      - name: Commit and Push New Article
+        run: |
+          git config --global user.name "Bullsye Content Bot"
+          git config --global user.email "bot@bullsye.app"
+          git add src/content/blog/
+          git commit -m "chore(seo): auto-generate weekly SEO blog article [skip ci]" || exit 0
+          git push
