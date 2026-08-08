@@ -2,9 +2,37 @@ import Link from "next/link";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
+import { getAllMdxBlogPosts } from "@/lib/seo/mdx-blog";
+
+type IndexPost = {
+  slug: string;
+  h1: string;
+  excerpt: string;
+  publishedAt: string;
+};
 
 export default function BlogIndexPage() {
-  const posts = BLOG_SLUGS.map((slug) => getBlogPost(slug)).filter(Boolean);
+  const legacy: IndexPost[] = BLOG_SLUGS.map((slug) => getBlogPost(slug))
+    .filter(Boolean)
+    .map((post) => ({
+      slug: post!.slug,
+      h1: post!.h1,
+      excerpt: post!.excerpt,
+      publishedAt: post!.publishedAt,
+    }));
+
+  const mdx: IndexPost[] = getAllMdxBlogPosts().map((post) => ({
+    slug: post.slug,
+    h1: post.h1,
+    excerpt: post.excerpt,
+    publishedAt: post.publishedAt,
+  }));
+
+  const bySlug = new Map<string, IndexPost>();
+  for (const p of [...legacy, ...mdx]) bySlug.set(p.slug, p);
+  const posts = [...bySlug.values()].sort((a, b) =>
+    b.publishedAt.localeCompare(a.publishedAt),
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -30,24 +58,24 @@ export default function BlogIndexPage() {
 
         <ul className="mt-10 divide-y divide-slate-200">
           {posts.map((post) => (
-            <li key={post!.slug} className="py-6 first:pt-0">
+            <li key={post.slug} className="py-6 first:pt-0">
               <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                {post!.publishedAt}
+                {post.publishedAt}
               </p>
               <h2 className="mt-1 text-xl font-bold text-madde-ink">
                 <Link
-                  href={`/blog/${post!.slug}`}
+                  href={`/blog/${post.slug}`}
                   className="hover:text-indigo-700"
                   prefetch={true}
                 >
-                  {post!.h1}
+                  {post.h1}
                 </Link>
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                {post!.excerpt}
+                {post.excerpt}
               </p>
               <Link
-                href={`/blog/${post!.slug}`}
+                href={`/blog/${post.slug}`}
                 className="mt-3 inline-block text-sm font-semibold text-indigo-600 hover:underline"
                 prefetch={true}
               >
