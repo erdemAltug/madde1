@@ -29,8 +29,8 @@ export default function BlogIndexPage() {
   }));
 
   const bySlug = new Map<string, IndexPost>();
-  for (const p of [...legacy, ...mdx]) bySlug.set(p.slug, p);
-  const posts = [...bySlug.values()].sort((a, b) =>
+  for (const p of legacy.concat(mdx)) bySlug.set(p.slug, p);
+  const posts = Array.from(bySlug.values()).sort((a, b) =>
     b.publishedAt.localeCompare(a.publishedAt),
   );
 

@@ -462,7 +462,7 @@ async function main() {
   const outPath = join(OUT_DIR, `${article.slug}.mdx`);
   writeFileSync(outPath, renderMdx(article, topic), "utf8");
 
-  state.usedTopicIds = [...new Set([...state.usedTopicIds, topic.id])];
+  state.usedTopicIds = Array.from(new Set(state.usedTopicIds.concat(topic.id)));
   state.lastGeneratedAt = new Date().toISOString();
   state.lastSlug = article.slug;
   saveState(state);
