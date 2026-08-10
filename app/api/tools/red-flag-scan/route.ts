@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { generateText } from "ai";
-import { resolveLegalModel } from "@/lib/ai/models";
+import * as Sentry from "@sentry/nextjs";
+import { generateLegalText, resolveLegalModel } from "@/lib/ai/models";
 
 export const maxDuration = 30;
 
@@ -13,6 +13,9 @@ type ScanResult = {
 function parseScan(raw: string): ScanResult {
   let t = raw.trim();
   t = t.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
+  const start = t.indexOf("{");
+  const end = t.lastIndexOf("}");
+  if (start >= 0 && end > start) t = t.slice(start, end + 1);
   const parsed = JSON.parse(t) as Record<string, unknown>;
   const take = (key: string) =>
     (Array.isArray(parsed[key]) ? parsed[key] : [])
@@ -27,27 +30,26 @@ function parseScan(raw: string): ScanResult {
 }
 
 export async function POST(req: Request) {
-  const model = resolveLegalModel();
-  if (!model) {
-    return NextResponse.json(
-      { error: "Model yapılandırması eksik" },
-      { status: 503 },
-    );
-  }
+  try {
+    if (!resolveLegalModel()) {
+      return NextResponse.json(
+        { error: "Model yapılandırması eksik" },
+        { status: 503 },
+      );
+    }
 
-  const body = await req.json().catch(() => ({}));
-  const contractText = String(body.contractText || "").slice(0, 36_000);
-  if (contractText.trim().length < 80) {
-    return NextResponse.json(
-      { error: "En az birkaç paragraf sözleşme metni gerekli" },
-      { status: 400 },
-    );
-  }
+    const body = await req.json().catch(() => ({}));
+    const contractText = String(body.contractText || "").slice(0, 36_000);
+    if (contractText.trim().length < 80) {
+      return NextResponse.json(
+        { error: "En az birkaç paragraf sözleşme metni gerekli" },
+        { status: 400 },
+      );
+    }
 
-  const { text } = await generateText({
-    model,
-    maxOutputTokens: 700,
-    prompt: `Sen Türk hukuku ön tarama asistanısın. Avukat değilsin; kesin hukuki görüş verme.
+    const { text } = await generateLegalText({
+      maxOutputTokens: 700,
+      prompt: `Sen Türk hukuku ön tarama asistanısın. Avukat değilsin; kesin hukuki görüş verme.
 Aşağıdaki sözleşme metnini tara ve YALNIZCA tek JSON satırı döndür.
 
 Metin:
@@ -63,15 +65,26 @@ JSON:
 }
 
 Her madde kısa Türkçe cümle olsun. Uydurma madde numarası yazma. Metinde yoksa genel riski tarif et.`,
-  });
+    });
 
-  try {
-    const result = parseScan(text);
-    return NextResponse.json({ success: true, ...result });
-  } catch {
+    try {
+      const result = parseScan(text);
+      return NextResponse.json({ success: true, ...result });
+    } catch {
+      return NextResponse.json(
+        { error: "Tarama sonucu işlenemedi" },
+        { status: 502 },
+      );
+    }
+  } catch (err) {
+    Sentry.captureException(err);
+    console.error("[red-flag-scan]", err);
     return NextResponse.json(
-      { error: "Tarama sonucu işlenemedi" },
-      { status: 502 },
+      {
+        error:
+          "Tarama şu an tamamlanamadı. Birkaç saniye sonra tekrar deneyin.",
+      },
+      { status: 500 },
     );
   }
 }

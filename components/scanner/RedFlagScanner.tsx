@@ -84,7 +84,14 @@ export function RedFlagScanner() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contractText: text }),
       });
-      const data = (await res.json()) as ScanResult & { error?: string };
+      let data: ScanResult & { error?: string } = { red: [], yellow: [], green: [] };
+      try {
+        data = (await res.json()) as ScanResult & { error?: string };
+      } catch {
+        setError("Sunucu yanıtı okunamadı. Tekrar deneyin.");
+        setResult(null);
+        return;
+      }
       if (!res.ok) {
         setError(data.error || "Tarama başarısız");
         setResult(null);
