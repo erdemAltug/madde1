@@ -1,8 +1,9 @@
 {
   "usedTopicIds": [
-    "kira-zam-2026"
+    "kira-zam-2026",
+    "kira-depozito-iade"
   ],
-  "lastGeneratedAt": "2026-08-08T15:11:25.352Z",
-  "lastSlug": "ev-sahibi-kiraya-yuzde-kac-zam-yapabilir-2026",
-  "poolCursor": 1
+  "lastGeneratedAt": "2026-08-11T07:13:57.214Z",
+  "lastSlug": "depozito-iadesi-vermeyen-ev-sahibine-ne-yapilir",
+  "poolCursor": 2
 }
