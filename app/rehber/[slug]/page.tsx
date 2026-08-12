@@ -7,6 +7,7 @@ import {
 } from "@/lib/seo/rehber-pages";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
+import { isNicheRegionalRehberSlug } from "@/lib/seo/niche-regional";
 
 type Props = { params: { slug: string } };
 
@@ -18,11 +19,17 @@ export function generateMetadata({ params }: Props): Metadata {
   const cfg = getRehberConfig(params.slug);
   if (!cfg) return { title: "Rehber" };
   const path = `/rehber/${params.slug}`;
+  const niche = isNicheRegionalRehberSlug(params.slug);
   return {
     title: cfg.metaTitle,
     description: cfg.metaDescription,
-    keywords: [...cfg.keywords, "hukuk rehberi", "Clause", SITE_NAME],
+    keywords: niche
+      ? ["hukuk rehberi", "Clause", SITE_NAME]
+      : [...cfg.keywords, "hukuk rehberi", "Clause", SITE_NAME],
     alternates: { canonical: absoluteUrl(path) },
+    robots: niche
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
     openGraph: {
       title: `${cfg.metaTitle} | ${SITE_NAME}`,
       description: cfg.metaDescription,

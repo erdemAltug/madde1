@@ -230,7 +230,7 @@ const PAGES: HukukiAnalizPageConfig[] = [
       "eşya hasar depozitosu",
       "depozito iade edilmiyor",
       "kira depozitosu dava",
-      "kıbrıs depozito anlaşmazlığı",
+      "depozito iadesi Türkiye",
     ],
     heroTitle: "Depozito iadesinde anlaşmazlık mı yaşıyorsunuz?",
     heroSubtitle: "Kesinti gerekçelerini ve haklarınızı netleştirin",

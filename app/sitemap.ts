@@ -8,6 +8,8 @@ import { YAPAY_ZEKA_HUKUK_SLUGS } from "@/lib/seo/yapay-zeka-hukuk-pages";
 import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
 import { getAllMdxBlogPosts, getMdxBlogSlugs } from "@/lib/seo/mdx-blog";
 import { HAKLARIM_SLUGS } from "@/lib/seo/haklarim-pages";
+import { INTENT_PILLAR_CATEGORIES } from "@/lib/seo/intent-pillars";
+import { isNicheRegionalPath } from "@/lib/seo/niche-regional";
 import { SITE_URL } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -57,6 +59,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.94,
     },
+    ...INTENT_PILLAR_CATEGORIES.map((category) => ({
+      url: `${SITE_URL}/${category}`,
+      lastModified: lastMod,
+      changeFrequency: "weekly" as const,
+      priority: 0.97,
+    })),
   ];
 
   const araclar: MetadataRoute.Sitemap = [
@@ -81,7 +89,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.92,
     },
-    ...REHBER_SLUGS.map((slug) => ({
+    ...REHBER_SLUGS.filter(
+      (slug) => !isNicheRegionalPath(`/rehber/${slug}`),
+    ).map((slug) => ({
       url: `${SITE_URL}/rehber/${slug}`,
       lastModified: new Date(
         getRehberConfig(slug)?.updatedAt ?? lastMod.toISOString(),
@@ -143,7 +153,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.88,
     },
-    ...blogSlugs.map((slug) => ({
+    ...blogSlugs
+      .filter((slug) => !isNicheRegionalPath(`/blog/${slug}`))
+      .map((slug) => ({
       url: `${SITE_URL}/blog/${slug}`,
       lastModified: new Date(
         mdxBySlug[slug]?.updatedAt ??

@@ -7,6 +7,7 @@ import { getMdxBlogPost, getMdxBlogSlugs } from "@/lib/seo/mdx-blog";
 import { getRelatedLinksForBlog } from "@/lib/seo/internal-links";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
+import { isNicheRegionalBlogSlug } from "@/lib/seo/niche-regional";
 
 type Props = { params: { slug: string } };
 
@@ -16,14 +17,20 @@ export function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: Props): Metadata {
+  const niche = isNicheRegionalBlogSlug(params.slug);
   const mdx = getMdxBlogPost(params.slug);
   if (mdx) {
     const path = `/blog/${params.slug}`;
     return {
       title: mdx.metaTitle,
       description: mdx.metaDescription,
-      keywords: [...mdx.keywords, "Clause blog", "legal AI", SITE_NAME],
+      keywords: niche
+        ? ["Clause blog", SITE_NAME]
+        : [...mdx.keywords, "Clause blog", "legal AI", SITE_NAME],
       alternates: { canonical: absoluteUrl(path) },
+      robots: niche
+        ? { index: false, follow: true }
+        : { index: true, follow: true },
       openGraph: {
         title: `${mdx.metaTitle} | ${SITE_NAME}`,
         description: mdx.excerpt,
@@ -43,8 +50,13 @@ export function generateMetadata({ params }: Props): Metadata {
   return {
     title: post.metaTitle,
     description: post.metaDescription,
-    keywords: [...post.keywords, "Clause blog", "legal AI", SITE_NAME],
+    keywords: niche
+      ? ["Clause blog", SITE_NAME]
+      : [...post.keywords, "Clause blog", "legal AI", SITE_NAME],
     alternates: { canonical: absoluteUrl(path) },
+    robots: niche
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
     openGraph: {
       title: `${post.metaTitle} | ${SITE_NAME}`,
       description: post.excerpt,
