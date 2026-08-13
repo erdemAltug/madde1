@@ -56,7 +56,7 @@ export function AnalysisPanel({
   onRequestUnlock,
   unlockBusy,
   isLoggedIn = false,
-  registeredLimit = 10,
+  registeredLimit: _registeredLimit = 10,
   onRequestServerPurge,
 }: Props) {
   const [paywallPulse, setPaywallPulse] = React.useState(false);
