@@ -166,7 +166,7 @@ export function SiteNavbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl">
-      <LaunchBanner />
+      {!user ? <LaunchBanner /> : null}
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:gap-4 lg:px-8">
         <Link
           href="/"
