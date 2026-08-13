@@ -17,6 +17,7 @@ import {
 import { StepResults } from "@/components/modal/StepResults";
 import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 import { LimitReachedDialog } from "@/components/growth/limit-reached-dialog";
+import { AuthModal } from "@/components/auth/AuthModal";
 import { SAMPLE_RENTAL_CONTRACT } from "@/lib/constants";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
 import { useAuthSession } from "@/hooks/use-auth-session";
@@ -90,6 +91,7 @@ export function ContractAnalyzerModal({
   const [teaser, setTeaser] = React.useState<TeaserData | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [limitDialogOpen, setLimitDialogOpen] = React.useState(false);
+  const [authOpen, setAuthOpen] = React.useState(false);
 
   const { userId, isLoggedIn } = useAuthSession();
   const dailyAnalysis = useDailyAnalysis(userId);
@@ -191,7 +193,7 @@ export function ContractAnalyzerModal({
       ? "Dosyanızı yükleyin veya örnekle saniyeler içinde deneyin."
       : step === "scanning"
         ? "Yapay zeka sözleşmenizi tarıyor."
-        : "Ücretsiz özet aşağıda; kritik detaylar kayıtla açılır.";
+        : "Hızlı risk özeti aşağıda. Detaylı rapor ve PDF lansman boyunca ücretsizdir.";
 
   return (
     <>
@@ -231,6 +233,14 @@ export function ContractAnalyzerModal({
                 teaser={teaser}
                 isLoggedIn={isLoggedIn}
                 onAnalyzeAgain={resetWizard}
+                onRequestFullReport={() => {
+                  if (isLoggedIn) {
+                    window.location.href = "/analiz";
+                    return;
+                  }
+                  onOpenChange(false);
+                  window.setTimeout(() => setAuthOpen(true), 200);
+                }}
               />
             ) : null}
           </div>
@@ -244,6 +254,7 @@ export function ContractAnalyzerModal({
         registeredLimit={dailyAnalysis.registeredLimit}
         isLoggedIn={isLoggedIn}
       />
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
     </>
   );
 }

@@ -9,11 +9,14 @@ const STORAGE_KEY = "clause-analysis-markdown";
 type Props = {
   markdown: string;
   sharePath?: string;
+  /** Misafir PDF indirmesini AuthModal'a yönlendirmek için */
+  onPdfClick?: () => boolean | void;
 };
 
 export function AnalysisActions({
   markdown,
   sharePath = "/analiz/kira-sozlesmesi",
+  onPdfClick,
 }: Props) {
   const [copied, setCopied] = React.useState<"md" | "link" | null>(null);
 
@@ -32,6 +35,7 @@ export function AnalysisActions({
   };
 
   const openPrint = () => {
+    if (onPdfClick?.() === false) return;
     if (!markdown.trim()) return;
     try {
       sessionStorage.setItem(STORAGE_KEY, markdown);

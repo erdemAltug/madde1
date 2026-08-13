@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { IS_PUBLIC_BETA } from "@/lib/launch";
 
 export const GUEST_DAILY_LIMIT = 3;
 export const REGISTERED_DAILY_LIMIT = 10;
@@ -57,11 +58,13 @@ export function useDailyAnalysis(userId?: string | null) {
   }, [userId, limit]);
 
   const canAnalyze = useCallback(() => {
+    if (IS_PUBLIC_BETA) return true;
     if (!isLoaded) return false;
     return remaining > 0;
   }, [isLoaded, remaining]);
 
   const consumeAnalysis = useCallback(() => {
+    if (IS_PUBLIC_BETA) return;
     const data = readDailyAnalyses(userId);
     const today = getTodayString();
 

@@ -1,7 +1,8 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
-import { CheckCircle2, Lock, Unlock } from "lucide-react";
+import { CheckCircle2, FileDown, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 import { captureEvent } from "@/lib/analytics/capture";
@@ -12,6 +13,7 @@ type Props = {
   teaser: TeaserData;
   isLoggedIn?: boolean;
   onAnalyzeAgain: () => void;
+  onRequestFullReport: () => void;
 };
 
 function riskPercentFromTeaser(data: TeaserData): number {
@@ -32,7 +34,12 @@ const FALLBACK_LOCKED = [
   "Tek taraflı fesih ve artış oranı kiracı aleyhine düzenlenmiş.",
 ] as const;
 
-export function StepResults({ teaser, isLoggedIn, onAnalyzeAgain }: Props) {
+export function StepResults({
+  teaser,
+  isLoggedIn,
+  onAnalyzeAgain,
+  onRequestFullReport,
+}: Props) {
   const riskPct = riskPercentFromTeaser(teaser);
   const locked = [
     teaser.categoryTitles[0]
@@ -42,6 +49,13 @@ export function StepResults({ teaser, isLoggedIn, onAnalyzeAgain }: Props) {
       ? `${teaser.categoryTitles[1]} — sözleşme aleyhinize işliyor olabilir.`
       : FALLBACK_LOCKED[1],
   ];
+
+  const onFullReport = () => {
+    captureEvent(AnalyticsEvents.DETAIL_UNLOCK_SIGNUP_CLICKED, {
+      source: "wizard_full_report_pdf",
+    });
+    onRequestFullReport();
+  };
 
   return (
     <div className="space-y-5">
@@ -107,23 +121,18 @@ export function StepResults({ teaser, isLoggedIn, onAnalyzeAgain }: Props) {
 
       <Button
         size="lg"
-        className="h-14 w-full rounded-xl bg-[var(--cta-primary)] text-base font-bold text-white shadow-[0_0_28px_rgba(37,99,235,0.5)] transition-all hover:scale-[1.01] hover:bg-[#1d4ed8] hover:shadow-[0_0_36px_rgba(37,99,235,0.6)]"
-        asChild
+        className="h-14 w-full rounded-xl bg-[var(--cta-primary)] px-4 text-sm font-bold text-white shadow-[0_0_28px_rgba(37,99,235,0.5)] transition-all hover:scale-[1.01] hover:bg-[#1d4ed8] hover:shadow-[0_0_36px_rgba(37,99,235,0.6)] sm:text-base"
+        onClick={onFullReport}
       >
-        <Link
-          href={isLoggedIn ? "/analiz" : "/giris?kayit=1"}
-          onClick={() =>
-            captureEvent(AnalyticsEvents.DETAIL_UNLOCK_SIGNUP_CLICKED, {
-              source: "wizard_teaser_results",
-            })
-          }
-        >
-          <Unlock className="mr-1 h-4 w-4" aria-hidden />
-          {isLoggedIn
-            ? "Tüm Riskleri Gör"
-            : "Ücretsiz Kayıt Ol & Tüm Riskleri Gör"}
-        </Link>
+        <FileDown className="mr-1 h-4 w-4 shrink-0" aria-hidden />
+        Detaylı Yasal Risk Raporunu ve PDF&apos;i İndir
       </Button>
+
+      {isLoggedIn ? (
+        <Button variant="outline" className="w-full rounded-xl font-semibold" asChild>
+          <Link href="/analiz">Tam analizi aç</Link>
+        </Button>
+      ) : null}
 
       <button
         type="button"

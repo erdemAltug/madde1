@@ -24,7 +24,7 @@ import { useDailyAnalysis } from "@/hooks/use-daily-analysis";
 import { useAuthSession } from "@/hooks/use-auth-session";
 import { SignupNudgeBanner } from "@/components/growth/signup-nudge-banner";
 import { LimitReachedDialog } from "@/components/growth/limit-reached-dialog";
-import { SignupUnlockDialog } from "@/components/growth/signup-unlock-dialog";
+import { AuthModal } from "@/components/auth/AuthModal";
 import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
@@ -294,11 +294,6 @@ export function ContractAnalyzer({
       setSignupUnlockOpen(true);
       return;
     }
-    if (!dailyAnalysis.canAnalyze()) {
-      openLimitDialog();
-      return;
-    }
-    dailyAnalysis.consumeAnalysis();
     setDetailUnlocked(true);
   };
 
@@ -398,7 +393,7 @@ export function ContractAnalyzer({
                   </ShinyAnalyzeButton>
                   <p className="text-[11px] text-slate-500 font-medium">
                     {enablePaywall
-                      ? `Günlük ${dailyAnalysis.limit} ücretsiz analiz — kalan: ${dailyAnalysis.remaining}${!isLoggedIn ? " · Kayıt ol → 10/gün" : ""}`
+                      ? "Lansman: hızlı risk özeti ücretsiz · detaylı rapor ve PDF hesapla ücretsiz"
                       : "Tam analiz başlatılıyor..."}
                   </p>
                 </div>
@@ -509,10 +504,9 @@ export function ContractAnalyzer({
         registeredLimit={dailyAnalysis.registeredLimit}
         isLoggedIn={isLoggedIn}
       />
-      <SignupUnlockDialog
+      <AuthModal
         open={signupUnlockOpen}
         onOpenChange={setSignupUnlockOpen}
-        registeredLimit={dailyAnalysis.registeredLimit}
       />
     </div>
   );

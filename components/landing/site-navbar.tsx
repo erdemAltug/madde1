@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ClauseLogo } from "@/components/brand/clause-logo";
+import { LaunchBanner } from "@/components/layout/LaunchBanner";
 import { cn } from "@/lib/utils";
 import {
   DILEKCE_TOOL_PATH,
@@ -165,6 +166,7 @@ export function SiteNavbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl">
+      <LaunchBanner />
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:gap-4 lg:px-8">
         <Link
           href="/"
