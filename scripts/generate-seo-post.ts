@@ -262,6 +262,10 @@ function parseArticleJson(raw: string): GeneratedArticle {
   };
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function generateWithGemini(prompt: string): Promise<string> {
   const key = process.env.GEMINI_API_KEY?.trim();
   if (!key) throw new Error("GEMINI_API_KEY missing");
@@ -278,31 +282,53 @@ async function generateWithGemini(prompt: string): Promise<string> {
       : rawModel;
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 8192,
-        responseMimeType: "application/json",
-      },
-    }),
-  });
-  if (!res.ok) {
+  const maxRetries = 3;
+  let lastError: Error | null = null;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 8192,
+          responseMimeType: "application/json",
+        },
+      }),
+    });
+
+    if (res.ok) {
+      const data = (await res.json()) as {
+        candidates?: { content?: { parts?: { text?: string }[] } }[];
+      };
+      const text = data.candidates?.[0]?.content?.parts
+        ?.map((p) => p.text || "")
+        .join("")
+        .trim();
+      if (!text) throw new Error("Gemini returned empty content");
+      return text;
+    }
+
     const errText = await res.text();
-    throw new Error(`Gemini error ${res.status}: ${errText.slice(0, 400)}`);
+    lastError = new Error(
+      `Gemini error ${res.status}: ${errText.slice(0, 400)}`,
+    );
+
+    const retryable = res.status === 503 || res.status === 429;
+    if (!retryable || attempt >= maxRetries) {
+      throw lastError;
+    }
+
+    const delayMs = 5000 * 2 ** attempt;
+    console.warn(
+      `[content-engine] Temporary Gemini API error (${lastError.message}). Retrying attempt ${attempt + 1}/3 in ${delayMs}ms...`,
+    );
+    await sleep(delayMs);
   }
-  const data = (await res.json()) as {
-    candidates?: { content?: { parts?: { text?: string }[] } }[];
-  };
-  const text = data.candidates?.[0]?.content?.parts
-    ?.map((p) => p.text || "")
-    .join("")
-    .trim();
-  if (!text) throw new Error("Gemini returned empty content");
-  return text;
+
+  throw lastError ?? new Error("Gemini request failed");
 }
 
 async function generateWithAiSdk(prompt: string): Promise<string> {
