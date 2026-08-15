@@ -1,10 +1,12 @@
-import "dotenv/config";
-
+import { config as loadEnv } from "dotenv";
 import { mkdirSync, readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { groq } from "@ai-sdk/groq";
+
+loadEnv({ path: join(process.cwd(), ".env.local") });
+loadEnv();
 
 const ROOT = process.cwd();
 const OUT_DIR = join(ROOT, "src", "content", "blog");
@@ -266,23 +268,67 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function generateWithGemini(prompt: string): Promise<string> {
+function uniqueIds(ids: Array<string | undefined>): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const id of ids) {
+    const v = id?.trim();
+    if (!v || seen.has(v)) continue;
+    seen.add(v);
+    out.push(v);
+  }
+  return out;
+}
+
+function geminiModelCandidates(): string[] {
+  return uniqueIds([
+    process.env.GEMINI_CONTENT_MODEL,
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash-lite",
+    "gemini-2.5-flash-lite",
+    "gemini-flash-lite-latest",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash",
+    "gemini-2.5-flash",
+    "gemini-flash-latest",
+    "gemini-3.7-flash",
+  ]);
+}
+
+function groqModelCandidates(): string[] {
+  return uniqueIds([
+    process.env.GROQ_CONTENT_MODEL,
+    process.env.GROQ_LEGAL_MODEL === "llama-3.3-70b-versatile"
+      ? undefined
+      : process.env.GROQ_LEGAL_MODEL,
+    "llama-3.1-8b-instant",
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-120b",
+    "llama-3.3-70b-versatile",
+  ]);
+}
+
+function extractGeminiText(data: {
+  candidates?: { content?: { parts?: { text?: string }[] } }[];
+}): string {
+  return (
+    data.candidates?.[0]?.content?.parts
+      ?.map((p) => p.text || "")
+      .join("")
+      .trim() || ""
+  );
+}
+
+async function generateWithGeminiModel(
+  prompt: string,
+  model: string,
+  opts?: { json?: boolean; maxOutputTokens?: number; retries?: number },
+): Promise<string> {
   const key = process.env.GEMINI_API_KEY?.trim();
   if (!key) throw new Error("GEMINI_API_KEY missing");
 
-  // gemini-2.5-flash yeni kullanıcılara kapalı (404). Alias ile güncel Flash'a bağlan.
-  const rawModel =
-    process.env.GEMINI_CONTENT_MODEL?.trim() || "gemini-flash-latest";
-  const model =
-    rawModel === "gemini-2.5-flash" ||
-    rawModel === "gemini-2.0-flash" ||
-    rawModel === "gemini-1.5-pro" ||
-    rawModel === "gemini-pro"
-      ? "gemini-flash-latest"
-      : rawModel;
-
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
-  const maxRetries = 3;
+  const maxRetries = opts?.retries ?? 1;
   let lastError: Error | null = null;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -293,8 +339,10 @@ async function generateWithGemini(prompt: string): Promise<string> {
         contents: [{ role: "user", parts: [{ text: prompt }] }],
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 8192,
-          responseMimeType: "application/json",
+          maxOutputTokens: opts?.maxOutputTokens ?? 8192,
+          ...(opts?.json === false
+            ? {}
+            : { responseMimeType: "application/json" }),
         },
       }),
     });
@@ -303,17 +351,14 @@ async function generateWithGemini(prompt: string): Promise<string> {
       const data = (await res.json()) as {
         candidates?: { content?: { parts?: { text?: string }[] } }[];
       };
-      const text = data.candidates?.[0]?.content?.parts
-        ?.map((p) => p.text || "")
-        .join("")
-        .trim();
-      if (!text) throw new Error("Gemini returned empty content");
+      const text = extractGeminiText(data);
+      if (!text) throw new Error(`Gemini ${model} returned empty content`);
       return text;
     }
 
     const errText = await res.text();
     lastError = new Error(
-      `Gemini error ${res.status}: ${errText.slice(0, 400)}`,
+      `Gemini ${model} error ${res.status}: ${errText.slice(0, 280)}`,
     );
 
     const retryable = res.status === 503 || res.status === 429;
@@ -321,75 +366,247 @@ async function generateWithGemini(prompt: string): Promise<string> {
       throw lastError;
     }
 
-    const delayMs = 5000 * 2 ** attempt;
+    const delayMs = 4000 * 2 ** attempt;
     console.warn(
-      `[content-engine] Temporary Gemini API error (${lastError.message}). Retrying attempt ${attempt + 1}/3 in ${delayMs}ms...`,
+      `[content-engine] ${model} ${res.status}; retry ${attempt + 1}/${maxRetries} in ${delayMs}ms`,
     );
     await sleep(delayMs);
   }
 
-  throw lastError ?? new Error("Gemini request failed");
+  throw lastError ?? new Error(`Gemini ${model} request failed`);
 }
 
-async function generateWithAiSdk(prompt: string): Promise<string> {
-  const model = process.env.OPENAI_API_KEY
-    ? openai(process.env.OPENAI_CONTENT_MODEL?.trim() || "gpt-4o-mini")
-    : process.env.GROQ_API_KEY
-      ? groq(process.env.GROQ_LEGAL_MODEL?.trim() || "llama-3.3-70b-versatile")
-      : null;
-  if (!model) throw new Error("No OPENAI_API_KEY or GROQ_API_KEY");
-
-  const { text } = await generateText({
-    model,
-    prompt,
-    maxOutputTokens: 8192,
-    temperature: 0.7,
-  });
-  return text;
+async function listGeminiGenerateModels(key: string): Promise<string[]> {
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`,
+  );
+  if (!res.ok) return [];
+  const listed = (await res.json()) as {
+    models?: { name?: string; supportedGenerationMethods?: string[] }[];
+  };
+  return (listed.models ?? [])
+    .filter((m) => m.supportedGenerationMethods?.includes("generateContent"))
+    .map((m) => m.name?.replace(/^models\//, "") || "")
+    .filter(
+      (n) =>
+        Boolean(n) &&
+        /flash|lite/i.test(n) &&
+        !/image|tts|live|embed|omni|audio/i.test(n),
+    );
 }
 
-async function generateArticleRaw(prompt: string): Promise<string> {
-  const hasOpenAiOrGroq =
-    Boolean(process.env.OPENAI_API_KEY?.trim()) ||
-    Boolean(process.env.GROQ_API_KEY?.trim());
-  const hasGemini = Boolean(process.env.GEMINI_API_KEY?.trim());
+async function resolveGeminiModels(): Promise<string[]> {
+  const fallback = geminiModelCandidates();
+  const key = process.env.GEMINI_API_KEY?.trim();
+  if (!key) return fallback;
+  try {
+    const live = await listGeminiGenerateModels(key);
+    if (live.length === 0) return fallback;
+    console.log(
+      `[content-engine] Gemini live generateContent models: ${live.slice(0, 12).join(", ")}`,
+    );
+    const liteFirst = [
+      ...live.filter((n) => /lite/i.test(n)),
+      ...live.filter((n) => !/lite/i.test(n)),
+    ].slice(0, 8);
+    return uniqueIds([...liteFirst, ...fallback]);
+  } catch {
+    return fallback;
+  }
+}
 
-  // Gemini free-tier sık 404/429 veriyor → OpenAI/Groq öncelikli
-  if (hasOpenAiOrGroq) {
+async function generateWithGemini(prompt: string): Promise<string> {
+  const models = await resolveGeminiModels();
+  const errors: string[] = [];
+
+  for (const model of models) {
     try {
-      return await generateWithAiSdk(prompt);
+      const text = await generateWithGeminiModel(prompt, model);
+      console.log(`[content-engine] Gemini ok: ${model}`);
+      return text;
     } catch (err) {
-      if (!hasGemini) throw err;
       const msg = err instanceof Error ? err.message : String(err);
+      errors.push(msg);
       console.warn(
-        `[content-engine] OpenAI/Groq failed; trying Gemini. ${msg.slice(0, 160)}`,
+        `[content-engine] Gemini fallback skip ${model}: ${msg.slice(0, 180)}`,
       );
     }
   }
 
-  if (hasGemini) {
+  throw new Error(
+    `All Gemini models failed (${models.slice(0, 8).join(", ")}). Last: ${errors.at(-1) ?? "unknown"}`,
+  );
+}
+
+async function generateWithGroq(prompt: string): Promise<string> {
+  if (!process.env.GROQ_API_KEY?.trim()) {
+    throw new Error("GROQ_API_KEY missing");
+  }
+
+  const models = groqModelCandidates();
+  const errors: string[] = [];
+
+  for (const modelId of models) {
     try {
-      return await generateWithGemini(prompt);
+      const { text } = await generateText({
+        model: groq(modelId),
+        prompt,
+        maxOutputTokens: 8192,
+        temperature: 0.7,
+      });
+      if (!text?.trim()) throw new Error(`Groq ${modelId} empty`);
+      console.log(`[content-engine] Groq ok: ${modelId}`);
+      return text;
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      if (
-        hasOpenAiOrGroq &&
-        /\b429\b|\b404\b|quota|Too Many Requests|NOT_FOUND|no longer available/i.test(
-          msg,
-        )
-      ) {
-        console.warn(
-          `[content-engine] Gemini unavailable; falling back. ${msg.slice(0, 160)}`,
-        );
-        return generateWithAiSdk(prompt);
-      }
-      throw err;
+      errors.push(`${modelId}: ${msg}`);
+      console.warn(
+        `[content-engine] Groq fallback skip ${modelId}: ${msg.slice(0, 180)}`,
+      );
+    }
+  }
+
+  throw new Error(`All Groq models failed. Last: ${errors.at(-1) ?? "unknown"}`);
+}
+
+async function generateWithOpenAI(prompt: string): Promise<string> {
+  if (!process.env.OPENAI_API_KEY?.trim()) {
+    throw new Error("OPENAI_API_KEY missing");
+  }
+  const modelId = process.env.OPENAI_CONTENT_MODEL?.trim() || "gpt-4o-mini";
+  const { text } = await generateText({
+    model: openai(modelId),
+    prompt,
+    maxOutputTokens: 8192,
+    temperature: 0.7,
+  });
+  if (!text?.trim()) throw new Error("OpenAI returned empty content");
+  console.log(`[content-engine] OpenAI ok: ${modelId}`);
+  return text;
+}
+
+async function generateArticleRaw(prompt: string): Promise<string> {
+  const providers: Array<{ name: string; run: () => Promise<string> }> = [];
+
+  if (process.env.GEMINI_API_KEY?.trim()) {
+    providers.push({ name: "Gemini", run: () => generateWithGemini(prompt) });
+  }
+  if (process.env.GROQ_API_KEY?.trim()) {
+    providers.push({ name: "Groq", run: () => generateWithGroq(prompt) });
+  }
+  if (process.env.OPENAI_API_KEY?.trim()) {
+    providers.push({ name: "OpenAI", run: () => generateWithOpenAI(prompt) });
+  }
+
+  if (providers.length === 0) {
+    throw new Error(
+      "Set GEMINI_API_KEY, GROQ_API_KEY, or OPENAI_API_KEY for content generation.",
+    );
+  }
+
+  const errors: string[] = [];
+  for (const provider of providers) {
+    try {
+      return await provider.run();
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      errors.push(`${provider.name}: ${msg}`);
+      console.warn(
+        `[content-engine] ${provider.name} exhausted; next provider. ${msg.slice(0, 200)}`,
+      );
     }
   }
 
   throw new Error(
-    "Set OPENAI_API_KEY, GROQ_API_KEY, or GEMINI_API_KEY for content generation.",
+    `All content providers failed. ${errors.join(" | ").slice(0, 800)}`,
   );
+}
+
+async function probeProviders(): Promise<void> {
+  const ping = 'Reply with JSON only: {"ok":true}';
+  console.log("[content-engine] probe start");
+
+  if (process.env.GEMINI_API_KEY?.trim()) {
+    const key = process.env.GEMINI_API_KEY.trim();
+    try {
+      const listRes = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`,
+      );
+      if (listRes.ok) {
+        const listed = (await listRes.json()) as {
+          models?: { name?: string }[];
+        };
+        const names = (listed.models ?? [])
+          .map((m) => m.name?.replace(/^models\//, ""))
+          .filter((n): n is string => Boolean(n) && /flash|lite/i.test(n))
+          .slice(0, 20);
+        console.log(
+          `[content-engine] Gemini listed flash/lite: ${names.join(", ")}`,
+        );
+      } else {
+        console.warn(
+          `[content-engine] Gemini list models ${listRes.status}: ${(await listRes.text()).slice(0, 160)}`,
+        );
+      }
+    } catch (err) {
+      console.warn("[content-engine] Gemini list failed", err);
+    }
+
+    for (const model of await resolveGeminiModels()) {
+      try {
+        const text = await generateWithGeminiModel(ping, model, {
+          json: true,
+          maxOutputTokens: 64,
+          retries: 0,
+        });
+        console.log(
+          `[content-engine] probe Gemini ${model} OK: ${text.slice(0, 80)}`,
+        );
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.warn(
+          `[content-engine] probe Gemini ${model} FAIL: ${msg.slice(0, 180)}`,
+        );
+      }
+    }
+  } else {
+    console.warn("[content-engine] probe skip Gemini (no key)");
+  }
+
+  if (process.env.GROQ_API_KEY?.trim()) {
+    for (const modelId of groqModelCandidates().slice(0, 4)) {
+      try {
+        const { text } = await generateText({
+          model: groq(modelId),
+          prompt: ping,
+          maxOutputTokens: 32,
+          temperature: 0,
+        });
+        console.log(
+          `[content-engine] probe Groq ${modelId} OK: ${text.slice(0, 80)}`,
+        );
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.warn(
+          `[content-engine] probe Groq ${modelId} FAIL: ${msg.slice(0, 180)}`,
+        );
+      }
+    }
+  } else {
+    console.warn("[content-engine] probe skip Groq (no key)");
+  }
+
+  if (process.env.OPENAI_API_KEY?.trim()) {
+    try {
+      const text = await generateWithOpenAI(ping);
+      console.log(`[content-engine] probe OpenAI OK: ${text.slice(0, 80)}`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.warn(`[content-engine] probe OpenAI FAIL: ${msg.slice(0, 180)}`);
+    }
+  } else {
+    console.warn("[content-engine] probe skip OpenAI (no key)");
+  }
 }
 
 function yamlEscape(value: string): string {
@@ -456,6 +673,11 @@ function renderMdx(article: GeneratedArticle, topic: Topic): string {
 }
 
 async function main() {
+  if (process.argv.includes("--probe")) {
+    await probeProviders();
+    return;
+  }
+
   const state = loadState();
   const topic = pickTopic(state);
   console.log(`[content-engine] topic=${topic.id} query="${topic.query}"`);

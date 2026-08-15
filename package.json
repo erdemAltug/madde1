@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:migrate": "node scripts/db-migrate.mjs",
-    "content:generate": "tsx scripts/generate-seo-post.ts"
+    "content:generate": "tsx scripts/generate-seo-post.ts",
+    "content:probe": "tsx scripts/generate-seo-post.ts --probe"
   },
   "dependencies": {
     "@ai-sdk/groq": "^3.0.31",
