@@ -537,8 +537,8 @@ async function probeProviders(): Promise<void> {
           models?: { name?: string }[];
         };
         const names = (listed.models ?? [])
-          .map((m) => m.name?.replace(/^models\//, ""))
-          .filter((n): n is string => Boolean(n) && /flash|lite/i.test(n))
+          .map((m) => m.name?.replace(/^models\//, "") ?? "")
+          .filter((n) => Boolean(n) && /flash|lite/i.test(n))
           .slice(0, 20);
         console.log(
           `[content-engine] Gemini listed flash/lite: ${names.join(", ")}`,
