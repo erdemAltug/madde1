@@ -12,26 +12,25 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 const path = KIRA_ARTIS_TOOL_PATH;
 const canonical = absoluteUrl(path);
 const title =
-  "Kira sözleşmesi artış oranı hesaplama — TBK bağlamında ücretsiz araç";
+  "Kira zammı yasal mı? 2026 tavan hesap + ücretsiz sözleşme tarama";
 
 export const metadata: Metadata = {
   title,
   description:
-    "Kira sözleşmesi artış oranı ve yıllık yüzde ile tahmini yeni kira tutarını hesaplayın. Kira sözleşmesi riskleri ve sözleşme analizi için Clause AI ile tam metin taramasına geçin.",
+    "Kira zammı tavanını 2026 için hesaplayın. Kira artış raporu ve ücretsiz sözleşme taraması — kayıt ile PDF.",
   keywords: [
+    "kira zammı yasal mı",
+    "kira artış hesaplama 2026",
+    "kira takip raporu",
     "kira sözleşmesi artış oranı hesaplama",
-    "kira sözleşmesi riskleri",
-    "kira artış hesaplama",
-    "TBK kira artışı",
-    "sözleşme analizi",
-    "legal AI assistant",
+    "ücretsiz kira tarama",
     "Clause",
   ],
   alternates: { canonical },
   openGraph: {
     title: `${title} | ${SITE_NAME}`,
     description:
-      "Uzun kuyruk SEO URL ile kira artışı hesabı; ücretsiz LegalTech aracı.",
+      "Kira zammı yasal mı? 2026 tavan hesabı ve ücretsiz tarama.",
     url: canonical,
     type: "article",
     locale: "tr_TR",
@@ -39,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: twitterSummaryLargeImage(
     title,
-    "Kira sözleşmesi artış oranı — ücretsiz hesaplayıcı ve rehber.",
+    "Kira zammı yasal mı — ücretsiz 2026 hesap.",
   ),
 };
 

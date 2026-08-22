@@ -17,7 +17,7 @@ export const SITE_NAME = "Clause";
 export const SITE_HOST = SITE_URL.replace(/^https?:\/\//, "");
 
 export const SITE_TAGLINE =
-  "Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı";
+  "Kira zammı yasal mı? Sözleşmeyi ücretsiz tara — Clause";
 
 export function absoluteUrl(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
@@ -26,32 +26,29 @@ export function absoluteUrl(path: string): string {
 
 export const defaultHomeMetadata: Metadata = {
   title:
-    "Yapay Zeka Hukuk Asistanı — Ücretsiz Sözleşme Analizi AI | Clause Türkiye",
+    "Clause — Kira zammı yasal mı? Ücretsiz sözleşme analizi 2026",
   description:
-    "Türkiye'nin yapay zeka hukuk asistanı: sözleşme analizi AI, kira ve iş sözleşmesi risk taraması, TBK uyumlu özet. Legal AI assistant ile ücretsiz ön kontrol — günlük hukuki aramalarda hızlı bilgi.",
+    "Kira zammı tavanı, kıdem tazminatı ve sözleşme tuzaklarını ücretsiz kontrol edin. Clause ile Türkiye odaklı AI tarama; kayıt olup detaylı raporu ve PDF'i indirin.",
   keywords: [
-    "yapay zeka hukuk asistanı",
-    "yapay zeka sözleşme analizi",
-    "yapay zeka hukuk",
-    "legal AI assistant",
-    "legal AI Türkiye",
-    "hukuki yapay zeka",
-    "ücretsiz hukuki analiz",
-    "sözleşme analizi AI",
-    "yapay zeka avukat",
-    "AI hukuk asistanı",
-    "kira sözleşmesi analizi yapay zeka",
-    "sözleşme risk taraması",
-    "Clause AI",
+    "kira zammı yasal mı",
+    "kira artış hesaplama",
+    "kira takip raporu",
+    "yapay zeka ile kira takibi",
     "ücretsiz sözleşme analizi",
+    "kıdem tazminatı hesaplama",
+    "tahliye taahhütnamesi kontrol",
+    "sözleşme tuzakları",
+    "yapay zeka hukuk asistanı",
+    "kira sözleşmesi analizi",
+    "Clause AI",
   ],
   alternates: {
     canonical: absoluteUrl("/"),
   },
   openGraph: {
-    title: `${SITE_NAME} — Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı`,
+    title: "Clause — Ücretsiz kira ve sözleşme analizi",
     description:
-      "Yapay zeka ile sözleşme analizi, Yargıtay içtihatları ve hukuki danışmanlık. Ücretsiz risk taraması.",
+      "Kira zammı yasal mı? Sözleşmeyi ücretsiz tarayın. Detaylı rapor ve PDF lansman döneminde hesapla ücretsiz.",
     url: absoluteUrl("/"),
     siteName: SITE_NAME,
     locale: "tr_TR",
@@ -67,9 +64,9 @@ export const defaultHomeMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Türkiye'nin İlk Ücretsiz Yapay Zeka Hukuk Asistanı`,
+    title: `Clause — Ücretsiz kira ve sözleşme analizi`,
     description:
-      "AI hukuk asistanı ile sözleşme analizi, Yargıtay emsal ve TBK danışmanlık.",
+      "Kira zammı, kıdem ve sözleşme tuzaklarını ücretsiz kontrol edin.",
     images: ["/opengraph-image"],
   },
 };

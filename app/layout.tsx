@@ -7,11 +7,11 @@ import { SITE_NAME, SITE_URL } from "@/lib/seo/site";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Yapay zeka ile TBK sözleşme analizi`,
+    default: `Clause — Ücretsiz sözleşme analizi ve kira zammı kontrolü`,
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Türkiye'de kira, iş ve ticari sözleşmeler için yapay zeka destekli risk taraması, TBK uyumlu özet ve taslak üretimi.",
+    "Kira zammı yasal mı, kıdem ne kadar, sözleşmede tuzak var mı? Clause ile ücretsiz tarayın; kayıt olup detaylı rapor ve PDF alın.",
   keywords: [
     "yapay zeka hukuk asistanı",
     "yapay zeka sözleşme analizi",

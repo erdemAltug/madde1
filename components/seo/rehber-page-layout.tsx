@@ -1,11 +1,10 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { FaqSection } from "@/components/seo/faq-section";
 import { InternalLinksSection } from "@/components/seo/internal-links-section";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
+import { SeoSignupCta } from "@/components/seo/seo-signup-cta";
 import type { RehberPageConfig } from "@/lib/seo/rehber-types";
 import {
   getRelatedLinksForRehber,
@@ -73,19 +72,10 @@ export function RehberPageLayout({
             ))}
           </div>
 
-          <div className="mt-10 rounded-2xl border border-[#005BEA]/20 bg-gradient-to-br from-slate-50 to-indigo-50/40 p-6">
-            <h2 className="text-lg font-bold text-madde-ink">Sözleşmenizi kontrol edin</h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Bu rehber bilgilendirme amaçlıdır. Kendi sözleşmeniz için ücretsiz ön tarama yapın.
-            </p>
-            <Link
-              href={config.ctaHref}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#005BEA] px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#0049c4]"
-            >
-              {config.ctaLabel}
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </div>
+          <SeoSignupCta
+            source={`rehber:${config.slug}`}
+            href={`/giris?kayit=1&next=${encodeURIComponent(config.ctaHref)}`}
+          />
 
           <FaqSection faqs={config.faqs} />
           <LegalAiDisclaimer className="mt-10" />

@@ -17,7 +17,7 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 const path = SOZLESME_TUZAK_TOOL_PATH;
 const canonical = absoluteUrl(path);
 const title =
-  "Sözleşmedeki gizli tuzaklar — ücretsiz AI kırmızı bayrak taraması";
+  "Sözleşmede tuzak var mı? 2026 ücretsiz AI tarama";
 const description =
   "Kira veya iş sözleşmesini yapıştırın; yapay zeka yüksek riskli, dikkat ve lehe maddeleri 3 grupta listelesin. Ücretsiz hızlı tarama.";
 

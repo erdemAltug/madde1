@@ -16,7 +16,7 @@ const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://tryclause.tech"
 ).replace(/\/$/, "");
 
-const CTA_BLOCK = `> 🛡️ **Yasal Haklarınızı Koruyun:** Kira veya iş sözleşmenizdeki gizli riskleri ve aleyhinize olan maddeleri 5 saniyede tespit etmek için [Clause.ai Ücretsiz Sözleşme Taramasını Deneyin ↗](${SITE_URL})`;
+const CTA_BLOCK = `> **Kişisel hukuk asistanınız:** Sözleşmenizdeki riskleri tarayın; kayıt olduğunuzda rapor hesabınızda saklanır. [Ücretsiz tarama ↗](${SITE_URL}/giris?kayit=1&next=/hesabim)`;
 
 type TopicPool = "kira" | "is" | "tuketici";
 
@@ -45,7 +45,7 @@ const TOPIC_POOLS: Topic[] = [
     id: "kira-depozito-iade",
     pool: "kira",
     query: "Depozito iadesi vermeyen ev sahibine ne yapılır?",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
   },
   // İş Hukuku
   {
@@ -77,6 +77,54 @@ const TOPIC_POOLS: Topic[] = [
     id: "tuketici-ikinci-el",
     pool: "tuketici",
     query: "İkinci el araç alımında sözleşme tuzakları",
+    ctaHref: "/araclar/sozlesme-tuzak-tarama",
+  },
+  {
+    id: "is-istifa-kidem-2026",
+    pool: "is",
+    query: "Kendi isteğiyle ayrılan işçi kıdem tazminatı alabilir mi 2026?",
+    ctaHref: "/araclar/kidem-tazminati-hesaplama",
+  },
+  {
+    id: "is-issizlik-maasi-2026",
+    pool: "is",
+    query: "İşsizlik maaşı 2026 ne kadar kaç ay alınır?",
+    ctaHref: "/araclar/issizlik-maasi-hesaplama",
+  },
+  {
+    id: "is-kidem-tavani-2026",
+    pool: "is",
+    query: "Kıdem tazminatı tavanı 2026 ne kadar?",
+    ctaHref: "/araclar/kidem-tazminati-hesaplama",
+  },
+  {
+    id: "is-fazla-mesai-hesap",
+    pool: "is",
+    query: "Fazla mesai ücreti nasıl hesaplanır 2026?",
+    ctaHref: "/araclar/fazla-mesai-ucreti-hesaplama",
+  },
+  {
+    id: "kira-zam-itiraz-dilekce",
+    pool: "kira",
+    query: "Ev sahibine kira zammı itiraz dilekçesi nasıl yazılır?",
+    ctaHref: "/dilekce-olusturucu",
+  },
+  {
+    id: "kira-ihtarname-nasil",
+    pool: "kira",
+    query: "Kira için ihtarname nasıl çekilir 2026?",
+    ctaHref: "/dilekce-olusturucu",
+  },
+  {
+    id: "is-rekabet-yasagi",
+    pool: "is",
+    query: "İş sözleşmesinde rekabet yasağı geçerli mi?",
+    ctaHref: "/is-sozlesmesi-analizi",
+  },
+  {
+    id: "sozlesme-cezai-sart",
+    pool: "is",
+    query: "Sözleşmede cezai şart ne zaman geçersiz sayılır?",
     ctaHref: "/araclar/sozlesme-tuzak-tarama",
   },
 ];
@@ -125,13 +173,24 @@ function saveState(state: EngineState) {
   writeFileSync(STATE_PATH, `${JSON.stringify(state, null, 2)}\n`, "utf8");
 }
 
+const BLOCKED_TOPIC = /kıbrıs|kibris|kktc|cyprus/i;
+
+function isAllowedTopic(topic: Topic): boolean {
+  return !BLOCKED_TOPIC.test(topic.query) && !BLOCKED_TOPIC.test(topic.id);
+}
+
 function pickTopic(state: EngineState): Topic {
-  const unused = TOPIC_POOLS.filter((t) => !state.usedTopicIds.includes(t.id));
-  const pool = unused.length > 0 ? unused : TOPIC_POOLS;
+  const unused = TOPIC_POOLS.filter(
+    (t) => isAllowedTopic(t) && !state.usedTopicIds.includes(t.id),
+  );
+  const pool =
+    unused.length > 0
+      ? unused
+      : TOPIC_POOLS.filter(isAllowedTopic);
   if (unused.length === 0) {
     state.usedTopicIds = [];
   }
-  const idx = state.poolCursor % pool.length;
+  const idx = state.poolCursor % Math.max(pool.length, 1);
   state.poolCursor = (state.poolCursor + 1) % Math.max(pool.length, 1);
   return pool[idx]!;
 }
@@ -204,7 +263,8 @@ Hedef kelime sayısı: 1200–1500 (Türkçe kelime).
 
 Kurallar:
 - Bilgilendirme amaçlıdır; hukuki danışmanlık / avukatlık yerine geçmez diye en az bir kez belirt.
-- Güncel Türkiye hukuku dilinde yaz (TBK, İş Kanunu, tüketici mevzuatı bağlamı).
+- Güncel Türkiye hukuku dilinde yaz (TBK, İş Kanunu, tüketici mevzuatı).
+- Kıbrıs, KKTC veya yurt dışı hukuk yazma; niş bölgesel içerik yok.
 - Kesin dava sonucu veya kesin parasal taahhüt verme.
 - Alt başlıklar (##), kısa paragraflar, madde listeleri kullan.
 - Son kullanıcıya aksiyon adımları ver.

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Lock, Shield, Trash2, Video, Zap } from "lucide-react";
+import { ArrowRight, Lock, Shield, Trash2, Zap } from "lucide-react";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ type Props = {
 const trustItems = [
   { icon: Lock, label: "KVKK & GDPA Uyumlu" },
   { icon: Shield, label: "256-bit Uçtan Uca Şifreleme" },
-  { icon: Trash2, label: "Analiz Sonrası Anlık Veri Silme" },
+  { icon: Trash2, label: "Misafir tarama silinir; hesapta sen tutarsın" },
 ] as const;
 
 export function LandingHero({ onOpenAnalyzer }: Props) {
@@ -41,11 +41,13 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
             clause.ai — Türk Hukuk Sistemi
           </div>
           <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-deep-navy sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
-            Yapay Zeka Hukuk Asistanı — Sözleşme Analizi ve Risk Taraması
+            Kişisel hukuk asistanınız — hukuki süreçlerinizde yanınızda
           </h1>
-          <p className="mt-5 max-w-xl text-lg font-medium text-slate-600">
-            Legal AI ile kira, iş ve ticari sözleşmelerinizi ücretsiz ön taramadan
-            geçirin. Riskleri sade dilde görün; avukat öncesi bilinçli karar verin.
+          <p className="mt-5 max-w-xl text-lg font-medium leading-relaxed text-slate-600">
+            Sözleşme taraması, dilekçe taslağı ve risk uyarısı; kira ve işle
+            sınırlı değil. Günlük hukuki işlemlerinizde ön kontrol yapın.
+            Kayıtlı hesapta taramalarınız saklanır, süreç boyunca size özel
+            kalır.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -69,10 +71,7 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
               className="h-14 rounded-xl border-2 border-slate-300 px-8 text-base font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
               asChild
             >
-              <a href="#nasil-calisir">
-                <Video className="mr-1 h-4 w-4" />
-                1 Dakikada Nasıl Çalışır?
-              </a>
+              <a href="/giris?kayit=1&next=/hesabim">Hesap oluşturun</a>
             </Button>
           </div>
 

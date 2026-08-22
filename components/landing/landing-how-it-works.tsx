@@ -20,8 +20,8 @@ const steps = [
   },
   {
     step: "3",
-    title: "Riskleri raporla",
-    desc: "Kritik maddeler, eksikler ve iyileştirme önerileri PDF’e hazır.",
+    title: "Riskleri raporla ve kaydet",
+    desc: "Kritik maddeler PDF’e hazır. Kayıtlı hesapta tarama envanterine düşer.",
     icon: FileCheck,
   },
 ];

@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { ToolResultSignupBar } from "@/components/growth/tool-result-signup-bar";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
+import { saveContractAnalysis } from "@/lib/inventory/save-analysis";
+import { useAuthSession } from "@/hooks/use-auth-session";
 
 type ScanResult = {
   red: string[];
@@ -54,6 +56,7 @@ function BulletGroup({
 }
 
 export function RedFlagScanner() {
+  const { isLoggedIn } = useAuthSession();
   const [text, setText] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -102,6 +105,29 @@ export function RedFlagScanner() {
         yellow: data.yellow || [],
         green: data.green || [],
       });
+      if (isLoggedIn) {
+        void saveContractAnalysis({
+          originalText: text,
+          title: "Tuzak taraması",
+          riskScore: Math.max(0, 100 - (data.red?.length ?? 0) * 18),
+          report: {
+            version: 1,
+            source: "tuzak-tarama",
+            red: data.red || [],
+            yellow: data.yellow || [],
+            green: data.green || [],
+            markdown: [
+              "## Tuzak taraması",
+              "### Yüksek risk",
+              ...(data.red || []).map((x) => `- ${x}`),
+              "### Dikkat",
+              ...(data.yellow || []).map((x) => `- ${x}`),
+              "### Lehine",
+              ...(data.green || []).map((x) => `- ${x}`),
+            ].join("\n"),
+          },
+        });
+      }
     } catch {
       setError("Bağlantı hatası. Tekrar deneyin.");
     } finally {

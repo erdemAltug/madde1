@@ -10,6 +10,7 @@ import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import type { FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
+import { ToolResultSignupBar } from "@/components/growth/tool-result-signup-bar";
 
 const inputVivid =
   "rounded-xl border-2 border-slate-200/90 bg-white font-semibold tabular-nums shadow-sm transition-all placeholder:font-normal placeholder:text-slate-400 focus-visible:border-[#005BEA] focus-visible:ring-2 focus-visible:ring-[#005BEA]/25";
@@ -49,9 +50,11 @@ export function RentIncreaseCalculator({
   const r = Number(rate.replace(",", ".")) || 0;
   const next = cur * (1 + r / 100);
   const delta = next - cur;
+  const [barDismissed, setBarDismissed] = React.useState(false);
   const hasResult = cur > 0 && r >= 0 && next > 0;
 
   return (
+    <>
     <Card
       className={cn(
         "border-slate-200 bg-white shadow-sm",
@@ -222,6 +225,14 @@ export function RentIncreaseCalculator({
           </p>
         )}
       </CardContent>
-    </Card>
+      </Card>
+      {!embedded && (
+        <ToolResultSignupBar
+          source="/araclar/kira-sozlesmesi-artis-orani-hesaplama"
+          visible={hasResult && !barDismissed}
+          onDismiss={() => setBarDismissed(true)}
+        />
+      )}
+    </>
   );
 }

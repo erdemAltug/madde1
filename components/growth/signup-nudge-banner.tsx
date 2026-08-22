@@ -53,7 +53,7 @@ export function SignupNudgeBanner({
             </p>
             <p className="mt-0.5 text-xs leading-relaxed text-slate-600">
               Ücretsiz kayıt ol: günde {registeredLimit} analiz (misafir: {guestLimit}),
-              geçmişe erişim ve PDF indirme.
+              geçmiş envanter (Taramalarım) ve PDF indirme.
               {remaining <= 1 ? " Bugünkü hakkın azaldı." : null}
             </p>
           </div>
@@ -69,7 +69,7 @@ export function SignupNudgeBanner({
               })
             }
           >
-            <Link href="/giris?kayit=1">Ücretsiz kayıt ol</Link>
+            <Link href="/giris?kayit=1&next=/hesabim">Ücretsiz kayıt ol</Link>
           </Button>
           <button
             type="button"

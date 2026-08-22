@@ -30,6 +30,7 @@ import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { buildInputAnalyticsProps } from "@/lib/analytics/input-props";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
+import { saveContractAnalysis } from "@/lib/inventory/save-analysis";
 
 export type ContractAnalyzerProps = {
   sharePath?: string;
@@ -115,6 +116,8 @@ export function ContractAnalyzer({
 
   const prevStatusRef = React.useRef(status);
 
+  const savedRef = React.useRef(false);
+
   React.useEffect(() => {
     const prev = prevStatusRef.current;
     prevStatusRef.current = status;
@@ -137,15 +140,39 @@ export function ContractAnalyzer({
       if (!isLoggedIn && !authLoading) {
         setShowSignupNudge(true);
       }
+      if (isLoggedIn && !savedRef.current && analysisMd.trim()) {
+        savedRef.current = true;
+        void saveContractAnalysis({
+          originalText: lastInputRef.current,
+          title: undefined,
+          riskScore: teaser?.securityScore ?? null,
+          report: {
+            version: 1,
+            markdown: analysisMd,
+            refactorMarkdown: refactorMd || undefined,
+            persona: personaRef.current,
+            source: "sozlesme-analizi",
+            teaser: teaser
+              ? {
+                  criticalRiskCount: teaser.criticalRiskCount,
+                  missingClauseCount: teaser.missingClauseCount,
+                  securityScore: teaser.securityScore,
+                  categoryTitles: teaser.categoryTitles,
+                }
+              : null,
+          },
+        });
+      }
     }
   }, [
     status,
     messages.length,
     enablePaywall,
-    analysisMd.length,
-    refactorMd.length,
+    analysisMd,
+    refactorMd,
     isLoggedIn,
     authLoading,
+    teaser,
   ]);
 
   React.useEffect(() => {
@@ -194,6 +221,7 @@ export function ContractAnalyzer({
     setMessages([]);
     setDetailUnlocked(false);
     setTeaser(null);
+    savedRef.current = false;
     phaseRef.current = "analysis";
 
     if (enablePaywall && persona) {

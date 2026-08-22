@@ -23,8 +23,8 @@ const features = [
     icon: Lightbulb,
   },
   {
-    title: "PDF raporlama",
-    desc: "Çıktıyı yazdırılabilir görünümde paylaşın veya arşivleyin.",
+    title: "Kişisel envanter",
+    desc: "Kayıtlı hesapta taramalar birikir; sabitle, tekrar aç, unutma.",
     icon: FileText,
   },
 ];

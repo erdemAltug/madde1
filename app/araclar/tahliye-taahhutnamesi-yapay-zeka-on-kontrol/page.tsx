@@ -12,12 +12,12 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 const path = TAHLIYE_TOOL_PATH;
 const canonical = absoluteUrl(path);
 const title =
-  "Tahliye taahhütnamesi yapay zeka ön kontrol — usul ve içerik riskleri";
+  "Tahliye taahhütnamesi geçerli mi? 2026 ücretsiz AI kontrol";
 
 export const metadata: Metadata = {
   title,
   description:
-    "Tahliye taahhütnamesini legal AI assistant ile ön taramadan geçirin. Kira sözleşmesi riskleri ve sözleşme analizi için Clause tam analiz sayfalarına geçin.",
+    "Tahliye taahhüdünü 2026’da ücretsiz tarayın. Usul ve içerik risklerini görün; kayıt ile tam rapor.",
   keywords: [
     "tahliye taahhütnamesi yapay zeka",
     "tahliye taahhütnamesi kontrolü",

@@ -36,18 +36,19 @@ export const INTENT_PILLAR_CATEGORIES: IntentPillarId[] = [
 const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
   "kira-sozlesmesi-analizi": {
     category: "kira-sozlesmesi-analizi",
-    h1: "Kira Sözleşmesi Risk Taraması & Yasal Zam Analizi",
+    h1: "Kira Zammı Yasal mı? Sözleşme + Zam Raporu",
     metaTitle:
-      "Kira sözleşmesi analizi 2026 — risk tarama & yasal zam sınırı | Clause",
+      "Kira zammı yasal mı? 2026 tavan, takip raporu ve ücretsiz tarama | Clause",
     metaDescription:
-      "Kira sözleşmesi analizi ile tahliye maddesi, cezai şart ve kira zam sınırı 2026 risklerini saniyeler içinde görün. Ücretsiz AI ön tarama.",
+      "Ev sahibi yüksek zam mı istedi? Kira artış raporu, yasal tavan ve sözleşme tuzaklarını ücretsiz görün. Clause ile tarayın, kayıt olup PDF indirin.",
     keywords: [
+      "kira zammı yasal mı",
+      "kira takip raporu",
+      "yapay zeka ile kira takibi",
+      "kira artış raporu",
       "kira sözleşmesi analizi",
-      "ev sahibi tahliye maddesi",
       "kira zam sınırı 2026",
-      "kira sözleşmesi risk tarama",
-      "yasal kira artışı",
-      "tahliye taahhüdü kontrol",
+      "ev sahibi tahliye maddesi",
     ],
     intro:
       "Ev sahibi yüksek zam mı istedi, sözleşmede tek taraflı tahliye veya cezai şart mı var? Clause, kira metninizi Türkiye odaklı sade dilde tarar; hangi maddelerin sizin aleyhinize işleyebileceğini özetler.",
@@ -63,8 +64,8 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
         body: "Artış oranı, bildirim usulü, depozito, bakım-onarım, tahliye ve cezai şart başlıkları çoğu uyuşmazlığın merkezindedir. Belirsiz ‘piyasa koşullarına göre’ ifadeleri veya boş bırakılmış tahliye taahhütleri ileride pahalı tartışmalara dönüşebilir. Ön tarama, bu başlıkları görünür kılar; kesin hukuki sonuç vaat etmez.",
       },
       {
-        title: "Kira zam sınırı 2026 — pratik kontrol",
-        body: "Yenileme dönemindeki yasal tavan ile ev sahibinin talep ettiği oranı yan yana koyun. Talep tavandan yüksekse yazılı itiraz ve sözleşme maddesi birlikte okunmalıdır. Clause kira analizi aracı, tavan karşılaştırması ve hazır cevap taslağı sunar; ardından sözleşmenin tamamını AI ile tarayabilirsiniz.",
+        title: "Kira takip raporu / zam kontrolü nedir?",
+        body: "Arama motorlarında ‘kira takip raporu’ veya ‘yapay zeka ile kira takibi’ diye geçen ihtiyaç, pratikte yasal tavan, talep edilen zam ve sözleşme maddesinin yan yana konmasıdır. Clause kira artış hesabı ve sözleşme taraması bu raporu üretir; muhasebe yazılımı veya otomatik tahsilat aracı değildir.",
       },
       {
         title: "Ev sahibi tahliye maddesi ve taahhütname",
@@ -78,9 +79,9 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
           "Evet. Clause ile ücretsiz ön tarama ve risk özeti alabilirsiniz. Detaylı madde açıklamaları için günlük limit ve kayıt katmanı uygulanabilir.",
       },
       {
-        question: "Kira zam sınırı 2026 nasıl kontrol edilir?",
+        question: "Kira takip raporu veya yapay zeka ile kira takibi nedir?",
         answer:
-          "Yenileme dönemindeki yasal tavan ile talep edilen oranı karşılaştırın. Clause kira analizi aracı bu karşılaştırmaya yardımcı olur; kesin oran için güncel resmi veriyi de doğrulayın.",
+          "Clause’da bu, kira zammının yasal tavanı aşıp aşmadığını ve sözleşmedeki artış maddesini kontrol etmektir. Aylık otomatik tahsilat paneli değildir. Ücretsiz hesap + sözleşme taraması ile başlayın.",
       },
       {
         question: "Bu sayfa avukatlık hizmeti midir?",
@@ -89,8 +90,8 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       },
     ],
     primaryCta: {
-      href: "/analiz/kira-sozlesmesi",
-      label: "Ücretsiz kira sözleşmesi taraması",
+      href: "/giris?kayit=1",
+      label: "Ücretsiz kayıt — kira raporunu aç",
     },
     secondaryCta: {
       href: KIRA_ANALIZI_TOOL_PATH,
@@ -108,16 +109,16 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       { href: "/rehber/kiraci-haklari", label: "Kiracı hakları rehberi" },
       { href: "/rehber/depozito-iadesi", label: "Depozito iadesi rehberi" },
     ],
-    updatedAt: "2026-08-12",
+    updatedAt: "2026-08-22",
   },
 
   "is-sozlesmesi-analizi": {
     category: "is-sozlesmesi-analizi",
     h1: "İş Sözleşmesi & Kıdem Tazminatı Risk Taraması",
     metaTitle:
-      "İş sözleşmesi analizi — cezai şart, rekabet yasağı, haklı fesih | Clause",
+      "İş sözleşmesi analizi 2026 — cezai şart, kıdem, ücretsiz tarama | Clause",
     metaDescription:
-      "İş sözleşmesi cezai şart, rekabet yasağı maddesi ve haklı fesih risklerini yapay zeka ile tarayın. Kıdem ve ihbar için pratik kontrol.",
+      "İş sözleşmesinde cezai şart ve rekabet yasağını ücretsiz tarayın. Kıdem ve ihbar hesabı ile birlikte; kayıt olup detaylı rapor alın.",
     keywords: [
       "iş sözleşmesi cezai şart",
       "rekabet yasağı maddesi",
@@ -166,8 +167,8 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       },
     ],
     primaryCta: {
-      href: "/analiz/is-sozlesmesi",
-      label: "Ücretsiz iş sözleşmesi taraması",
+      href: "/giris?kayit=1",
+      label: "Ücretsiz kayıt — iş sözleşmesini tara",
     },
     secondaryCta: {
       href: TAZMINAT_HUB_TOOL_PATH,
@@ -188,16 +189,16 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       },
       { href: SOZLESME_TUZAK_TOOL_PATH, label: "Sözleşme tuzak tarama" },
     ],
-    updatedAt: "2026-08-12",
+    updatedAt: "2026-08-22",
   },
 
   "dilekce-hazirlama": {
     category: "dilekce-hazirlama",
     h1: "AI İle Otomatik İhtarname ve Dilekçe Oluşturucu",
     metaTitle:
-      "AI dilekçe ve ihtarname oluşturucu — ücretsiz taslak | Clause",
+      "Ücretsiz dilekçe ve ihtarname 2026 — kira, depozito, tüketici | Clause",
     metaDescription:
-      "Kira itirazı, depozito iadesi veya tüketici başvurusu için AI ile otomatik ihtarname ve dilekçe taslağı. Ücretsiz, soru-cevapla hazırlanır.",
+      "Kira itirazı, depozito iadesi veya tüketici başvurusu için ücretsiz dilekçe taslağı. Soru-cevapla hazırlanır; avukat yerine geçmez.",
     keywords: [
       "dilekçe hazırlama",
       "ihtarname oluşturucu",
@@ -265,7 +266,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
         label: "Depozito ihtar örneği",
       },
     ],
-    updatedAt: "2026-08-12",
+    updatedAt: "2026-08-22",
   },
 };
 

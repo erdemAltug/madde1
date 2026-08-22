@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ClauseLogo } from "@/components/brand/clause-logo";
-import { LaunchBanner } from "@/components/layout/LaunchBanner";
 import { cn } from "@/lib/utils";
 import {
   DILEKCE_TOOL_PATH,
@@ -123,11 +122,18 @@ export function SiteNavbar() {
       {userMenuOpen ? (
         <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10">
           <Link
-            href="/analiz"
+            href="/hesabim"
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
             onClick={() => setUserMenuOpen(false)}
           >
-            Analizlerim
+            Taramalarım
+          </Link>
+          <Link
+            href="/analiz/kira-sozlesmesi"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
+            onClick={() => setUserMenuOpen(false)}
+          >
+            Yeni tarama
           </Link>
           <button
             type="button"
@@ -166,7 +172,6 @@ export function SiteNavbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 shadow-sm shadow-slate-900/[0.03] backdrop-blur-xl">
-      {!user ? <LaunchBanner /> : null}
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4 sm:px-6 lg:gap-4 lg:px-8">
         <Link
           href="/"
@@ -226,11 +231,11 @@ export function SiteNavbar() {
                     </span>
                   </div>
                   <Link
-                    href="/analiz"
+                    href="/hesabim"
                     className="block rounded-md px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"
                     onClick={closeMobile}
                   >
-                    Analizlerim
+                    Taramalarım
                   </Link>
                   <button
                     type="button"

@@ -37,11 +37,11 @@ export function ToolResultSignupBar({
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-slate-900">
-              Sonucu PDF olarak saklamak veya dilekçe taslağı üretmek ister misiniz?
+              Sonucu PDF olarak saklamak veya Taramalarım’a eklemek ister misiniz?
             </p>
             <p className="mt-0.5 text-xs leading-relaxed text-slate-600">
-              Ücretsiz kayıt ile geçmişe erişim, PDF indirme ve daha fazla analiz
-              hakkı açılır. Bu araç hukuki tavsiye yerine geçmez.
+              Ücretsiz kayıt: geçmiş taramalar, PDF ve kişisel envanter.
+              Bu araç hukuki tavsiye yerine geçmez.
             </p>
           </div>
         </div>
@@ -50,13 +50,16 @@ export function ToolResultSignupBar({
             size="sm"
             className="h-10 rounded-lg bg-indigo-600 font-semibold hover:bg-indigo-700"
             asChild
-            onClick={() =>
+            onClick={() => {
               captureEvent(AnalyticsEvents.SIGNUP_NUDGE_CLICKED, {
                 source: `tool_result_bar:${source}`,
-              })
-            }
+              });
+              captureEvent(AnalyticsEvents.SEO_TOOL_SIGNUP_CLICK, {
+                source: `tool_result_bar:${source}`,
+              });
+            }}
           >
-            <Link href={`/giris?kayit=1&next=${encodeURIComponent(source)}`}>
+            <Link href={`/giris?kayit=1&next=${encodeURIComponent("/hesabim")}`}>
               Ücretsiz kayıt ol
             </Link>
           </Button>

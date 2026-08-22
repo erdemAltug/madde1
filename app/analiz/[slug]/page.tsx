@@ -6,7 +6,8 @@ import {
   getContractAnalysisConfig,
 } from "@/lib/seo/contract-analysis-pages";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
-import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
+import { canonicalForPath, isCanonicalLoser } from "@/lib/seo/canonical-winners";
+import { SITE_NAME } from "@/lib/seo/site";
 
 type Props = {
   params: { slug: string };
@@ -22,6 +23,7 @@ export function generateMetadata({ params }: Props): Metadata {
     return { title: "Analiz" };
   }
   const path = `/analiz/${params.slug}`;
+  const canonical = canonicalForPath(path);
   return {
     title: cfg.metaTitle,
     description: cfg.metaDescription,
@@ -32,17 +34,20 @@ export function generateMetadata({ params }: Props): Metadata {
       "Clause",
     ],
     alternates: {
-      canonical: absoluteUrl(path),
+      canonical,
     },
     openGraph: {
       title: `${cfg.metaTitle} | ${SITE_NAME}`,
       description: cfg.metaDescription,
-      url: absoluteUrl(path),
+      url: canonical,
       type: "article",
       locale: "tr_TR",
       images: openGraphArticleImages(defaultOgAlt(cfg.metaTitle)),
     },
     twitter: twitterSummaryLargeImage(cfg.metaTitle, cfg.metaDescription),
+    robots: isCanonicalLoser(path)
+      ? { index: false, follow: true }
+      : undefined,
   };
 }
 

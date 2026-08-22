@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
+import { safeInternalNext } from "@/lib/inventory/safe-next";
+
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/analiz";
+  const next = safeInternalNext(searchParams.get("next"));
 
   if (!code) {
     return NextResponse.redirect(`${origin}/giris`);

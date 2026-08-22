@@ -4,10 +4,12 @@ import * as React from "react";
 import { ContractAnalyzerModal } from "@/components/clause/contract-analyzer-modal";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { LandingHero } from "@/components/landing/landing-hero";
+import { LandingWhyAssistant } from "@/components/landing/landing-why-assistant";
 import { LandingSecurityStrip } from "@/components/landing/landing-security-strip";
 import { LandingTrustBand } from "@/components/landing/landing-trust-band";
 import { LandingTryStrip } from "@/components/landing/landing-try-strip";
 import { LandingHowItWorks } from "@/components/landing/landing-how-it-works";
+import { LandingCompanion } from "@/components/landing/landing-companion";
 import { LandingFeaturesGrid } from "@/components/landing/landing-features-grid";
 import { PricingSection } from "@/components/marketing/pricing-section";
 import { FreeToolsSection } from "@/components/landing/free-tools-section";
@@ -44,10 +46,12 @@ export function ClauseLanding() {
       <SiteNavbar />
       <main id="ana-icerik" className="relative">
         <LandingHero onOpenAnalyzer={() => setAnalyzerOpen(true)} />
+        <LandingWhyAssistant />
         <LandingSecurityStrip />
         <LandingTrustBand />
         <LandingTryStrip onOpenAnalyzer={() => setAnalyzerOpen(true)} />
         <LandingHowItWorks />
+        <LandingCompanion />
         <LandingFeaturesGrid />
         <CommonRisksSection />
         <SeoPersonaSections />

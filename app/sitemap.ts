@@ -10,6 +10,7 @@ import { getAllMdxBlogPosts, getMdxBlogSlugs } from "@/lib/seo/mdx-blog";
 import { HAKLARIM_SLUGS } from "@/lib/seo/haklarim-pages";
 import { INTENT_PILLAR_CATEGORIES } from "@/lib/seo/intent-pillars";
 import { isNicheRegionalPath } from "@/lib/seo/niche-regional";
+import { isCanonicalLoser } from "@/lib/seo/canonical-winners";
 import { SITE_URL } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -116,21 +117,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  const analiz: MetadataRoute.Sitemap = CONTRACT_ANALYSIS_SLUGS.map((slug) => ({
+  const analiz: MetadataRoute.Sitemap = CONTRACT_ANALYSIS_SLUGS.filter(
+    (slug) => !isCanonicalLoser(`/analiz/${slug}`),
+  ).map((slug) => ({
     url: `${SITE_URL}/analiz/${slug}`,
     lastModified: lastMod,
     changeFrequency: "weekly" as const,
     priority: 0.9,
   }));
 
-  const sozlesmeAnalizi: MetadataRoute.Sitemap = SOZLESME_ANALIZI_SLUGS.map(
-    (slug) => ({
-      url: `${SITE_URL}/sozlesme-analizi/${slug}`,
-      lastModified: lastMod,
-      changeFrequency: "weekly" as const,
-      priority: 0.88,
-    }),
-  );
+  const sozlesmeAnalizi: MetadataRoute.Sitemap = SOZLESME_ANALIZI_SLUGS.filter(
+    (slug) => !isCanonicalLoser(`/sozlesme-analizi/${slug}`),
+  ).map((slug) => ({
+    url: `${SITE_URL}/sozlesme-analizi/${slug}`,
+    lastModified: lastMod,
+    changeFrequency: "weekly" as const,
+    priority: 0.88,
+  }));
 
   const yapayZekaHukuk: MetadataRoute.Sitemap = [
     ...YAPAY_ZEKA_HUKUK_SLUGS.map((slug) => ({

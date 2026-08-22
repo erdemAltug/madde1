@@ -115,7 +115,7 @@ export function IntentPillarLanding({ config }: Props) {
               Hemen deneyin
             </h2>
             <p className="mt-2 text-sm font-medium text-slate-600">
-              Kayıt olmadan ön tarama veya dilekçe taslağı ile başlayın. Avukat
+              Ücretsiz kayıt ile detaylı risk raporu ve PDF açılır. Avukat
               yerine geçmez; bilinçli adım atmanıza yardımcı olur.
             </p>
             <Button

@@ -16,7 +16,7 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 const path = DILEKCE_TOOL_PATH;
 const canonical = absoluteUrl(path);
 const title =
-  "AI dilekçe & ihtarname oluşturucu — tüketici, kira, depozito";
+  "Dilekçe nasıl yazılır? 2026 ücretsiz AI dilekçe oluşturucu";
 const description =
   "Tüketici hakem heyeti, kira zammı itirazı veya depozito iadesi için soru-cevapla resmi formatta dilekçe taslağı oluşturun. Ücretsiz.";
 

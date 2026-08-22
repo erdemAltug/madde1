@@ -1,12 +1,11 @@
-import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ArrowRight } from "lucide-react";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { FaqSection } from "@/components/seo/faq-section";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
+import { SeoSignupCta } from "@/components/seo/seo-signup-cta";
 import type { MdxBlogPost } from "@/lib/seo/mdx-blog";
 import { buildArticleJsonLd } from "@/lib/seo/faq-schema";
 import { absoluteUrl } from "@/lib/seo/site";
@@ -65,22 +64,10 @@ export function MdxBlogLayout({ post }: Props) {
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>
           </div>
 
-          <div className="mt-10 rounded-2xl border border-[var(--cta-primary)]/20 bg-gradient-to-br from-slate-50 to-blue-50/40 p-6">
-            <h2 className="text-lg font-bold text-madde-ink">
-              Sözleşmenizi kontrol edin
-            </h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Bu rehber bilgilendirme amaçlıdır. Kendi sözleşmeniz için ücretsiz
-              ön tarama yapın.
-            </p>
-            <Link
-              href={post.ctaHref}
-              className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[var(--cta-primary)] hover:underline"
-            >
-              {post.ctaLabel}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
+          <SeoSignupCta
+            source={`blog:${post.slug}`}
+            href={`/giris?kayit=1&next=${encodeURIComponent(post.ctaHref)}`}
+          />
 
           {post.faqs.length > 0 && !post.body.includes("## Sıkça sorulan sorular") ? (
             <FaqSection faqs={post.faqs} />

@@ -18,6 +18,7 @@ export const AnalyticsEvents = {
   LIMIT_DIALOG_SIGNUP_CLICKED: "Limit_Dialog_Signup_Clicked",
   DETAIL_UNLOCK_SIGNUP_PROMPT_SHOWN: "Detail_Unlock_Signup_Prompt_Shown",
   DETAIL_UNLOCK_SIGNUP_CLICKED: "Detail_Unlock_Signup_Clicked",
+  SEO_TOOL_SIGNUP_CLICK: "Seo_Tool_Signup_Click",
   CONTACT_FORM_SUBMITTED: "Contact_Form_Submitted",
   CONTACT_FORM_ERROR: "Contact_Form_Error",
 } as const;

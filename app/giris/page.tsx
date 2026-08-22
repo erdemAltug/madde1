@@ -12,6 +12,7 @@ import { getSupabaseBrowser } from "@/lib/supabase/browser";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { identifyAuthUser } from "@/lib/analytics/identify";
+import { safeInternalNext } from "@/lib/inventory/safe-next";
 
 export default function GirisPage() {
   const router = useRouter();
@@ -34,6 +35,8 @@ export default function GirisPage() {
     }
   }, [searchParams]);
 
+  const nextPath = safeInternalNext(searchParams.get("next"));
+
   const handleGoogleSignIn = async () => {
     setError(null);
     const supabase = getSupabaseBrowser();
@@ -42,7 +45,7 @@ export default function GirisPage() {
       return;
     }
 
-    const redirectTo = `${window.location.origin}/auth/callback?next=/analiz`;
+    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`;
     const { error: oauthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo },
@@ -101,7 +104,7 @@ export default function GirisPage() {
       });
     }
 
-    router.push("/analiz");
+    router.push(nextPath);
     router.refresh();
   };
 
@@ -181,7 +184,7 @@ export default function GirisPage() {
           </h2>
           
           <p className="text-xl text-slate-300 max-w-md">
-            Sözleşmelerinizi ücretsiz analiz edin. Kayıt ol — günde 10 analiz, geçmiş kayıtları ve PDF indirme.
+            Sözleşmeni tara; kayıt olunca taramaların hesabında birikir. Kişisel hukuk asistanın — günde 10 analiz, PDF, envanter.
           </p>
           
           <div className="mt-12 grid grid-cols-2 gap-6 text-left max-w-md">

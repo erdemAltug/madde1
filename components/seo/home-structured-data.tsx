@@ -20,12 +20,12 @@ const faq = [
   {
     question: "Clause nasıl çalışır?",
     answer:
-      "Sözleşme metnini yapıştırırsınız; yapay zeka TBK, İş Kanunu ve KVKK gibi başlıklarla ön tarama üretir. Ücretsiz özet ve güven skorundan sonra detaylı riskler ve düzeltme önerileri kredi ile açılır.",
+      "Sözleşme metnini yapıştırırsınız; yapay zeka kira zammı, kıdem ve tuzak maddelerini ön tarar. Lansman döneminde kayıt ile detaylı risk raporu ve PDF ücretsizdir.",
   },
   {
     question: "Kira sözleşmesi kontrolü ücretsiz mi?",
     answer:
-      "Ön tarama ve güven skoru ücretsizdir. Madde madde risk açıklamaları ve iyileştirilmiş metin üretimi ücretli kredi ile sunulur; fiyatlar sitede şeffaftır.",
+      "Ön tarama ücretsizdir. Detaylı madde madde rapor ve PDF lansman döneminde hesap oluşturunca ücretsiz açılır; abonelik sonra gelir.",
   },
   {
     question: "Sözleşme üretimi yapabilir miyim?",

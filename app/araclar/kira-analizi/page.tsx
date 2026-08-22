@@ -18,7 +18,7 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 const path = KIRA_ANALIZI_TOOL_PATH;
 const canonical = absoluteUrl(path);
 const title =
-  "Ev sahibi yüzde kaç zam yapabilir? — Kira analizi & cevap metni";
+  "Ev sahibi yüzde kaç zam yapabilir? 2026 kira takip raporu";
 const description =
   "Ev sahibinin istediği kira zammını TÜFE yasal tavanıyla karşılaştırın. TBK 344 bağlamında haklı/haksız uyarısı ve WhatsApp / e-posta cevap taslağı — ücretsiz.";
 
@@ -29,7 +29,8 @@ export const metadata: Metadata = {
     "ev sahibi yüzde kaç zam yapabilir",
     "kira artışı yasal tavan",
     "TBK 344",
-    "kira zammı hesaplama",
+    "kira takip raporu",
+    "yapay zeka ile kira takibi",
     "ev sahibine cevap metni",
     "kiracı hakları",
     SITE_NAME,
