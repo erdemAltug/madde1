@@ -34,16 +34,16 @@ export function LandingWhyAssistant() {
         <Reveal>
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-semibold uppercase tracking-wide text-[#005BEA]">
-              Neden şimdi
+              Ücretsiz kişisel asistan
             </p>
             <h2 className="mt-2 text-balance text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Modern hayatta herkesin bir hukuk asistanına ihtiyacı var
+              Hukuki süreçlerinizde yalnız kalmak zorunda değilsiniz
             </h2>
             <p className="mt-4 text-base font-medium leading-relaxed text-slate-600">
-              Kurumlar ve platformlar hukuku ölçekler; bireyler çoğu zaman yalnız
-              kalır. Yapay zeka destekli bir asistan, kira ve işten tüketici
-              başvurusuna kadar günlük hukuki süreçlerde yanınızda durur — pahalı
-              bir kurumsal yazılım olarak değil, kişisel bir kontrol katmanı olarak.
+              Clause, ücretsiz kişisel hukuk asistanınızdır: sözleşme taraması,
+              dilekçe taslağı ve risk uyarısı hesabınızda durur. Kurumların
+              hukuku ölçekli; sizin de yanınızda duran bir kontrol katmanı olsun.
+              Avukatın yerini tutmaz; bilinçli adım atmanızı sağlar.
             </p>
           </div>
         </Reveal>
