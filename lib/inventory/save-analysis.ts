@@ -29,7 +29,7 @@ export async function saveContractAnalysis(input: {
       user_id: user.id,
       contract_title: title,
       original_text: original,
-      ai_report: { version: 1, ...input.report },
+      ai_report: { ...input.report, version: 1 },
       risk_score:
         input.riskScore ?? input.report.teaser?.securityScore ?? null,
     })
@@ -76,7 +76,7 @@ export async function setAnalysisPinned(
   const supabase = getSupabaseBrowser();
   if (!supabase) return false;
 
-  const next: InventoryReport = { version: 1, ...(report ?? {}), pinned };
+  const next: InventoryReport = { ...(report ?? {}), version: 1, pinned };
   const { error } = await supabase
     .from("contract_analyses")
     .update({ ai_report: next })

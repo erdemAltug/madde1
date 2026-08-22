@@ -37,7 +37,7 @@ export default function HesabimDetailPage() {
     if (ok) {
       setRow({
         ...row,
-        ai_report: { version: 1, ...row.ai_report, pinned: next },
+        ai_report: { ...row.ai_report, version: 1, pinned: next },
       });
     }
   };

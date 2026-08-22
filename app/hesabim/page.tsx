@@ -53,7 +53,7 @@ export default function HesabimPage() {
       setRows((prev) =>
         prev.map((r) =>
           r.id === row.id
-            ? { ...r, ai_report: { version: 1, ...r.ai_report, pinned: next } }
+            ? { ...r, ai_report: { ...r.ai_report, version: 1, pinned: next } }
             : r,
         ),
       );
