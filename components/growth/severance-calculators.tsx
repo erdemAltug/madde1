@@ -9,6 +9,7 @@ import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import type { FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 
 const inputClass =
   "rounded-xl border-2 border-slate-200/90 bg-white font-semibold tabular-nums shadow-sm transition-all placeholder:font-normal placeholder:text-slate-400 focus-visible:border-[#005BEA] focus-visible:ring-2 focus-visible:ring-[#005BEA]/25";
@@ -90,18 +91,28 @@ export function KidemTazminatiCalculator({
         </div>
 
         {hasResult ? (
-          <div className="rounded-xl border border-[#005BEA]/20 bg-indigo-50/50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Tahmini kıdem tazminatı
-            </p>
-            <p className="mt-1 text-2xl font-bold tabular-nums text-madde-ink">
-              {formatTry(estimated)}
-            </p>
-            <p className="mt-2 text-xs text-slate-500">
-              Her tam yıl için 30 günlük brüt ücret formülü (bilgilendirme). Kıdem tavanı, kısmi
-              yıl ve fesih türü sonucu değiştirir.
-            </p>
-          </div>
+          <>
+            <div className="rounded-xl border border-[#005BEA]/20 bg-indigo-50/50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Tahmini kıdem tazminatı
+              </p>
+              <p className="mt-1 text-2xl font-bold tabular-nums text-madde-ink">
+                {formatTry(estimated)}
+              </p>
+              <p className="mt-2 text-xs text-slate-500">
+                Her tam yıl için 30 günlük brüt ücret formülü (bilgilendirme). Kıdem tavanı, kısmi
+                yıl ve fesih türü sonucu değiştirir.
+              </p>
+            </div>
+            <ToolContractScanCta
+              source="/araclar/kidem-tazminati-hesaplama"
+              href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+              highlight={`Tahmini kıdem tazminatınız ${formatTry(estimated)}.`}
+              title="İş sözleşmenizde fesih, rekabet yasağı veya haksız kesinti maddesi var mı?"
+              body="İş sözleşmeni yapıştır — aleyhte maddeleri işaretleyelim (ücretsiz)."
+              ctaLabel="İş sözleşmesini tara"
+            />
+          </>
         ) : null}
       </CardContent>
     </Card>
@@ -183,18 +194,28 @@ export function IhbarTazminatiCalculator({
         </div>
 
         {hasResult ? (
-          <div className="rounded-xl border border-[#005BEA]/20 bg-indigo-50/50 p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Tahmini ihbar tazminatı
-            </p>
-            <p className="mt-1 text-2xl font-bold tabular-nums text-madde-ink">
-              {formatTry(estimated)}
-            </p>
-            <p className="mt-2 text-xs text-slate-500">
-              Kanuni ihbar süresi: {weeks} hafta. Bildirimsiz fesih varsayımıyla kabaca hesap;
-              somut olayda farklılık gösterebilir.
-            </p>
-          </div>
+          <>
+            <div className="rounded-xl border border-[#005BEA]/20 bg-indigo-50/50 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Tahmini ihbar tazminatı
+              </p>
+              <p className="mt-1 text-2xl font-bold tabular-nums text-madde-ink">
+                {formatTry(estimated)}
+              </p>
+              <p className="mt-2 text-xs text-slate-500">
+                Kanuni ihbar süresi: {weeks} hafta. Bildirimsiz fesih varsayımıyla kabaca hesap;
+                somut olayda farklılık gösterebilir.
+              </p>
+            </div>
+            <ToolContractScanCta
+              source="/araclar/ihbar-tazminati-hesaplama"
+              href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+              highlight={`Tahmini ihbar tazminatınız ${formatTry(estimated)}.`}
+              title="Sözleşmedeki bildirim ve fesih maddeleri kanuni süreyi daraltıyor mu?"
+              body="İş sözleşmeni yapıştır — ihbar ve fesih maddelerini tarayalım."
+              ctaLabel="İş sözleşmesini tara"
+            />
+          </>
         ) : null}
       </CardContent>
     </Card>

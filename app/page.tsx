@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { ClauseLanding } from "@/components/landing/clause-landing";
 import { HomeStructuredData } from "@/components/seo/home-structured-data";
@@ -9,7 +10,9 @@ export default function Home() {
   return (
     <>
       <HomeStructuredData />
-      <ClauseLanding />
+      <Suspense fallback={<div className="min-h-screen bg-[#F8FAFC]" />}>
+        <ClauseLanding />
+      </Suspense>
     </>
   );
 }

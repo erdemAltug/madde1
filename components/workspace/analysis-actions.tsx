@@ -4,10 +4,15 @@ import * as React from "react";
 import { Copy, Link2, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { openPrintMarkdown } from "@/lib/print/open-print-markdown";
+import { buildOnIncelemeRaporuMarkdown } from "@/lib/print/build-on-inceleme-raporu";
+import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 
 type Props = {
   markdown: string;
   sharePath?: string;
+  teaser?: TeaserData | null;
+  analysisMarkdown?: string;
+  refactorMarkdown?: string;
   /** Misafir PDF indirmesini AuthModal'a yönlendirmek için */
   onPdfClick?: () => boolean | void;
 };
@@ -15,6 +20,9 @@ type Props = {
 export function AnalysisActions({
   markdown,
   sharePath = "/analiz/kira-sozlesmesi",
+  teaser,
+  analysisMarkdown,
+  refactorMarkdown,
   onPdfClick,
 }: Props) {
   const [copied, setCopied] = React.useState<"md" | "link" | null>(null);
@@ -35,7 +43,12 @@ export function AnalysisActions({
 
   const openPrint = () => {
     if (onPdfClick?.() === false) return;
-    openPrintMarkdown(markdown);
+    const report = buildOnIncelemeRaporuMarkdown({
+      teaser: teaser ?? null,
+      analysisMarkdown: analysisMarkdown ?? markdown,
+      refactorMarkdown,
+    });
+    openPrintMarkdown(report.trim() ? report : markdown);
   };
 
   const hasContent = markdown.trim().length > 0;

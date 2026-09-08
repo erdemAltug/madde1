@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 
 const MIN_GROSS_2026 = 33_030;
 const MAX_GROSS_BENEFIT_2026 = MIN_GROSS_2026 * 0.8;
@@ -185,6 +186,17 @@ export function UnemploymentCalculator() {
           hizmet akdi koşulu, başvuru zamanı ve İŞKUR kayıtları hak kazanmayı
           etkiler. Araç yalnızca tutar ve süre tahmini yapar.
         </div>
+
+        {durationDays > 0 && gross > 0 ? (
+          <ToolContractScanCta
+            source="/araclar/issizlik-maasi-hesaplama"
+            href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+            highlight={`Tahmini toplam işsizlik ödemesi ${formatTry(netBenefit * (durationDays / 30))}.`}
+            title="Fesih bildiriminiz ve iş sözleşmeniz hak kaybına yol açıyor mu?"
+            body="İş sözleşmenizi yapıştırın — fesih ve ücret maddelerini tarayalım."
+            ctaLabel="İş sözleşmesini tara"
+          />
+        ) : null}
       </CardContent>
     </Card>
   );

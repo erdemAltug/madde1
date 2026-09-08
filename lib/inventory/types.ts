@@ -1,3 +1,10 @@
+export type InventoryRevision = {
+  at: string;
+  note?: string;
+  /** Kısa özet veya markdown snippet */
+  markdownSnippet?: string;
+};
+
 export type InventoryReport = {
   version: 1;
   markdown?: string;
@@ -14,6 +21,8 @@ export type InventoryReport = {
   red?: string[];
   yellow?: string[];
   green?: string[];
+  /** Son N kaydetme / revizyon (jsonb, migrasyon gerekmez) */
+  revision_history?: InventoryRevision[];
 };
 
 export type InventoryRow = {

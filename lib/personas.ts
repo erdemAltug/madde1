@@ -41,7 +41,7 @@ export function personaPromptFragment(persona: PersonaId): string {
     case "tenant":
       return "Kullanıcı kiracı perspektifinde. Kira artışı, depozito, tahliye, tadilat ve aidat maddelerine özellikle dikkat et.";
     case "freelancer":
-      return "Kullanıcı freelancer perspektifinde. Ödeme vadesi, gecikme faizi, teslim kabul, fikri mülkiyet ve sorumluluk sınırlarına özellikle dikkat et.";
+      return "Kullanıcı freelancer / serbest çalışan perspektifinde. Özellikle şu başlıklara odaklan: (1) kaynak kodu ve tasarım fikri mülkiyeti / IP devri, (2) revizyon hakkı sayısı ve süresi, (3) ödeme vadesi ve gecikme faizi / temerrüt, (4) NDA tek taraflılığı, (5) SLA ve orantısız cezai şart, (6) erken fesihte ödeme ve IP durumu. Riskleri bu preset’e göre önceliklendir.";
     default:
       return "Genel kullanıcı perspektifi; sade ve anlaşılır dil kullan.";
   }

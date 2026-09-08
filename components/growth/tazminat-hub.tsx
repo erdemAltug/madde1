@@ -8,6 +8,7 @@ import {
   IhbarTazminatiCalculator,
 } from "@/components/growth/severance-calculators";
 import { ToolResultSignupBar } from "@/components/growth/tool-result-signup-bar";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { captureEvent } from "@/lib/analytics/capture";
@@ -186,6 +187,20 @@ export function TazminatHub() {
           </p>
         </CardContent>
       </Card>
+
+      <ToolContractScanCta
+        source="/araclar/kidem-ihbar-tazminati-hesaplama"
+        href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+        className="mt-6"
+        highlight={
+          checks.size > 0
+            ? `${checks.size} haklı fesih sinyali işaretlediniz.`
+            : "Kıdem ve ihbar tahmini hazır."
+        }
+        title="İş sözleşmenizde fesih, rekabet yasağı veya ücrete dahil mesai maddesi var mı?"
+        body="Sözleşmeyi yapıştır — kritik maddeleri 15 saniyede tarayalım."
+        ctaLabel="İş sözleşmesini tara"
+      />
 
       <ToolResultSignupBar
         source="/araclar/kidem-ihbar-tazminati-hesaplama"

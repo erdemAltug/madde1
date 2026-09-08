@@ -202,9 +202,9 @@ export function FreelanceChecklistWidget({
           {!embedded ? (
             <ToolContractScanCta
               source="/araclar/freelance-sozlesme-kontrol-listesi"
-              href="/sozlesme-analizi/freelance-yazilim-kontrati"
+              href="/?persona=freelancer&open=1#dene"
               title="Fikri mülkiyet veya revizyon maddesi gizli tuzak mı?"
-              body="Sözleşmeni yapıştır, 15 saniyede AI ile tarayalım."
+              body="Sözleşmeni yapıştır — freelancer preset ile IP, revizyon ve ödeme maddelerini tarayalım."
               ctaLabel="Freelance kontrati tara"
             />
           ) : null}

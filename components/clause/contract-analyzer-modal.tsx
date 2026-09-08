@@ -38,6 +38,7 @@ type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   sharePath?: string;
+  initialPersona?: PersonaId;
 };
 
 const FALLBACK_TEASER: TeaserData = {
@@ -87,9 +88,10 @@ async function fetchTeaser(
 export function ContractAnalyzerModal({
   open,
   onOpenChange,
+  initialPersona = "general",
 }: Props) {
   const [step, setStep] = React.useState<WizardStep>("input");
-  const [persona, setPersona] = React.useState<PersonaId>("general");
+  const [persona, setPersona] = React.useState<PersonaId>(initialPersona);
   const [contractText, setContractText] = React.useState("");
   const [fileName, setFileName] = React.useState<string | null>(null);
   const [teaser, setTeaser] = React.useState<TeaserData | null>(null);
@@ -103,12 +105,16 @@ export function ContractAnalyzerModal({
 
   const resetWizard = React.useCallback(() => {
     setStep("input");
-    setPersona("general");
+    setPersona(initialPersona);
     setContractText("");
     setFileName(null);
     setTeaser(null);
     setError(null);
-  }, []);
+  }, [initialPersona]);
+
+  React.useEffect(() => {
+    if (open) setPersona(initialPersona);
+  }, [open, initialPersona]);
 
   React.useEffect(() => {
     if (!open) {

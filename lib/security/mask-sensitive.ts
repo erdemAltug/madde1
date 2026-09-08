@@ -4,7 +4,13 @@
  */
 const PLACEHOLDER = "[GİZLENMİŞ]";
 
-export type MaskDetectionKind = "tc" | "phone" | "iban" | "card" | "email";
+export type MaskDetectionKind =
+  | "tc"
+  | "phone"
+  | "iban"
+  | "card"
+  | "email"
+  | "name";
 
 export type MaskDetection = {
   kind: MaskDetectionKind;
@@ -65,7 +71,7 @@ function maskEmailSample(raw: string): string {
 }
 
 const RULES: {
-  kind: MaskDetectionKind;
+  kind: Exclude<MaskDetectionKind, "name">;
   label: string;
   patterns: RegExp[];
   sample: (raw: string) => string;
@@ -105,8 +111,63 @@ const RULES: {
   },
 ];
 
+const NAME_TOKEN =
+  "[A-ZÇĞİÖŞÜ][a-zçğıöşü]+(?:\\s+[A-ZÇĞİÖŞÜ][a-zçğıöşü]+){0,3}";
+
+/** Etiketli taraf isimleri — TC rakamlarıyla çakışmaz */
+const PARTY_LABEL_RE = new RegExp(
+  `(?:Kiracı|Kiraya\\s*Veren|Kiralayan|İşveren|İşçi|Taraf|Alıcı|Satıcı|Müşteri|Yüklenici|Adı\\s*Soyadı|Ad\\s*/\\s*Soyad)\\s*[:：]\\s*(${NAME_TOKEN})`,
+  "giu",
+);
+
+const SAYIN_RE = new RegExp(`Sayın\\s+(${NAME_TOKEN})`, "giu");
+
+const PARTY_LABELS = ["[Taraf A]", "[Taraf B]", "[Taraf C]", "[Taraf D]"];
+
+function anonymizePartyNames(text: string): {
+  text: string;
+  count: number;
+  sample: string | null;
+} {
+  const found: string[] = [];
+  const collect = (re: RegExp) => {
+    re.lastIndex = 0;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(text)) !== null) {
+      const name = m[1]?.trim();
+      if (!name || name.length < 3) continue;
+      if (/\d/.test(name)) continue;
+      if (!found.includes(name)) found.push(name);
+    }
+  };
+  collect(PARTY_LABEL_RE);
+  collect(SAYIN_RE);
+
+  if (!found.length) return { text, count: 0, sample: null };
+
+  let out = text;
+  let count = 0;
+  found.slice(0, PARTY_LABELS.length).forEach((name, i) => {
+    const label = PARTY_LABELS[i] ?? `[Taraf ${i + 1}]`;
+    const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(escaped, "g");
+    const before = out;
+    out = out.replace(re, label);
+    if (out !== before) count += 1;
+  });
+
+  return {
+    text: out,
+    count,
+    sample: found
+      .slice(0, 2)
+      .map((_, i) => PARTY_LABELS[i])
+      .join(", "),
+  };
+}
+
 /**
- * TC kimlik (11 hane), TR IBAN, Türkiye cep / sabit hat, kart, e-posta maskeler.
+ * TC, IBAN, telefon, kart, e-posta ve etiketli taraf isimlerini maskeler.
  */
 export function maskSensitiveText(raw: string): MaskResult {
   let text = raw;
@@ -130,6 +191,18 @@ export function maskSensitiveText(raw: string): MaskResult {
         count: kindCount,
       });
     }
+  }
+
+  const parties = anonymizePartyNames(text);
+  text = parties.text;
+  if (parties.count > 0 && parties.sample) {
+    replacementCount += parties.count;
+    detections.push({
+      kind: "name",
+      label: "Taraf isimleri",
+      sample: parties.sample,
+      count: parties.count,
+    });
   }
 
   return { text, replacementCount, detections };

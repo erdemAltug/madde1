@@ -109,6 +109,37 @@ export default function HesabimDetailPage() {
               </div>
             ) : null}
 
+            {flags?.revision_history && flags.revision_history.length > 0 ? (
+              <section className="mt-8 rounded-xl border border-slate-200 bg-white p-4">
+                <h2 className="text-sm font-bold text-slate-900">
+                  Revizyon geçmişi
+                </h2>
+                <ol className="mt-3 space-y-3">
+                  {flags.revision_history.map((rev, i) => (
+                    <li
+                      key={`${rev.at}-${i}`}
+                      className="border-l-2 border-[#005BEA]/30 pl-3 text-sm"
+                    >
+                      <p className="text-xs font-semibold text-slate-500">
+                        v{i + 1} ·{" "}
+                        {new Date(rev.at).toLocaleString("tr-TR")}
+                      </p>
+                      {rev.note ? (
+                        <p className="mt-0.5 font-medium text-slate-800">
+                          {rev.note}
+                        </p>
+                      ) : null}
+                      {rev.markdownSnippet ? (
+                        <p className="mt-1 line-clamp-3 text-xs text-slate-600">
+                          {rev.markdownSnippet}
+                        </p>
+                      ) : null}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ) : null}
+
             {md ? (
               <div className="prose prose-slate mt-8 max-w-none">
                 <StreamingMarkdown content={md} />

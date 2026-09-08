@@ -244,6 +244,20 @@ export function YillikIzinCalculator({
             </p>
           </div>
         </div>
+        {hasResult ? (
+          <ToolContractScanCta
+            source="/araclar/yillik-izin-hesaplama"
+            href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+            highlight={
+              unusedDays > 0
+                ? `Kullanılmayan izin ücreti tahmini ${formatTry(unusedPay)}.`
+                : `Tahmini asgari izin hakkınız ${entitled} gün.`
+            }
+            title="İş sözleşmenizde izin ve ücret maddeleri aleyhinize mi?"
+            body="Sözleşmeyi yapıştır — izin, mesai ve fesih maddelerini tarayalım."
+            ctaLabel="İş sözleşmesini tara"
+          />
+        ) : null}
         <p className="text-xs leading-relaxed text-slate-600">
           Asgari süreler genel çerçevedir; yaş, iş sözleşmesi veya TİS daha
           elverişli hak tanıyabilir. Sonuç hukuki görüş değildir.

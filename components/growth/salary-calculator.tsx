@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents, type FreeToolId } from "@/lib/analytics/events";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 
 const MIN_GROSS_2026 = 33_030;
 const SGK_CEILING_2026 = 297_270;
@@ -440,6 +441,17 @@ export function SalaryCalculator({
               </div>
             </div>
           </>
+        ) : null}
+
+        {totals ? (
+          <ToolContractScanCta
+            source="/araclar/brut-net-maas-hesaplama"
+            href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+            highlight={`Yıllık net toplam tahmini ${formatTry(totals.net)}.`}
+            title="İş sözleşmenizde ücret, kesinti veya fazla mesai maddesi aleyhinize mi?"
+            body="Sözleşmeyi yapıştır — maaş ve fesih maddelerini tarayalım."
+            ctaLabel="İş sözleşmesini tara"
+          />
         ) : null}
 
         <p className="text-xs leading-relaxed text-slate-500">

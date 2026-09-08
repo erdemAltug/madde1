@@ -10,6 +10,7 @@ import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import type { FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 
 const inputVivid =
   "rounded-xl border-2 border-slate-200/90 bg-white font-semibold tabular-nums shadow-sm transition-all placeholder:font-normal placeholder:text-slate-400 focus-visible:border-[#005BEA] focus-visible:ring-2 focus-visible:ring-[#005BEA]/25";
@@ -169,6 +170,17 @@ export function StampTaxCalculator({
           Tarife ve istisnalar işlem türüne göre değişir; bu hesap yalnızca
           kabaca yönlendirme içindir.
         </p>
+        {!embedded && hasTax ? (
+          <ToolContractScanCta
+            source="/araclar/damga-vergisi-hesaplama"
+            href="/sozlesme-analizi/kira-sozlesmesi-analizi"
+            highlight={`Tahmini damga ${tax.toLocaleString("tr-TR", { maximumFractionDigits: 2 })} TL.`}
+            title="Sözleşmede gizli maliyet veya aleyhte madde var mı?"
+            body="Kontratını yapıştır — hukuki riskleri de tarayalım (ücretsiz)."
+            ctaLabel="Sözleşmeyi tara"
+            className="mt-1"
+          />
+        ) : null}
       </CardContent>
     </Card>
   );

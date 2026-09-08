@@ -23,13 +23,28 @@ export async function saveContractAnalysis(input: {
     input.title?.trim() ||
     titleFromText(original, "Sözleşme taraması");
 
+  const prior = input.report.revision_history ?? [];
+  const snippet = (input.report.markdown ?? "")
+    .slice(0, 2000)
+    .trim();
+  const revision_history = [
+    ...prior,
+    {
+      at: new Date().toISOString(),
+      note: input.report.refactorMarkdown?.trim()
+        ? "Analiz + revizyon kaydı"
+        : "Analiz kaydı",
+      markdownSnippet: snippet || undefined,
+    },
+  ].slice(-5);
+
   const { data, error } = await supabase
     .from("contract_analyses")
     .insert({
       user_id: user.id,
       contract_title: title,
       original_text: original,
-      ai_report: { ...input.report, version: 1 },
+      ai_report: { ...input.report, version: 1, revision_history },
       risk_score:
         input.riskScore ?? input.report.teaser?.securityScore ?? null,
     })

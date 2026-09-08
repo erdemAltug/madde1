@@ -17,6 +17,9 @@ import { ContractDiffPanel } from "@/components/b2c/contract-diff-panel";
 import { extractImprovedContractSection } from "@/lib/extract-improved-contract";
 import { cn } from "@/lib/utils";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
+import { AnalysisDeliverables } from "@/components/analysis/analysis-deliverables";
+import { buildOnIncelemeRaporuMarkdown } from "@/lib/print/build-on-inceleme-raporu";
+import { openPrintMarkdown } from "@/lib/print/open-print-markdown";
 import { SITE_HOST } from "@/lib/seo/site";
 
 type Props = {
@@ -119,6 +122,24 @@ export function AnalysisPanel({
             loading={teaserLoading}
             className="mb-5"
             onCategoryInteract={bumpPaywallHint}
+          />
+        ) : null}
+
+        {teaser && (!paywallActive || detailUnlocked) ? (
+          <AnalysisDeliverables
+            teaser={teaser}
+            variant="workspace"
+            detailUnlocked
+            className="mb-6"
+            onPdfClick={() => {
+              openPrintMarkdown(
+                buildOnIncelemeRaporuMarkdown({
+                  teaser,
+                  analysisMarkdown,
+                  refactorMarkdown,
+                }),
+              );
+            }}
           />
         ) : null}
 
@@ -278,6 +299,9 @@ export function AnalysisPanel({
           <AnalysisActions
             markdown={markdownForExport}
             sharePath={sharePath}
+            teaser={teaser}
+            analysisMarkdown={analysisMarkdown}
+            refactorMarkdown={refactorMarkdown}
           />
         ) : null}
       </div>
