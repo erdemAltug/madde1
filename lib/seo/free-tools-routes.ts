@@ -5,12 +5,16 @@ export const KIRA_ARTIS_TOOL_PATH =
   "/araclar/kira-sozlesmesi-artis-orani-hesaplama" as const;
 export const DAMGA_VERGISI_TOOL_PATH =
   "/araclar/damga-vergisi-hesaplama" as const;
+/** Kazanan tahliye URL — tarih/imza geçerlilik + AI ön kontrol */
 export const TAHLIYE_TOOL_PATH =
-  "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol" as const;
+  "/araclar/tahliye-taahhudu-gecerlilik-kontrolu" as const;
 export const KIDEM_TAZMINATI_TOOL_PATH =
   "/araclar/kidem-tazminati-hesaplama" as const;
 export const IHBAR_TAZMINATI_TOOL_PATH =
   "/araclar/ihbar-tazminati-hesaplama" as const;
+/** Kıdem + ihbar birleşik hub (kazanan) */
+export const KIDEM_IHBAR_TOOL_PATH =
+  "/araclar/kidem-ihbar-tazminati-hesaplama" as const;
 export const FAZLA_MESAI_TOOL_PATH =
   "/araclar/fazla-mesai-ucreti-hesaplama" as const;
 export const YILLIK_IZIN_TOOL_PATH =
@@ -20,15 +24,22 @@ export const BRUT_NET_MAAS_TOOL_PATH =
 export const ISSIZLIK_MAASI_TOOL_PATH =
   "/araclar/issizlik-maasi-hesaplama" as const;
 export const KIRA_ANALIZI_TOOL_PATH = "/araclar/kira-analizi" as const;
-export const TAZMINAT_HUB_TOOL_PATH = "/araclar/tazminat-hesaplama" as const;
+/** @deprecated Kazanan: KIDEM_IHBAR_TOOL_PATH — redirect ile birleştirildi */
+export const TAZMINAT_HUB_TOOL_PATH = KIDEM_IHBAR_TOOL_PATH;
 export const SOZLESME_TUZAK_TOOL_PATH =
   "/araclar/sozlesme-tuzak-tarama" as const;
+export const FREELANCE_CHECKLIST_TOOL_PATH =
+  "/araclar/freelance-sozlesme-kontrol-listesi" as const;
 export const DILEKCE_TOOL_PATH = "/dilekce-olusturucu" as const;
 
 /** Eski URL’ler next.config redirect ile buraya yönlendirilir */
 export const KIRA_ARTIS_LEGACY_PATH = "/araclar/kira-artis-hesaplama" as const;
 export const TAHLIYE_LEGACY_PATH =
   "/araclar/tahliye-taahhutnamesi-kontrolu" as const;
+export const TAHLIYE_AI_LEGACY_PATH =
+  "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol" as const;
+export const TAZMINAT_HUB_LEGACY_PATH =
+  "/araclar/tazminat-hesaplama" as const;
 
 export type FreeToolNavItem = {
   href: string;
@@ -43,14 +54,19 @@ export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
     description: "TÜFE tavan + ev sahibine WhatsApp/e-posta cevabı.",
   },
   {
-    href: TAZMINAT_HUB_TOOL_PATH,
-    label: "Kıdem & ihbar + hak sorgulama",
-    description: "Tazminat hesabı ve istifaya zorlama kontrol listesi.",
+    href: KIDEM_IHBAR_TOOL_PATH,
+    label: "Kıdem & ihbar tazminatı hesaplama",
+    description: "İşten çıkarma / istifa senaryoları ve haklı fesih listesi.",
   },
   {
     href: SOZLESME_TUZAK_TOOL_PATH,
     label: "Sözleşmede 3 gizli tuzak taraması",
     description: "Kırmızı / sarı / yeşil AI ön tarama.",
+  },
+  {
+    href: FREELANCE_CHECKLIST_TOOL_PATH,
+    label: "Freelance sözleşme kontrol listesi",
+    description: "Fikri mülkiyet, revizyon ve ödeme maddeleri.",
   },
   {
     href: DILEKCE_TOOL_PATH,
@@ -99,15 +115,16 @@ export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
   },
   {
     href: TAHLIYE_TOOL_PATH,
-    label: "Tahliye taahhütnamesi yapay zeka ön kontrol",
-    description: "Usul ve içerik riskleri için hızlı AI taraması.",
+    label: "Tahliye taahhüdü geçerlilik kontrolü",
+    description: "Tarih, imza çelişkisi ön kontrolü + AI tarama.",
   },
 ];
 
 export const FREE_TOOLS_SITEMAP_PATHS = [
   KIRA_ANALIZI_TOOL_PATH,
-  TAZMINAT_HUB_TOOL_PATH,
+  KIDEM_IHBAR_TOOL_PATH,
   SOZLESME_TUZAK_TOOL_PATH,
+  FREELANCE_CHECKLIST_TOOL_PATH,
   DILEKCE_TOOL_PATH,
   KIRA_ARTIS_TOOL_PATH,
   KIDEM_TAZMINATI_TOOL_PATH,

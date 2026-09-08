@@ -211,7 +211,7 @@ const SOZLESME_CLUSTER_MAP: Record<string, string[]> = {
     "/rehber/depozito-iadesi",
     "/rehber/tahliye-sureci",
     "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
-    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     "/hukuki-analiz/kira-sozlesmesi-feshi",
     "/hukuki-analiz/tahliye-taahhutnamesi",
   ],
@@ -250,20 +250,20 @@ const SOZLESME_CLUSTER_MAP: Record<string, string[]> = {
 };
 
 const REHBER_CLUSTER_MAP: Record<string, string[]> = {
-  "kiraci-haklari": ["/rehber/kira-artisi-haklari", "/rehber/depozito-iadesi", "/rehber/tahliye-sureci", "/sozlesme-analizi/kira-sozlesmesi-analizi"],
+  "kiraci-haklari": ["/araclar/kira-analizi", "/rehber/kira-artisi-haklari", "/rehber/tahliye-sureci", "/sozlesme-analizi/kira-sozlesmesi-analizi"],
   "isci-haklari": ["/rehber/isten-cikarilinca-ne-yapilir", "/rehber/kidem-ihbar-tazminati", "/rehber/fazla-mesai-ucreti", "/sozlesme-analizi/is-sozlesmesi-riskleri"],
   "tuketici-haklari": ["/rehber/mesafeli-satis-cayma", "/rehber/e-ticaret-iade-haklari", "/rehber/tuketici-sikayet-hatti-rehber", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
   "sozlesme-imzalamadan-once": ["/rehber/sozlesme-cezai-sart", "/rehber/sozlesme-iptal-cayma-farki", "/rehber/yapay-zeka-sozlesme-kontrolu", "/hukuki-analiz/sozlesme-risk-analizi"],
   "depozito-iadesi": ["/rehber/depozito-ne-kadar-alinir", "/rehber/depozito-iadesi", "/hukuki-analiz/depozito-anlasmazligi", "/blog/depozito-iadesi-yazili-ihtar-ornek"],
   "kira-artisi-haklari": ["/rehber/kiraci-haklari", "/rehber/is-yeri-ticari-kira-rehberi", "/araclar/kira-sozlesmesi-artis-orani-hesaplama", "/blog/kira-artisi-2026-hesaplama-rehberi-blog"],
   "isten-cikarilinca-ne-yapilir": ["/araclar/issizlik-maasi-hesaplama", "/rehber/kidem-ihbar-tazminati", "/hukuki-analiz/is-cikarilma-tazminat", "/araclar/ihbar-tazminati-hesaplama"],
-  "kidem-ihbar-tazminati": ["/rehber/isten-cikarilinca-ne-yapilir", "/rehber/iscinin-hakli-fesih-hakki", "/araclar/kidem-tazminati-hesaplama", "/araclar/ihbar-tazminati-hesaplama"],
-  "tahliye-sureci": ["/rehber/tahliye-taahhutnamesi-rehberi", "/rehber/kira-feshi-hakli-nedenler", "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol", "/hukuki-analiz/tahliye-taahhutnamesi"],
+  "kidem-ihbar-tazminati": ["/rehber/isten-cikarilinca-ne-yapilir", "/rehber/iscinin-hakli-fesih-hakki", "/araclar/kidem-ihbar-tazminati-hesaplama", "/araclar/kidem-tazminati-hesaplama"],
+  "tahliye-sureci": ["/rehber/tahliye-taahhutnamesi-rehberi", "/rehber/kira-feshi-hakli-nedenler", "/araclar/tahliye-taahhudu-gecerlilik-kontrolu", "/hukuki-analiz/tahliye-taahhutnamesi"],
   "mesafeli-satis-cayma": ["/rehber/online-alisveris-14-gun-cayma", "/rehber/e-ticaret-iade-haklari", "/rehber/tuketici-haklari", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
-  "tahliye-taahhutnamesi-rehberi": ["/rehber/tahliye-sureci", "/rehber/kira-sozlesmesi-bildirim-sureleri", "/hukuki-analiz/tahliye-taahhutnamesi", "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol"],
+  "tahliye-taahhutnamesi-rehberi": ["/rehber/tahliye-sureci", "/rehber/kira-sozlesmesi-bildirim-sureleri", "/hukuki-analiz/tahliye-taahhutnamesi", "/araclar/tahliye-taahhudu-gecerlilik-kontrolu"],
   "kira-sozlesmesi-ornek-maddeler": ["/rehber/kira-sozlesmesi-sablon-riskleri", "/rehber/sozlesme-imzalamadan-once", "/rehber/sozlesme-cezai-sart", "/sozlesme-analizi/kira-sozlesmesi-analizi"],
   "is-sozlesmesi-belirsiz-maddeler": ["/rehber/isci-haklari", "/rehber/gizlilik-istihdam-sozlesmesi", "/rehber/is-sozlesmesi-ucret-kesintisi", "/sozlesme-analizi/is-sozlesmesi-riskleri"],
-  "freelance-sozlesme-rehberi": ["/rehber/hizmet-sozlesmesi-rehberi", "/rehber/yazilim-telif-sozlesmesi", "/blog/freelance-sozlesme-fatura-rehberi", "/sozlesme-analizi/freelance-yazilim-kontrati"],
+  "freelance-sozlesme-rehberi": ["/araclar/freelance-sozlesme-kontrol-listesi", "/rehber/hizmet-sozlesmesi-rehberi", "/rehber/yazilim-telif-sozlesmesi", "/sozlesme-analizi/freelance-yazilim-kontrati"],
   "gizlilik-sozlesmesi-kvkk": ["/rehber/kvkk-calisan-verisi", "/rehber/gizlilik-istihdam-sozlesmesi", "/blog/kvkk-aydinlatma-metni-zorunlu-mu", "/sozlesme-analizi/kvkk-aydinlatma-metni-analizi"],
   "mobbing-is-yerinde": ["/rehber/isci-haklari", "/rehber/iscinin-hakli-fesih-hakki", "/rehber/isten-cikarilinca-ne-yapilir", "/hukuki-analiz/haksiz-fesih"],
   "kira-feshi-hakli-nedenler": ["/rehber/kira-sozlesmesi-fesih-bildirimi", "/rehber/tahliye-sureci", "/rehber/kira-sozlesmesi-bildirim-sureleri", "/hukuki-analiz/kira-sozlesmesi-feshi"],
@@ -367,7 +367,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   "ev-sahibi-keyfi-tahliye-edemez": [
     "/rehber/tahliye-sureci",
     "/rehber/kiraci-haklari",
-    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     "/hukuki-analiz/tahliye-taahhutnamesi",
   ],
   "dijital-abonelik-otomatik-yenileme-iptal": [
@@ -491,7 +491,7 @@ const YAPAY_ZEKA_CLUSTER_MAP: Record<string, string[]> = {
   ],
   "ucretsiz-yapay-zeka-hukuk": ["/#dene", "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani", "/araclar"],
   "yapay-zeka-tahliye-taahhutnamesi": [
-    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     "/rehber/tahliye-sureci",
     "/hukuki-analiz/tahliye-taahhutnamesi",
   ],
@@ -519,7 +519,7 @@ const ALL_LINKS: InternalLink[] = [
     description: "Sözleşme matrahı tahmini.",
   },
   {
-    href: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    href: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     label: "Tahliye taahhütnamesi kontrol",
     description: "AI ön tarama.",
   },
@@ -602,7 +602,7 @@ export function getRelatedLinksForRehber(slug: string): InternalLink[] {
 const BLOG_CLUSTER_MAP: Record<string, string[]> = {
   "kira-sozlesmesi-riskli-maddeler-2026": ["/rehber/kira-sozlesmesi-sablon-riskleri", "/rehber/kira-sozlesmesi-ornek-maddeler", "/rehber/kiraci-haklari", "/sozlesme-analizi/kira-sozlesmesi-analizi"],
   "yapay-zeka-sozlesme-analizi-nasil-calisir": ["/rehber/yapay-zeka-sozlesme-kontrolu", "/rehber/ucretsiz-sozlesme-analizi-nasil", "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi", "/blog/sozlesme-madde-madde-analiz"],
-  "tahliye-taahhutnamesi-7-hata": ["/rehber/tahliye-taahhutnamesi-rehberi", "/rehber/tahliye-sureci", "/hukuki-analiz/tahliye-taahhutnamesi", "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol"],
+  "tahliye-taahhutnamesi-7-hata": ["/rehber/tahliye-taahhutnamesi-rehberi", "/rehber/tahliye-sureci", "/hukuki-analiz/tahliye-taahhutnamesi", "/araclar/tahliye-taahhudu-gecerlilik-kontrolu"],
   "is-sozlesmesi-imzalamadan-once-5-soru": ["/rehber/is-sozlesmesi-belirsiz-maddeler", "/rehber/sozlesme-imzalamadan-once", "/rehber/isci-haklari", "/sozlesme-analizi/is-sozlesmesi-riskleri"],
   "tbk-kira-artisi-2026-pratik": ["/rehber/kira-artisi-haklari", "/rehber/kiraci-haklari", "/araclar/kira-sozlesmesi-artis-orani-hesaplama", "/blog/kira-artisi-2026-hesaplama-rehberi-blog"],
   "depozito-iadesi-reddedildi": ["/rehber/depozito-iadesi", "/rehber/depozito-ne-kadar-alinir", "/rehber/depozito-iadesi", "/hukuki-analiz/depozito-anlasmazligi"],
@@ -667,7 +667,7 @@ export function getRelatedLinksForHukukiAnaliz(slug: string): InternalLink[] {
       "/rehber/kiraci-haklari",
       "/rehber/tahliye-sureci",
       "/sozlesme-analizi/kira-sozlesmesi-analizi",
-      "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+      "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     ],
     "is-cikarilma-tazminat": [
       "/rehber/isten-cikarilinca-ne-yapilir",
@@ -676,7 +676,7 @@ export function getRelatedLinksForHukukiAnaliz(slug: string): InternalLink[] {
     ],
     "tahliye-taahhutnamesi": [
       "/rehber/tahliye-sureci",
-      "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+      "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
       "/sozlesme-analizi/kira-sozlesmesi-analizi",
     ],
     "sozlesme-risk-analizi": [
@@ -762,7 +762,7 @@ const HAKLARIM_CLUSTER_MAP: Record<string, string[]> = {
   ],
   "evden-cikarilma-haklarim": [
     "/rehber/tahliye-sureci",
-    "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     "/hukuki-analiz/tahliye-taahhutnamesi",
   ],
 };

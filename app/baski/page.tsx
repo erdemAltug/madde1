@@ -35,7 +35,7 @@ export default function BaskiPage() {
       <div className="mx-auto max-w-3xl px-6 py-10 print:py-6">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-3 print:hidden">
           <h1 className="font-serif text-xl font-semibold text-slate-900">
-            Clause — Analiz çıktısı
+            Clause — Risk raporu / analiz çıktısı
           </h1>
           <Button type="button" onClick={() => window.print()}>
             Yazdır / PDF

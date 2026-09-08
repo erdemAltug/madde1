@@ -223,7 +223,7 @@ const PAGES: RehberPageConfig[] = [
         answer: "Hukuka aykırı müdahale sayılabilir; acil hukuki destek alın.",
       },
     ],
-    ctaHref: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    ctaHref: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     updatedAt: "2026-07-11",
   }),
 ];

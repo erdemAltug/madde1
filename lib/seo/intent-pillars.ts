@@ -103,7 +103,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
         label: "Sözleşme tuzak tarama",
       },
       {
-        href: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+        href: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
         label: "Tahliye taahhütnamesi ön kontrol",
       },
       { href: "/rehber/kiraci-haklari", label: "Kiracı hakları rehberi" },

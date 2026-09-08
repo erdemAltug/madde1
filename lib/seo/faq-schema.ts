@@ -1,4 +1,5 @@
 import type { FaqItem } from "./rehber-pages";
+import { SITE_NAME, SITE_URL } from "@/lib/seo/site";
 
 export function buildFaqJsonLd(faqs: FaqItem[]) {
   return {
@@ -65,5 +66,51 @@ export function buildHowToJsonLd(opts: {
       "@type": "WebPage",
       "@id": opts.url,
     },
+  };
+}
+
+/** Araç sayfaları için SoftwareApplication — rich result / sitelinks adayı */
+export function buildSoftwareApplicationJsonLd(opts: {
+  name: string;
+  description: string;
+  url: string;
+  applicationCategory?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    applicationCategory: opts.applicationCategory ?? "BusinessApplication",
+    operatingSystem: "Web",
+    inLanguage: "tr-TR",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "TRY",
+    },
+    provider: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+  };
+}
+
+export function buildBreadcrumbListJsonLd(
+  items: { name: string; href: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: item.href.startsWith("http")
+        ? item.href
+        : `${SITE_URL}${item.href.startsWith("/") ? item.href : `/${item.href}`}`,
+    })),
   };
 }

@@ -26,13 +26,22 @@ export function RelatedToolsSection({
   className,
   headingId = "ilgili-araclar",
   slug,
+  excludeHref,
+  limit = 8,
 }: {
   className?: string;
   headingId?: string;
   /** /sozlesme-analizi/[slug] için konuya özel rehber bağlantıları */
   slug?: string;
+  /** Mevcut araç sayfasını listeden çıkar */
+  excludeHref?: string;
+  limit?: number;
 }) {
   const topicLinks = slug ? getRelatedLinksForSozlesme(slug).slice(0, 4) : [];
+  const tools = FREE_TOOLS_NAV.filter((t) => t.href !== excludeHref).slice(
+    0,
+    limit,
+  );
   return (
     <section
       className={cn("border-t border-slate-200 bg-slate-50/40", className)}
@@ -78,7 +87,7 @@ export function RelatedToolsSection({
               Ücretsiz araçlar
             </h3>
             <ul className="mt-3 space-y-2">
-              {FREE_TOOLS_NAV.map((t) => (
+              {tools.map((t) => (
                 <li key={t.href}>
                   <Link
                     href={t.href}

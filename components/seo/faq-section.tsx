@@ -1,16 +1,25 @@
 import type { FaqItem } from "@/lib/seo/rehber-pages";
 import { buildFaqJsonLd } from "@/lib/seo/faq-schema";
+import { cn } from "@/lib/utils";
 
 type Props = {
   faqs: FaqItem[];
   heading?: string;
+  className?: string;
 };
 
-export function FaqSection({ faqs, heading = "Sıkça sorulan sorular" }: Props) {
+export function FaqSection({
+  faqs,
+  heading = "Sıkça sorulan sorular",
+  className,
+}: Props) {
   const jsonLd = buildFaqJsonLd(faqs);
 
   return (
-    <section aria-labelledby="faq-baslik" className="mt-12">
+    <section
+      aria-labelledby="faq-baslik"
+      className={cn("mt-12", className)}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

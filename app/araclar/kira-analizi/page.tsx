@@ -1,154 +1,121 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteNavbar } from "@/components/landing/site-navbar";
-import { SiteFooter } from "@/components/landing/site-footer";
+import { ToolPageShell } from "@/components/seo/tool-page-shell";
 import { KiraAnaliziCalculator } from "@/components/growth/kira-analizi-calculator";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { FaqSection } from "@/components/seo/faq-section";
-import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
+import { StatuteCite } from "@/components/legal/statute-cite";
+import { buildToolMetadata } from "@/lib/seo/tool-metadata";
 import { KIRA_ANALIZI_TOOL_PATH } from "@/lib/seo/free-tools-routes";
-import { buildHowToJsonLd } from "@/lib/seo/faq-schema";
-import {
-  defaultOgAlt,
-  openGraphArticleImages,
-  twitterSummaryLargeImage,
-} from "@/lib/seo/og";
-import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = KIRA_ANALIZI_TOOL_PATH;
-const canonical = absoluteUrl(path);
-const title =
-  "Ev sahibi yüzde kaç zam yapabilir? 2026 kira takip raporu";
-const description =
-  "Ev sahibinin istediği kira zammını TÜFE yasal tavanıyla karşılaştırın. TBK 344 bağlamında haklı/haksız uyarısı ve WhatsApp / e-posta cevap taslağı — ücretsiz.";
 
-export const metadata: Metadata = {
-  title,
-  description,
+export const metadata = buildToolMetadata({
+  toolName: "Kira Analizi",
+  topic: "kira artışı yasal tavanı (TBK m. 344)",
+  path,
   keywords: [
     "ev sahibi yüzde kaç zam yapabilir",
     "kira artışı yasal tavan",
     "TBK 344",
     "kira takip raporu",
-    "yapay zeka ile kira takibi",
-    "ev sahibine cevap metni",
-    "kiracı hakları",
-    SITE_NAME,
   ],
-  alternates: { canonical },
-  openGraph: {
-    title: `${title} | ${SITE_NAME}`,
-    description,
-    url: canonical,
-    type: "article",
-    locale: "tr_TR",
-    images: openGraphArticleImages(defaultOgAlt(title)),
-  },
-  twitter: twitterSummaryLargeImage(title, description),
-};
-
-const howToLd = buildHowToJsonLd({
-  name: "Kira zammı yasal tavan analizi",
-  description:
-    "Mevcut kira, talep edilen kira ve TÜFE tavanı ile yasal üst sınırı hesaplama.",
-  url: canonical,
-  steps: [
-    "Mevcut kiranızı ve ev sahibinin istediği tutarı girin.",
-    "TÜİK’ten güncel TÜFE 12 aylık ortalama oranını yazın.",
-    "Yasal tavan aşıldı mı rozetini ve hazır cevap metnini kullanın.",
-  ],
+  titleOverride:
+    "Kira Analizi 2026 — Yasal Hesaplama ve AI Ön İnceleme",
 });
 
 const faqs = [
   {
-    question: "Ev sahibi yüzde kaç zam yapabilir?",
+    question: "Ev sahibi TÜFE üzerinde zam isteyebilir mi?",
     answer:
-      "Konut ve çatılı işyeri kiralarında yenilenen dönem artışı kural olarak TÜFE’nin on iki aylık ortalamalarına göre değişim oranını aşamaz (TBK m. 344). Sözleşme daha düşük bir oran öngörmüşse o oran uygulanır. Güncel oranı TÜİK’ten teyit edin.",
+      "Konut ve çatılı işyeri kiralarında yenilenen dönem artışı kural olarak TÜFE’nin on iki aylık ortalamalarına göre değişim oranını aşamaz (TBK m. 344). Sözleşme daha düşük oran öngörmüşse o uygulanır. Bu araç bilgilendirme amaçlıdır.",
   },
   {
     question: "Ev sahibi kiraya %100 zam yaptı, ne yapmalıyım?",
     answer:
-      "Önce yasal tavanı hesaplayın. Aşıyorsa yazılı olarak itiraz edin, ödeme yapacaksanız çekince koyun, sözleşmeyi ve yazışmaları saklayın. Baskı veya tahliye tehdidi varsa avukata danışın. Bu araç hazır cevap taslağı üretir; noter ihtarı veya dava yerine geçmez.",
+      "Önce yasal tavanı hesaplayın. Aşıyorsa yazılı itiraz edin, ödeme yapacaksanız çekince koyun, sözleşmeyi saklayın. Baskı veya tahliye tehdidi varsa avukata danışın.",
   },
   {
     question: "TÜFE mi ÜFE mi esas alınır?",
     answer:
       "Kanundaki ölçüt tüketici fiyat endeksinin (TÜFE) on iki aylık ortalamalara göre değişimidir. ÜFE bu hesabın yasal ölçütü değildir.",
   },
-  {
-    question: "Bir yıllık süre dolmadan zam istenebilir mi?",
-    answer:
-      "Yenileme dönemine bağlıdır. Sözleşme başlangıcı veya son artıştan bir yıl dolmadan talep gelirse süre ve bildirim şartlarını kontrol edin; şüphede avukat görüşü alın.",
-  },
 ];
 
 export default function KiraAnaliziPage() {
   return (
-    <div className="min-h-screen bg-white pb-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }}
-      />
-      <SiteNavbar />
-      <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <Breadcrumbs
-          items={[
-            { name: "Ücretsiz araçlar", href: "/araclar" },
-            { name: "Kira analizi", href: path },
-          ]}
-        />
-
-        <header className="mb-10 max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-wide text-[#005BEA]">
-            Günlük hukuk · Kiracı
-          </p>
-          <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Ev sahibi fazla zam mı istedi?
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Mevcut kiranızı, istenen zammı ve TÜFE tavanını girin. Yasal üst
-            sınırı, haklı/haksız uyarısını ve ev sahibine atılacak cevap
-            metnini anında alın.{" "}
-            <Link
-              href="/sozlesme-analizi/kira-sozlesmesi-analizi"
-              className="font-semibold text-[#005BEA] hover:underline"
-            >
-              Kira sözleşmesi AI taraması
-            </Link>
-            .
-          </p>
-        </header>
-
-        <KiraAnaliziCalculator />
-
-        <article className="prose prose-slate mt-12 max-w-none prose-p:text-[15px] prose-p:leading-relaxed">
-          <h2>Bu araç ne işe yarar?</h2>
+    <ToolPageShell
+      path={path}
+      breadcrumbLabel="Kira Analizi"
+      h1="Ev sahibi fazla zam mı istedi?"
+      bottomPad
+      intro={
+        <>
+          Mevcut kiranızı, istenen zammı ve TÜFE tavanını girin. Yasal üst
+          sınırı, haklı/haksız uyarısını ve ev sahibine atılacak cevap metnini
+          anında alın.{" "}
+          <Link
+            href="/rehber/kiraci-haklari"
+            className="font-semibold text-[#005BEA] hover:underline"
+          >
+            Kiracı hakları rehberi
+          </Link>
+          {" · "}
+          <Link
+            href="/sozlesme-analizi/kira-sozlesmesi-analizi"
+            className="font-semibold text-[#005BEA] hover:underline"
+          >
+            Kira sözleşmesi AI taraması
+          </Link>
+          {" · "}
+          <Link
+            href="/gunluk-hukuk"
+            className="font-semibold text-[#005BEA] hover:underline"
+          >
+            Günlük hukuk
+          </Link>
+          .
+        </>
+      }
+      howTo={{
+        name: "Kira zammı yasal tavan analizi",
+        description:
+          "Mevcut kira, talep edilen kira ve TÜFE tavanı ile yasal üst sınırı hesaplama.",
+        steps: [
+          "Mevcut kiranızı ve ev sahibinin istediği tutarı girin.",
+          "TÜİK’ten güncel TÜFE 12 aylık ortalama oranını yazın.",
+          "Yasal tavan aşıldı mı rozetini ve hazır cevap metnini kullanın.",
+        ],
+      }}
+      softwareApp={{
+        name: "Clause Kira Analizi",
+        description: "TBK m. 344 bağlamında kira artışı yasal tavan hesaplama.",
+      }}
+      faqs={faqs}
+      article={
+        <>
+          <h2>TBK m. 344 ve kira artışı</h2>
+          <StatuteCite
+            cite="TBK m. 344"
+            href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6098&MevzuatTur=1&MevzuatTertip=5"
+          >
+            Yenilenen kira dönemlerinde uygulanacak artış, bir önceki kira
+            yılında tüketici fiyat endeksindeki on iki aylık ortalamalara göre
+            değişim oranını geçemez. Bu araç tahmin üretir; resmi oran TÜİK’ten
+            doğrulanmalıdır.
+          </StatuteCite>
           <p>
-            Sıradan kullanıcı TBK madde numarasıyla değil, “ev sahibi %100 zam
-            istedi” sorusuyla gelir. Bu mikro araç tam da o anı yakalar: sayılar
-            girilir, yasal tavanla karşılaştırılır, kopyalanabilir cevap üretilir.
-            Sonraki adım kira sözleşmesinin tam metin AI analizi ve gerekirse
-            kayıtlı PDF / dilekçe akışıdır.
-          </p>
-          <h2>İlgili araçlar</h2>
-          <p>
+            İlgili araçlar:{" "}
             <Link href="/araclar/kira-sozlesmesi-artis-orani-hesaplama">
-              Klasik kira artış oranı hesaplama
+              klasik kira artış oranı
             </Link>
             ,{" "}
-            <Link href="/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol">
-              tahliye taahhütnamesi ön kontrol
-            </Link>{" "}
-            ve{" "}
-            <Link href="/rehber/kira-artisi-haklari">kira artışı hakları rehberi</Link>
+            <Link href="/araclar/tahliye-taahhudu-gecerlilik-kontrolu">
+              tahliye taahhüdü geçerlilik kontrolü
+            </Link>
             .
           </p>
-        </article>
-
-        <FaqSection faqs={faqs} />
-        <LegalAiDisclaimer className="mt-10" />
-      </main>
-      <SiteFooter />
-    </div>
+        </>
+      }
+    >
+      <KiraAnaliziCalculator />
+    </ToolPageShell>
   );
 }

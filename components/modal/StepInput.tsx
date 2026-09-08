@@ -1,11 +1,19 @@
 "use client";
 
 import * as React from "react";
-import { Briefcase, FileUp, Home, Laptop, Search, Zap } from "lucide-react";
+import {
+  Briefcase,
+  FileUp,
+  Home,
+  Laptop,
+  Search,
+  Zap,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { PersonaId } from "@/lib/personas";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { PrivacyShieldLive } from "@/components/growth/privacy-shield-live";
 
 const CONTEXT_BADGES: {
   id: PersonaId;
@@ -118,6 +126,8 @@ export function StepInput({
           e.target.value = "";
         }}
       />
+
+      <PrivacyShieldLive text={contractText} />
 
       <button
         type="button"

@@ -164,7 +164,7 @@ const PAGES: HukukiAnalizPageConfig[] = [
           "Yazılı şekil şartları açısından risklidir; resmi belge düzenlenmesi tercih edilir.",
       },
     ],
-    ctaHref: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    ctaHref: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     updatedAt: "2026-05-01",
   },
   {

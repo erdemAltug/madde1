@@ -3,8 +3,7 @@
 import * as React from "react";
 import { Copy, Link2, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const STORAGE_KEY = "clause-analysis-markdown";
+import { openPrintMarkdown } from "@/lib/print/open-print-markdown";
 
 type Props = {
   markdown: string;
@@ -36,13 +35,7 @@ export function AnalysisActions({
 
   const openPrint = () => {
     if (onPdfClick?.() === false) return;
-    if (!markdown.trim()) return;
-    try {
-      sessionStorage.setItem(STORAGE_KEY, markdown);
-    } catch {
-      return;
-    }
-    window.open("/baski", "_blank", "noopener,noreferrer");
+    openPrintMarkdown(markdown);
   };
 
   const hasContent = markdown.trim().length > 0;

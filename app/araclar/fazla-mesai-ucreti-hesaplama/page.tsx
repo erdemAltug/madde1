@@ -1,104 +1,90 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteNavbar } from "@/components/landing/site-navbar";
-import { SiteFooter } from "@/components/landing/site-footer";
+import { ToolPageShell } from "@/components/seo/tool-page-shell";
 import { FazlaMesaiCalculator } from "@/components/growth/labor-calculators";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { StatuteCite } from "@/components/legal/statute-cite";
+import { buildToolMetadata } from "@/lib/seo/tool-metadata";
 import { FAZLA_MESAI_TOOL_PATH } from "@/lib/seo/free-tools-routes";
-import { buildHowToJsonLd } from "@/lib/seo/faq-schema";
-import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
-import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = FAZLA_MESAI_TOOL_PATH;
-const canonical = absoluteUrl(path);
-const title = "Fazla mesai ücreti hesaplama — ücretsiz araç 2026";
 
-export const metadata: Metadata = {
-  title,
-  description:
-    "Brüt maaş ve fazla mesai saati ile ücretsiz fazla mesai ücreti tahmini. İşçi hakları rehberi ve iş sözleşmesi AI ön analizi.",
+export const metadata = buildToolMetadata({
+  toolName: "Fazla Mesai Ücreti Hesaplama",
+  topic: "fazla mesai ücreti",
+  path,
   keywords: [
     "fazla mesai ücreti hesaplama",
-    "fazla mesai hesapla",
-    "mesai ücreti nasıl hesaplanır",
     "fazla mesai 1.5",
-    SITE_NAME,
-  ],
-  alternates: { canonical },
-  openGraph: {
-    title: `${title} | ${SITE_NAME}`,
-    description: "Ücretsiz fazla mesai ücreti tahmini — bilgilendirme amaçlı.",
-    url: canonical,
-    type: "article",
-    locale: "tr_TR",
-    images: openGraphArticleImages(defaultOgAlt(title)),
-  },
-  twitter: twitterSummaryLargeImage(title, "Fazla mesai ücreti hesaplama — ücretsiz."),
-};
-
-const howToLd = buildHowToJsonLd({
-  name: "Fazla mesai ücreti hesaplama",
-  description: "Brüt aylık ücret ve fazla mesai saati ile tahmini zamlı ücret.",
-  url: canonical,
-  steps: [
-    "Brüt aylık ücretinizi girin.",
-    "Fazla mesai saatini yazın.",
-    "Tahmini zamlı ücreti görün; iş sözleşmenizi AI ile kontrol edin.",
+    "İş Kanunu m. 41",
   ],
 });
 
+const faqs = [
+  {
+    question: "Fazla mesai saat ücreti nasıl hesaplanır?",
+    answer:
+      "Pratikte sık kullanılan yaklaşım; saatlik ücretin bir buçuk katı ile fazla mesai saatini çarpmaktır (İş Kanunu m. 41 bağlamı). Saatlik ücret için aylık brütün çalışma saatine bölünmesi yaygındır. Somut hesap bordro ve sözleşmeye göre değişir.",
+  },
+  {
+    question: "Fazla mesai reddedilebilir mi?",
+    answer:
+      "Kanunda ve içtihatta belirli sınırlar ve istisnalar vardır. Yazılı onay, yıllık üst sınır ve işin niteliği önemlidir. Detay için fazla mesai rehberine bakın; bu araç tahmindir.",
+  },
+];
+
 export default function FazlaMesaiHesaplamaPage() {
   return (
-    <div className="min-h-screen bg-white">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToLd) }}
-      />
-      <SiteNavbar />
-      <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <Breadcrumbs
-          items={[
-            { name: "Ücretsiz araçlar", href: "/araclar" },
-            { name: "Fazla mesai ücreti hesaplama", href: path },
-          ]}
-        />
-        <header className="mb-10">
-          <h1 className="text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Fazla mesai ücreti hesaplama
-          </h1>
-          <p className="mt-3 text-base text-slate-600">
-            Tahmini sonuç — yazılı anlaşma, gece ve tatil çalışması sonucu
-            değiştirebilir.{" "}
-            <Link
-              href="/rehber/fazla-mesai-reddetme-ve-ucret"
-              className="font-semibold text-[#005BEA] hover:underline"
-            >
-              Fazla mesai reddetme ve ücret rehberi
-            </Link>
-            .
-          </p>
-        </header>
-        <FazlaMesaiCalculator
-          analyticsToolId="fazla_mesai_page"
-          analyticsSurface="tool_page"
-        />
-        <section className="prose prose-slate mt-12 max-w-none text-sm">
-          <h2>Fazla mesai ücreti nasıl hesaplanır?</h2>
-          <p>
-            Pratikte sık kullanılan yaklaşım; saatlik ücretin bir buçuk katı ile
-            fazla mesai saatini çarpmaktır. Saatlik ücret için aylık brütün
-            çalışma saatine bölünmesi yaygın bir tahmindir. Somut hesap bordro,
-            sözleşmedeki çalışma düzeni ve güncel mevzuata göre değişir.
-          </p>
+    <ToolPageShell
+      path={path}
+      breadcrumbLabel="Fazla mesai ücreti"
+      h1="Fazla mesai ücreti hesaplama"
+      bottomPad
+      intro={
+        <>
+          Brüt ücret ve fazla mesai saati ile zamlı ücret tahmini alın.{" "}
+          <Link
+            href="/rehber/fazla-mesai-reddetme-ve-ucret"
+            className="font-semibold text-[#005BEA] hover:underline"
+          >
+            Fazla mesai reddetme ve ücret rehberi
+          </Link>
+          .
+        </>
+      }
+      howTo={{
+        name: "Fazla mesai ücreti hesaplama",
+        description: "Brüt aylık ücret ve fazla mesai saati ile tahmini zamlı ücret.",
+        steps: [
+          "Brüt aylık ücretinizi girin.",
+          "Fazla mesai saatini yazın.",
+          "Tahmini zamlı ücreti görün; iş sözleşmenizi AI ile kontrol edin.",
+        ],
+      }}
+      softwareApp={{
+        name: "Clause Fazla Mesai Ücreti Hesaplama",
+        description: "İş Kanunu m. 41 bağlamında fazla mesai ücreti tahmini.",
+      }}
+      faqs={faqs}
+      article={
+        <>
+          <h2>İş Kanunu m. 41</h2>
+          <StatuteCite cite="İş Kanunu m. 41">
+            Fazla çalışma, kanundaki sınırlar ve zamlı ücret esaslarıyla
+            düzenlenir. Bu hesaplayıcı yaygın pratik çarpanlarla tahmin üretir;
+            gece, tatil ve yazılı anlaşma sonucu değiştirir.
+          </StatuteCite>
           <p>
             <Link href="/sozlesme-analizi/is-sozlesmesi-riskleri">
               İş sözleşmesi AI analizi
-            </Link>{" "}
-            ile fazla mesai ve ücret maddelerini kontrol edin.
+            </Link>
+            .
           </p>
-        </section>
-      </main>
-      <SiteFooter />
-    </div>
+        </>
+      }
+    >
+      <FazlaMesaiCalculator
+        analyticsToolId="fazla_mesai_page"
+        analyticsSurface="tool_page"
+      />
+    </ToolPageShell>
   );
 }

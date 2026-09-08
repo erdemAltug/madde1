@@ -70,7 +70,7 @@ export default function KidemTazminatiHesaplamaPage() {
             Tahmini sonuç — kıdem tavanı ve fesih türü sonucu değiştirir. Kıdem +
             ihbar + istifaya zorlama kontrol listesi için{" "}
             <Link
-              href="/araclar/tazminat-hesaplama"
+              href="/araclar/kidem-ihbar-tazminati-hesaplama"
               className="font-semibold text-[#005BEA] hover:underline"
             >
               birleşik tazminat hub

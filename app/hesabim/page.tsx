@@ -12,7 +12,7 @@ import {
   setAnalysisPinned,
 } from "@/lib/inventory/save-analysis";
 import { isPinned, type InventoryRow } from "@/lib/inventory/types";
-import { KIRA_ANALIZI_TOOL_PATH } from "@/lib/seo/free-tools-routes";
+import { FREELANCE_CHECKLIST_TOOL_PATH } from "@/lib/seo/free-tools-routes";
 
 function formatTr(iso: string): string {
   try {
@@ -68,21 +68,27 @@ export default function HesabimPage() {
       <SiteNavbar />
       <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
         <p className="text-xs font-bold uppercase tracking-wide text-[#005BEA]">
-          Kişisel asistan
+          Sözleşme arşivi
         </p>
         <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
           Taramalarım
         </h1>
         <p className="mt-2 text-sm font-medium text-slate-600">
-          Kaydettiğin sözleşmeler, tuzak taramaları ve risk notları burada.
-          Avukatlık yerine geçmez; senin envanterin.
+          Geçmiş taramalar, risk notları ve indirdiğin ön inceleme raporları.
+          Freelancer / KOBİ için kişisel sözleşme envanteri — avukatlık yerine
+          geçmez.
         </p>
 
-        <div className="mt-6">
+        <div className="mt-6 flex flex-wrap gap-2">
           <Button className="rounded-xl bg-[#005BEA] font-semibold hover:bg-[#0047b8]" asChild>
-            <Link href={KIRA_ANALIZI_TOOL_PATH}>
+            <Link href="/#dene">
               <Plus className="mr-1 h-4 w-4" />
               Yeni tarama
+            </Link>
+          </Button>
+          <Button variant="outline" className="rounded-xl font-semibold" asChild>
+            <Link href={FREELANCE_CHECKLIST_TOOL_PATH}>
+              Serbest çalışan paketi
             </Link>
           </Button>
         </div>

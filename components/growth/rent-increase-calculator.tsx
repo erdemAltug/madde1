@@ -10,6 +10,7 @@ import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import type { FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 import { ToolResultSignupBar } from "@/components/growth/tool-result-signup-bar";
 
 const inputVivid =
@@ -224,6 +225,12 @@ export function RentIncreaseCalculator({
             hukuki kontrol için uzman görüşü gerekebilir.
           </p>
         )}
+        {!embedded && hasResult ? (
+          <ToolContractScanCta
+            source="/araclar/kira-sozlesmesi-artis-orani-hesaplama"
+            className="mt-4"
+          />
+        ) : null}
       </CardContent>
       </Card>
       {!embedded && (

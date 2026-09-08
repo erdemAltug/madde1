@@ -102,7 +102,7 @@ const POSTS: BlogPostConfig[] = [
         answer: "Kanuni diğer yollar (kira borcu, süre bitimi vb.) ayrı değerlendirilir.",
       },
     ],
-    ctaHref: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    ctaHref: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
   }),
   blog({
     slug: "is-sozlesmesi-imzalamadan-once-5-soru",

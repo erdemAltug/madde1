@@ -39,7 +39,7 @@ const TOPIC_POOLS: Topic[] = [
     id: "kira-tahliye-taahhut",
     pool: "kira",
     query: "Tahliye taahhütnamesi geçerlilik şartları",
-    ctaHref: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    ctaHref: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
   },
   {
     id: "kira-depozito-iade",
@@ -58,7 +58,7 @@ const TOPIC_POOLS: Topic[] = [
     id: "is-mobbing-fesih",
     pool: "is",
     query: "Mobbing nedeniyle haklı fesih rehberi",
-    ctaHref: "/araclar/tazminat-hesaplama",
+    ctaHref: "/araclar/kidem-ihbar-tazminati-hesaplama",
   },
   {
     id: "is-ihbar-hesap",

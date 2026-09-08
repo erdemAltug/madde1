@@ -4,6 +4,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { FileUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PrivacyShieldLive } from "@/components/growth/privacy-shield-live";
 import { countSensitivePatterns } from "@/lib/security/mask-sensitive";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -125,6 +126,8 @@ export function ContractInputPanel({
           Dosya yükle
         </button>
       </div>
+
+      <PrivacyShieldLive text={value} compact />
     </motion.div>
   );
 }

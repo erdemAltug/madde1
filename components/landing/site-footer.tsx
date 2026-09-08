@@ -26,7 +26,7 @@ const POPULAR_SEARCHES = [
   },
   {
     label: "Tahliye taahhütnamesi kontrol",
-    href: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    href: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
   },
   {
     label: "Kiracı hakları rehberi",

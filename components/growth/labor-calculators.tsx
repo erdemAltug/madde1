@@ -9,6 +9,8 @@ import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import type { FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
+import { ToolResultSignupBar } from "@/components/growth/tool-result-signup-bar";
 
 const inputClass =
   "rounded-xl border-2 border-slate-200/90 bg-white font-semibold tabular-nums shadow-sm transition-all placeholder:font-normal placeholder:text-slate-400 focus-visible:border-[#005BEA] focus-visible:ring-2 focus-visible:ring-[#005BEA]/25";
@@ -39,6 +41,7 @@ export function FazlaMesaiCalculator({
 }) {
   const [gross, setGross] = React.useState("45000");
   const [hours, setHours] = React.useState("20");
+  const [barDismissed, setBarDismissed] = React.useState(false);
   const trackedRef = React.useRef(false);
 
   const grossMonthly = parseNum(gross);
@@ -57,62 +60,80 @@ export function FazlaMesaiCalculator({
   }, [analyticsToolId, analyticsSurface]);
 
   return (
-    <Card className="border-slate-200 bg-white shadow-sm">
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-base font-bold text-slate-900">
-          <Clock className="h-4 w-4 text-[#005BEA]" />
-          Fazla mesai ücreti tahmini
-        </CardTitle>
-        <p className="text-xs font-medium text-slate-500">
-          Saatlik ücret × 1,5 × fazla mesai saati (bilgilendirme amaçlı tahmin)
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="fm-gross">Brüt aylık ücret (TL)</Label>
-            <Input
-              id="fm-gross"
-              inputMode="decimal"
-              value={gross}
-              onChange={(e) => {
-                setGross(e.target.value);
-                track();
-              }}
-              className={cn(inputClass)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="fm-hours">Fazla mesai saati</Label>
-            <Input
-              id="fm-hours"
-              inputMode="decimal"
-              value={hours}
-              onChange={(e) => {
-                setHours(e.target.value);
-                track();
-              }}
-              className={cn(inputClass)}
-            />
-          </div>
-        </div>
-        <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-            Tahmini fazla mesai ücreti
+    <>
+      <Card className="border-slate-200 bg-white shadow-sm">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-base font-bold text-slate-900">
+            <Clock className="h-4 w-4 text-[#005BEA]" />
+            Fazla mesai ücreti tahmini
+          </CardTitle>
+          <p className="text-xs font-medium text-slate-500">
+            Saatlik ücret × 1,5 × fazla mesai saati (bilgilendirme amaçlı tahmin)
           </p>
-          <p className="mt-1 text-2xl font-bold tabular-nums text-madde-ink">
-            {hasResult ? formatTry(estimated) : "—"}
-          </p>
-          {hasResult ? (
-            <p className="mt-2 text-xs leading-relaxed text-slate-600">
-              Yaklaşık saatlik: {formatTry(hourly)} · Zamlı (×1,5):{" "}
-              {formatTry(hourly * 1.5)}. Gece, tatil ve yazılı anlaşma sonucu
-              değiştirebilir.
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="fm-gross">Brüt aylık ücret (TL)</Label>
+              <Input
+                id="fm-gross"
+                inputMode="decimal"
+                value={gross}
+                onChange={(e) => {
+                  setGross(e.target.value);
+                  track();
+                }}
+                className={cn(inputClass)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="fm-hours">Fazla mesai saati</Label>
+              <Input
+                id="fm-hours"
+                inputMode="decimal"
+                value={hours}
+                onChange={(e) => {
+                  setHours(e.target.value);
+                  track();
+                }}
+                className={cn(inputClass)}
+              />
+            </div>
+          </div>
+          <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+              Tahmini fazla mesai ücreti
             </p>
+            <p className="mt-1 text-2xl font-bold tabular-nums text-madde-ink">
+              {hasResult ? formatTry(estimated) : "—"}
+            </p>
+            {hasResult ? (
+              <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                Yaklaşık saatlik: {formatTry(hourly)} · Zamlı (×1,5):{" "}
+                {formatTry(hourly * 1.5)}. Gece, tatil ve yazılı anlaşma sonucu
+                değiştirebilir.
+              </p>
+            ) : null}
+          </div>
+
+          {hasResult ? (
+            <ToolContractScanCta
+              source="/araclar/fazla-mesai-ucreti-hesaplama"
+              href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+              highlight={`Fazla mesai alacağınız ${formatTry(estimated)} olarak hesaplandı.`}
+              title='Ancak iş sözleşmenizde "Fazla mesai ücrete dahildir" maddesi geçerli mi?'
+              body="İş sözleşmeni yapıştır — geçersiz fesih ve mesai maddelerini işaretleyelim (ücretsiz)."
+              ctaLabel="İş sözleşmesini tara"
+            />
           ) : null}
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+      <ToolResultSignupBar
+        source="/araclar/fazla-mesai-ucreti-hesaplama"
+        visible={hasResult && !barDismissed}
+        onDismiss={() => setBarDismissed(true)}
+      />
+    </>
   );
 }
 

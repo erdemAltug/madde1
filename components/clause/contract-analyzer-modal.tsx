@@ -14,6 +14,10 @@ import {
   SCAN_DURATION_MS,
   StepScanning,
 } from "@/components/modal/StepScanning";
+import {
+  PRIVACY_MASK_STEP_MS,
+  StepPrivacyMask,
+} from "@/components/modal/StepPrivacyMask";
 import { StepResults } from "@/components/modal/StepResults";
 import type { TeaserData } from "@/components/b2c/risk-teaser-dashboard";
 import { LimitReachedDialog } from "@/components/growth/limit-reached-dialog";
@@ -28,7 +32,7 @@ import { AnalyticsEvents } from "@/lib/analytics/events";
 import { buildInputAnalyticsProps } from "@/lib/analytics/input-props";
 import { cn } from "@/lib/utils";
 
-type WizardStep = "input" | "scanning" | "results";
+type WizardStep = "input" | "masking" | "scanning" | "results";
 
 type Props = {
   open: boolean;
@@ -129,14 +133,27 @@ export function ContractAnalyzerModal({
       setError(null);
       setPersona(nextPersona);
       setContractText(trimmed);
-      setStep("scanning");
       setTeaser(null);
+
+      const { replacementCount } = maskSensitiveText(trimmed);
+      setStep("masking");
+      captureEvent(AnalyticsEvents.PRIVACY_MASKING_TOGGLED, {
+        context: "wizard_privacy_step",
+        replacement_count: replacementCount,
+      });
+
+      await new Promise<void>((resolve) => {
+        window.setTimeout(resolve, PRIVACY_MASK_STEP_MS);
+      });
+
+      setStep("scanning");
 
       captureEvent(AnalyticsEvents.ANALYSIS_STARTED, {
         paywall: true,
         compact: true,
         persona: nextPersona,
         source: `wizard_${source}`,
+        masked_fields: replacementCount,
         ...buildInputAnalyticsProps(trimmed, { source: "contract_analyzer" }),
       });
 
@@ -184,16 +201,20 @@ export function ContractAnalyzerModal({
   const title =
     step === "input"
       ? "Ücretsiz sözleşme analizi"
-      : step === "scanning"
-        ? "Analiz devam ediyor"
-        : "Risk özeti hazır";
+      : step === "masking"
+        ? "Gizlilik koruması"
+        : step === "scanning"
+          ? "Analiz devam ediyor"
+          : "Risk özeti hazır";
 
   const description =
     step === "input"
       ? "Dosyanızı yükleyin veya örnekle saniyeler içinde deneyin."
-      : step === "scanning"
-        ? "Yapay zeka sözleşmenizi tarıyor."
-        : "Hızlı risk özeti aşağıda. Detaylı rapor ve PDF lansman boyunca ücretsizdir.";
+      : step === "masking"
+        ? "Kişisel veriler tarayıcınızda maskeleniyor."
+        : step === "scanning"
+          ? "Yapay zeka sözleşmenizi tarıyor."
+          : "Hızlı risk özeti aşağıda. Detaylı rapor ve PDF lansman boyunca ücretsizdir.";
 
   return (
     <>
@@ -226,6 +247,9 @@ export function ContractAnalyzerModal({
                 onStartAnalysis={onStartAnalysis}
                 error={error}
               />
+            ) : null}
+            {step === "masking" ? (
+              <StepPrivacyMask contractText={contractText} />
             ) : null}
             {step === "scanning" ? <StepScanning /> : null}
             {step === "results" && teaser ? (

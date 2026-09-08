@@ -5,6 +5,7 @@ import {
   AlertTriangle,
   CheckCircle2,
   Copy,
+  FileDown,
   Home,
   MessageCircle,
   Mail,
@@ -13,7 +14,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 import { ToolResultSignupBar } from "@/components/growth/tool-result-signup-bar";
+import { buildKiraRiskReportMarkdown } from "@/lib/growth/kira-risk-report";
+import { openPrintMarkdown } from "@/lib/print/open-print-markdown";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents, type FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
@@ -169,6 +173,29 @@ export function KiraAnaliziCalculator({
     }
   };
 
+  const downloadRiskPdf = () => {
+    if (!templates) return;
+    const md = buildKiraRiskReportMarkdown({
+      current,
+      proposed,
+      legalMax,
+      tufePct,
+      proposedPct,
+      exceeded,
+      earlyRenewal,
+      months,
+      whatsapp: templates.whatsapp,
+      email: templates.email,
+      summary: templates.summary,
+    });
+    const ok = openPrintMarkdown(md);
+    if (ok) {
+      captureEvent(AnalyticsEvents.HERO_CTA_CLICKED, {
+        source: "kira_analizi_pdf_risk_report",
+      });
+    }
+  };
+
   return (
     <>
       <Card className="border-slate-200 bg-white shadow-sm">
@@ -320,6 +347,17 @@ export function KiraAnaliziCalculator({
                     </li>
                   ))}
                 </ul>
+
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="mt-4 h-10 w-full gap-1.5 rounded-xl border-slate-300 bg-white font-semibold sm:w-auto"
+                  onClick={downloadRiskPdf}
+                >
+                  <FileDown className="h-4 w-4" />
+                  PDF Risk Raporu indir
+                </Button>
               </div>
 
               <div className="grid gap-4 lg:grid-cols-2">
@@ -366,6 +404,14 @@ export function KiraAnaliziCalculator({
                   </pre>
                 </div>
               </div>
+
+              <ToolContractScanCta
+                source="/araclar/kira-analizi"
+                highlight={`Yasal sınırınız ${formatTry(legalMax)} olarak hesaplandı.`}
+                title="Ancak ev sahipleri genellikle sözleşmeye tahliye taahhütnamesi veya haksız cezai şartlar ekler."
+                body="Kira kontratını yapıştır veya PDF yükle — 15 saniyede aleyhine olan maddeleri tarayalım (ücretsiz)."
+                ctaLabel="Kontratı tara — ücretsiz"
+              />
             </>
           ) : null}
 

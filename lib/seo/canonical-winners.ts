@@ -1,4 +1,8 @@
 import { absoluteUrl } from "@/lib/seo/site";
+import {
+  KIDEM_IHBAR_TOOL_PATH,
+  TAHLIYE_TOOL_PATH,
+} from "@/lib/seo/free-tools-routes";
 
 /**
  * Google’a gösterilen kazanan URL’ler.
@@ -12,8 +16,10 @@ export const CANONICAL_WINNERS = {
   kiraZamHesap: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
   kiraAnalizTool: "/araclar/kira-analizi",
   kidem: "/araclar/kidem-tazminati-hesaplama",
-  tahliye: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+  kidemIhbar: KIDEM_IHBAR_TOOL_PATH,
+  tahliye: TAHLIYE_TOOL_PATH,
   tuzak: "/araclar/sozlesme-tuzak-tarama",
+  freelanceChecklist: "/araclar/freelance-sozlesme-kontrol-listesi",
 } as const;
 
 /** path → kazanan path (kendisi kazanan değilse) */
@@ -23,6 +29,10 @@ export const CANONICAL_OVERRIDES: Record<string, string> = {
   "/analiz/kira-sozlesmesi": CANONICAL_WINNERS.kiraAnaliz,
   "/analiz/is-sozlesmesi": CANONICAL_WINNERS.isAnaliz,
   "/analiz/tahliye-taahhutnamesi": CANONICAL_WINNERS.tahliye,
+  "/araclar/tazminat-hesaplama": CANONICAL_WINNERS.kidemIhbar,
+  "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol":
+    CANONICAL_WINNERS.tahliye,
+  "/araclar/tahliye-taahhutnamesi-kontrolu": CANONICAL_WINNERS.tahliye,
 };
 
 export function canonicalForPath(path: string): string {

@@ -50,7 +50,17 @@ const nextConfig = {
       },
       {
         source: "/araclar/tahliye-taahhutnamesi-kontrolu",
-        destination: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+        destination: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
+        permanent: true,
+      },
+      {
+        source: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+        destination: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
+        permanent: true,
+      },
+      {
+        source: "/araclar/tazminat-hesaplama",
+        destination: "/araclar/kidem-ihbar-tazminati-hesaplama",
         permanent: true,
       },
       {

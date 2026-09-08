@@ -188,7 +188,7 @@ export function TazminatHub() {
       </Card>
 
       <ToolResultSignupBar
-        source="/araclar/tazminat-hesaplama"
+        source="/araclar/kidem-ihbar-tazminati-hesaplama"
         visible={!barDismissed && checks.size > 0}
         onDismiss={() => setBarDismissed(true)}
       />

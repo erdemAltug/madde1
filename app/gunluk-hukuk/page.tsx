@@ -56,13 +56,16 @@ const clusters = [
             links: [
               { href: "/rehber/kiraci-haklari", label: "Kiracı hakları 2026" },
               {
+                href: "/araclar/kira-analizi",
+                label: "Kira zammı yasal tavan analizi",
+              },
+              {
                 href: "/rehber/kira-kontrat-kontrol-listesi-2026",
                 label: "Kira kontrat kontrol listesi",
               },
-              { href: "/rehber/depozito-iadesi", label: "Depozito iadesi" },
               {
-                href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
-                label: "Kira artışını hesapla",
+                href: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
+                label: "Tahliye taahhüdü kontrolü",
               },
             ],
   },
@@ -89,8 +92,8 @@ const clusters = [
                 label: "Kıdem tazminatı adım adım",
               },
               {
-                href: "/araclar/kidem-tazminati-hesaplama",
-                label: "Kıdem tazminatı hesapla",
+                href: "/araclar/kidem-ihbar-tazminati-hesaplama",
+                label: "Kıdem & ihbar tazminatı hesapla",
               },
               {
                 href: "/araclar/fazla-mesai-ucreti-hesaplama",

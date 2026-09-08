@@ -69,7 +69,7 @@ export default function IhbarTazminatiHesaplamaPage() {
           <p className="mt-3 text-base text-slate-600">
             Bildirimsiz fesih varsayımıyla kabaca hesap.{" "}
             <Link
-              href="/araclar/tazminat-hesaplama"
+              href="/araclar/kidem-ihbar-tazminati-hesaplama"
               className="font-semibold text-[#005BEA] hover:underline"
             >
               Kıdem + ihbar + hak sorgulama

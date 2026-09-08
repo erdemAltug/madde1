@@ -5,6 +5,7 @@ import { FaqSection } from "@/components/seo/faq-section";
 import { InternalLinksSection } from "@/components/seo/internal-links-section";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
 import { SeoSignupCta } from "@/components/seo/seo-signup-cta";
+import { RehberToolEmbed } from "@/components/seo/rehber-tool-embed";
 import type { RehberPageConfig } from "@/lib/seo/rehber-types";
 import {
   getRelatedLinksForRehber,
@@ -50,6 +51,7 @@ export function RehberPageLayout({
             { name: config.h1.split("—")[0]?.trim() ?? config.h1, href: path },
           ]}
         />
+        <LegalAiDisclaimer variant="banner" className="mb-8" />
         <article>
           <header>
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -71,6 +73,8 @@ export function RehberPageLayout({
               </section>
             ))}
           </div>
+
+          <RehberToolEmbed slug={config.slug} />
 
           <SeoSignupCta
             source={`rehber:${config.slug}`}

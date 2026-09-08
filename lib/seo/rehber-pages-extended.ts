@@ -39,7 +39,7 @@ export const REHBER_EXTENDED_PAGES = [
           "Her somut olay farklıdır; baskı, bilgilendirme eksikliği veya hukuka aykırı şartlar iddia edilebilir. Belgelerinizi saklayın ve hukuki değerlendirme alın.",
       },
     ],
-    ctaHref: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    ctaHref: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     ctaLabel: "Tahliye taahhütnamesini AI ile kontrol edin",
   }),
   createRehberPage({

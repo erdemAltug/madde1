@@ -468,7 +468,7 @@ const BASE_PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "Tahliye taahhütnamesini kontrol edin",
-    ctaHref: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    ctaHref: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     updatedAt: "2026-05-01",
   },
   {

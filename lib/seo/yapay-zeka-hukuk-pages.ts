@@ -275,7 +275,7 @@ const PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "Tahliye taahhütnamesi aracı",
-    ctaHref: "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol",
+    ctaHref: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
     updatedAt: "2026-06-02",
   },
   {
