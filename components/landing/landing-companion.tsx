@@ -10,18 +10,18 @@ import { AnalyticsEvents } from "@/lib/analytics/events";
 const points = [
   {
     icon: FolderOpen,
-    title: "Tarama envanteri",
-    body: "Sözleşme, tuzak taraması ve dilekçe taslakları hesabınızda durur. Önceki kontrolü yeniden aramak zorunda kalmazsınız.",
+    title: "Sözleşme envanteri",
+    body: "Analiz ettiğiniz sözleşmeler, risk özetleri ve dilekçe taslakları hesabınızda saklanır; önceki incelemelerinize dilediğiniz zaman dönebilirsiniz.",
   },
   {
     icon: Bookmark,
-    title: "Kaydettikleriniz",
-    body: "Önemli taramayı sabitleyin. Yeni bir yazışma geldiğinde rapora tek adımda dönün.",
+    title: "Öncelikli kayıtlar",
+    body: "Kritik incelemeleri sabitleyin. Yeni bir yazışma veya revizyon geldiğinde ilgili rapora tek adımda erişin.",
   },
   {
     icon: ShieldAlert,
-    title: "Kişisel asistan",
-    body: "Kurumsal bir panel değil: sizin metinleriniz, sizin riskleriniz, Türkiye hukuku bağlamında sade dilde uyarı.",
+    title: "Kişisel hukuk asistanı",
+    body: "Kurumsal bir dashboard değil: metinleriniz, tespit edilen riskler ve Türkiye hukuku bağlamında sade dilde uyarılar.",
   },
 ] as const;
 
@@ -35,14 +35,15 @@ export function LandingCompanion() {
         <Reveal>
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-bold uppercase tracking-wide text-[#005BEA]">
-              Kayıt olunca
+              Ücretsiz hesap
             </p>
             <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-              Kişisel hukuk asistanınız: taramalar kaybolmaz
+              İncelemeleriniz hesabınızda güvende
             </h2>
             <p className="mt-3 font-medium text-slate-600">
-              Misafir oturumunda tarama geçicidir. Ücretsiz hesapla geçmiş
-              taramalar, sabitledikleriniz ve PDF çıktısı hesabınızda tutulur.
+              Misafir oturumunda sonuçlar geçicidir. Ücretsiz hesapla geçmiş
+              analizler, sabitlediğiniz kayıtlar ve PDF çıktıları güvenli şekilde
+              saklanır.
             </p>
           </div>
         </Reveal>
@@ -72,7 +73,7 @@ export function LandingCompanion() {
             }
           >
             <Link href="/giris?kayit=1&next=/hesabim">
-              Hesap oluşturun — taramalarınızı saklayın
+              Ücretsiz hesap oluşturun
             </Link>
           </Button>
         </div>
