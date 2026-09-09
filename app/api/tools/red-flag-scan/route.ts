@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import { generateLegalText, resolveLegalModel } from "@/lib/ai/models";
+import { retrieveLegalGrounding } from "@/lib/rag";
 
 export const maxDuration = 30;
 
@@ -47,11 +48,31 @@ export async function POST(req: Request) {
       );
     }
 
+    let ragHint = "";
+    try {
+      const g = await retrieveLegalGrounding({
+        contractText,
+        persona: "general",
+        mode: "light",
+      });
+      if (g.retrieved && g.hits.length) {
+        ragHint =
+          "\nDoğrulanmış bağlam (yalnızca buradaki etiketlere atıf):\n" +
+          g.hits
+            .slice(0, 4)
+            .map((h) => `- [${h.citeLabel}] ${h.content.slice(0, 220)}`)
+            .join("\n") +
+          "\n";
+      }
+    } catch (err) {
+      console.error("[red-flag-scan] rag", err);
+    }
+
     const { text } = await generateLegalText({
       maxOutputTokens: 700,
       prompt: `Sen Türk hukuku ön tarama asistanısın. Avukat değilsin; kesin hukuki görüş verme.
 Aşağıdaki sözleşme metnini tara ve YALNIZCA tek JSON satırı döndür.
-
+${ragHint}
 Metin:
 """
 ${contractText}
@@ -59,12 +80,12 @@ ${contractText}
 
 JSON:
 {
-  "red": ["en fazla 3 madde — yüksek risk / kullanıcı aleyhine tuzak; madde numarası varsa belirt"],
+  "red": ["en fazla 3 madde — yüksek risk / kullanıcı aleyhine tuzak; doğrulanmış atıf varsa etiketle"],
   "yellow": ["en fazla 3 madde — dikkat edilmesi gereken belirsizlikler"],
   "green": ["en fazla 3 madde — kullanıcı lehine veya dengeli görünen noktalar"]
 }
 
-Her madde kısa Türkçe cümle olsun. Uydurma madde numarası yazma. Metinde yoksa genel riski tarif et.`,
+Her madde kısa Türkçe cümle olsun. Uydurma kanun madde numarası yazma. Metinde yoksa genel riski tarif et.`,
     });
 
     try {

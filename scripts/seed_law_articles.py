@@ -137,19 +137,39 @@ def process_row(row: dict[str, Any]) -> tuple[str, dict[str, Any], str, str, int
         # Prepare content for embedding (truncated context)
         content_for_embed = truncate_text(context, MAX_CHARS_EMBED)
         
-        # Prepare metadata as JSON
-        metadata = {
+        # Prepare metadata as JSON (Legal RAG article-level alanları)
+        metadata: dict[str, Any] = {
             "soru": soru,
             "cevap": cevap,
             "veri_turu": veri_turu,
+            "kategori": veri_turu or "genel",
+            "yururluk_durumu": "Bilinmiyor",
         }
-        
+
+        blob = f"{context}\n{soru}\n{cevap}\n{kaynak}".lower()
+        if "6098" in blob or "borçlar" in blob or "borclar" in blob or "tbk" in blob:
+            metadata["kanun_no"] = "6098"
+            metadata["kanun_adi"] = "Türk Borçlar Kanunu"
+        elif "4857" in blob or "iş kanunu" in blob or "is kanunu" in blob:
+            metadata["kanun_no"] = "4857"
+            metadata["kanun_adi"] = "İş Kanunu"
+        elif "6102" in blob or "ticaret" in blob or "ttk" in blob:
+            metadata["kanun_no"] = "6102"
+            metadata["kanun_adi"] = "Türk Ticaret Kanunu"
+        elif "6698" in blob or "kvkk" in blob:
+            metadata["kanun_no"] = "6698"
+            metadata["kanun_adi"] = "KVKK"
+
+        madde_m = re.search(r"(?:madde|m\.?)\s*[:\.]?\s*(\d{1,4})\b", context[:800], re.I)
+        if madde_m:
+            metadata["madde_no"] = int(madde_m.group(1))
+
         # Category from veri_türü
         category = veri_turu if veri_turu else "hukuk"
-        
+
         # Source from kaynak
         source = kaynak if kaynak else "Türk Hukuk Veriseti"
-        
+
         return (content_for_embed, metadata, category, source, score)
         
     except Exception as e:

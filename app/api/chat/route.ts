@@ -8,6 +8,11 @@ import {
 } from "@/lib/prompts";
 import { personaPromptFragment, type PersonaId } from "@/lib/personas";
 import { resolveLegalModel, streamLegalText } from "@/lib/ai/models";
+import {
+  RAG_ANALYSIS_OUTPUT_RULES,
+  retrieveLegalGrounding,
+} from "@/lib/rag";
+import { extractLastUserText } from "@/lib/rag/message-text";
 
 export const maxDuration = 60;
 
@@ -43,6 +48,29 @@ export async function POST(req: Request) {
       system = TBK_CONTRACT_REFACTOR_FOLLOWUP;
     } else {
       system = TBK_CONTRACT_SYSTEM;
+    }
+
+    const wantsRag = phase !== "refactor";
+
+    if (wantsRag) {
+      const contractText = extractLastUserText(messages).slice(0, 48_000);
+      if (contractText.length >= 80) {
+        try {
+          const grounding = await retrieveLegalGrounding({
+            contractText,
+            persona: mode === "tahliye" ? "tenant" : persona,
+            mode: mode === "tahliye" ? "light" : "full",
+          });
+          if (grounding.retrieved) {
+            system = `${system}\n\n${RAG_ANALYSIS_OUTPUT_RULES}\n\n${grounding.groundingBlock}`;
+          } else {
+            system = `${system}\n\n${RAG_ANALYSIS_OUTPUT_RULES}\n\n(Bu turda vektör DB'den doğrulanmış madde getirilemedi. Kanun madde numarası uydurma; riskleri genel dilde anlat.)`;
+          }
+        } catch (err) {
+          console.error("[api/chat] rag", err);
+          system = `${system}\n\n${RAG_ANALYSIS_OUTPUT_RULES}\n\n(RAG geçici olarak kullanılamadı. Madde numarası uydurma.)`;
+        }
+      }
     }
 
     const modelMessages = await convertToModelMessages(messages);

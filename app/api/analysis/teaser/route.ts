@@ -3,6 +3,7 @@ import * as Sentry from "@sentry/nextjs";
 import type { PersonaId } from "@/lib/personas";
 import { personaPromptFragment } from "@/lib/personas";
 import { generateLegalText, resolveLegalModel } from "@/lib/ai/models";
+import { retrieveLegalGrounding } from "@/lib/rag";
 
 export const maxDuration = 30;
 
@@ -65,12 +66,30 @@ export async function POST(req: Request) {
 
     const pFrag = personaPromptFragment(persona);
 
+    let ragHint = "";
+    try {
+      const g = await retrieveLegalGrounding({
+        contractText,
+        persona,
+        mode: "light",
+      });
+      if (g.retrieved && g.hits.length) {
+        const lines = g.hits
+          .slice(0, 3)
+          .map((h) => `- [${h.citeLabel}] ${h.content.slice(0, 280)}`)
+          .join("\n");
+        ragHint = `\nİlgili doğrulanmış bağlam (risk başlıklarını buna göre seç; uydurma madde no yazma):\n${lines}\n`;
+      }
+    } catch (err) {
+      console.error("[analysis/teaser] rag", err);
+    }
+
     const { text } = await generateLegalText({
       maxOutputTokens: 400,
       prompt: `Sen Türk hukuku asistanısın. ${pFrag}
 
 Aşağıdaki sözleşme metnini HIZLICA tarayıp yalnızca TEK bir JSON satırı döndür. Başka metin yazma.
-
+${ragHint}
 Metin:
 """
 ${contractText}
@@ -84,7 +103,8 @@ JSON şeması (Türkçe başlıklar üret):
   "categoryTitles": ["kısa risk başlığı 1", "kısa risk başlığı 2", ... en fazla 5]
 }
 
-categoryTitles örnek stili: "Maaş kesintisi riski", "Tazminat maddesi eksikliği", "Tek taraflı fesih" gibi son kullanıcıya anlaşılır kısa etiketler.`,
+categoryTitles örnek stili: "Maaş kesintisi riski", "Tazminat maddesi eksikliği", "Tek taraflı fesih" gibi son kullanıcıya anlaşılır kısa etiketler.
+categoryTitles içinde uydurma kanun madde numarası kullanma.`,
     });
 
     try {

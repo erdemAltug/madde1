@@ -38,12 +38,16 @@ Riskleri gider, eksikleri tamamla, dili sadeleştir; nihai metin kopyalanabilir 
 - **Eksik madde özeti:** (kısa)
 
 # 🔴 Kritik Riskler
-Madde madde: risk, neden riskli, önerilen çözüm yolu.
+Madde madde: risk, neden riskli, önerilen çözüm yolu. Mümkünse Dayanak: [atıf].
 
 # 🟢 İyileştirilmiş Versiyon
 (Tüm riskleri giderilmiş, eksikleri tamamlanmış, sadeleştirilmiş tam sözleşme metni.)
 
-Önsöz veya "tabii ki" ile başlama; doğrudan Markdown ile başla.`;
+# 📚 Dayanaklar
+(Doğrulanmış bağlamdaki atıf etiketleri; yoksa belirt.)
+
+Önsöz veya "tabii ki" ile başlama; doğrudan Markdown ile başla.
+Uydurma kanun madde numarası yazma; yalnızca verilen hukuki bağlamdaki etiketlere atıf yap.`;
 
 /** Ücretli özet akışı — ilk tur: analiz özeti + kritik riskler (iyileştirilmiş metin YOK) */
 export const TBK_CONTRACT_SYSTEM_B2C_ANALYSIS = `${CLAUSE_CORE_ROLE}
@@ -67,9 +71,13 @@ Markdown yapısı:
 - **Eksik madde özeti:**
 
 # 🔴 Kritik Riskler
-Her madde için: risk başlığı, neden riskli, pratik çözüm yolu.
+Her madde için: risk başlığı, neden riskli, pratik çözüm yolu. Mümkünse \`Dayanak: [atıf]\`.
 
-Önsöz yok; doğrudan # 📊 ile başla.`;
+# 📚 Dayanaklar
+(Doğrulanmış bağlamdaki atıf etiketleri; yoksa "Bu turda doğrulanmış madde atıfı yapılmadı.")
+
+Önsöz yok; doğrudan # 📊 ile başla.
+Uydurma kanun madde numarası yazma; yalnızca sana verilen doğrulanmış hukuki bağlamdaki etiketlere atıf yap. Bağlam yoksa genel risk dili kullan.`;
 
 /** Ücretli özet akışı — ikinci tur: yalnızca iyileştirilmiş tam metin */
 export const TBK_CONTRACT_SYSTEM_B2C_REFACTOR = `${CLAUSE_CORE_ROLE}
