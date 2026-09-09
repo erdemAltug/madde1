@@ -48,7 +48,15 @@ export function StepResults({
         >
           <Link href="/analiz">Tam analizi aç · Arşive kaydet</Link>
         </Button>
-      ) : null}
+      ) : (
+        <Button
+          type="button"
+          className="w-full rounded-xl bg-deep-navy font-semibold text-white hover:bg-deep-navy/90"
+          onClick={onRequestFullReport}
+        >
+          Tam raporu aç · Ücretsiz hesap
+        </Button>
+      )}
 
       <button
         type="button"
