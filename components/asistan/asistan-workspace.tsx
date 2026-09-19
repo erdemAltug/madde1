@@ -140,53 +140,44 @@ export function AsistanWorkspace() {
         body: JSON.stringify({ threadId, message: raw }),
       });
 
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        text?: string;
+        citations?: string[];
+        message?: AsistanMessage;
+      };
+
       if (!res.ok) {
-        const j = await res.json().catch(() => ({}));
         throw new Error(
-          typeof j.error === "string" ? j.error : "Yanıt alınamadı",
+          typeof data.error === "string" ? data.error : "Yanıt alınamadı",
         );
       }
 
-      const citeHeader = res.headers.get("X-Clause-Citations");
-      if (citeHeader) {
-        try {
-          setCitations(JSON.parse(decodeURIComponent(citeHeader)) as string[]);
-        } catch {
-          /* ignore */
-        }
+      const answer = (data.text || data.message?.content || "").trim();
+      if (!answer) {
+        throw new Error("Boş yanıt geldi. Lütfen tekrar deneyin.");
       }
 
-      const assistantId = `local-a-${Date.now()}`;
+      if (Array.isArray(data.citations)) {
+        setCitations(data.citations);
+      }
+
+      const assistantMsg: AsistanMessage = data.message ?? {
+        id: `local-a-${Date.now()}`,
+        thread_id: threadId!,
+        role: "assistant",
+        content: answer,
+        citations: data.citations ?? null,
+        created_at: new Date().toISOString(),
+      };
+
       setMessages((m) => [
-        ...m,
-        {
-          id: assistantId,
-          thread_id: threadId!,
-          role: "assistant",
-          content: "",
-          created_at: new Date().toISOString(),
-        },
+        ...m.filter((x) => x.id !== optimistic.id),
+        optimistic,
+        { ...assistantMsg, content: answer },
       ]);
 
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error("Akış yok");
-      const decoder = new TextDecoder();
-      let full = "";
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        full += decoder.decode(value, { stream: true });
-        const snapshot = full;
-        setMessages((m) =>
-          m.map((msg) =>
-            msg.id === assistantId ? { ...msg, content: snapshot } : msg,
-          ),
-        );
-      }
-
       await refreshThreads();
-      const synced = await listAsistanMessages(threadId);
-      if (synced.length) setMessages(synced);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Bir hata oluştu");
     } finally {
@@ -380,9 +371,9 @@ export function AsistanWorkspace() {
                 </div>
               ))
             )}
-            {citations.length > 0 ? (
+            {citations.length > 0 && messages.some((m) => m.role === "assistant") ? (
               <div className="flex flex-wrap gap-1.5">
-                {citations.map((c) => (
+                {[...new Set(citations)].map((c) => (
                   <span
                     key={c}
                     className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-medium text-slate-600"
@@ -390,6 +381,12 @@ export function AsistanWorkspace() {
                     {c}
                   </span>
                 ))}
+              </div>
+            ) : null}
+            {busy ? (
+              <div className="mr-auto flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Yanıt yazılıyor…
               </div>
             ) : null}
             <div ref={bottomRef} />

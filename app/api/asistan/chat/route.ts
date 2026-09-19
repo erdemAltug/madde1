@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { generateText } from "ai";
 import { resolveLegalModelCandidates } from "@/lib/ai/models";
 import { ASISTAN_SYSTEM } from "@/lib/asistan/prompt";
 import { titleFromFirstMessage } from "@/lib/asistan/types";
@@ -12,7 +12,8 @@ import { bearerFromRequest, getSupabaseAuthed } from "@/lib/supabase/authed";
 export const maxDuration = 60;
 
 const MSG_CAP = 8_000;
-const HISTORY_LIMIT = 24;
+const HISTORY_LIMIT = 20;
+const GROUNDING_CAP = 6_000;
 
 export async function POST(req: Request) {
   try {
@@ -23,7 +24,10 @@ export async function POST(req: Request) {
 
     const supabase = getSupabaseAuthed(token);
     if (!supabase) {
-      return Response.json({ error: "Supabase yapılandırması eksik" }, { status: 503 });
+      return Response.json(
+        { error: "Supabase yapılandırması eksik" },
+        { status: 503 },
+      );
     }
 
     const {
@@ -108,11 +112,11 @@ export async function POST(req: Request) {
       const g = await retrieveLegalGrounding({
         contractText: message,
         persona: "general",
-        mode: "full",
+        mode: "light",
       });
       if (g.retrieved) {
-        groundingBlock = g.groundingBlock;
-        citations = g.allowedCites;
+        groundingBlock = g.groundingBlock.slice(0, GROUNDING_CAP);
+        citations = g.allowedCites.slice(0, 6);
       }
     } catch (err) {
       console.error("[asistan/chat] rag", err);
@@ -126,55 +130,76 @@ export async function POST(req: Request) {
       .filter((m) => m.role === "user" || m.role === "assistant")
       .map((m) => ({
         role: m.role as "user" | "assistant",
-        content: String(m.content),
+        content: String(m.content).slice(0, 4_000),
       }));
 
+    let text = "";
     let lastError: unknown;
     for (let i = 0; i < candidates.length; i++) {
       const model = candidates[i]!;
       try {
-        const result = streamText({
+        const result = await generateText({
           model,
           system,
           messages: modelMessages,
           temperature: 0.25,
-          maxOutputTokens: 2200,
-          onFinish: async ({ text }) => {
-            const content = (text || "").trim();
-            if (!content) return;
-            await supabase.from("legal_chat_messages").insert({
-              thread_id: threadId,
-              user_id: user.id,
-              role: "assistant",
-              content,
-              citations: citations.length ? citations : null,
-            });
-            await supabase
-              .from("legal_chat_threads")
-              .update({ updated_at: new Date().toISOString() })
-              .eq("id", threadId);
-          },
+          maxOutputTokens: 1800,
         });
-
-        return result.toTextStreamResponse({
-          headers: {
-            "X-Clause-Citations": encodeURIComponent(
-              JSON.stringify(citations.slice(0, 12)),
-            ),
-          },
-        });
+        text = (result.text || "").trim();
+        if (text) break;
       } catch (err) {
         lastError = err;
         console.error(
           `[asistan/chat] model ${i + 1} failed:`,
-          err instanceof Error ? err.message : err,
+          err instanceof Error ? err.message.slice(0, 300) : err,
         );
       }
     }
 
-    throw lastError instanceof Error
-      ? lastError
-      : new Error("Asistan yanıtı üretilemedi");
+    if (!text) {
+      console.error("[asistan/chat] empty text", lastError);
+      return Response.json(
+        {
+          error:
+            "Yanıt üretilemedi. Birkaç saniye sonra tekrar deneyin.",
+        },
+        { status: 502 },
+      );
+    }
+
+    const { data: saved, error: saveErr } = await supabase
+      .from("legal_chat_messages")
+      .insert({
+        thread_id: threadId,
+        user_id: user.id,
+        role: "assistant",
+        content: text,
+        citations: citations.length ? citations : null,
+      })
+      .select("id, thread_id, role, content, citations, created_at")
+      .single();
+
+    if (saveErr) {
+      console.error("[asistan/chat] save assistant", saveErr);
+    }
+
+    await supabase
+      .from("legal_chat_threads")
+      .update({ updated_at: new Date().toISOString() })
+      .eq("id", threadId);
+
+    return Response.json({
+      text,
+      citations,
+      message: saved ?? {
+        id: `tmp-${Date.now()}`,
+        thread_id: threadId,
+        role: "assistant",
+        content: text,
+        citations,
+        created_at: new Date().toISOString(),
+      },
+    });
   } catch (err) {
     console.error("[asistan/chat]", err);
     return Response.json(
