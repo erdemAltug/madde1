@@ -42,7 +42,7 @@ export function AsistanWorkspace() {
   const [loadingMsgs, setLoadingMsgs] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [citations, setCitations] = React.useState<string[]>([]);
-  const bottomRef = React.useRef<HTMLDivElement>(null);
+  const messagesPaneRef = React.useRef<HTMLDivElement>(null);
   const [mobileShowChat, setMobileShowChat] = React.useState(false);
 
   const refreshThreads = React.useCallback(async () => {
@@ -73,7 +73,9 @@ export function AsistanWorkspace() {
   }, [activeId, isLoggedIn]);
 
   React.useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const pane = messagesPaneRef.current;
+    if (!pane) return;
+    pane.scrollTop = pane.scrollHeight;
   }, [messages, busy]);
 
   const startNew = async () => {
@@ -228,17 +230,18 @@ export function AsistanWorkspace() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F8FAFC]">
+    <div className="flex h-dvh flex-col overflow-hidden bg-[#F8FAFC]">
       <SiteNavbar />
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-0 px-0 sm:px-4 sm:py-6 lg:flex-row lg:gap-4 lg:px-6">
+      <div className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col gap-0 px-0 sm:px-4 sm:py-4 lg:flex-row lg:gap-4 lg:px-6">
         {/* Thread list */}
         <aside
           className={cn(
-            "border-b border-slate-200 bg-white lg:w-72 lg:shrink-0 lg:rounded-2xl lg:border",
-            mobileShowChat && "hidden lg:block",
+            "flex min-h-0 flex-col border-b border-slate-200 bg-white lg:w-72 lg:shrink-0 lg:rounded-2xl lg:border",
+            mobileShowChat && "hidden lg:flex",
+            !mobileShowChat && "min-h-0 flex-1 lg:flex-none",
           )}
         >
-          <div className="flex items-center justify-between gap-2 p-4">
+          <div className="flex shrink-0 items-center justify-between gap-2 p-4">
             <div>
               <p className="text-xs font-bold uppercase tracking-wide text-[#005BEA]">
                 Clause Asistan
@@ -253,7 +256,7 @@ export function AsistanWorkspace() {
               <MessageSquarePlus className="h-4 w-4" />
             </Button>
           </div>
-          <ul className="max-h-[50vh] space-y-1 overflow-y-auto px-2 pb-4 lg:max-h-[70vh]">
+          <ul className="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain px-2 pb-4">
             {threads.length === 0 ? (
               <li className="px-3 py-6 text-center text-sm text-slate-500">
                 Henüz sohbet yok. Bir soru sorun.
@@ -288,7 +291,7 @@ export function AsistanWorkspace() {
               ))
             )}
           </ul>
-          <div className="border-t border-slate-100 p-3">
+          <div className="shrink-0 border-t border-slate-100 p-3">
             <Link
               href="/hesabim"
               className="text-xs font-semibold text-slate-500 hover:text-[#005BEA]"
@@ -301,11 +304,11 @@ export function AsistanWorkspace() {
         {/* Chat */}
         <section
           className={cn(
-            "flex min-h-[70vh] flex-1 flex-col bg-white lg:rounded-2xl lg:border lg:border-slate-200",
+            "flex min-h-0 flex-1 flex-col bg-white lg:rounded-2xl lg:border lg:border-slate-200",
             !mobileShowChat && "hidden lg:flex",
           )}
         >
-          <header className="flex items-center gap-2 border-b border-slate-100 px-4 py-3">
+          <header className="flex shrink-0 items-center gap-2 border-b border-slate-100 px-4 py-3">
             <button
               type="button"
               className="text-sm font-semibold text-[#005BEA] lg:hidden"
@@ -319,7 +322,10 @@ export function AsistanWorkspace() {
             </p>
           </header>
 
-          <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+          <div
+            ref={messagesPaneRef}
+            className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4"
+          >
             {loadingMsgs ? (
               <div className="flex justify-center py-12">
                 <Loader2 className="h-5 w-5 animate-spin text-slate-400" />
@@ -371,7 +377,8 @@ export function AsistanWorkspace() {
                 </div>
               ))
             )}
-            {citations.length > 0 && messages.some((m) => m.role === "assistant") ? (
+            {citations.length > 0 &&
+            messages.some((m) => m.role === "assistant") ? (
               <div className="flex flex-wrap gap-1.5">
                 {[...new Set(citations)].map((c) => (
                   <span
@@ -389,15 +396,16 @@ export function AsistanWorkspace() {
                 Yanıt yazılıyor…
               </div>
             ) : null}
-            <div ref={bottomRef} />
           </div>
 
           {error ? (
-            <p className="px-4 text-sm font-medium text-red-600">{error}</p>
+            <p className="shrink-0 px-4 text-sm font-medium text-red-600">
+              {error}
+            </p>
           ) : null}
 
           <form
-            className="border-t border-slate-100 p-3"
+            className="shrink-0 border-t border-slate-100 p-3"
             onSubmit={(e) => {
               e.preventDefault();
               void send();
@@ -437,7 +445,6 @@ export function AsistanWorkspace() {
           </form>
         </section>
       </div>
-      <SiteFooter />
     </div>
   );
 }
