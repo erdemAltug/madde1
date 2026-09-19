@@ -17,8 +17,12 @@ export const metadata = buildToolMetadata({
     "tahliye taahhüdü geçerli mi",
     "tahliye taahhütnamesi kontrol",
     "tarih imza çelişkisi",
-    "TBK kira tahliye",
+    "boş tarihli tahliye",
   ],
+  titleOverride:
+    "Tahliye taahhüdü geçerli mi? Ücretsiz kontrol listesi + AI ön inceleme",
+  descriptionOverride:
+    "Tarih/imza çelişkisi ve baskı sinyallerini kontrol edin; taahhüt metnini ücretsiz AI ile tarayın. Kesin hüküm vermez — Clause ön kontrol.",
 });
 
 const faqs = [
@@ -44,7 +48,7 @@ export default function TahliyeGecerlilikPage() {
     <ToolPageShell
       path={path}
       breadcrumbLabel="Tahliye taahhüdü kontrolü"
-      h1="Tahliye taahhüdü geçerlilik kontrolü"
+      h1="Tahliye taahhüdü geçerli mi? Ücretsiz kontrol"
       intro={
         <>
           Tarih ve imza çelişkilerini tarayın, ardından taahhüt metnini AI ile

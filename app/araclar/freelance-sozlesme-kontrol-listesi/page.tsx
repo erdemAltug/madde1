@@ -9,7 +9,7 @@ const path = FREELANCE_CHECKLIST_TOOL_PATH;
 
 export const metadata = buildToolMetadata({
   toolName: "Freelance Sözleşme Kontrol Listesi",
-  topic: "freelance sözleşme maddeleri (IP, revizyon, NDA)",
+  topic: "freelance sözleşme maddeleri",
   path,
   keywords: [
     "freelance sözleşme kontrol listesi",
@@ -17,6 +17,10 @@ export const metadata = buildToolMetadata({
     "revizyon hakkı",
     "NDA SLA freelancer",
   ],
+  titleOverride:
+    "Freelance sözleşme kontrol listesi 2026 — IP, ödeme, NDA",
+  descriptionOverride:
+    "Fikri mülkiyet, revizyon, ödeme ve NDA maddelerini işaretleyin; ardından sözleşmenizi ücretsiz AI ile tarayın — Clause.",
 });
 
 const faqs = [

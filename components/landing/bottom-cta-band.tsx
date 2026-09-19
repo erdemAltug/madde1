@@ -18,8 +18,8 @@ export function BottomCtaBand({ onOpenAnalyzer }: Props) {
             Bugün tara — yarın hesabında dursun
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base font-medium text-white/90">
-            Misafirken anında ön tarama. Ücretsiz kayıtla kişisel hukuk asistanın:
-            taramalar, kaydettiklerin, PDF.
+            Misafirken anında ön tarama. Üye olunca kişisel hukuk asistanınız:
+            kalıcı arşiv, detaylı rapor ve PDF.
           </p>
           <Button
             size="lg"

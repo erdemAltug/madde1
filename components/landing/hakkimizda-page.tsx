@@ -19,7 +19,7 @@ const values = [
   {
     icon: Sparkles,
     title: "LegalTech odaklı",
-    body: "Kira, iş ve ticari sözleşmelerde TBK ve İş Kanunu bağlamında risk özeti üretiriz. Ücretsiz araçlar ve rehberlerle günlük hukuk ihtiyaçlarına yanıt veririz.",
+    body: "Kira, iş, tüketici, freelance ve günlük hukuki metinlerde risk özeti üretiriz. Ücretsiz araçlar ve rehberlerle hukuki işlerinize yanıt veririz.",
   },
 ];
 
@@ -43,9 +43,10 @@ export function HakkimizdaPage() {
             Clause — Türkiye için yapay zeka hukuk asistanı
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Clause, kira sözleşmesinden iş kontratına kadar günlük hukuki metinleri yapay zeka ile
-            ön taramadan geçiren bir LegalTech ürünüdür. Amacımız insanların avukata gitmeden önce
-            riskleri görmesi ve bilinçli karar vermesidir.
+            Clause, günlük hukuki işleriniz için yapay zeka asistanınızdır:
+            sözleşme tarama, dilekçe taslağı, hesaplayıcılar ve risk uyarısı.
+            Amacımız avukata gitmeden önce riskleri görmeniz ve bilinçli karar
+            vermenizdir.
           </p>
         </header>
 
@@ -66,8 +67,8 @@ export function HakkimizdaPage() {
           <h2 className="text-lg font-bold text-madde-ink">Ne sunuyoruz?</h2>
           <ul className="mt-3 list-inside list-disc space-y-2 text-sm text-slate-600">
             <li>Ücretsiz yapay zeka sözleşme ön taraması</li>
-            <li>60+ hukuk rehberi ve 40+ blog yazısı</li>
-            <li>Kira artışı, damga vergisi, kıdem ve ihbar hesaplayıcıları</li>
+            <li>Dilekçe / ihtarname taslağı ve ücretsiz hukuk hesaplayıcıları</li>
+            <li>Kira, iş, tüketici ve freelance rehberleri</li>
             <li>KVKK odaklı veri güvenliği taahhüdü</li>
           </ul>
           <div className="mt-5 flex flex-wrap gap-3">

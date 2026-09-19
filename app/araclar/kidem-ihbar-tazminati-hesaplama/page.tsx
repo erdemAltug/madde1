@@ -15,8 +15,12 @@ export const metadata = buildToolMetadata({
     "kıdem ihbar tazminatı hesaplama",
     "işten çıkarılma tazminat",
     "istifa kıdem",
-    "İş Kanunu m. 17",
+    "kıdem tazminatı hesaplama 2026",
   ],
+  titleOverride:
+    "Kıdem ve ihbar tazminatı hesaplama 2026 — ücretsiz + iş sözleşmesi taraması",
+  descriptionOverride:
+    "Brüt ücret ve kıdeme göre kıdem/ihbar tahmini. İstifaya zorlama listesi ve ücretsiz iş sözleşmesi risk taraması — Clause.",
 });
 
 const faqs = [
@@ -42,7 +46,7 @@ export default function KidemIhbarTazminatiPage() {
     <ToolPageShell
       path={path}
       breadcrumbLabel="Kıdem & ihbar tazminatı"
-      h1="Kıdem ve ihbar tazminatı hesaplama"
+      h1="Kıdem ve ihbar tazminatı hesaplama 2026"
       bottomPad
       intro={
         <>

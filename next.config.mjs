@@ -64,6 +64,16 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+        destination: "/kira-sozlesmesi-analizi",
+        permanent: true,
+      },
+      {
+        source: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+        destination: "/is-sozlesmesi-analizi",
+        permanent: true,
+      },
+      {
         source: "/dilekce-olusturur",
         destination: "/dilekce-olusturucu",
         permanent: true,

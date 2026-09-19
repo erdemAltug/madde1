@@ -19,7 +19,7 @@ const canonical = absoluteUrl(path);
 const title =
   "Sözleşmede tuzak var mı? 2026 ücretsiz AI tarama";
 const description =
-  "Kira veya iş sözleşmesini yapıştırın; yapay zeka yüksek riskli, dikkat ve lehe maddeleri 3 grupta listelesin. Ücretsiz hızlı tarama.";
+  "Kira, iş veya freelance sözleşmesini yapıştırın; kırmızı / sarı / yeşil riskleri anında görün. Ücretsiz — kayıtla detaylı rapor.";
 
 export const metadata: Metadata = {
   title,

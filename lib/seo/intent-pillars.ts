@@ -36,11 +36,11 @@ export const INTENT_PILLAR_CATEGORIES: IntentPillarId[] = [
 const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
   "kira-sozlesmesi-analizi": {
     category: "kira-sozlesmesi-analizi",
-    h1: "Kira Zammı Yasal mı? Sözleşme + Zam Raporu",
+    h1: "Kira zammı yasal mı? Sözleşme + zam raporu 2026",
     metaTitle:
-      "Kira zammı yasal mı? 2026 tavan, takip raporu ve ücretsiz tarama | Clause",
+      "Kira zammı yasal mı? 2026 tavan, zam raporu ve ücretsiz tarama | Clause",
     metaDescription:
-      "Ev sahibi yüksek zam mı istedi? Kira artış raporu, yasal tavan ve sözleşme tuzaklarını ücretsiz görün. Clause ile tarayın, kayıt olup PDF indirin.",
+      "Ev sahibi yüksek zam mı istedi? Yasal tavan, kira artış raporu ve sözleşme tuzaklarını ücretsiz görün. Clause ile tarayın; kayıtla PDF alın.",
     keywords: [
       "kira zammı yasal mı",
       "kira takip raporu",
@@ -109,16 +109,16 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       { href: "/rehber/kiraci-haklari", label: "Kiracı hakları rehberi" },
       { href: "/rehber/depozito-iadesi", label: "Depozito iadesi rehberi" },
     ],
-    updatedAt: "2026-08-22",
+    updatedAt: "2026-09-19",
   },
 
   "is-sozlesmesi-analizi": {
     category: "is-sozlesmesi-analizi",
-    h1: "İş Sözleşmesi & Kıdem Tazminatı Risk Taraması",
+    h1: "İş sözleşmesi risk taraması — cezai şart, kıdem, fesih",
     metaTitle:
       "İş sözleşmesi analizi 2026 — cezai şart, kıdem, ücretsiz tarama | Clause",
     metaDescription:
-      "İş sözleşmesinde cezai şart ve rekabet yasağını ücretsiz tarayın. Kıdem ve ihbar hesabı ile birlikte; kayıt olup detaylı rapor alın.",
+      "Cezai şart, rekabet yasağı ve fesih maddelerini ücretsiz tarayın. Kıdem/ihbar hesabı ile birlikte; kayıtla detaylı rapor — Clause.",
     keywords: [
       "iş sözleşmesi cezai şart",
       "rekabet yasağı maddesi",
@@ -189,12 +189,12 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       },
       { href: SOZLESME_TUZAK_TOOL_PATH, label: "Sözleşme tuzak tarama" },
     ],
-    updatedAt: "2026-08-22",
+    updatedAt: "2026-09-19",
   },
 
   "dilekce-hazirlama": {
     category: "dilekce-hazirlama",
-    h1: "AI İle Otomatik İhtarname ve Dilekçe Oluşturucu",
+    h1: "Ücretsiz dilekçe ve ihtarname — kira, depozito, tüketici",
     metaTitle:
       "Ücretsiz dilekçe ve ihtarname 2026 — kira, depozito, tüketici | Clause",
     metaDescription:
@@ -266,7 +266,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
         label: "Depozito ihtar örneği",
       },
     ],
-    updatedAt: "2026-08-22",
+    updatedAt: "2026-09-19",
   },
 };
 

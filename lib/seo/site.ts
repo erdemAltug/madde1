@@ -16,8 +16,9 @@ export const SITE_NAME = "Clause";
 
 export const SITE_HOST = SITE_URL.replace(/^https?:\/\//, "");
 
+/** Platform odaklı — kira zammı niyeti araç kazananına bırakıldı */
 export const SITE_TAGLINE =
-  "Kira zammı yasal mı? Sözleşmeyi ücretsiz tara — Clause";
+  "Ücretsiz hukuk asistanı: sözleşme tara, dilekçe yaz, sorun sor — Clause";
 
 export function absoluteUrl(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
@@ -26,29 +27,28 @@ export function absoluteUrl(path: string): string {
 
 export const defaultHomeMetadata: Metadata = {
   title:
-    "Clause — Kira zammı yasal mı? Ücretsiz sözleşme analizi 2026",
+    "Clause — Ücretsiz hukuk asistanı: sözleşme tara, dilekçe yaz 2026",
   description:
-    "Kira zammı tavanı, kıdem tazminatı ve sözleşme tuzaklarını ücretsiz kontrol edin. Clause ile Türkiye odaklı AI tarama; kayıt olup detaylı raporu ve PDF'i indirin.",
+    "Sözleşme tuzaklarını tarayın, dilekçe taslağı alın, kira ve iş hesaplarını ücretsiz yapın. Clause kişisel hukuk asistanınız; kayıtla rapor ve arşiv sizde kalır.",
   keywords: [
-    "kira zammı yasal mı",
-    "kira artış hesaplama",
-    "kira takip raporu",
-    "yapay zeka ile kira takibi",
-    "ücretsiz sözleşme analizi",
-    "kıdem tazminatı hesaplama",
-    "tahliye taahhütnamesi kontrol",
-    "sözleşme tuzakları",
     "yapay zeka hukuk asistanı",
+    "ücretsiz sözleşme analizi",
+    "sözleşme tuzakları",
+    "dilekçe hazırlama",
+    "kira zammı yasal mı",
+    "kıdem tazminatı hesaplama",
+    "tahliye taahhüdü kontrol",
     "kira sözleşmesi analizi",
+    "iş sözleşmesi analizi",
     "Clause AI",
   ],
   alternates: {
     canonical: absoluteUrl("/"),
   },
   openGraph: {
-    title: "Clause — Ücretsiz kira ve sözleşme analizi",
+    title: "Clause — Ücretsiz kişisel hukuk asistanı",
     description:
-      "Kira zammı yasal mı? Sözleşmeyi ücretsiz tarayın. Detaylı rapor ve PDF lansman döneminde hesapla ücretsiz.",
+      "Sözleşme tara, dilekçe yaz, günlük hukuki işlerini kontrol et. Detaylı rapor hesapla ücretsiz.",
     url: absoluteUrl("/"),
     siteName: SITE_NAME,
     locale: "tr_TR",
@@ -64,9 +64,9 @@ export const defaultHomeMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `Clause — Ücretsiz kira ve sözleşme analizi`,
+    title: "Clause — Ücretsiz hukuk asistanı 2026",
     description:
-      "Kira zammı, kıdem ve sözleşme tuzaklarını ücretsiz kontrol edin.",
+      "Sözleşme tarama, dilekçe ve ücretsiz hukuk hesaplayıcıları — Clause.",
     images: ["/opengraph-image"],
   },
 };

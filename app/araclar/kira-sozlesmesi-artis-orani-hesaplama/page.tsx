@@ -55,7 +55,7 @@ export default function KiraSozlesmesiArtisOraniHesaplamaPage() {
         />
         <header className="mb-10">
           <h1 className="text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Kira sözleşmesi artış oranı hesaplama
+            Kira zammı yasal mı? 2026 artış oranı hesaplama
           </h1>
           <p className="mt-3 text-base font-medium text-slate-600">
             Tahmini yeni kira — bilgilendirme amaçlıdır. Kesin hukuki sonuç için
@@ -69,10 +69,10 @@ export default function KiraSozlesmesiArtisOraniHesaplamaPage() {
             </Link>
             ; tam metin risk taraması için{" "}
             <Link
-              href="/analiz/kira-sozlesmesi"
+              href="/kira-sozlesmesi-analizi"
               className="font-semibold text-madde-blue hover:underline"
             >
-              kira sözleşmesi yapay zeka analizi
+              kira sözleşmesi analizi
             </Link>
             .
           </p>

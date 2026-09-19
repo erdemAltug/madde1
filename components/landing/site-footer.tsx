@@ -93,7 +93,8 @@ export function SiteFooter() {
           <div>
             <ClauseLogo withWordmark size={32} />
             <p className="mt-2 max-w-xs text-sm font-medium text-slate-600">
-              Herkes için yapay zeka destekli sözleşme ön kontrolü. Avukat yerine geçmez;
+              Herkes için yapay zeka hukuk asistanı: sözleşme, dilekçe, soru.
+              Avukat yerine geçmez;
               bilinçli karar için ilk adım.
             </p>
           </div>

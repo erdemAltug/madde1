@@ -19,16 +19,16 @@ export type ToolMetadataInput = {
 };
 
 /**
- * Araç sayfası metadata — YMYL tutarlı title / description / canonical.
- * Title: `[Araç Adı] 2026 — Yasal Hesaplama ve AI Ön İnceleme | Clause`
+ * Araç sayfası metadata — CTR odaklı title / description / canonical.
+ * Varsayılan: `[Araç] 2026 — ücretsiz hesap + AI ön inceleme`
  */
 export function buildToolMetadata(input: ToolMetadataInput): Metadata {
   const title =
     input.titleOverride ??
-    `${input.toolName} 2026 — Yasal Hesaplama ve AI Ön İnceleme`;
+    `${input.toolName} 2026 — ücretsiz hesap + AI ön inceleme`;
   const description =
     input.descriptionOverride ??
-    `2026 güncel mevzuatına göre ${input.topic} hesaplayın, yasal sınırları öğrenin ve sözleşme maddelerinizi yapay zeka ile ücretsiz tarayın.`;
+    `${input.topic} için 2026 güncel mevzuata göre ücretsiz hesaplayın; yasal sınırları görün ve sözleşme maddelerinizi yapay zeka ile tarayın.`;
   const canonical = absoluteUrl(input.path);
 
   return {

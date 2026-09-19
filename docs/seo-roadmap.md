@@ -1,8 +1,11 @@
 # Clause SEO yol haritası
 
+> **Eylül 2026 güncelleme:** GSC son 3 ay — 14 tıklama · ~1,09B gösterim · CTR %1,3 · konum **30,8**.  
+> Top 10 sprint: [`seo-top10-gsc-2026-09.md`](./seo-top10-gsc-2026-09.md)
+
 > **Hedef:** Türkçe “yapay zeka sözleşme analizi”, kira/iş hukuku uzun kuyruk aramalarında organik trafik.
 > **Mülk:** [Google Search Console](https://search.google.com/search-console) → `https://tryclause.tech/`
-> **Son güncelleme:** 5 Ağustos 2026
+> **Son güncelleme:** 19 Eylül 2026
 
 ## Ağustos 2026 kapsamlı audit
 

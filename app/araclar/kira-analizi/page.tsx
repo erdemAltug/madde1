@@ -9,16 +9,17 @@ const path = KIRA_ANALIZI_TOOL_PATH;
 
 export const metadata = buildToolMetadata({
   toolName: "Kira Analizi",
-  topic: "kira artışı yasal tavanı (TBK m. 344)",
+  topic: "kira artışı yasal tavanı",
   path,
   keywords: [
     "ev sahibi yüzde kaç zam yapabilir",
     "kira artışı yasal tavan",
-    "TBK 344",
+    "kira zammı yasal mı",
     "kira takip raporu",
   ],
-  titleOverride:
-    "Kira Analizi 2026 — Yasal Hesaplama ve AI Ön İnceleme",
+  titleOverride: "Kira zammı yasal mı? 2026 tavan + ücretsiz cevap taslağı",
+  descriptionOverride:
+    "Ev sahibi fazla zam mı istedi? 2026 TÜFE tavanını hesaplayın, haklı/haksız uyarısı ve WhatsApp cevabı alın. Ücretsiz — Clause.",
 });
 
 const faqs = [
@@ -44,7 +45,7 @@ export default function KiraAnaliziPage() {
     <ToolPageShell
       path={path}
       breadcrumbLabel="Kira Analizi"
-      h1="Ev sahibi fazla zam mı istedi?"
+      h1="Kira zammı yasal mı? 2026 tavan + cevap taslağı"
       bottomPad
       intro={
         <>
@@ -59,7 +60,7 @@ export default function KiraAnaliziPage() {
           </Link>
           {" · "}
           <Link
-            href="/sozlesme-analizi/kira-sozlesmesi-analizi"
+            href="/kira-sozlesmesi-analizi"
             className="font-semibold text-[#005BEA] hover:underline"
           >
             Kira sözleşmesi AI taraması

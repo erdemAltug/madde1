@@ -38,16 +38,15 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
         <div className="flex flex-col justify-center animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-[var(--cta-primary)]">
             <Zap className="h-3.5 w-3.5" />
-            clause.ai — Türk Hukuk Sistemi
+            clause.ai — Türk hukuku için kişisel asistan
           </div>
           <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-deep-navy sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
-            Kişisel hukuk asistanınız — hukuki süreçlerinizde yanınızda
+            Hukuki işlerinizde yanınızda — tarayın, sorun, taslaklayın
           </h1>
           <p className="mt-5 max-w-xl text-lg font-medium leading-relaxed text-slate-600">
-            Sözleşme taraması, dilekçe taslağı ve risk uyarısı; kira ve işle
-            sınırlı değil. Günlük hukuki işlemlerinizde ön kontrol yapın.
-            Kayıtlı hesapta taramalarınız saklanır, süreç boyunca size özel
-            kalır.
+            Sözleşmenizi tarayın, dilekçe taslağı alın, hukuki sorunuzu sorun.
+            Kira ve işle sınırlı değil — günlük hukuki işlerinizde ön kontrol
+            yapın. Ücretsiz kayıtla taramalarınız hesabınızda kalır.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -62,7 +61,7 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
               }}
             >
               <Zap className="mr-1 h-4 w-4" />
-              Ücretsiz Sözleşme Analizi Yap
+              Ücretsiz dene
               <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
             <Button
@@ -71,7 +70,9 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
               className="h-14 rounded-xl border-2 border-slate-300 px-8 text-base font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
               asChild
             >
-              <a href="/giris?kayit=1&next=/hesabim">Hesap oluşturun</a>
+              <a href="/giris?kayit=1&next=/hesabim">
+                Hesap oluştur — asistanın kalsın
+              </a>
             </Button>
           </div>
 

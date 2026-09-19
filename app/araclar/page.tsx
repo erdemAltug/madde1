@@ -9,9 +9,9 @@ import { REHBER_HUB_LINKS, SOZLESME_ANALIZI_FEATURED } from "@/lib/seo/internal-
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 
-const title = "Ücretsiz hesaplama araçları 2026 — maaş, kira, tazminat";
+const title = "Ücretsiz hukuk hesaplayıcıları 2026 — kira, kıdem, maaş";
 const description =
-  "Brüt net maaş, işsizlik maaşı, kira artışı, kıdem, ihbar, fazla mesai ve yıllık izin hesaplama. Günlük hukuk için ücretsiz LegalTech araçları.";
+  "Kira zammı, kıdem/ihbar, brüt net, işsizlik, fazla mesai ve tahliye kontrolü. Hesaplayın, sonra sözleşmenizi ücretsiz tarayın — Clause.";
 
 export const metadata: Metadata = {
   title,

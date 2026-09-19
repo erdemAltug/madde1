@@ -11,7 +11,7 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = IHBAR_TAZMINATI_TOOL_PATH;
 const canonical = absoluteUrl(path);
-const title = "İhbar tazminatı hesaplama — ücretsiz tahmini araç 2026";
+const title = "İhbar tazminatı hesaplama 2026 — ücretsiz tahmini araç";
 
 export const metadata: Metadata = {
   title,

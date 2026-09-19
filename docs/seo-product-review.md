@@ -1,5 +1,8 @@
 # Clause.ai — SEO & Ürün Mimarisi İncelemesi
 
+> **Güncel plan (Eyl 2026):** GSC konum ~30,8 → Top 10 için bkz.  
+> [`docs/seo-top10-gsc-2026-09.md`](./seo-top10-gsc-2026-09.md) · wording: [`wording-repositioning-plan.md`](./wording-repositioning-plan.md) · kalıcı chat: [`legal-chat-homepage-demo-plan.md`](./legal-chat-homepage-demo-plan.md)
+
 **Tarih:** 22 Ağustos 2026  
 **Kapsam:** [tryclause.tech](https://tryclause.tech/) tüm public IA, GSC sinyali, kayıt hunisi  
 **Rol:** Product Manager review  

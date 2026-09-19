@@ -14,8 +14,12 @@ export const metadata = buildToolMetadata({
   keywords: [
     "fazla mesai ücreti hesaplama",
     "fazla mesai 1.5",
-    "İş Kanunu m. 41",
+    "fazla mesai hesaplama 2026",
   ],
+  titleOverride:
+    "Fazla mesai ücreti hesaplama 2026 — ücretsiz + iş sözleşmesi taraması",
+  descriptionOverride:
+    "Brüt ücret ve fazla mesai saatiyle tahmini zamlı ücret. Ücretsiz hesap; sözleşme maddenizi AI ile tarayın — Clause.",
 });
 
 const faqs = [
