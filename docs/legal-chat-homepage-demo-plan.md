@@ -133,14 +133,15 @@ Wording: `docs/wording-repositioning-plan.md` §4.1.
 
 ### Phase 0 — Spec (bu dosya) ✅
 
-### Phase 1 — Backend iskelet (3–5 gün)
+### Phase 1 — Backend + UI iskelet ✅ (19 Eyl 2026)
 
-- Migration + RLS  
-- Threads CRUD  
-- `POST /api/asistan/chat` stream + persist  
-- Minimal `/asistan` UI (liste + mesaj)
+- Migration `010_legal_chat.sql` + RLS  
+- `POST /api/asistan/chat` stream + persist + RAG  
+- `/asistan` UI (liste + sohbet)  
+- Nav / hesabim / homepage demo  
+- robots: `/asistan` noindex  
 
-### Phase 2 — Ürün cilası (3–4 gün)
+### Phase 2 — Ürün cilası (sonraki)
 
 - Örnek sorular, citations UI, arşiv, mobil  
 - Credits entegrasyonu  

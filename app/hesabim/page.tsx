@@ -68,16 +68,25 @@ export default function HesabimPage() {
       <SiteNavbar />
       <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
         <p className="text-xs font-bold uppercase tracking-wide text-[#005BEA]">
-          Sözleşme arşivi
+          Hukuk asistanım
         </p>
         <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">
           Taramalarım
         </h1>
         <p className="mt-2 text-sm font-medium text-slate-600">
-          Geçmiş taramalar, risk notları ve indirdiğin ön inceleme raporları.
-          Freelancer / KOBİ için kişisel sözleşme envanteri — avukatlık yerine
-          geçmez.
+          Geçmiş taramalar ve raporlar. Mevzuat dayanaklı kalıcı sohbet için{" "}
+          <Link href="/asistan" className="font-semibold text-[#005BEA] hover:underline">
+            Hukuk Asistanı
+          </Link>
+          .
         </p>
+        {isLoggedIn ? (
+          <div className="mt-4">
+            <Button asChild className="rounded-xl bg-[#005BEA]">
+              <Link href="/asistan">Asistanı aç</Link>
+            </Button>
+          </div>
+        ) : null}
 
         <div className="mt-6 flex flex-wrap gap-2">
           <Button className="rounded-xl bg-[#005BEA] font-semibold hover:bg-[#0047b8]" asChild>

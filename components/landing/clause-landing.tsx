@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { ContractAnalyzerModal } from "@/components/clause/contract-analyzer-modal";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { LandingHero } from "@/components/landing/landing-hero";
+import { LandingAsistanDemo } from "@/components/landing/landing-asistan-demo";
 import { LandingWhyAssistant } from "@/components/landing/landing-why-assistant";
 import { LandingSecurityStrip } from "@/components/landing/landing-security-strip";
 import { LandingTrustBand } from "@/components/landing/landing-trust-band";
@@ -60,6 +61,7 @@ export function ClauseLanding() {
       <SiteNavbar />
       <main id="ana-icerik" className="relative">
         <LandingHero onOpenAnalyzer={() => setAnalyzerOpen(true)} />
+        <LandingAsistanDemo />
         <LandingWhyAssistant />
         <LandingSecurityStrip />
         <LandingTrustBand />

@@ -103,7 +103,17 @@ export function SiteNavbar() {
   };
 
   const authBlock = user ? (
-    <div className="relative" ref={userMenuRef}>
+    <div className="flex shrink-0 items-center gap-2">
+      <Button
+        size="sm"
+        className="hidden rounded-lg bg-[#005BEA] font-semibold text-white hover:bg-[#0046b8] sm:inline-flex"
+        asChild
+      >
+        <Link href="/asistan" prefetch={true}>
+          Asistan
+        </Link>
+      </Button>
+      <div className="relative" ref={userMenuRef}>
       <button
         type="button"
         onClick={() => setUserMenuOpen((v) => !v)}
@@ -122,6 +132,13 @@ export function SiteNavbar() {
       </button>
       {userMenuOpen ? (
         <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10">
+          <Link
+            href="/asistan"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#005BEA] hover:bg-blue-50"
+            onClick={() => setUserMenuOpen(false)}
+          >
+            Hukuk Asistanı
+          </Link>
           <Link
             href="/hesabim"
             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
@@ -146,6 +163,7 @@ export function SiteNavbar() {
           </button>
         </div>
       ) : null}
+      </div>
     </div>
   ) : (
     <div className="flex shrink-0 items-center gap-2">
@@ -231,6 +249,13 @@ export function SiteNavbar() {
                       {getUserDisplayName()}
                     </span>
                   </div>
+                  <Link
+                    href="/asistan"
+                    className="block rounded-md px-3 py-2 text-sm font-semibold text-[#005BEA] hover:bg-blue-50"
+                    onClick={closeMobile}
+                  >
+                    Hukuk Asistanı
+                  </Link>
                   <Link
                     href="/hesabim"
                     className="block rounded-md px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"

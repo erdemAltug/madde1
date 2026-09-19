@@ -70,7 +70,7 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
               className="h-14 rounded-xl border-2 border-slate-300 px-8 text-base font-semibold text-slate-700 hover:border-slate-400 hover:bg-slate-50"
               asChild
             >
-              <a href="/giris?kayit=1&next=/hesabim">
+              <a href="/giris?kayit=1&next=/asistan">
                 Hesap oluştur — asistanın kalsın
               </a>
             </Button>
