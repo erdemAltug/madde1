@@ -74,7 +74,7 @@ export default function HesabimPage() {
           Taramalarım
         </h1>
         <p className="mt-2 text-sm font-medium text-slate-600">
-          Geçmiş taramalar ve raporlar. Mevzuat dayanaklı kalıcı sohbet için{" "}
+          Geçmiş taramalar ve raporlar. Sohbet için{" "}
           <Link href="/asistan" className="font-semibold text-[#005BEA] hover:underline">
             Hukuk Asistanı
           </Link>

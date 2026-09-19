@@ -3,9 +3,9 @@ import { AsistanWorkspace } from "@/components/asistan/asistan-workspace";
 import { absoluteUrl } from "@/lib/seo/site";
 
 export const metadata: Metadata = {
-  title: "Hukuk Asistanı — kalıcı mevzuat sohbeti | Clause",
+  title: "Hukuk Asistanı | Clause",
   description:
-    "Üyelere özel Türk hukuku asistanı. Sohbetleriniz hesabınızda saklanır; mümkünse mevzuat dayanaklı yanıt.",
+    "Üyelere özel hukuk sohbeti. Sohbetleriniz hesabınızda saklanır.",
   robots: { index: false, follow: false },
   alternates: { canonical: absoluteUrl("/asistan") },
 };

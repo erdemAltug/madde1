@@ -15,7 +15,7 @@ const DEMO = [
   },
   {
     role: "assistant" as const,
-    text: "Kısa özet: Konut kiralarında yenilenen dönem artışı kural olarak TÜFE on iki aylık ortalamasını aşamaz. %80’lik talep çoğu durumda tavanın üzerinde kalır.\n\nNe yapabilirsiniz: Yazılı itiraz, çekinceli ödeme, sözleşmedeki artış maddesini kontrol.\n\nDayanaklar: TBK m.344 bağlamı (doğrulanmış RAG).",
+    text: "Konut kiralarında yenilenen dönem artışı kural olarak TÜFE on iki aylık ortalamasını aşamaz. %80’lik talep çoğu durumda tavanın üzerindedir.\n\nYazılı itiraz edin; çekinceli ödeme ve sözleşmedeki artış maddesini kontrol edin.",
     cite: "TBK m.344",
   },
 ];
@@ -41,14 +41,13 @@ export function LandingAsistanDemo() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-14 lg:px-8">
         <Reveal>
           <p className="text-xs font-bold uppercase tracking-wide text-[#005BEA]">
-            Clause Asistan
+            Asistan
           </p>
           <h2 className="mt-2 text-balance text-3xl font-bold tracking-tight text-deep-navy sm:text-4xl">
-            Genel chatbot değil — hukuk bilen asistan
+            Hukuki sorularınız için kalıcı sohbet
           </h2>
           <p className="mt-4 max-w-md text-base font-medium leading-relaxed text-slate-600">
-            Üye hesabınızda sohbet kalıcıdır. Yanıtlar mümkünse mevzuat
-            dayanağıyla gelir; tarayıcı kapanınca kaybolmaz.
+            Üye hesabınızda sorularınız saklanır. Tarayıcı kapanınca kaybolmaz.
           </p>
           <Button
             asChild
@@ -61,7 +60,7 @@ export function LandingAsistanDemo() {
             }
           >
             <Link href="/giris?kayit=1&next=/asistan">
-              Ücretsiz hesap — asistanı aç
+              Hesap oluştur
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
@@ -72,7 +71,7 @@ export function LandingAsistanDemo() {
             <div className="flex items-center gap-2 border-b border-slate-100 bg-slate-50 px-4 py-2.5">
               <Scale className="h-4 w-4 text-[#005BEA]" />
               <span className="text-xs font-bold text-slate-700">
-                Demo · Clause Asistan
+                Clause Asistan
               </span>
             </div>
             <div className="space-y-3 p-4 min-h-[220px]">
@@ -88,8 +87,8 @@ export function LandingAsistanDemo() {
                   <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm leading-relaxed text-slate-800 whitespace-pre-wrap">
                     {DEMO[1].text}
                   </div>
-                  <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800">
-                    Dayanak: {DEMO[1].cite}
+                  <span className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-medium text-slate-600">
+                    {DEMO[1].cite}
                   </span>
                 </div>
               ) : step >= 1 ? (
@@ -97,7 +96,7 @@ export function LandingAsistanDemo() {
               ) : null}
             </div>
             <p className="border-t border-slate-100 px-4 py-2 text-center text-[11px] text-slate-400">
-              Örnek yanıttır. Gerçek sohbet için üye olun.
+              Örnek. Gerçek sohbet için üye olun.
             </p>
           </div>
         </Reveal>

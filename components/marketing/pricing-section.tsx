@@ -5,22 +5,24 @@ import { Check, Building2, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/landing/reveal";
-import { EnterpriseContactDialog } from "@/components/b2c/enterprise-contact-dialog";
-import { useRouter } from "next/navigation";
+import { ContactLeadDialog } from "@/components/b2c/contact-lead-dialog";
 
 export function PricingSection() {
-  const router = useRouter();
   const [enterpriseOpen, setEnterpriseOpen] = React.useState(false);
-
-  const handleFreeStart = () => {
-    router.push("/giris?kayit=1");
-  };
+  const [b2cLeadOpen, setB2cLeadOpen] = React.useState(false);
 
   return (
     <section className="space-y-8 py-16 sm:py-20" id="fiyatlandirma">
-      <EnterpriseContactDialog
+      <ContactLeadDialog
         open={enterpriseOpen}
         onOpenChange={setEnterpriseOpen}
+        variant="enterprise"
+      />
+      <ContactLeadDialog
+        open={b2cLeadOpen}
+        onOpenChange={setB2cLeadOpen}
+        variant="b2c"
+        source="pricing_b2c"
       />
 
       <Reveal>
@@ -28,31 +30,29 @@ export function PricingSection() {
           <h2 className="text-2xl font-semibold tracking-tight text-deep-navy sm:text-3xl">
             Hukuki Güvenceniz Artık Cebinizde
           </h2>
-          <p className="mt-3 text-sm text-slate-600 font-medium">
-            Tek bir avukat danışmanlık ücretinin çok altına, sınırsız hukuki zeka desteğine sahip olun.
+          <p className="mt-3 text-sm font-medium text-slate-600">
+            Tek bir avukat danışmanlık ücretinin çok altına, sınırsız hukuki
+            zeka desteğine sahip olun.
           </p>
         </div>
       </Reveal>
-      
 
-      {/* Two columns: Free + Corporate */}
-      <div className="mx-auto grid max-w-4xl grid-cols-1 md:grid-cols-2 gap-6 px-4 sm:px-6 lg:px-8 items-stretch">
-        {/* Free - Beta (Left) */}
+      <div className="mx-auto grid max-w-4xl grid-cols-1 items-stretch gap-6 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
         <Reveal delay={0.06}>
-          <Card className="h-full flex flex-col border-2 border-emerald-200 bg-emerald-50/50 shadow-md hover:shadow-lg transition-shadow">
+          <Card className="flex h-full flex-col border-2 border-emerald-200 bg-emerald-50/50 shadow-md transition-shadow hover:shadow-lg">
             <CardHeader className="p-6 pb-4">
               <CardTitle className="text-lg font-semibold text-deep-navy">
-                Ücretsiz
+                Bireysel
               </CardTitle>
-              <p className="text-4xl font-bold text-emerald-600 mt-2">
-                0₺<span className="text-sm font-medium text-slate-500">/ay</span>
+              <p className="mt-2 text-lg font-semibold text-deep-navy">
+                Teklif alın
               </p>
-              <p className="text-sm text-slate-500 mt-1 font-medium">
-                Kayıt ol — günde 10 analiz
+              <p className="mt-1 text-sm font-medium text-slate-500">
+                Günlük kullanım, paket ve asistan desteği
               </p>
             </CardHeader>
-            <CardContent className="flex-1 p-6 pt-2 flex flex-col">
-              <ul className="space-y-3 flex-1">
+            <CardContent className="flex flex-1 flex-col p-6 pt-2">
+              <ul className="flex-1 space-y-3">
                 {[
                   "Günde 10 analiz (kayıtlı)",
                   "Detaylı risk özeti",
@@ -60,26 +60,29 @@ export function PricingSection() {
                   "PDF / yazdır",
                   "TBK + güncel mevzuat özeti",
                 ].map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                  <li
+                    key={f}
+                    className="flex items-center gap-3 text-sm font-medium text-slate-600"
+                  >
                     <Check className="h-4 w-4 shrink-0 text-emerald-500" />
                     {f}
                   </li>
                 ))}
               </ul>
               <Button
-                onClick={handleFreeStart}
-                className="w-full mt-6 rounded-xl py-4 font-semibold bg-emerald-600 text-white hover:bg-emerald-700 shadow-lg shadow-emerald-500/25"
+                type="button"
+                onClick={() => setB2cLeadOpen(true)}
+                className="mt-6 w-full rounded-xl bg-emerald-600 py-4 font-semibold text-white shadow-lg shadow-emerald-500/25 hover:bg-emerald-700"
               >
-                Hemen Ücretsiz Başla
-                <ArrowRight className="ml-2 w-4 h-4" />
+                Teklif alın
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardContent>
           </Card>
         </Reveal>
 
-        {/* Corporate - Kurumsal (Right) - Dark Theme */}
         <Reveal delay={0.1}>
-          <Card className="h-full flex flex-col bg-slate-900 border border-slate-800 shadow-sm hover:shadow-md transition-shadow text-white">
+          <Card className="flex h-full flex-col border border-slate-800 bg-slate-900 text-white shadow-sm transition-shadow hover:shadow-md">
             <CardHeader className="p-6 pb-4">
               <div className="flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-indigo-400" />
@@ -87,15 +90,13 @@ export function PricingSection() {
                   Kurumsal
                 </CardTitle>
               </div>
-              <p className="text-lg font-semibold text-white mt-2">
-                Teklif Alın
-              </p>
-              <p className="text-sm text-slate-400 mt-1 font-medium">
+              <p className="mt-2 text-lg font-semibold text-white">Teklif Alın</p>
+              <p className="mt-1 text-sm font-medium text-slate-400">
                 Sınırsız Analiz + Özel Çözümler
               </p>
             </CardHeader>
-            <CardContent className="flex-1 p-6 pt-2 flex flex-col">
-              <ul className="space-y-3 flex-1">
+            <CardContent className="flex flex-1 flex-col p-6 pt-2">
+              <ul className="flex-1 space-y-3">
                 {[
                   "Sınırsız analiz kredisi",
                   "Çoklu Kullanıcı Paneli",
@@ -104,7 +105,10 @@ export function PricingSection() {
                   "Özel entegrasyon desteği",
                   "Gelişmiş İçtihat Filtreleme",
                 ].map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-sm text-slate-300 font-medium">
+                  <li
+                    key={f}
+                    className="flex items-center gap-3 text-sm font-medium text-slate-300"
+                  >
                     <Check className="h-4 w-4 shrink-0 text-indigo-400" />
                     {f}
                   </li>
@@ -112,7 +116,7 @@ export function PricingSection() {
               </ul>
               <Button
                 onClick={() => setEnterpriseOpen(true)}
-                className="w-full mt-6 rounded-xl py-4 font-semibold bg-slate-800 border border-slate-700 text-white hover:bg-slate-700 hover:border-indigo-500"
+                className="mt-6 w-full rounded-xl border border-slate-700 bg-slate-800 py-4 font-semibold text-white hover:border-indigo-500 hover:bg-slate-700"
               >
                 İletişime Geçin
               </Button>
@@ -120,10 +124,9 @@ export function PricingSection() {
           </Card>
         </Reveal>
       </div>
-      
-      {/* Footer Note */}
-      <div className="text-center mt-8">
-        <p className="text-xs text-slate-400 font-medium">
+
+      <div className="mt-8 text-center">
+        <p className="text-xs font-medium text-slate-400">
           İstediğiniz zaman iptal edebilirsiniz. Gizli ücret yoktur.
         </p>
       </div>

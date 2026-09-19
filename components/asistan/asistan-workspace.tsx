@@ -218,11 +218,11 @@ export function AsistanWorkspace() {
         <main className="mx-auto max-w-lg px-4 py-20 text-center">
           <Scale className="mx-auto h-10 w-10 text-[#005BEA]" />
           <h1 className="mt-4 text-2xl font-bold text-slate-900">
-            Hukuk asistanı — üyelere özel
+            Hukuk asistanı
           </h1>
           <p className="mt-3 text-sm text-slate-600">
-            Mevzuat dayanaklı kalıcı sohbet için ücretsiz hesap oluşturun.
-            Sohbetleriniz tarayıcıda değil, hesabınızda saklanır.
+            Devam etmek için ücretsiz hesap oluşturun. Sohbetleriniz
+            hesabınızda saklanır.
           </p>
           <Button asChild className="mt-6 rounded-xl bg-[#005BEA]">
             <Link href="/giris?kayit=1&next=/asistan">Ücretsiz kayıt ol</Link>
@@ -324,7 +324,7 @@ export function AsistanWorkspace() {
             </button>
             <Sparkles className="hidden h-4 w-4 text-[#005BEA] sm:block" />
             <p className="text-sm font-semibold text-slate-800">
-              Türk hukuku asistanı · dayanaklı yanıt
+              Hukuk asistanı
             </p>
           </header>
 
@@ -337,11 +337,11 @@ export function AsistanWorkspace() {
               <div className="mx-auto max-w-md py-8 text-center">
                 <Scale className="mx-auto h-8 w-8 text-[#005BEA]" />
                 <p className="mt-3 text-base font-semibold text-slate-900">
-                  Genel chatbot değil — hukuk bağlamlı asistan
+                  Sorunuzu yazın
                 </p>
                 <p className="mt-2 text-sm text-slate-600">
-                  Sorunuzu yazın veya örneklerden birini seçin. Yanıtlar mümkünse
-                  mevzuat dayanağıyla gelir; avukat yerine geçmez.
+                  Kısa bir hukuki soru sorun veya metin yapıştırın. Yanıtlar
+                  bilgilendirme amaçlıdır; avukat yerine geçmez.
                 </p>
                 <div className="mt-5 flex flex-wrap justify-center gap-2">
                   {ASISTAN_EXAMPLE_PROMPTS.map((q) => (
@@ -385,9 +385,9 @@ export function AsistanWorkspace() {
                 {citations.map((c) => (
                   <span
                     key={c}
-                    className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800"
+                    className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-medium text-slate-600"
                   >
-                    Dayanak: {c}
+                    {c}
                   </span>
                 ))}
               </div>

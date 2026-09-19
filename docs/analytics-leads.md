@@ -54,6 +54,7 @@ Brave / reklam engeli **istemciyi** keser; **sunucu capture** yine çalışır.
 | source | Nereden |
 |--------|---------|
 | `enterprise` | Kurumsal iletişim dialog (varsayılan) |
+| `pricing_b2c` | Fiyatlandırma → Ücretsiz kart → **Teklif alın** |
 | `pricing_modal_business` | Fiyatlandırma → İletişime Geç |
 | `seo_persona` | Ana sayfa SEO metni linki |
 
