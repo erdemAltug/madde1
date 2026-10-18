@@ -10,6 +10,9 @@ import { AnalyticsEvents } from "@/lib/analytics/events";
 import type { FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
+import { Button } from "@/components/ui/button";
+import { SEVERANCE_CEILING } from "@/lib/legal/official-rates";
+import { Copy } from "lucide-react";
 
 const inputClass =
   "rounded-xl border-2 border-slate-200/90 bg-white font-semibold tabular-nums shadow-sm transition-all placeholder:font-normal placeholder:text-slate-400 focus-visible:border-[#005BEA] focus-visible:ring-2 focus-visible:ring-[#005BEA]/25";
@@ -35,13 +38,24 @@ export function KidemTazminatiCalculator({
 }) {
   const [gross, setGross] = React.useState("45000");
   const [years, setYears] = React.useState("5");
+  const [copied, setCopied] = React.useState(false);
   const trackedRef = React.useRef(false);
 
   const grossMonthly = parseNum(gross);
   const workYears = parseNum(years);
-  const daily = grossMonthly > 0 ? grossMonthly / 30 : 0;
-  const estimated = workYears > 0 ? workYears * 30 * daily : 0;
+  const cappedMonthly = Math.min(grossMonthly, SEVERANCE_CEILING.annualGrossTry);
+  const capped = grossMonthly > SEVERANCE_CEILING.annualGrossTry;
+  const estimated = workYears > 0 ? workYears * cappedMonthly : 0;
   const hasResult = grossMonthly > 0 && workYears > 0;
+  const letter = hasResult
+    ? `Sayın Yetkili,
+
+İş sözleşmem sona erdi. ${workYears.toLocaleString("tr-TR")} yıl için tahmini kıdem alacağım ${formatTry(estimated)}${capped ? ` (yıllık tavan ${formatTry(SEVERANCE_CEILING.annualGrossTry)} uygulandı)` : ""}.
+
+Kıdem, ihbar ve kullanılmayan izin alacaklarımın ödenmesini rica ederim. Bu metin bilgilendirme amaçlı bir taslaktır; noter ihtarı yerine geçmez.
+
+Saygılarımla`
+    : "";
 
   const track = React.useCallback(() => {
     if (!analyticsToolId || trackedRef.current) return;
@@ -100,17 +114,46 @@ export function KidemTazminatiCalculator({
                 {formatTry(estimated)}
               </p>
               <p className="mt-2 text-xs text-slate-500">
-                Her tam yıl için 30 günlük brüt ücret formülü (bilgilendirme). Kıdem tavanı, kısmi
-                yıl ve fesih türü sonucu değiştirir.
+                Her tam yıl için 30 günlük brüt ücret. Tavan{" "}
+                {formatTry(SEVERANCE_CEILING.annualGrossTry)} (
+                {SEVERANCE_CEILING.periodLabel}). Kısmi yıl ve fesih türü sonucu
+                değiştirir.
+                {capped ? " Brüt ücret tavanın üstünde; tavan uygulandı." : ""}
               </p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="text-sm font-bold text-slate-800">İşverene mesaj</p>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="h-8 gap-1.5 rounded-lg text-xs font-semibold"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(letter);
+                      setCopied(true);
+                      window.setTimeout(() => setCopied(false), 2000);
+                    } catch {
+                      /* ignore */
+                    }
+                  }}
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                  {copied ? "Kopyalandı" : "Kopyala"}
+                </Button>
+              </div>
+              <pre className="max-h-48 overflow-y-auto whitespace-pre-wrap rounded-lg bg-white p-3 text-xs leading-relaxed text-slate-700">
+                {letter}
+              </pre>
             </div>
             <ToolContractScanCta
               source="/araclar/kidem-tazminati-hesaplama"
-              href="/sozlesme-analizi/is-sozlesmesi-riskleri"
-              highlight={`Tahmini kıdem tazminatınız ${formatTry(estimated)}.`}
-              title="İş sözleşmenizde fesih, rekabet yasağı veya haksız kesinti maddesi var mı?"
-              body="İş sözleşmeni yapıştır — aleyhte maddeleri işaretleyelim (ücretsiz)."
-              ctaLabel="İş sözleşmesini tara"
+              href="/giris?kayit=1&next=/asistan"
+              highlight={`Tahmini kıdem ${formatTry(estimated)}.`}
+              title="Bu alacak dosyan asistanında kalsın."
+              body="İş sözleşmeni tarar, ihtar ve sonraki yazışmayı aynı yerde tutarız."
+              ctaLabel="Dosyayı asistanıma al"
             />
           </>
         ) : null}

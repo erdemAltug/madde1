@@ -4,7 +4,6 @@ import { SOZLESME_ANALIZI_SLUGS } from "@/lib/seo/sozlesme-analizi-pages";
 import { REHBER_SLUGS, getRehberConfig } from "@/lib/seo/rehber-pages";
 import { HUKUKI_ANALIZ_SLUGS } from "@/lib/seo/hukuki-analiz-pages";
 import { FREE_TOOLS_SITEMAP_PATHS } from "@/lib/seo/free-tools-routes";
-import { YAPAY_ZEKA_HUKUK_SLUGS } from "@/lib/seo/yapay-zeka-hukuk-pages";
 import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
 import { getAllMdxBlogPosts, getMdxBlogSlugs } from "@/lib/seo/mdx-blog";
 import { HAKLARIM_SLUGS } from "@/lib/seo/haklarim-pages";
@@ -47,12 +46,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: lastMod,
       changeFrequency: "weekly",
       priority: 0.93,
-    },
-    {
-      url: `${SITE_URL}/yapay-zeka-hukuk`,
-      lastModified: lastMod,
-      changeFrequency: "weekly",
-      priority: 0.95,
     },
     {
       url: `${SITE_URL}/gunluk-hukuk`,
@@ -135,15 +128,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.88,
   }));
 
-  const yapayZekaHukuk: MetadataRoute.Sitemap = [
-    ...YAPAY_ZEKA_HUKUK_SLUGS.map((slug) => ({
-      url: `${SITE_URL}/yapay-zeka-hukuk/${slug}`,
-      lastModified: lastMod,
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    })),
-  ];
-
   const blogSlugs = Array.from(new Set(BLOG_SLUGS.concat(getMdxBlogSlugs())));
   const mdxBySlug = Object.fromEntries(
     getAllMdxBlogPosts().map((p) => [p.slug, p]),
@@ -191,7 +175,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...rehber,
     ...hukukiAnaliz,
     ...haklarim,
-    ...yapayZekaHukuk,
     ...analiz,
     ...sozlesmeAnalizi,
     ...blog,

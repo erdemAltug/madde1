@@ -50,13 +50,18 @@ export type FreeToolNavItem = {
 export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
   {
     href: KIRA_ARTIS_TOOL_PATH,
-    label: "Kira zammı yasal mı?",
-    description: "2026 tavan hesabı — ücretsiz.",
+    label: "Ev sahibi zam istedi",
+    description: "Yasal tavan ve ev sahibine mesaj. Dosya asistanında kalır.",
   },
   {
     href: KIDEM_IHBAR_TOOL_PATH,
-    label: "Kıdem ve ihbar tazminatı hesaplama",
-    description: "İşten çıkarma / istifa senaryoları ve haklı fesih listesi.",
+    label: "İşten çıkarıldım",
+    description: "Kıdem, ihbar ve işverene mesaj. Alacak dosyan hesapta durur.",
+  },
+  {
+    href: "/haklarim/depozito-haklarim",
+    label: "Depozitom gelmedi",
+    description: "İade tutarı ve ev sahibine mesaj.",
   },
   {
     href: TAHLIYE_TOOL_PATH,

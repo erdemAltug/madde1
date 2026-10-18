@@ -17,8 +17,7 @@ export const metadata = buildToolMetadata({
     "istifa kıdem",
     "kıdem tazminatı hesaplama 2026",
   ],
-  titleOverride:
-    "Kıdem ve ihbar tazminatı hesaplama 2026 — ücretsiz + iş sözleşmesi taraması",
+  titleOverride: "İşten çıkarıldım ne alırım? Kıdem ve ihbar 2026",
   descriptionOverride:
     "Brüt ücret ve kıdeme göre kıdem/ihbar tahmini. İstifaya zorlama listesi ve ücretsiz iş sözleşmesi risk taraması — Clause.",
 });
@@ -46,13 +45,12 @@ export default function KidemIhbarTazminatiPage() {
     <ToolPageShell
       path={path}
       breadcrumbLabel="Kıdem & ihbar tazminatı"
-      h1="Kıdem ve ihbar tazminatı hesaplama 2026"
+      h1="İşten çıkarıldım, ne alırım?"
       bottomPad
       intro={
         <>
-          İşten çıkarılma veya istifa senaryosunda kıdem ve ihbar tutarını
-          tahmin edin; istifaya zorlama kontrol listesiyle haklı fesih
-          sinyallerini tarayın.{" "}
+          Brüt maaş ve süreyi yaz. Kıdem tavanı uygulanır, işverene mesaj çıkar.
+          Alacak dosyan asistanında kalır.{" "}
           <Link
             href="/rehber/kidem-ihbar-tazminati"
             className="font-semibold text-[#005BEA] hover:underline"

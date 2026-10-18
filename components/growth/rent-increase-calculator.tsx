@@ -12,6 +12,7 @@ import type { FreeToolId } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
 import { ToolResultSignupBar } from "@/components/growth/tool-result-signup-bar";
+import { RENT_CEILING } from "@/lib/legal/official-rates";
 
 const inputVivid =
   "rounded-xl border-2 border-slate-200/90 bg-white font-semibold tabular-nums shadow-sm transition-all placeholder:font-normal placeholder:text-slate-400 focus-visible:border-[#005BEA] focus-visible:ring-2 focus-visible:ring-[#005BEA]/25";
@@ -33,7 +34,9 @@ export function RentIncreaseCalculator({
   analyticsSurface?: "bento" | "tool_page";
 } = {}) {
   const [current, setCurrent] = React.useState("25000");
-  const [rate, setRate] = React.useState("25");
+  const [rate, setRate] = React.useState(
+    String(RENT_CEILING.pct).replace(".", ","),
+  );
   const trackedRef = React.useRef(false);
 
   const trackFirstUse = React.useCallback(() => {

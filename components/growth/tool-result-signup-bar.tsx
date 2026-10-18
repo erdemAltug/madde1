@@ -37,11 +37,11 @@ export function ToolResultSignupBar({
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-slate-900">
-              Sonucu PDF olarak saklamak veya Taramalarım’a eklemek ister misiniz?
+              Bu dosya asistanında kalsın.
             </p>
             <p className="mt-0.5 text-xs leading-relaxed text-slate-600">
-              Ücretsiz kayıt: geçmiş taramalar, PDF ve kişisel envanter.
-              Bu araç hukuki tavsiye yerine geçmez.
+              Mesaj, sözleşme ve sonraki adım aynı yerde durur. Ücretsiz hesapla
+              başlar; düzenli kullanım hesabındadır. Avukatlık değildir.
             </p>
           </div>
         </div>
@@ -59,8 +59,8 @@ export function ToolResultSignupBar({
               });
             }}
           >
-            <Link href={`/giris?kayit=1&next=${encodeURIComponent("/hesabim")}`}>
-              Ücretsiz kayıt ol
+            <Link href={`/giris?kayit=1&next=${encodeURIComponent("/asistan")}`}>
+              Asistanıma al
             </Link>
           </Button>
           {onDismiss ? (
