@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { RentIncreaseCalculator } from "@/components/growth/rent-increase-calculator";
+import { KiraAnaliziCalculator } from "@/components/growth/kira-analizi-calculator";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { KiraArtisSeoArticle } from "@/components/seo/araclar/kira-artis-seo-article";
 import { KIRA_ARTIS_TOOL_PATH } from "@/lib/seo/free-tools-routes";
@@ -11,13 +10,12 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = KIRA_ARTIS_TOOL_PATH;
 const canonical = absoluteUrl(path);
-const title =
-  "Kira zammı yasal mı? 2026 tavan hesap + ücretsiz sözleşme tarama";
+const title = "Ev sahibi zam istedi — yasal tavan ve mesaj";
 
 export const metadata: Metadata = {
   title,
   description:
-    "Kira zammı tavanını 2026 için hesaplayın. Kira artış raporu ve ücretsiz sözleşme taraması — kayıt ile PDF.",
+    "Ev sahibinin istediği kirayı Ekim 2026 yasal tavanıyla karşılaştır, mesajı kopyala. Dosya asistanında kalır.",
   keywords: [
     "kira zammı yasal mı",
     "kira artış hesaplama 2026",
@@ -55,26 +53,12 @@ export default function KiraSozlesmesiArtisOraniHesaplamaPage() {
         />
         <header className="mb-10">
           <h1 className="text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Kira zammı yasal mı? 2026 artış oranı hesaplama
+            Ev sahibi zam istedi
           </h1>
           <p className="mt-3 text-base font-medium text-slate-600">
-            Tahmini yeni kira — bilgilendirme amaçlıdır. Kesin hukuki sonuç için
-            avukata danışın. Ev sahibinin istediği zammı yasal tavanla
-            karşılaştırmak ve hazır cevap metni almak için{" "}
-            <Link
-              href="/araclar/kira-analizi"
-              className="font-semibold text-madde-blue hover:underline"
-            >
-              kira analizi &amp; cevap taslağı
-            </Link>
-            ; tam metin risk taraması için{" "}
-            <Link
-              href="/kira-sozlesmesi-analizi"
-              className="font-semibold text-madde-blue hover:underline"
-            >
-              kira sözleşmesi analizi
-            </Link>
-            .
+            Mevcut kirayı ve istenen tutarı yaz. Yasal tavan hazır, ev sahibine
+            mesaj çıkar. Bu bir hesap sitesi değil: dosya asistanında kalır,
+            sözleşmen ve gelecek yılın zammı aynı yerde durur.
           </p>
         </header>
 
@@ -85,10 +69,7 @@ export default function KiraSozlesmesiArtisOraniHesaplamaPage() {
           <h2 id="hesap-baslik" className="sr-only">
             Kira artış hesaplayıcı aracı
           </h2>
-          <RentIncreaseCalculator
-            analyticsToolId="rent_increase_page"
-            analyticsSurface="tool_page"
-          />
+          <KiraAnaliziCalculator analyticsToolId="rent_increase_page" />
         </section>
 
         <section aria-labelledby="rehber-baslik">

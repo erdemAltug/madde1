@@ -20,10 +20,8 @@ import { buildKiraRiskReportMarkdown } from "@/lib/growth/kira-risk-report";
 import { openPrintMarkdown } from "@/lib/print/open-print-markdown";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents, type FreeToolId } from "@/lib/analytics/events";
+import { RENT_CEILING } from "@/lib/legal/official-rates";
 import { cn } from "@/lib/utils";
-
-/** Kullanıcı TÜİK’ten güncelleyebilir — bilgilendirme varsayılanı */
-const DEFAULT_TUFE_CEILING_PCT = 37.86;
 
 function parseNumber(value: string): number {
   return Number(value.replace(/\./g, "").replace(",", ".")) || 0;
@@ -76,7 +74,7 @@ function buildTemplates(opts: {
 
 Kira artış talebinizi aldım. Mevcut kira ${formatTry(current)}; talep edilen tutar ${formatTry(proposed)} (${formatPct(proposedPct)} artış).
 
-Türk Borçlar Kanunu m. 344 kapsamında konut kiralarında yenilenen dönem artışı, TÜFE’nin on iki aylık ortalamalarına göre değişim oranını aşamaz. Girdiğim yasal tavan oranı ${formatPct(tufePct)} olup yasal üst sınır yaklaşık ${formatTry(legalMax)}’dir.
+Türk Borçlar Kanunu m. 344 kapsamında konut kiralarında yenilenen dönem artışı, TÜFE’nin on iki aylık ortalamasına göre değişim oranını aşamaz. ${RENT_CEILING.periodLabel} için açıklanan tavan ${formatPct(tufePct)}; yasal üst sınır yaklaşık ${formatTry(legalMax)}.
 
 Talebinizin bu sınırı aştığını düşünüyorum. Yasal sınır dahilinde yeni bir teklif iletebilirseniz görüşmeye açığım.
 
@@ -85,7 +83,7 @@ Saygılarımla`
 
 Kira artış talebinizi aldım. Mevcut kira ${formatTry(current)}; talep edilen tutar ${formatTry(proposed)} (${formatPct(proposedPct)} artış).
 
-TBK m. 344 bağlamında girdiğim TÜFE tavanı ${formatPct(tufePct)} ve yasal üst sınır yaklaşık ${formatTry(legalMax)}. Talebiniz bu varsayıma göre tavan içinde görünüyor. Yazılı sözleşmemizdeki artış maddesini de kontrol ederek teyit etmek isterim.
+TBK m. 344 bağlamında ${RENT_CEILING.periodLabel} tavanı ${formatPct(tufePct)} ve yasal üst sınır yaklaşık ${formatTry(legalMax)}. Talebiniz bu tavana göre sınır içinde görünüyor. Sözleşmedeki artış maddesini de birlikte teyit etmek isterim.
 
 Saygılarımla`;
 
@@ -97,14 +95,14 @@ Not: Bu metin bilgilendirme amaçlı bir taslaktır; bireysel durumunuza göre a
 
   const summary = exceeded
     ? [
-        `Ev sahibinin istediği ${formatTry(proposed)} (${formatPct(proposedPct)}), girdiğiniz TÜFE tavanına göre yasal üst sınır olan ${formatTry(legalMax)}’i aşıyor.`,
-        `TBK 344 çerçevesinde konut kiralarında artış, TÜFE 12 aylık ortalama değişimini aşamaz; fazla kısmı reddedilebilir görünür.`,
-        `Aşağıdaki hazır WhatsApp / e-posta metnini kopyalayıp gönderin; ardından kira sözleşmenizi Clause ile taratın.`,
+        `Ev sahibinin istediği ${formatTry(proposed)} (${formatPct(proposedPct)}), ${RENT_CEILING.periodLabel} tavanına göre yasal üst sınır olan ${formatTry(legalMax)} tutarını aşıyor.`,
+        `TBK m. 344: konut ve çatılı işyerinde yenileme artışı, on iki aylık ortalama TÜFE’yi aşamaz. Sözleşme daha düşük oran yazıyorsa o uygulanır.`,
+        `Mesajı gönder. Sözleşme ve sonraki zam aynı dosyada, asistanında kalsın.`,
       ]
     : [
-        `Talep edilen ${formatTry(proposed)} (${formatPct(proposedPct)}), girdiğiniz tavanla yasal üst sınır ${formatTry(legalMax)} içinde kalıyor.`,
-        `Yine de sözleşmedeki artış formülünü, bildirim tarihini ve tahliye baskısı olup olmadığını kontrol edin.`,
-        `Şüphe varsa hazır metni nazik bir teyit mesajı olarak kullanın ve sözleşmeyi AI ile tarayın.`,
+        `Talep edilen ${formatTry(proposed)} (${formatPct(proposedPct)}), ${RENT_CEILING.periodLabel} tavanında yasal üst sınır ${formatTry(legalMax)} içinde kalıyor.`,
+        `Sözleşmedeki artış maddesi, bildirim tarihi ve tahliye baskısı sonucu değiştirir.`,
+        `Metni teyit için kullan. Sözleşme asistanında kalsın; gelecek yılın zammı aynı dosyadan gider.`,
       ];
 
   return { whatsapp, email, summary };
@@ -117,9 +115,7 @@ export function KiraAnaliziCalculator({
 }) {
   const [currentInput, setCurrentInput] = React.useState("25.000");
   const [proposedInput, setProposedInput] = React.useState("40.000");
-  const [tufeInput, setTufeInput] = React.useState(
-    String(DEFAULT_TUFE_CEILING_PCT).replace(".", ","),
-  );
+  const [contractRateInput, setContractRateInput] = React.useState("");
   const [startDate, setStartDate] = React.useState("2024-09-01");
   const [copied, setCopied] = React.useState<"wa" | "mail" | null>(null);
   const [barDismissed, setBarDismissed] = React.useState(false);
@@ -127,7 +123,11 @@ export function KiraAnaliziCalculator({
 
   const current = parseNumber(currentInput);
   const proposed = parseNumber(proposedInput);
-  const tufePct = parseNumber(tufeInput);
+  const contractRate = parseNumber(contractRateInput);
+  const tufePct =
+    contractRate > 0 && contractRate < RENT_CEILING.pct
+      ? contractRate
+      : RENT_CEILING.pct;
   const months = monthsBetween(startDate);
   const valid = current > 0 && proposed > 0 && tufePct >= 0;
 
@@ -205,8 +205,8 @@ export function KiraAnaliziCalculator({
             Kira zammı &amp; kiracı hakları analizi
           </CardTitle>
           <p className="text-xs leading-relaxed text-slate-500">
-            Ev sahibinin istediği zammı yasal TÜFE tavanıyla karşılaştırın; tek
-            tıkla cevap metni alın.
+            Ev sahibinin istediği kirayı yaz. Yasal tavan hazır; mesaj da çıksın.
+            Dosya asistanında kalır, sonraki zam aynı yerden gider.
           </p>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -237,23 +237,28 @@ export function KiraAnaliziCalculator({
                 className="h-11 rounded-xl border-2 border-slate-200 font-semibold tabular-nums focus-visible:border-[#005BEA]"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="kira-tufe">
-                Yasal tavan — TÜFE 12 aylık ort. (%)
+            <div className="space-y-2 sm:col-span-2">
+              <p className="text-sm font-medium text-slate-800">
+                Yasal tavan {formatPct(RENT_CEILING.pct)} — {RENT_CEILING.periodLabel}
+              </p>
+              <p className="text-[11px] leading-relaxed text-slate-500">
+                {RENT_CEILING.sourceLabel}. Beş yılı aşan kirada bedeli hâkim
+                belirleyebilir. Sözleşmede daha düşük oran varsa onu yaz.
+              </p>
+              <Label htmlFor="kira-contract-rate" className="sr-only">
+                Sözleşmedeki daha düşük oran
               </Label>
               <Input
-                id="kira-tufe"
+                id="kira-contract-rate"
                 inputMode="decimal"
-                value={tufeInput}
+                placeholder="Sözleşmedeki oran daha düşükse (%)"
+                value={contractRateInput}
                 onChange={(e) => {
-                  setTufeInput(e.target.value);
+                  setContractRateInput(e.target.value);
                   track();
                 }}
                 className="h-11 rounded-xl border-2 border-slate-200 font-semibold tabular-nums focus-visible:border-[#005BEA]"
               />
-              <p className="text-[11px] text-slate-500">
-                Güncel oranı TÜİK’ten girin. Varsayılan örnek amaçlıdır.
-              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="kira-start">Sözleşme / son artış başlangıcı</Label>
@@ -407,18 +412,20 @@ export function KiraAnaliziCalculator({
 
               <ToolContractScanCta
                 source="/araclar/kira-analizi"
-                highlight={`Yasal sınırınız ${formatTry(legalMax)} olarak hesaplandı.`}
-                title="Ancak ev sahipleri genellikle sözleşmeye tahliye taahhütnamesi veya haksız cezai şartlar ekler."
-                body="Kira kontratını yapıştır veya PDF yükle — 15 saniyede aleyhine olan maddeleri tarayalım (ücretsiz)."
-                ctaLabel="Kontratı tara — ücretsiz"
+                href="/giris?kayit=1&next=/asistan"
+                highlight={`Yasal üst sınır ${formatTry(legalMax)}.`}
+                title="Bu dosya asistanında kalsın."
+                body="Sözleşmeyi tararız, ev sahibinin cevabına göre bir sonraki metni aynı yerde yazarız. Gelecek yılın zammı da burada durur."
+                ctaLabel="Dosyayı asistanıma al"
               />
             </>
           ) : null}
 
           <p className="text-xs leading-relaxed text-slate-500">
-            Bilgilendirme amaçlıdır; avukatlık hizmeti değildir. Konut / çatılı
-            işyeri, süre, bildirim ve sözleşme maddeleri sonucu değiştirir. TÜFE
-            oranını resmi kaynaktan doğrulayın.
+            Bilgilendirme amaçlıdır, avukatlık değildir. Tavan{" "}
+            {RENT_CEILING.sourceLabel} ({formatPct(RENT_CEILING.pct)},{" "}
+            {RENT_CEILING.periodLabel}). Süre, bildirim ve sözleşme maddesi
+            sonucu değiştirir.
           </p>
         </CardContent>
       </Card>

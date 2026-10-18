@@ -6,18 +6,17 @@ import {
   REHBER_HUB_LINKS,
   SOZLESME_ANALIZI_FEATURED,
   HUKUKI_ANALIZ_LINKS,
-  YAPAY_ZEKA_HUKUK_LINKS,
 } from "@/lib/seo/internal-links";
 import { TrendingUp } from "lucide-react";
 import { CONTACT_EMAIL } from "@/lib/site/contact";
 
 const POPULAR_SEARCHES = [
   {
-    label: "Kira zammı yasal mı?",
+    label: "Ev sahibi zam istedi",
     href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
   },
   {
-    label: "Kıdem ve ihbar hesaplama",
+    label: "İşten çıkarıldım",
     href: "/araclar/kidem-ihbar-tazminati-hesaplama",
   },
   {
@@ -157,29 +156,45 @@ export function SiteFooter() {
               </ul>
             </nav>
 
-            <nav aria-label="Yapay zeka hukuk" className="space-y-2">
-              <p className="font-bold text-deep-navy">Yapay zeka hukuk</p>
+            <nav aria-label="Dosyan kalsın" className="space-y-2">
+              <p className="font-bold text-deep-navy">Dosyan kalsın</p>
               <ul className="space-y-1.5">
                 <li>
                   <Link
-                    href="/yapay-zeka-hukuk"
+                    href="/araclar/kira-sozlesmesi-artis-orani-hesaplama"
+                    prefetch={true}
+                    className="text-slate-600 font-medium hover:text-deep-navy"
+                  >
+                    Ev sahibi zam istedi
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/araclar/kidem-ihbar-tazminati-hesaplama"
+                    prefetch={true}
+                    className="text-slate-600 font-medium hover:text-deep-navy"
+                  >
+                    İşten çıkarıldım
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/haklarim/depozito-haklarim"
+                    prefetch={true}
+                    className="text-slate-600 font-medium hover:text-deep-navy"
+                  >
+                    Depozitom gelmedi
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/giris?kayit=1&next=/asistan"
                     prefetch={true}
                     className="font-semibold text-madde-blue hover:underline"
                   >
-                    Tüm AI rehberleri
+                    Asistanında kalsın
                   </Link>
                 </li>
-                {YAPAY_ZEKA_HUKUK_LINKS.slice(0, 5).map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      prefetch={true}
-                      className="text-slate-600 font-medium hover:text-deep-navy"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
               </ul>
             </nav>
 

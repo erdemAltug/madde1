@@ -34,6 +34,13 @@ const FreelanceChecklistWidget = dynamic(
     ),
   { ssr: false },
 );
+const DepozitoIadeAraci = dynamic(
+  () =>
+    import("@/components/growth/depozito-iade-araci").then(
+      (m) => m.DepozitoIadeAraci,
+    ),
+  { ssr: false },
+);
 const RentIncreaseCalculator = dynamic(
   () =>
     import("@/components/growth/rent-increase-calculator").then(
@@ -47,6 +54,11 @@ const EMBED_BY_SLUG: Record<
   string,
   { title: string; href: string; node: ReactNode }
 > = {
+  "depozito-haklarim": {
+    title: "Depozito iadesi",
+    href: "/haklarim/depozito-haklarim",
+    node: <DepozitoIadeAraci />,
+  },
   "kiraci-haklari": {
     title: "Kira zammı yasal tavan hesaplayıcı",
     href: KIRA_ANALIZI_TOOL_PATH,

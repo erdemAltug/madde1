@@ -24,6 +24,7 @@ export function generateMetadata({ params }: Props): Metadata {
     description: cfg.metaDescription,
     keywords: [...cfg.keywords, "yapay zeka hukuk", "legal AI", SITE_NAME],
     alternates: { canonical: absoluteUrl(path) },
+    robots: { index: false, follow: true },
     openGraph: {
       title: `${cfg.metaTitle} | ${SITE_NAME}`,
       description: cfg.metaDescription,

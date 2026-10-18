@@ -49,9 +49,8 @@ export default function KiraAnaliziPage() {
       bottomPad
       intro={
         <>
-          Mevcut kiranızı, istenen zammı ve TÜFE tavanını girin. Yasal üst
-          sınırı, haklı/haksız uyarısını ve ev sahibine atılacak cevap metnini
-          anında alın.{" "}
+          Mevcut kirayı ve istenen tutarı yaz. Yasal tavan hazır, mesaj çıkar.
+          Dosya asistanında kalır.{" "}
           <Link
             href="/araclar/kira-sozlesmesi-artis-orani-hesaplama"
             className="font-semibold text-[#005BEA] hover:underline"

@@ -94,10 +94,10 @@ const PAGES: RehberPageConfig[] = [
   }),
   createRehberPage({
     slug: "depozito-haklarim",
-    h1: "Depozito iade hakkım — kiracı rehberi",
-    metaTitle: "Depozito iade hakkım ne? — anlaşmazlık rehberi",
+    h1: "Depozitom iade edilmiyor",
+    metaTitle: "Depozitom iade edilmiyor — tutar ve ev sahibine mesaj",
     metaDescription:
-      "Kira depozitosu ne zaman iade edilir? Kesinti ve yazılı ihtar hakları. Ücretsiz AI kira analizi.",
+      "Yatırdığın depozito ve kesintiye göre iade tutarını gör, ev sahibine mesajı kopyala. Dosya asistanında kalır.",
     keywords: ["depozito iade hakkım", "depozito iadesi", "kira depozitosu hakları"],
     intro: "Depozito teminattır; keyfi kesinti ve gecikme uyuşmazlık doğurur.",
     sections: [

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { SiteNavbar } from "@/components/landing/site-navbar";
@@ -7,6 +8,11 @@ import {
   YAPAY_ZEKA_HUKUK_SLUGS,
   getYapayZekaHukukConfig,
 } from "@/lib/seo/yapay-zeka-hukuk-pages";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+  title: "Yapay zeka hukuk",
+};
 
 export default function YapayZekaHukukHubPage() {
   const pages = YAPAY_ZEKA_HUKUK_SLUGS.map((slug) => getYapayZekaHukukConfig(slug)).filter(

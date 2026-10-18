@@ -5,6 +5,7 @@
 export const NICHE_REGIONAL_PATHS = [
   "/rehber/kibris-kira-depozito-anlasmazligi",
   "/blog/kibris-kira-sozlesmesi-7-tuzak",
+  "/blog/kira-takip-raporu-yapay-zeka-analizi",
 ] as const;
 
 export const NICHE_REGIONAL_REHBER_SLUGS = [
@@ -13,6 +14,7 @@ export const NICHE_REGIONAL_REHBER_SLUGS = [
 
 export const NICHE_REGIONAL_BLOG_SLUGS = [
   "kibris-kira-sozlesmesi-7-tuzak",
+  "kira-takip-raporu-yapay-zeka-analizi",
 ] as const;
 
 export function isNicheRegionalPath(path: string): boolean {

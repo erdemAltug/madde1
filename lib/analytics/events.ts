@@ -39,5 +39,6 @@ export type FreeToolId =
   | "tazminat_hub_page"
   | "red_flag_scanner_page"
   | "dilekce_olusturucu_page"
+  | "depozito_iade_page"
   | "freelance_checklist_page"
   | "tahliye_validity_page";

@@ -43,9 +43,8 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       "Ev sahibi yüksek zam mı istedi? Yasal tavan, kira artış raporu ve sözleşme tuzaklarını ücretsiz görün. Clause ile tarayın; kayıtla PDF alın.",
     keywords: [
       "kira zammı yasal mı",
-      "kira takip raporu",
-      "yapay zeka ile kira takibi",
-      "kira artış raporu",
+      "ev sahibi zam istedi",
+      "kira artış oranı 2026",
       "kira sözleşmesi analizi",
       "kira zam sınırı 2026",
       "ev sahibi tahliye maddesi",
@@ -64,8 +63,8 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
         body: "Artış oranı, bildirim usulü, depozito, bakım-onarım, tahliye ve cezai şart başlıkları çoğu uyuşmazlığın merkezindedir. Belirsiz ‘piyasa koşullarına göre’ ifadeleri veya boş bırakılmış tahliye taahhütleri ileride pahalı tartışmalara dönüşebilir. Ön tarama, bu başlıkları görünür kılar; kesin hukuki sonuç vaat etmez.",
       },
       {
-        title: "Kira takip raporu / zam kontrolü nedir?",
-        body: "Arama motorlarında ‘kira takip raporu’ veya ‘yapay zeka ile kira takibi’ diye geçen ihtiyaç, pratikte yasal tavan, talep edilen zam ve sözleşme maddesinin yan yana konmasıdır. Clause kira artış hesabı ve sözleşme taraması bu raporu üretir; muhasebe yazılımı veya otomatik tahsilat aracı değildir.",
+        title: "Ev sahibi zam istediğinde ne bakılır?",
+        body: "İstenen kira, yenileme dönemi için açıklanan on iki aylık TÜFE tavanı ve sözleşmedeki artış maddesi yan yana konur. Clause bu karşılaştırmayı ve ev sahibine mesajı çıkarır; ödeme takip yazılımı değildir. Dosya asistanında kalır, sonraki zam aynı yerden gider.",
       },
       {
         title: "Ev sahibi tahliye maddesi ve taahhütname",
