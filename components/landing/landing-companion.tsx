@@ -73,7 +73,7 @@ export function LandingCompanion() {
             }
           >
             <Link href="/giris?kayit=1&next=/hesabim">
-              Ücretsiz hesap oluşturun
+              Kayıt ol
             </Link>
           </Button>
         </div>

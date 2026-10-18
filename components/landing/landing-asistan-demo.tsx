@@ -60,7 +60,7 @@ export function LandingAsistanDemo() {
             }
           >
             <Link href="/giris?kayit=1&next=/asistan">
-              Hesap oluştur
+              Kayıt ol
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
