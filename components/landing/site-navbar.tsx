@@ -183,7 +183,7 @@ export function SiteNavbar() {
         asChild
       >
         <Link href="/giris?kayit=1" prefetch={true}>
-          Ücretsiz kayıt
+          Kayıt ol
         </Link>
       </Button>
     </div>
@@ -285,7 +285,7 @@ export function SiteNavbar() {
                     onClick={closeMobile}
                     prefetch={true}
                   >
-                    Ücretsiz kayıt ol
+                    Kayıt ol
                   </Link>
                 </Button>
               )}

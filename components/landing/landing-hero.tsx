@@ -71,7 +71,7 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
               asChild
             >
               <a href="/giris?kayit=1&next=/asistan">
-                Hesap oluştur — asistanın kalsın
+                Kayıt ol
               </a>
             </Button>
           </div>
