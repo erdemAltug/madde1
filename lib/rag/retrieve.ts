@@ -7,7 +7,13 @@ import {
   personaCategoryFilter,
 } from "@/lib/rag/persona-boost";
 import { buildCiteLabel } from "@/lib/rag/cite";
-import type { LegalGrounding, RagHit } from "@/lib/rag/types";
+import {
+  buildLightEmbedText,
+  expandLegalQuery,
+  parseStatuteRefs,
+} from "@/lib/rag/query-signals";
+import { blendRetrievalScore, lexicalOverlap } from "@/lib/rag/rerank";
+import type { LegalGrounding, RagHit, RagHitType } from "@/lib/rag/types";
 
 const MATCH_THRESHOLD = 0.42;
 const LAW_PER_QUERY = 3;
@@ -53,17 +59,39 @@ export async function retrieveLegalGrounding(
   const mode = opts.mode ?? "full";
   const filterCategory = personaCategoryFilter(persona);
 
+  const statuteRefs = parseStatuteRefs(opts.contractText).slice(0, 3);
+  const expansion = expandLegalQuery(opts.contractText);
   const queries =
     mode === "light"
-      ? [opts.contractText.slice(0, 2500)]
+      ? [buildLightEmbedText(opts.contractText)]
       : [
           ...extractContractQueries(opts.contractText, { maxQueries: 3 }),
-          ...personaBoostQueries(persona).slice(0, 2),
-        ].slice(0, 5);
+          ...personaBoostQueries(persona).slice(0, expansion ? 1 : 2),
+          ...(expansion ? [expansion] : []),
+        ]
+          .filter((q) => q.trim().length > 0)
+          .slice(0, 5);
 
-  if (queries.length === 0) return empty;
+  if (queries.length === 0 && statuteRefs.length === 0) return empty;
 
   const hitMap = new Map<string, RagHit>();
+
+  await Promise.all(
+    statuteRefs.map(async (ref) => {
+      const { data, error } = await supabase.rpc("lookup_law_articles_by_madde", {
+        filter_kanun_no: ref.kanunNo,
+        filter_madde_no: ref.maddeNo,
+        match_count: 2,
+      });
+      if (error) {
+        console.error("[rag] lookup_law_articles_by_madde", error.message);
+        return;
+      }
+      for (const row of (data || []) as MatchRow[]) {
+        mergeHit(hitMap, rowToHit(row, "kanun_maddesi", true));
+      }
+    }),
+  );
 
   await Promise.all(
     queries.map(async (q) => {
@@ -93,16 +121,29 @@ export async function retrieveLegalGrounding(
       }
 
       for (const row of (lawRes.data || []) as MatchRow[]) {
-        mergeHit(hitMap, rowToHit(row, "kanun_maddesi"));
+        mergeHit(hitMap, rowToHit(row, "kanun_maddesi", false));
       }
       for (const row of (emsalRes.data || []) as MatchRow[]) {
-        mergeHit(hitMap, rowToHit(row, "emsal_karar"));
+        mergeHit(hitMap, rowToHit(row, knowledgeHitType(row), false));
       }
     }),
   );
 
+  const rankQuery = `${opts.contractText.slice(0, 500)}\n${expansion}`;
   const hits = [...hitMap.values()]
-    .sort((a, b) => b.similarity - a.similarity)
+    .sort(
+      (a, b) =>
+        blendRetrievalScore(
+          b.similarity,
+          lexicalOverlap(rankQuery, b.content),
+          Boolean(b.exact),
+        ) -
+        blendRetrievalScore(
+          a.similarity,
+          lexicalOverlap(rankQuery, a.content),
+          Boolean(a.exact),
+        ),
+    )
     .slice(0, MAX_TOTAL_HITS);
 
   if (hits.length === 0) return empty;
@@ -118,14 +159,32 @@ export async function retrieveLegalGrounding(
   };
 }
 
+function knowledgeHitType(row: MatchRow): RagHitType {
+  const md = row.metadata ?? {};
+  const esas = md.esas_no ?? md.esas ?? md.karar_no ?? md.kararNo;
+  const source = (row.source || "").toLocaleLowerCase("tr-TR");
+  if (
+    (esas != null && String(esas).trim()) ||
+    source.includes("yargıtay") ||
+    source.includes("yargitay") ||
+    source.includes("danıştay") ||
+    source.includes("danistay")
+  ) {
+    return "emsal_karar";
+  }
+  return "hukuki_not";
+}
+
 function rowToHit(
   row: MatchRow,
   type: RagHit["type"],
+  exact: boolean,
 ): RagHit {
   const content = (row.full_content || row.content || "").trim();
   return {
     id: row.id,
     type,
+    exact,
     content: content.slice(0, MAX_CONTENT_CHARS),
     category: row.category,
     source: row.source,
@@ -150,10 +209,13 @@ function mergeHit(map: Map<string, RagHit>, hit: RagHit) {
 
 function formatGroundingBlock(hits: RagHit[], allowedCites: string[]): string {
   const lines = hits.map((h, i) => {
-    const header =
+    const kind =
       h.type === "kanun_maddesi"
-        ? `### Kaynak ${i + 1} — KANUN [${h.citeLabel}] (benzerlik ${h.similarity.toFixed(2)})`
-        : `### Kaynak ${i + 1} — EMSAL [${h.citeLabel}] (benzerlik ${h.similarity.toFixed(2)})`;
+        ? "KANUN"
+        : h.type === "emsal_karar"
+          ? "EMSAL"
+          : "NOT";
+    const header = `### Kaynak ${i + 1} — ${kind} [${h.citeLabel}] (benzerlik ${h.similarity.toFixed(2)})`;
     const metaBits = [
       h.source ? `Kaynak: ${h.source}` : null,
       h.category ? `Kategori: ${h.category}` : null,
@@ -172,7 +234,8 @@ Kurallar:
 1) Listede olmayan kanun madde numarası UYDURMA.
 2) Bağlam yetersizse "bu noktada doğrulanmış madde atıfı yok; genel risk değerlendirmesi" yaz.
 3) Her kritik riskte mümkünse ilgili [atıf etiketi] kullan.
-4) Emsal kararları bağlayıcı kanun gibi sunma; "yargı pratiği / emsal eğilimi" diye nitelendir.
+4) EMSAL satırını bağlayıcı kanun gibi sunma; "yargı pratiği" diye nitelendir.
+5) NOT satırı soru-cevap notudur; madde numarası gibi yazma.
 
 ${lines.join("\n\n---\n\n")}`;
 }

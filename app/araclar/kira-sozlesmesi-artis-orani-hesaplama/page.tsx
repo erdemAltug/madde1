@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   keywords: [
     "kira zammı yasal mı",
     "kira artış hesaplama 2026",
-    "kira takip raporu",
+    "kira artış oranı hesaplama",
     "kira sözleşmesi artış oranı hesaplama",
     "ücretsiz kira tarama",
     "Clause",

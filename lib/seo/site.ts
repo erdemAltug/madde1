@@ -31,24 +31,20 @@ export const defaultHomeMetadata: Metadata = {
   description:
     "Sözleşme tuzaklarını tarayın, dilekçe taslağı alın, kira ve iş hesaplarını ücretsiz yapın. Clause kişisel hukuk asistanınız; kayıtla rapor ve arşiv sizde kalır.",
   keywords: [
-    "yapay zeka hukuk asistanı",
+    "ücretsiz hukuk asistanı",
     "ücretsiz sözleşme analizi",
     "sözleşme tuzakları",
     "dilekçe hazırlama",
-    "kira zammı yasal mı",
-    "kıdem tazminatı hesaplama",
-    "tahliye taahhüdü kontrol",
-    "kira sözleşmesi analizi",
-    "iş sözleşmesi analizi",
-    "Clause AI",
+    "Clause",
   ],
   alternates: {
     canonical: absoluteUrl("/"),
   },
   openGraph: {
-    title: "Clause — Ücretsiz kişisel hukuk asistanı",
+    title:
+      "Ücretsiz hukuk asistanı: sözleşme tara, dilekçe yaz 2026 | Clause",
     description:
-      "Sözleşme tara, dilekçe yaz, günlük hukuki işlerini kontrol et. Detaylı rapor hesapla ücretsiz.",
+      "Sözleşme tuzaklarını tarayın, dilekçe taslağı alın, kira ve iş hesaplarını ücretsiz yapın.",
     url: absoluteUrl("/"),
     siteName: SITE_NAME,
     locale: "tr_TR",

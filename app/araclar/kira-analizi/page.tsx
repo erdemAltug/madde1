@@ -12,14 +12,14 @@ export const metadata = buildToolMetadata({
   topic: "kira artışı yasal tavanı",
   path,
   keywords: [
-    "ev sahibi yüzde kaç zam yapabilir",
+    "ev sahibi fazla zam istedi",
+    "kira zammı itiraz mesajı",
+    "kiracı cevap taslağı",
     "kira artışı yasal tavan",
-    "kira zammı yasal mı",
-    "kira takip raporu",
   ],
-  titleOverride: "Kira zammı yasal mı? 2026 tavan + ücretsiz cevap taslağı",
+  titleOverride: "Ev sahibi fazla zam istedi mi? Ücretsiz cevap taslağı 2026",
   descriptionOverride:
-    "Ev sahibi fazla zam mı istedi? 2026 TÜFE tavanını hesaplayın, haklı/haksız uyarısı ve WhatsApp cevabı alın. Ücretsiz — Clause.",
+    "İstenen zammı 2026 tavanıyla karşılaştırın, haklı/haksız uyarısı ve ev sahibine WhatsApp cevabı alın. Ücretsiz — Clause.",
 });
 
 const faqs = [
@@ -45,13 +45,20 @@ export default function KiraAnaliziPage() {
     <ToolPageShell
       path={path}
       breadcrumbLabel="Kira Analizi"
-      h1="Kira zammı yasal mı? 2026 tavan + cevap taslağı"
+      h1="Ev sahibi fazla zam istedi mi?"
       bottomPad
       intro={
         <>
           Mevcut kiranızı, istenen zammı ve TÜFE tavanını girin. Yasal üst
           sınırı, haklı/haksız uyarısını ve ev sahibine atılacak cevap metnini
           anında alın.{" "}
+          <Link
+            href="/araclar/kira-sozlesmesi-artis-orani-hesaplama"
+            className="font-semibold text-[#005BEA] hover:underline"
+          >
+            Kira zammı yasal mı?
+          </Link>
+          {" · "}
           <Link
             href="/rehber/kiraci-haklari"
             className="font-semibold text-[#005BEA] hover:underline"

@@ -4,13 +4,16 @@ import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { IhbarTazminatiCalculator } from "@/components/growth/severance-calculators";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { IHBAR_TAZMINATI_TOOL_PATH } from "@/lib/seo/free-tools-routes";
+import {
+  IHBAR_TAZMINATI_TOOL_PATH,
+  KIDEM_IHBAR_TOOL_PATH,
+} from "@/lib/seo/free-tools-routes";
 import { buildHowToJsonLd } from "@/lib/seo/faq-schema";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = IHBAR_TAZMINATI_TOOL_PATH;
-const canonical = absoluteUrl(path);
+const canonical = absoluteUrl(KIDEM_IHBAR_TOOL_PATH);
 const title = "İhbar tazminatı hesaplama 2026 — ücretsiz tahmini araç";
 
 export const metadata: Metadata = {

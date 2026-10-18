@@ -72,7 +72,7 @@ export default function SozlesmeTuzakTaramaPage() {
             Günlük hukuk · Sözleşme
           </p>
           <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Sözleşmedeki 3 gizli tuzak
+            Sözleşmede tuzak var mı?
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
             İmza öncesi hızlı ön tarama. Derin analiz için{" "}

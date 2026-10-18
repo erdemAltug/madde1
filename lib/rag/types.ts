@@ -1,4 +1,4 @@
-export type RagHitType = "kanun_maddesi" | "emsal_karar";
+export type RagHitType = "kanun_maddesi" | "emsal_karar" | "hukuki_not";
 
 export type RagHit = {
   id: string;
@@ -10,6 +10,8 @@ export type RagHit = {
   metadata?: Record<string, unknown> | null;
   /** UI / prompt atıf etiketi — örn. TBK m.344 veya Emsal #ab12 */
   citeLabel: string;
+  /** metadata madde eşleşmesi vektör skorunun önüne geçer */
+  exact?: boolean;
 };
 
 export type LegalGrounding = {

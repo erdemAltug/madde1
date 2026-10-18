@@ -90,7 +90,7 @@ export default function TahliyeGecerlilikPage() {
           <p>
             İlgili sayfalar:{" "}
             <Link href="/araclar/kira-analizi">kira analizi</Link>,{" "}
-            <Link href="/sozlesme-analizi/kira-sozlesmesi-analizi">
+            <Link href="/kira-sozlesmesi-analizi">
               kira sözleşmesi AI taraması
             </Link>
             ,{" "}
@@ -104,7 +104,7 @@ export default function TahliyeGecerlilikPage() {
         <TahliyeCheckWidget />
         <ToolContractScanCta
           source={path}
-          href="/sozlesme-analizi/kira-sozlesmesi-analizi"
+          href="/kira-sozlesmesi-analizi"
           title="Taahhütle birlikte kira sözleşmesinde haksız madde var mı?"
           body="Kontratını yapıştır, 15 saniyede tarayalım."
         />

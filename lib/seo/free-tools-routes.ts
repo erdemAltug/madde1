@@ -49,19 +49,29 @@ export type FreeToolNavItem = {
 
 export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
   {
-    href: KIRA_ANALIZI_TOOL_PATH,
-    label: "Kira zammı & kiracı hakları analizi",
-    description: "TÜFE tavan + ev sahibine WhatsApp/e-posta cevabı.",
+    href: KIRA_ARTIS_TOOL_PATH,
+    label: "Kira zammı yasal mı?",
+    description: "2026 tavan hesabı — ücretsiz.",
   },
   {
     href: KIDEM_IHBAR_TOOL_PATH,
-    label: "Kıdem & ihbar tazminatı hesaplama",
+    label: "Kıdem ve ihbar tazminatı hesaplama",
     description: "İşten çıkarma / istifa senaryoları ve haklı fesih listesi.",
   },
   {
+    href: TAHLIYE_TOOL_PATH,
+    label: "Tahliye taahhüdü geçerli mi?",
+    description: "Tarih, imza çelişkisi ön kontrolü + AI tarama.",
+  },
+  {
     href: SOZLESME_TUZAK_TOOL_PATH,
-    label: "Sözleşmede 3 gizli tuzak taraması",
-    description: "Kırmızı / sarı / yeşil AI ön tarama.",
+    label: "Sözleşmede tuzak var mı?",
+    description: "Kırmızı / sarı / yeşil ön tarama.",
+  },
+  {
+    href: KIRA_ANALIZI_TOOL_PATH,
+    label: "Ev sahibine zam cevap taslağı",
+    description: "Tavan karşılaştırması ve WhatsApp/e-posta cevabı.",
   },
   {
     href: FREELANCE_CHECKLIST_TOOL_PATH,
@@ -72,21 +82,6 @@ export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
     href: DILEKCE_TOOL_PATH,
     label: "Dilekçe & ihtarname oluşturucu",
     description: "Tüketici, kira ve depozito taslakları.",
-  },
-  {
-    href: KIRA_ARTIS_TOOL_PATH,
-    label: "Kira sözleşmesi artış oranı hesaplama",
-    description: "TBK bağlamında tahmini yeni kira — ücretsiz hesaplayıcı.",
-  },
-  {
-    href: KIDEM_TAZMINATI_TOOL_PATH,
-    label: "Kıdem tazminatı hesaplama",
-    description: "Brüt maaş ve kıdeme göre tahmini kıdem tazminatı.",
-  },
-  {
-    href: IHBAR_TAZMINATI_TOOL_PATH,
-    label: "İhbar tazminatı hesaplama",
-    description: "İhbar süresine göre tahmini ihbar tazminatı.",
   },
   {
     href: FAZLA_MESAI_TOOL_PATH,
@@ -112,11 +107,6 @@ export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
     href: DAMGA_VERGISI_TOOL_PATH,
     label: "Damga vergisi hesaplama",
     description: "Kira ve sözleşme bedeli üzerinden kabaca damga tahmini.",
-  },
-  {
-    href: TAHLIYE_TOOL_PATH,
-    label: "Tahliye taahhüdü geçerlilik kontrolü",
-    description: "Tarih, imza çelişkisi ön kontrolü + AI tarama.",
   },
 ];
 

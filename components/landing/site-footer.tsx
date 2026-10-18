@@ -13,20 +13,20 @@ import { CONTACT_EMAIL } from "@/lib/site/contact";
 
 const POPULAR_SEARCHES = [
   {
-    label: "Yapay zeka hukuk asistanı",
-    href: "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
-  },
-  {
-    label: "Yapay zeka sözleşme analizi",
-    href: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
-  },
-  {
-    label: "Kira artış hesaplama",
+    label: "Kira zammı yasal mı?",
     href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
   },
   {
-    label: "Tahliye taahhütnamesi kontrol",
+    label: "Kıdem ve ihbar hesaplama",
+    href: "/araclar/kidem-ihbar-tazminati-hesaplama",
+  },
+  {
+    label: "Tahliye taahhüdü geçerli mi?",
     href: "/araclar/tahliye-taahhudu-gecerlilik-kontrolu",
+  },
+  {
+    label: "Sözleşmede tuzak var mı?",
+    href: "/araclar/sozlesme-tuzak-tarama",
   },
   {
     label: "Kiracı hakları rehberi",
@@ -38,11 +38,7 @@ const POPULAR_SEARCHES = [
   },
   {
     label: "Kira sözleşmesi analizi",
-    href: "/sozlesme-analizi/kira-sozlesmesi-analizi",
-  },
-  {
-    label: "Kıdem tazminatı hesaplama",
-    href: "/araclar/kidem-tazminati-hesaplama",
+    href: "/kira-sozlesmesi-analizi",
   },
   {
     label: "Brüt net maaş hesaplama",

@@ -2,6 +2,7 @@
  * Merkezi iç linkleme haritası — B2C hukuk SEO için konu kümeleri.
  */
 
+import { CANONICAL_OVERRIDES } from "@/lib/seo/canonical-winners";
 import { REHBER_SLUGS, getRehberConfig } from "@/lib/seo/rehber-pages";
 import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
 
@@ -510,8 +511,28 @@ const ALL_LINKS: InternalLink[] = [
   ...YAPAY_ZEKA_HUKUK_LINKS,
   {
     href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
-    label: "Kira artış hesaplama",
-    description: "Ücretsiz hesaplayıcı.",
+    label: "Kira zammı yasal mı?",
+    description: "2026 ücretsiz tavan hesabı.",
+  },
+  {
+    href: "/araclar/kidem-ihbar-tazminati-hesaplama",
+    label: "Kıdem ve ihbar tazminatı hesaplama",
+    description: "2026 ücretsiz kıdem ve ihbar tahmini.",
+  },
+  {
+    href: "/araclar/sozlesme-tuzak-tarama",
+    label: "Sözleşmede tuzak var mı?",
+    description: "Ücretsiz kırmızı, sarı, yeşil tarama.",
+  },
+  {
+    href: "/kira-sozlesmesi-analizi",
+    label: "Kira sözleşmesi analizi",
+    description: "Kira kontratı risk taraması.",
+  },
+  {
+    href: "/is-sozlesmesi-analizi",
+    label: "İş sözleşmesi analizi",
+    description: "İş kontratı risk taraması.",
   },
   {
     href: "/araclar/damga-vergisi-hesaplama",
@@ -569,7 +590,8 @@ const ALL_LINKS: InternalLink[] = [
 function resolveLinks(hrefs: string[]): InternalLink[] {
   const seen = new Set<string>();
   const result: InternalLink[] = [];
-  for (const href of hrefs) {
+  for (const raw of hrefs) {
+    const href = CANONICAL_OVERRIDES[raw] ?? raw;
     if (seen.has(href)) continue;
     seen.add(href);
     const found = ALL_LINKS.find((l) => l.href === href);

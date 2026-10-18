@@ -5,6 +5,7 @@ import { titleFromFirstMessage } from "@/lib/asistan/types";
 import {
   RAG_ANALYSIS_OUTPUT_RULES,
   retrieveLegalGrounding,
+  verifyCitations,
 } from "@/lib/rag";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
 import { bearerFromRequest, getSupabaseAuthed } from "@/lib/supabase/authed";
@@ -154,6 +155,11 @@ export async function POST(req: Request) {
           err instanceof Error ? err.message.slice(0, 300) : err,
         );
       }
+    }
+
+    const citationCheck = verifyCitations(text, citations);
+    if (citationCheck.ungrounded.length > 0) {
+      text += `\n\nDoğrulanamayan atıf (bu turda bağlama düşmedi): ${citationCheck.ungrounded.join(", ")}. Bu maddeleri kesin dayanak saymayın.`;
     }
 
     if (!text) {

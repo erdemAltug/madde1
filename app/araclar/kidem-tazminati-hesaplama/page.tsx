@@ -4,13 +4,16 @@ import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { KidemTazminatiCalculator } from "@/components/growth/severance-calculators";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { KIDEM_TAZMINATI_TOOL_PATH } from "@/lib/seo/free-tools-routes";
+import {
+  KIDEM_IHBAR_TOOL_PATH,
+  KIDEM_TAZMINATI_TOOL_PATH,
+} from "@/lib/seo/free-tools-routes";
 import { buildHowToJsonLd } from "@/lib/seo/faq-schema";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = KIDEM_TAZMINATI_TOOL_PATH;
-const canonical = absoluteUrl(path);
+const canonical = absoluteUrl(KIDEM_IHBAR_TOOL_PATH);
 const title = "Kıdem tazminatı hesaplama 2026 — ücretsiz tahmini araç";
 
 export const metadata: Metadata = {

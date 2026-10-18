@@ -75,7 +75,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.92,
     },
-    ...FREE_TOOLS_SITEMAP_PATHS.map((p) => ({
+    ...FREE_TOOLS_SITEMAP_PATHS.filter((p) => !isCanonicalLoser(p)).map((p) => ({
       url: `${SITE_URL}${p}`,
       lastModified: lastMod,
       changeFrequency: "weekly" as const,

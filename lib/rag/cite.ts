@@ -1,6 +1,6 @@
 /** Retrieval sonucundan okunabilir atıf etiketi üretir. */
 export function buildCiteLabel(input: {
-  type: "kanun_maddesi" | "emsal_karar";
+  type: "kanun_maddesi" | "emsal_karar" | "hukuki_not";
   content: string;
   category?: string | null;
   source?: string | null;
@@ -12,7 +12,7 @@ export function buildCiteLabel(input: {
   const maddeNo = pickStr(md, ["madde_no", "maddeNo", "madde"]);
   const kanunAdi = pickStr(md, ["kanun_adi", "kanunAdi"]);
 
-  if (maddeNo) {
+  if (input.type === "kanun_maddesi" && maddeNo) {
     const short =
       shortLawName(kanunAdi) ||
       shortLawName(input.source) ||
@@ -22,13 +22,19 @@ export function buildCiteLabel(input: {
     return `${short} m.${maddeNo}`;
   }
 
-  const fromText = parseMaddeFromText(input.content);
-  if (fromText) return fromText;
+  if (input.type === "kanun_maddesi") {
+    const fromText = parseMaddeFromText(input.content);
+    if (fromText) return fromText;
+  }
 
   if (input.type === "emsal_karar") {
     const esas = pickStr(md, ["esas_no", "esas", "karar_no"]);
     if (esas) return `Emsal ${esas}`;
     return `Emsal #${input.id.slice(0, 8)}`;
+  }
+
+  if (input.type === "hukuki_not") {
+    return `Not #${input.id.slice(0, 8)}`;
   }
 
   const src = (input.source || input.category || "Mevzuat").trim();

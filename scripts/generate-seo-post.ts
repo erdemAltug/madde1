@@ -52,7 +52,7 @@ const TOPIC_POOLS: Topic[] = [
     id: "is-istifa-kidem",
     pool: "is",
     query: "Kendi isteğiyle ayrılan işçi kıdem tazminatı alabilir mi?",
-    ctaHref: "/araclar/kidem-tazminati-hesaplama",
+    ctaHref: "/araclar/kidem-ihbar-tazminati-hesaplama",
   },
   {
     id: "is-mobbing-fesih",
@@ -64,7 +64,7 @@ const TOPIC_POOLS: Topic[] = [
     id: "is-ihbar-hesap",
     pool: "is",
     query: "İhbar süresi ve ihbar tazminatı hesaplama",
-    ctaHref: "/araclar/ihbar-tazminati-hesaplama",
+    ctaHref: "/araclar/kidem-ihbar-tazminati-hesaplama",
   },
   // Tüketici Hukuku
   {
@@ -83,7 +83,7 @@ const TOPIC_POOLS: Topic[] = [
     id: "is-istifa-kidem-2026",
     pool: "is",
     query: "Kendi isteğiyle ayrılan işçi kıdem tazminatı alabilir mi 2026?",
-    ctaHref: "/araclar/kidem-tazminati-hesaplama",
+    ctaHref: "/araclar/kidem-ihbar-tazminati-hesaplama",
   },
   {
     id: "is-issizlik-maasi-2026",
@@ -95,7 +95,7 @@ const TOPIC_POOLS: Topic[] = [
     id: "is-kidem-tavani-2026",
     pool: "is",
     query: "Kıdem tazminatı tavanı 2026 ne kadar?",
-    ctaHref: "/araclar/kidem-tazminati-hesaplama",
+    ctaHref: "/araclar/kidem-ihbar-tazminati-hesaplama",
   },
   {
     id: "is-fazla-mesai-hesap",
