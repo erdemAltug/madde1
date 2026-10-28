@@ -11,8 +11,8 @@ type Props = {
 };
 
 const trustItems = [
-  { icon: Lock, label: "KVKK & GDPA Uyumlu" },
-  { icon: Shield, label: "256-bit Uçtan Uca Şifreleme" },
+  { icon: Lock, label: "KVKK uyumlu" },
+  { icon: Shield, label: "TLS ile şifreli aktarım" },
   { icon: Trash2, label: "Misafir tarama silinir; hesapta sen tutarsın" },
 ] as const;
 
@@ -38,7 +38,7 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
         <div className="flex flex-col justify-center animate-in fade-in slide-in-from-bottom-4 duration-300">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-[var(--cta-primary)]">
             <Zap className="h-3.5 w-3.5" />
-            clause.ai — Türk hukuku için kişisel asistan
+            Clause — Türk hukuku için kişisel asistan
           </div>
           <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-deep-navy sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
             Hukuki işlerinizde yanınızda — tarayın, sorun, taslaklayın

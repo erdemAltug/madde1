@@ -8,17 +8,14 @@ import { LandingHero } from "@/components/landing/landing-hero";
 import { LandingAsistanDemo } from "@/components/landing/landing-asistan-demo";
 import { LandingWhyAssistant } from "@/components/landing/landing-why-assistant";
 import { LandingSecurityStrip } from "@/components/landing/landing-security-strip";
-import { LandingTrustBand } from "@/components/landing/landing-trust-band";
 import { LandingTryStrip } from "@/components/landing/landing-try-strip";
 import { LandingHowItWorks } from "@/components/landing/landing-how-it-works";
 import { LandingCompanion } from "@/components/landing/landing-companion";
-import { LandingFeaturesGrid } from "@/components/landing/landing-features-grid";
 import { PricingSection } from "@/components/marketing/pricing-section";
 import { FreeToolsSection } from "@/components/landing/free-tools-section";
 import { BottomCtaBand } from "@/components/landing/bottom-cta-band";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { CommonRisksSection } from "@/components/landing/common-risks-section";
-import { SeoPersonaSections } from "@/components/landing/seo-persona-sections";
 import type { PersonaId } from "@/lib/personas";
 
 function parsePersona(raw: string | null): PersonaId {
@@ -64,13 +61,10 @@ export function ClauseLanding() {
         <LandingAsistanDemo />
         <LandingWhyAssistant />
         <LandingSecurityStrip />
-        <LandingTrustBand />
         <LandingTryStrip onOpenAnalyzer={() => setAnalyzerOpen(true)} />
         <LandingHowItWorks />
         <LandingCompanion />
-        <LandingFeaturesGrid />
         <CommonRisksSection />
-        <SeoPersonaSections />
         <FreeToolsSection />
         <div className="border-t border-slate-200/60 bg-gradient-to-b from-[#F8FAFC] via-slate-50/50 to-[#F8FAFC]">
           <PricingSection />

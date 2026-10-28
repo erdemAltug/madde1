@@ -46,7 +46,6 @@ export function HomeStructuredData() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
-    alternateName: "Clause.ai",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",

@@ -14,7 +14,7 @@ const reasons = [
   },
   {
     icon: Landmark,
-    title: "Bilgi asimetresi kurumların lehinedir",
+    title: "Bilgi asimetrisi kurumların lehinedir",
     body: "Karşı taraf çoğu zaman hazır şablon ve hukuk desteğiyle gelir. Bireyin aynı anda her maddeyi okuması beklenemez. Erken, sade dilde uyarı; müzakere ve gerekirse avukata gitme kararını güçlendirir.",
   },
   {

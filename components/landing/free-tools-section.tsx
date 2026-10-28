@@ -9,12 +9,6 @@ import { TahliyeCheckWidget } from "@/components/growth/tahliye-check-widget";
 import { Reveal } from "@/components/landing/reveal";
 import { Button } from "@/components/ui/button";
 import {
-  BENTO_SEO_COMING_SOON,
-  BENTO_SEO_DAMGA,
-  BENTO_SEO_KIRA_ARTIS,
-  BENTO_SEO_TAHLIYE,
-} from "@/lib/seo/bento-tool-seo-copy";
-import {
   DAMGA_VERGISI_TOOL_PATH,
   KIRA_ANALIZI_TOOL_PATH,
   TAHLIYE_TOOL_PATH,
@@ -38,7 +32,6 @@ function ToolShell({
   indexPageHref,
   indexPageLabel,
   accentTint,
-  srSeoText,
   /** İçerik alanını uzatma — bento kira kartı gibi kompakt düzenler için */
   compact = false,
 }: {
@@ -54,7 +47,6 @@ function ToolShell({
   indexPageLabel?: string;
   accentTint?: string;
   /** Arama motorları / ekran okuyucu için uzun açıklama (görünmez) */
-  srSeoText?: string;
   compact?: boolean;
 }) {
   const [pulse, setPulse] = React.useState(false);
@@ -78,11 +70,6 @@ function ToolShell({
       <div className="flex gap-4">
         <div className={iconWrap}>{icon}</div>
         <div className="min-w-0 flex-1">
-          {srSeoText ? (
-            <p id={`${id}-seo`} className="sr-only">
-              {srSeoText}
-            </p>
-          ) : null}
           <h3 className="text-lg font-extrabold tracking-tight text-madde-ink">
             {title}
           </h3>
@@ -160,11 +147,11 @@ export function FreeToolsSection() {
               Ücretsiz araçlar
             </p>
             <h2 className="mt-3 text-balance text-3xl font-extrabold tracking-tight text-madde-ink sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
-              Anında değer: bento ızgarasında{" "}
-              <span className="text-[#005BEA]">hukuk + hesap</span>
+              Hesaplayın, kontrol edin,{" "}
+              <span className="text-[#005BEA]">kayıt gerekmez</span>
             </h2>
             <p className="mt-4 text-base font-semibold text-slate-600 sm:text-lg">
-              Kira, damga ve tahliye ön kontrolü — modern arayüz, net geri bildirim.
+              Kira zammı, damga vergisi ve tahliye taahhüdü için hızlı ön kontrol.
             </p>
           </div>
         </Reveal>
@@ -185,7 +172,6 @@ export function FreeToolsSection() {
               }}
               className="h-full"
               compact
-              srSeoText={BENTO_SEO_KIRA_ARTIS}
               indexPageHref={KIRA_ANALIZI_TOOL_PATH}
               indexPageLabel="Kira analizi — tavan kontrolü ve cevap metni"
             >
@@ -214,7 +200,6 @@ export function FreeToolsSection() {
                 focusIn(damgaRef);
               }}
               className="h-full"
-              srSeoText={BENTO_SEO_DAMGA}
               indexPageHref={DAMGA_VERGISI_TOOL_PATH}
               indexPageLabel="Damga vergisi hesaplama — tam sayfa"
             >
@@ -232,13 +217,12 @@ export function FreeToolsSection() {
             <ToolShell
               id="arac-tahliye"
               title="Tahliye taahhütnamesi"
-              description="AI ile hızlı ön kontrol — mavi vurgulu diyalog."
+              description="Taahhüdünüz geçerli mi? Tarih, imza ve şekil şartlarını kontrol edin."
               icon={<FileWarning className="h-5 w-5" aria-hidden />}
               showTryButton={false}
               onTry={() => {}}
               className="h-full"
               accentTint="rgba(0, 91, 234, 0.04)"
-              srSeoText={BENTO_SEO_TAHLIYE}
               indexPageHref={TAHLIYE_TOOL_PATH}
               indexPageLabel="Tahliye taahhütnamesi yapay zeka — tam sayfa"
             >
@@ -248,22 +232,19 @@ export function FreeToolsSection() {
 
           <Reveal delay={0.12} className="h-full md:col-span-2">
             <div className="tool-bento-card flex h-full min-h-[160px] flex-col justify-center rounded-3xl border-2 border-dashed border-[#005BEA]/35 bg-gradient-to-br from-[#005BEA]/[0.07] via-white to-violet-50/50 p-8 text-center sm:text-left">
-              <p id="arac-yakinda-seo" className="sr-only">
-                {BENTO_SEO_COMING_SOON}
-              </p>
               <p className="text-base font-extrabold text-madde-ink">
-                Daha fazla araç yakında
+                Tüm ücretsiz araçlar
               </p>
               <p className="mt-2 text-sm font-semibold text-slate-600">
-                Kıdem, KVKK özeti ve sözleşme şablonları — aynı bento
-                deneyiminde.
+                Kıdem ve ihbar tazminatı, fazla mesai, yıllık izin, brüt-net maaş
+                ve işsizlik maaşı hesaplayıcıları.
               </p>
               <Button
                 asChild
                 variant="cta"
                 className="mt-5 w-full rounded-xl sm:w-auto sm:self-start"
               >
-                <Link href="/#fiyatlandirma">Tam analize geç</Link>
+                <Link href="/araclar">Araçlara göz at</Link>
               </Button>
             </div>
           </Reveal>
