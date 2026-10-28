@@ -198,7 +198,7 @@ export const REHBER_DAILY_WAVE_2_PAGES = [
       { question: "Borcu ödedim ama kesinti sürüyor; ne yapmalıyım?", answer: "Güncel dosya hesabını ve ödemenin dosyaya işlendiğini doğrulayın. İcra dairesinin kapanış veya kesintiyi durdurma kaydını işverenle karşılaştırın; dekontları saklayın." },
       { question: "Maaş haczi işten çıkarma nedeni midir?", answer: "Maaş haczinin varlığı tek başına otomatik bir fesih sonucu doğurmaz. İşverenin gerekçesi ve somut koşullar iş hukuku bakımından ayrıca değerlendirilmelidir." },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     ctaLabel: "İş sözleşmesi risklerini inceleyin",
   }),
   createDailyPage({
@@ -258,7 +258,7 @@ export const REHBER_DAILY_WAVE_2_PAGES = [
       { question: "Dilekçeyi e-postayla göndermek yeterli mi?", answer: "E-postanın ulaştığı ve içeriğinin değişmediği ispatlanabilmelidir; sözleşme veya özel durum daha güçlü bir bildirim yöntemi gerektirebilir. Kurumsal kaydı ve gönderim kanıtını saklayın." },
       { question: "İstifadan vazgeçebilir miyim?", answer: "Beyan işverene ulaştıktan sonra tek taraflı geri alma her durumda mümkün olmayabilir. İşverenle yazılı anlaşma veya somut olayın özellikleri belirleyicidir; hızlıca yazılı bildirim yapın." },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     ctaLabel: "İş sözleşmenizdeki riskleri kontrol edin",
   }),
   createDailyPage({
@@ -318,7 +318,7 @@ export const REHBER_DAILY_WAVE_2_PAGES = [
       { question: "Prim kesintisi de maaş kesintisi sayılır mı?", answer: "Primin kazanılma koşulları sözleşme, işyeri uygulaması ve performans ölçütlerine bağlıdır. Kazanılmış bir primle henüz koşulu oluşmamış değişken ödeme aynı değerlendirilmez." },
       { question: "Kesilen ücreti nasıl talep edebilirim?", answer: "Önce bordro, banka kaydı ve kesinti dayanağını toplayıp işverene yazılı başvurabilirsiniz. Sonraki yol ve zorunlu usuller talebin niteliğine göre değişeceğinden güncel hukuki değerlendirme alın." },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     ctaLabel: "İş sözleşmesi risklerini kontrol edin",
   }),
   createDailyPage({
@@ -378,7 +378,7 @@ export const REHBER_DAILY_WAVE_2_PAGES = [
       { question: "Ev sahibi depozitodan boya bedeli kesebilir mi?", answer: "Olağan eskime ile kiracının verdiği zarar ayrılmalıdır. Teslim tutanakları, kullanım süresi, fotoğraflar ve gerçek masraf belgeleri görülmeden otomatik kesinti sonucu çıkarılamaz." },
       { question: "Depozito iade edilmezse hangi belgeler gerekir?", answer: "Kira sözleşmesi, ödeme dekontu, giriş ve çıkış tutanakları, fotoğraflar, anahtar teslim kaydı ve yazılı iade talebi temel belgelerdir. Başvuru yolu somut uyuşmazlığa göre belirlenir." },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     ctaLabel: "Kira sözleşmenizi analiz edin",
   }),
   createDailyPage({
@@ -438,7 +438,7 @@ export const REHBER_DAILY_WAVE_2_PAGES = [
       { question: "Ev sahibi izinsiz girdiyse ne yapmalıyım?", answer: "Önce güvenliğinizi sağlayın, tarihli delilleri koruyun ve girişin tekrar edilmemesini yazılı bildirin. Olayın ağırlığına göre resmi başvuru ve hukuki destek seçeneklerini değerlendirin." },
       { question: "Su kaçağında ev sahibi kapıyı açtırabilir mi?", answer: "Yakın ve ciddi zarar tehlikesinde orantılı acil müdahale gerekebilir. Mümkünse kiracı ve yetkili birimler bilgilendirilmeli; müdahale yalnızca tehlikeyi giderecek kapsamda tutulmalıdır." },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     ctaLabel: "Kira sözleşmenizi kontrol edin",
   }),
   createDailyPage({
@@ -498,7 +498,7 @@ export const REHBER_DAILY_WAVE_2_PAGES = [
       { question: "Tamir ücretini kiradan düşebilir miyim?", answer: "Tek taraflı mahsup kira borcu tartışması yaratabilir. Sorumluluk ve tutar netleştirilip mümkünse ev sahibinin yazılı kabulü alınmadan kirayı eksik yatırmayın." },
       { question: "Ev sahibi kombiyi hiç tamir ettirmezse ne olur?", answer: "Arızanın konut kullanımına etkisi, bildirimler ve geçen süre önemlidir. Uygun başvuru yolu somut olaya göre değişir; yazılı kayıtlarla hukuki destek değerlendirin." },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     ctaLabel: "Kira sözleşmenizi analiz edin",
   }),
   createDailyPage({

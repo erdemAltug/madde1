@@ -242,7 +242,7 @@ export const BLOG_BATCH_3_POSTS: BlogPostConfig[] = [
         answer: "Tazminat ve ihtiyati tedbir talepleri gündeme gelebilir; avukat desteği şarttır.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
   }),
   blog({
     slug: "kira-sozlesmesi-ev-sahibi-kontrol-listesi",
@@ -269,7 +269,7 @@ export const BLOG_BATCH_3_POSTS: BlogPostConfig[] = [
         answer: "Hayır; yazılı sözleşme ve teslim tutanağı şarttır.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
   }),
   blog({
     slug: "ucretsiz-hukuk-asistani-2026-karsilastirma",

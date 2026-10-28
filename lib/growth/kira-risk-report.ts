@@ -89,7 +89,7 @@ export function buildKiraRiskReportMarkdown(input: KiraRiskReportInput): string 
     "## Önerilen sonraki adım",
     "",
     "- Kira sözleşmesinde **tahliye taahhüdü**, haksız artış formülü veya tek taraflı fesih maddesi olup olmadığını Clause ile tarayın.",
-    `- Analiz: https://${SITE_HOST}/sozlesme-analizi/kira-sozlesmesi-analizi`,
+    `- Analiz: https://${SITE_HOST}/kira-sozlesmesi-analizi`,
     "",
     "---",
     "",

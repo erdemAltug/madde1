@@ -252,7 +252,7 @@ export function IhbarTazminatiCalculator({
             </div>
             <ToolContractScanCta
               source="/araclar/ihbar-tazminati-hesaplama"
-              href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+              href="/is-sozlesmesi-analizi"
               highlight={`Tahmini ihbar tazminatınız ${formatTry(estimated)}.`}
               title="Sözleşmedeki bildirim ve fesih maddeleri kanuni süreyi daraltıyor mu?"
               body="İş sözleşmeni yapıştır — ihbar ve fesih maddelerini tarayalım."

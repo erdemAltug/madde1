@@ -126,7 +126,7 @@ export const REHBER_BATCH_3_PAGES = [
         answer: "Kefalet metnindeki kapsam ve süre belirleyicidir; genel kefalet ile sınırlı kefalet farklı sonuç doğurur.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-07-11",
   }),
   createRehberPage({
@@ -412,7 +412,7 @@ export const REHBER_BATCH_3_PAGES = [
         answer: "Şekil şartları ve TBK hükümleri birlikte değerlendirilir; ayrı rehberimize bakın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-07-11",
   }),
   createRehberPage({

@@ -173,7 +173,7 @@ export function StampTaxCalculator({
         {!embedded && hasTax ? (
           <ToolContractScanCta
             source="/araclar/damga-vergisi-hesaplama"
-            href="/sozlesme-analizi/kira-sozlesmesi-analizi"
+            href="/kira-sozlesmesi-analizi"
             highlight={`Tahmini damga ${tax.toLocaleString("tr-TR", { maximumFractionDigits: 2 })} TL.`}
             title="Sözleşmede gizli maliyet veya aleyhte madde var mı?"
             body="Kontratını yapıştır — hukuki riskleri de tarayalım (ücretsiz)."

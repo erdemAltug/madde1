@@ -178,7 +178,7 @@ export function TazminatHub() {
             </Link>
             ,{" "}
             <Link
-              href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+              href="/is-sozlesmesi-analizi"
               className="font-semibold text-[#005BEA] hover:underline"
             >
               iş sözleşmesi AI analizi
@@ -190,7 +190,7 @@ export function TazminatHub() {
 
       <ToolContractScanCta
         source="/araclar/kidem-ihbar-tazminati-hesaplama"
-        href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+        href="/is-sozlesmesi-analizi"
         className="mt-6"
         highlight={
           checks.size > 0

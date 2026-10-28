@@ -103,7 +103,7 @@ const PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "Sözleşme analizi sayfalarına git",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-06-02",
   },
   {
@@ -148,7 +148,7 @@ const PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "Kira sözleşmesi AI analizi",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-06-02",
   },
   {
@@ -180,7 +180,7 @@ const PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "İş sözleşmesi risk analizi",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-06-02",
   },
   {

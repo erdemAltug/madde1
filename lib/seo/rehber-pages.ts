@@ -78,7 +78,7 @@ const BASE_PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "Kira sözleşmenizi ücretsiz tarayın",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-05-01",
   },
   {
@@ -136,7 +136,7 @@ const BASE_PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "İş sözleşmenizi ücretsiz analiz edin",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-05-01",
   },
   {
@@ -293,7 +293,7 @@ const BASE_PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "Kira sözleşmesi depozito maddesini kontrol edin",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-05-01",
   },
   {
@@ -383,7 +383,7 @@ const BASE_PAGES: RehberPageConfig[] = [
       },
     ],
     ctaLabel: "İş sözleşmenizi analiz edin",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-05-01",
   },
   {

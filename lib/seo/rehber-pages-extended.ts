@@ -67,7 +67,7 @@ export const REHBER_EXTENDED_PAGES = [
           "Bazı hallerde geçerli olabilir ancak ispat zordur. Yazılı sözleşme her iki taraf için de güvence sağlar.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     ctaLabel: "Kira sözleşmesi analizi",
   }),
   createRehberPage({
@@ -95,7 +95,7 @@ export const REHBER_EXTENDED_PAGES = [
           "İşçinin açık rızası olmadan aleyhine köklü değişiklik yapılamaz. Yeni metni imzalamadan önce inceleyin.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     ctaLabel: "İş sözleşmesi risk analizi",
   }),
   createRehberPage({
@@ -184,7 +184,7 @@ export const REHBER_EXTENDED_PAGES = [
           "Haklı fesih ve tazminat talepleri somut delile bağlıdır. Hukuki destek alın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "kira-feshi-hakli-nedenler",
@@ -244,7 +244,7 @@ export const REHBER_EXTENDED_PAGES = [
         answer: "Değerlendirme daha sıkı yapılabilir; belgeyi imzalamadan önce uzman görüşü alın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "depozito-ne-kadar-alinir",
@@ -541,7 +541,7 @@ export const REHBER_EXTENDED_PAGES = [
         answer: "Kesinti ancak kanuni veya yazılı rızaya dayalı hallerde mümkündür.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "sozlesme-cezai-sart",
@@ -619,7 +619,7 @@ export const REHBER_EXTENDED_PAGES = [
         answer: "Kayıt tutulmazsa ispat zorlaşır; çalışma saatleri sözleşmede belirtilmeli.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "kira-sozlesmesi-sablon-riskleri",
@@ -645,6 +645,6 @@ export const REHBER_EXTENDED_PAGES = [
         answer: "Şekil güçlenir; içerik yine okunmalı ve güncellenmelidir.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
   }),
 ];

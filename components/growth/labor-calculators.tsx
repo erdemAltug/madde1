@@ -119,7 +119,7 @@ export function FazlaMesaiCalculator({
           {hasResult ? (
             <ToolContractScanCta
               source="/araclar/fazla-mesai-ucreti-hesaplama"
-              href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+              href="/is-sozlesmesi-analizi"
               highlight={`Fazla mesai alacağınız ${formatTry(estimated)} olarak hesaplandı.`}
               title='Ancak iş sözleşmenizde "Fazla mesai ücrete dahildir" maddesi geçerli mi?'
               body="İş sözleşmeni yapıştır — geçersiz fesih ve mesai maddelerini işaretleyelim (ücretsiz)."
@@ -247,7 +247,7 @@ export function YillikIzinCalculator({
         {hasResult ? (
           <ToolContractScanCta
             source="/araclar/yillik-izin-hesaplama"
-            href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+            href="/is-sozlesmesi-analizi"
             highlight={
               unusedDays > 0
                 ? `Kullanılmayan izin ücreti tahmini ${formatTry(unusedPay)}.`
