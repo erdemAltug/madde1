@@ -109,8 +109,8 @@ export function SiteNavbar() {
         className="hidden rounded-lg bg-[#005BEA] font-semibold text-white hover:bg-[#0046b8] sm:inline-flex"
         asChild
       >
-        <Link href="/asistan" prefetch={true}>
-          Asistan
+        <Link href="/panel" prefetch={true}>
+          Panelim
         </Link>
       </Button>
       <div className="relative" ref={userMenuRef}>
@@ -133,8 +133,15 @@ export function SiteNavbar() {
       {userMenuOpen ? (
         <div className="absolute right-0 top-full z-50 mt-2 w-48 rounded-xl border border-slate-200/60 bg-white py-2 shadow-lg shadow-slate-900/10">
           <Link
-            href="/asistan"
+            href="/panel"
             className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#005BEA] hover:bg-blue-50"
+            onClick={() => setUserMenuOpen(false)}
+          >
+            Hukuki hayatım
+          </Link>
+          <Link
+            href="/asistan"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-deep-navy"
             onClick={() => setUserMenuOpen(false)}
           >
             Hukuk Asistanı
@@ -250,8 +257,15 @@ export function SiteNavbar() {
                     </span>
                   </div>
                   <Link
-                    href="/asistan"
+                    href="/panel"
                     className="block rounded-md px-3 py-2 text-sm font-semibold text-[#005BEA] hover:bg-blue-50"
+                    onClick={closeMobile}
+                  >
+                    Hukuki hayatım
+                  </Link>
+                  <Link
+                    href="/asistan"
+                    className="block rounded-md px-3 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-50"
                     onClick={closeMobile}
                   >
                     Hukuk Asistanı

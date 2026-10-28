@@ -31,6 +31,7 @@ import { AnalyticsEvents } from "@/lib/analytics/events";
 import { buildInputAnalyticsProps } from "@/lib/analytics/input-props";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
 import { saveContractAnalysis } from "@/lib/inventory/save-analysis";
+import { KeyDatesCard } from "@/components/assistant/key-dates-card";
 
 export type ContractAnalyzerProps = {
   sharePath?: string;
@@ -493,6 +494,9 @@ export function ContractAnalyzer({
                 setDetailUnlocked(false);
               }}
             />
+            {analysisMd && !busy && lastInputRef.current ? (
+              <KeyDatesCard contractText={lastInputRef.current} className="mt-6" />
+            ) : null}
             </div>
           </div>
         </>

@@ -9,9 +9,12 @@ import { buildOnIncelemeRaporuMarkdown } from "@/lib/print/build-on-inceleme-rap
 import { openPrintMarkdown } from "@/lib/print/open-print-markdown";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
+import { KeyDatesCard } from "@/components/assistant/key-dates-card";
 
 type Props = {
   teaser: TeaserData;
+  /** Tarih çıkarma için taranan metin */
+  contractText?: string;
   isLoggedIn?: boolean;
   onAnalyzeAgain: () => void;
   onRequestFullReport: () => void;
@@ -19,6 +22,7 @@ type Props = {
 
 export function StepResults({
   teaser,
+  contractText,
   isLoggedIn,
   onAnalyzeAgain,
   onRequestFullReport,
@@ -39,6 +43,8 @@ export function StepResults({
         detailUnlocked={Boolean(isLoggedIn)}
         onPdfClick={openPdf}
       />
+
+      {contractText ? <KeyDatesCard contractText={contractText} /> : null}
 
       {isLoggedIn ? (
         <Button

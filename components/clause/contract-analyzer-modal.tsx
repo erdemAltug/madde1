@@ -261,6 +261,7 @@ export function ContractAnalyzerModal({
             {step === "results" && teaser ? (
               <StepResults
                 teaser={teaser}
+                contractText={contractText}
                 isLoggedIn={isLoggedIn}
                 onAnalyzeAgain={resetWizard}
                 onRequestFullReport={() => {
