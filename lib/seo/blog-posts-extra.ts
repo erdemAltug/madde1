@@ -144,7 +144,7 @@ export const BLOG_EXTRA_POSTS: BlogPostConfig[] = [
         answer: "Hayır; sözleşmenizi özel olarak inceletin veya AI ön tarama yapın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
   }),
   blog({
     slug: "ucretsiz-hukuki-danismanlik-ai",

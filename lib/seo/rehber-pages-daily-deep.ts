@@ -82,7 +82,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
       },
     ],
     ctaLabel: "İş sözleşmenizdeki izin maddelerini tarayın",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({
@@ -414,7 +414,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
       },
     ],
     ctaLabel: "Kira kontratınızı ön analiz edin",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({
@@ -497,7 +497,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
       },
     ],
     ctaLabel: "İş sözleşmenizdeki ücret maddesini tarayın",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({
@@ -580,7 +580,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
       },
     ],
     ctaLabel: "İş sözleşmesi risklerinizi önceden görün",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({
@@ -663,7 +663,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
       },
     ],
     ctaLabel: "Fazla çalışma maddenizi ön analiz edin",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({
@@ -746,7 +746,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
       },
     ],
     ctaLabel: "Kira sözleşmenizdeki tahliye risklerini görün",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({
@@ -912,7 +912,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
       },
     ],
     ctaLabel: "İş sözleşmenizi 15 başlıkta tarayın",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({

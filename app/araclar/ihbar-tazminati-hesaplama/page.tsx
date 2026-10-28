@@ -6,14 +6,13 @@ import { IhbarTazminatiCalculator } from "@/components/growth/severance-calculat
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import {
   IHBAR_TAZMINATI_TOOL_PATH,
-  KIDEM_IHBAR_TOOL_PATH,
 } from "@/lib/seo/free-tools-routes";
 import { buildHowToJsonLd } from "@/lib/seo/faq-schema";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = IHBAR_TAZMINATI_TOOL_PATH;
-const canonical = absoluteUrl(KIDEM_IHBAR_TOOL_PATH);
+const canonical = absoluteUrl(IHBAR_TAZMINATI_TOOL_PATH);
 const title = "İhbar tazminatı hesaplama 2026 — ücretsiz tahmini araç";
 
 export const metadata: Metadata = {

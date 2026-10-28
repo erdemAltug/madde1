@@ -162,7 +162,7 @@ export default function BrutNetMaasHesaplamaPage() {
               kıdem tazminatı hesaplama
             </Link>{" "}
             ve{" "}
-            <Link href="/sozlesme-analizi/is-sozlesmesi-riskleri">
+            <Link href="/is-sozlesmesi-analizi">
               iş sözleşmesi AI ön analizi
             </Link>
             .

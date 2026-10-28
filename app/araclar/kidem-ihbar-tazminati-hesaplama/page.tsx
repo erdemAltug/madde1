@@ -86,7 +86,7 @@ export default function KidemIhbarTazminatiPage() {
           </StatuteCite>
           <p>
             Detaylı sözleşme riskleri için{" "}
-            <Link href="/sozlesme-analizi/is-sozlesmesi-riskleri">
+            <Link href="/is-sozlesmesi-analizi">
               iş sözleşmesi AI analizi
             </Link>{" "}
             ve{" "}

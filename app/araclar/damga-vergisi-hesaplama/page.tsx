@@ -37,7 +37,7 @@ export default function DamgaVergisiPage() {
         <>
           Aylık bedel, süre ve binde oranı ile yaklaşık damga vergisi hesaplayın.{" "}
           <Link
-            href="/sozlesme-analizi/kira-sozlesmesi-analizi"
+            href="/kira-sozlesmesi-analizi"
             className="font-semibold text-[#005BEA] hover:underline"
           >
             Kira sözleşmesi AI taraması

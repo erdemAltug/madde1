@@ -47,7 +47,7 @@ const POSTS: BlogPostConfig[] = [
         answer: "Tarafların anlaşmasıyla ek protokol mümkün olabilir; mevcut hükümler geçerliliğini korur.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     ctaLabel: "Kira sözleşmesi analizi",
   }),
   blog({
@@ -128,7 +128,7 @@ const POSTS: BlogPostConfig[] = [
         answer: "İş Kanunu ve toplu iş sözleşmesi sınırlarına tabidir; sözleşmeyi okuyun.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
   }),
   blog({
     slug: "tbk-kira-artisi-2026-pratik",

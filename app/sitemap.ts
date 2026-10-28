@@ -13,7 +13,9 @@ import { isCanonicalLoser } from "@/lib/seo/canonical-winners";
 import { SITE_URL } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastMod = new Date();
+  // Sabit tarih: her build'de "şimdi" vermek lastmod sinyalini değersizleştirir.
+  // Statik/araç sayfalarında anlamlı içerik değişikliği olduğunda bu tarihi güncelleyin.
+  const lastMod = new Date("2026-10-28");
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: lastMod, changeFrequency: "weekly", priority: 1 },

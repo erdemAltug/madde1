@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 
-/** Üretimde NEXT_PUBLIC_SITE_URL ile canonical / OG uyumu (örn. https://tryclause.ai) */
-const siteUrlFromEnv = process.env.NEXT_PUBLIC_SITE_URL;
-// Vercel’de NEXT_PUBLIC_SITE_URL set edilmediyse doğru host’u yakalamak için.
-const siteUrlFromVercel = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : undefined;
+/** Kanonik üretim domaini — canonical, sitemap ve OG her zaman buna işaret etmeli. */
+const PRODUCTION_SITE_URL = "https://tryclause.tech";
 
-export const SITE_URL = (siteUrlFromEnv ?? siteUrlFromVercel ?? "https://tryclause.tech").replace(
+/** Üretimde NEXT_PUBLIC_SITE_URL ile canonical / OG uyumu */
+const siteUrlFromEnv = process.env.NEXT_PUBLIC_SITE_URL;
+// VERCEL_URL deploy'a özel *.vercel.app adresidir; yalnızca preview ortamında kullan.
+// Üretimde kullanılırsa canonical ve sitemap yanlış domaine işaret eder.
+const siteUrlFromVercel =
+  process.env.VERCEL_URL && process.env.VERCEL_ENV !== "production"
+    ? `https://${process.env.VERCEL_URL}`
+    : undefined;
+
+export const SITE_URL = (siteUrlFromEnv ?? siteUrlFromVercel ?? PRODUCTION_SITE_URL).replace(
   /\/$/,
   "",
 );

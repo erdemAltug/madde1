@@ -21,7 +21,7 @@ type Props = {
 /** Hesaplayıcı → sözleşme tarama köprüsü (dinamik sonuç kancası) */
 export function ToolContractScanCta({
   source,
-  href = "/sozlesme-analizi/kira-sozlesmesi-analizi",
+  href = "/kira-sozlesmesi-analizi",
   highlight,
   title = "Ev sahibinin sözleşmeye eklediği tahliye taahhüdü veya haksız artış maddesi var mı?",
   body = "Kira kontratını yapıştır veya PDF yükle — 15 saniyede aleyhine olan maddeleri tarayalım (ücretsiz).",

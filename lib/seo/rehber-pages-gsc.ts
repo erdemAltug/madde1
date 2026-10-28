@@ -108,7 +108,7 @@ export const REHBER_GSC_PAGES = [
           "Clause, sözleşmedeki depozito, hasar, iade, fesih ve yetki ifadelerini ön analiz sırasında belirlemenize yardımcı olabilir. Avukat değildir; uygulanacak hukuku kesinleştirmez, delilleri hükme bağlamaz ve sonuç öngörmez. Yargı alanına özgü değerlendirme için KKTC'de, Kıbrıs Cumhuriyeti'nde veya ilgili ülkede yetkin yerel hukukçuya danışın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
   createRehberPage({

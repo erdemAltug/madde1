@@ -62,7 +62,7 @@ const PAGES: RehberPageConfig[] = [
         answer: "Yasal sebep ve usul olmadan hayır; zorla çıkarma yasaktır.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-07-11",
   }),
   createRehberPage({
@@ -196,7 +196,7 @@ const PAGES: RehberPageConfig[] = [
         answer: "Kanuna aykırı maddeler geçersiz sayılabilir.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-07-11",
   }),
   createRehberPage({
