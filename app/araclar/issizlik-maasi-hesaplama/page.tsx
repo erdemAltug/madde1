@@ -151,7 +151,7 @@ export default function IssizlikMaasiHesaplamaPage() {
           </p>
           <p>
             Fesih maddelerini anlamak için{" "}
-            <Link href="/sozlesme-analizi/is-sozlesmesi-riskleri">
+            <Link href="/is-sozlesmesi-analizi">
               iş sözleşmesi AI ön analizi
             </Link>{" "}
             yapabilirsiniz. Çıktılar hukuki görüş veya İŞKUR kararı değildir.

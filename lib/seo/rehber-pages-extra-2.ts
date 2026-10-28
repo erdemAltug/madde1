@@ -33,7 +33,7 @@ export const REHBER_EXTRA_2_PAGES = [
         answer: "Kira borcu ile aidat borcu hukuki sonuçları farklı olabilir; sözleşme ve yönetim planına bakın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "deneme-suresi-rehberi",
@@ -63,7 +63,7 @@ export const REHBER_EXTRA_2_PAGES = [
         answer: "Kıdem hesabı kural olarak işe girişten itibaren işler; somut uyuşmazlıklarda uzman görüşü alın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "is-kazasi-isveren-yukumluluk",
@@ -113,7 +113,7 @@ export const REHBER_EXTRA_2_PAGES = [
         answer: "Genel unvan paylaşımı ile ticari sır ifşası farklıdır; sözleşme metnine bakın.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "kira-garanti-mektubu",
@@ -435,7 +435,7 @@ export const REHBER_EXTRA_2_PAGES = [
         answer: "Genel TBK ve apartman kuralları devreye girebilir; komşu haklarına dikkat.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
   }),
   createRehberPage({
     slug: "sozlesme-iptal-cayma-farki",

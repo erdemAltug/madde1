@@ -60,7 +60,7 @@ const PAGES: HukukiAnalizPageConfig[] = [
           "Borç tahliye sebebi olabilir ancak usul kuralları vardır. İhtar ve yasal süreçler gözetilmelidir.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-05-01",
   },
   {
@@ -113,7 +113,7 @@ const PAGES: HukukiAnalizPageConfig[] = [
           "Deneme süresi içinde bildirimsiz fesih mümkün olabilir; kötü niyet ayrı değerlendirilir.",
       },
     ],
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-05-01",
   },
   {

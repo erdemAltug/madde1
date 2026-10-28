@@ -77,7 +77,7 @@ export default function FazlaMesaiHesaplamaPage() {
             gece, tatil ve yazılı anlaşma sonucu değiştirir.
           </StatuteCite>
           <p>
-            <Link href="/sozlesme-analizi/is-sozlesmesi-riskleri">
+            <Link href="/is-sozlesmesi-analizi">
               İş sözleşmesi AI analizi
             </Link>
             .

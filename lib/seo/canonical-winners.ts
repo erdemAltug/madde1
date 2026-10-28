@@ -17,7 +17,8 @@ export const CANONICAL_WINNERS = {
   dilekceTool: "/dilekce-olusturucu",
   kiraZamHesap: "/araclar/kira-sozlesmesi-artis-orani-hesaplama",
   kiraAnalizTool: "/araclar/kira-analizi",
-  kidem: "/araclar/kidem-tazminati-hesaplama",
+  kidem: KIDEM_TAZMINATI_TOOL_PATH,
+  ihbar: IHBAR_TAZMINATI_TOOL_PATH,
   kidemIhbar: KIDEM_IHBAR_TOOL_PATH,
   tahliye: TAHLIYE_TOOL_PATH,
   tuzak: "/araclar/sozlesme-tuzak-tarama",
@@ -32,8 +33,6 @@ export const CANONICAL_OVERRIDES: Record<string, string> = {
   "/analiz/is-sozlesmesi": CANONICAL_WINNERS.isAnaliz,
   "/analiz/tahliye-taahhutnamesi": CANONICAL_WINNERS.tahliye,
   "/araclar/tazminat-hesaplama": CANONICAL_WINNERS.kidemIhbar,
-  [KIDEM_TAZMINATI_TOOL_PATH]: CANONICAL_WINNERS.kidemIhbar,
-  [IHBAR_TAZMINATI_TOOL_PATH]: CANONICAL_WINNERS.kidemIhbar,
   "/araclar/tahliye-taahhutnamesi-yapay-zeka-on-kontrol":
     CANONICAL_WINNERS.tahliye,
   "/araclar/tahliye-taahhutnamesi-kontrolu": CANONICAL_WINNERS.tahliye,

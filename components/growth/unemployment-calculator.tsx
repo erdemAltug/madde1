@@ -190,7 +190,7 @@ export function UnemploymentCalculator() {
         {durationDays > 0 && gross > 0 ? (
           <ToolContractScanCta
             source="/araclar/issizlik-maasi-hesaplama"
-            href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+            href="/is-sozlesmesi-analizi"
             highlight={`Tahmini toplam işsizlik ödemesi ${formatTry(netBenefit * (durationDays / 30))}.`}
             title="Fesih bildiriminiz ve iş sözleşmeniz hak kaybına yol açıyor mu?"
             body="İş sözleşmenizi yapıştırın — fesih ve ücret maddelerini tarayalım."

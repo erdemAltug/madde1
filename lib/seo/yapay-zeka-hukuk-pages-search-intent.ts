@@ -334,7 +334,7 @@ export const YAPAY_ZEKA_HUKUK_SEARCH_INTENT_PAGES = [
       },
     ],
     ctaLabel: "İş sözleşmesi risk başlıklarını inceleyin",
-    ctaHref: "/sozlesme-analizi/is-sozlesmesi-riskleri",
+    ctaHref: "/is-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
 
@@ -502,7 +502,7 @@ export const YAPAY_ZEKA_HUKUK_SEARCH_INTENT_PAGES = [
       },
     ],
     ctaLabel: "Kira sözleşmenizin risklerini görün",
-    ctaHref: "/sozlesme-analizi/kira-sozlesmesi-analizi",
+    ctaHref: "/kira-sozlesmesi-analizi",
     updatedAt: "2026-08-05",
   }),
 ];

@@ -446,7 +446,7 @@ export function SalaryCalculator({
         {totals ? (
           <ToolContractScanCta
             source="/araclar/brut-net-maas-hesaplama"
-            href="/sozlesme-analizi/is-sozlesmesi-riskleri"
+            href="/is-sozlesmesi-analizi"
             highlight={`Yıllık net toplam tahmini ${formatTry(totals.net)}.`}
             title="İş sözleşmenizde ücret, kesinti veya fazla mesai maddesi aleyhinize mi?"
             body="Sözleşmeyi yapıştır — maaş ve fesih maddelerini tarayalım."
