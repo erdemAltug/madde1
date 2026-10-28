@@ -10,7 +10,9 @@ import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "clause_auth_toast_dismissed_v2";
 const DISMISS_MS = 24 * 60 * 60 * 1000;
-const DELAY_MS = 10_000;
+const DELAY_MS = 30_000;
+/** Mobilde zamanlayıcı ile popup açma: içeriği örter, kullanıcı henüz değer görmedi. */
+const MOBILE_QUERY = "(max-width: 639px)";
 const SCROLL_THRESHOLD = 0.4;
 
 const AUTH_ROUTES = ["/giris", "/kayit", "/admin"];
@@ -87,7 +89,8 @@ export function AuthToast() {
     if (loading || isLoggedIn || isAuthRoute(pathname)) return;
     if (wasDismissedRecently()) return;
 
-    const timer = window.setTimeout(reveal, DELAY_MS);
+    const isMobile = window.matchMedia(MOBILE_QUERY).matches;
+    const timer = isMobile ? undefined : window.setTimeout(reveal, DELAY_MS);
 
     const onScroll = () => {
       if (!isScrollTriggerPath(pathname)) return;

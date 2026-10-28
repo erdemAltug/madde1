@@ -4,7 +4,7 @@ type Props = {
   className?: string;
   /** Kare ikon boyutu (px) */
   size?: number;
-  /** Clause + .ai yazısı */
+  /** "Clause" yazısı */
   withWordmark?: boolean;
   wordmarkClassName?: string;
 };
@@ -55,7 +55,6 @@ export function ClauseLogo({
           >
             Clause
           </span>
-          <span className="text-sm font-semibold text-[#005BEA]">.ai</span>
         </span>
       ) : null}
     </span>

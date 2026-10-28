@@ -212,11 +212,11 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-500">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-500" />
-            <span className="font-medium">10.000+ Kanun Maddesi</span>
+            <span className="font-medium">TBK ve İş Kanunu odaklı</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-500" />
-            <span className="font-medium">Yargıtay İçtihatları</span>
+            <span className="font-medium">Kişisel veriler maskelenir</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-500" />

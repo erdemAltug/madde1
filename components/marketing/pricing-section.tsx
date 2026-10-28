@@ -31,8 +31,8 @@ export function PricingSection() {
             Hukuki Güvenceniz Artık Cebinizde
           </h2>
           <p className="mt-3 text-sm font-medium text-slate-600">
-            Tek bir avukat danışmanlık ücretinin çok altına, sınırsız hukuki
-            zeka desteğine sahip olun.
+            Ön tarama ve ücretsiz araçlar her zaman ücretsiz. Yoğun kullanım ve
+            ekipler için size uygun paketi birlikte belirleyelim.
           </p>
         </div>
       </Reveal>
@@ -127,7 +127,7 @@ export function PricingSection() {
 
       <div className="mt-8 text-center">
         <p className="text-xs font-medium text-slate-400">
-          İstediğiniz zaman iptal edebilirsiniz. Gizli ücret yoktur.
+          Ücretsiz plan için kredi kartı gerekmez.
         </p>
       </div>
     </section>

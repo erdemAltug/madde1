@@ -5,7 +5,7 @@ import { FileCheck2, Shield } from "lucide-react";
 const findings = [
   {
     title: "Ev Sahibi Zam Talebi",
-    body: "İstenen %80, Ekim 2026 yasal tavanı (%31,49) üzerinde.",
+    body: "İstenen %80, 12 aylık TÜFE ortalamasıyla belirlenen yasal tavanın üzerinde.",
   },
   {
     title: "Cezai Şart",

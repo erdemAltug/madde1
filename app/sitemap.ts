@@ -50,6 +50,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.93,
     },
     {
+      url: `${SITE_URL}/cevap-taslagi`,
+      lastModified: lastMod,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${SITE_URL}/gunluk-hukuk`,
       lastModified: lastMod,
       changeFrequency: "weekly",
