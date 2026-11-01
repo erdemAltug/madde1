@@ -69,7 +69,7 @@ export function SignupNudgeBanner({
               })
             }
           >
-            <Link href="/giris?kayit=1&next=/hesabim">Ücretsiz kayıt ol</Link>
+            <Link href="/giris?kayit=1&next=/asistan">Ücretsiz kayıt ol</Link>
           </Button>
           <button
             type="button"

@@ -25,3 +25,25 @@ function tokenize(query: string): string[] {
     .split(/[^\p{L}\p{N}]+/u)
     .filter((token) => token.length >= 4);
 }
+
+const RRF_K = 60;
+
+/**
+ * Reciprocal Rank Fusion: vektör ve tam metin listelerini skor ölçeğinden
+ * bağımsız birleştirir. Girdi: her kanalın id listesi (en iyiden kötüye).
+ */
+export function reciprocalRankFusion(rankings: string[][]): Map<string, number> {
+  const scores = new Map<string, number>();
+  for (const list of rankings) {
+    list.forEach((id, idx) => {
+      scores.set(id, (scores.get(id) ?? 0) + 1 / (RRF_K + idx + 1));
+    });
+  }
+  return scores;
+}
+
+/** Aynı kanun maddesinin iki kopyası (farklı tablo/sürüm) listeyi doldurmasın. */
+export function dedupeKey(citeLabel: string, content: string): string {
+  if (/\bm\.\d+/.test(citeLabel)) return citeLabel.toLocaleLowerCase("tr-TR");
+  return content.slice(0, 160).replace(/\s+/g, " ").toLocaleLowerCase("tr-TR");
+}

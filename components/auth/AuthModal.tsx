@@ -116,7 +116,7 @@ export function AuthModal({ open, onOpenChange }: Props) {
         <p className="text-center text-xs text-slate-500">
           veya{" "}
           <a
-            href="/giris?kayit=1"
+            href="/giris?kayit=1&next=/analiz"
             className="font-semibold text-indigo-700 hover:underline"
           >
             e-posta ile kayıt ol

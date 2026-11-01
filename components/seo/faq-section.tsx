@@ -24,17 +24,17 @@ export function FaqSection({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h2 id="faq-baslik" className="text-2xl font-bold tracking-tight text-madde-ink">
+      <h2 id="faq-baslik" className="text-2xl font-bold tracking-tight text-madde-ink dark:text-slate-50">
         {heading}
       </h2>
       <dl className="mt-6 space-y-4">
         {faqs.map((faq) => (
           <div
             key={faq.question}
-            className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+            className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900"
           >
-            <dt className="text-base font-semibold text-madde-ink">{faq.question}</dt>
-            <dd className="mt-2 text-sm leading-relaxed text-slate-600">{faq.answer}</dd>
+            <dt className="text-base font-semibold text-madde-ink dark:text-slate-100">{faq.question}</dt>
+            <dd className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{faq.answer}</dd>
           </div>
         ))}
       </dl>

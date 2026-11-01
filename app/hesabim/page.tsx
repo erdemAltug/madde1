@@ -117,7 +117,7 @@ export default function HesabimPage() {
               Ücretsiz kayıt ol; taramaların bu sayfada birikir.
             </p>
             <Button className="mt-5 rounded-xl bg-[#005BEA] font-semibold" asChild>
-              <Link href="/giris?kayit=1&next=/hesabim">Ücretsiz kayıt</Link>
+              <Link href="/giris?kayit=1&next=/asistan">Ücretsiz kayıt</Link>
             </Button>
           </div>
         ) : rows.length === 0 ? (

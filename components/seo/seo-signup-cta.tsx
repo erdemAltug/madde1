@@ -16,9 +16,9 @@ type Props = {
 
 export function SeoSignupCta({
   source,
-  href = "/giris?kayit=1&next=/hesabim",
+  href = "/giris?kayit=1&next=/asistan",
   title = "Bu maddeleri kendi belgende tara — ücretsiz kayıt",
-  body = "Ön tarama misafirken. Üye olunca detaylı rapor, PDF ve arşiv hesabınızda kalır. Clause avukat yerine geçmez.",
+  body = "Ön tarama misafirken. Ücretsiz hesapla kalıcı hukuk asistanınız olur: detaylı rapor, arşiv ve tarih hatırlatmaları. Clause avukat yerine geçmez.",
   label = "Ücretsiz kayıt ol — raporu aç",
   className,
 }: Props) {

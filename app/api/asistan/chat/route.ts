@@ -7,14 +7,18 @@ import {
   retrieveLegalGrounding,
   verifyCitations,
 } from "@/lib/rag";
+import { contextualizeQuery } from "@/lib/rag/conversation";
+import { buildPersonalContext } from "@/lib/rag/personal-context";
 import { maskSensitiveText } from "@/lib/security/mask-sensitive";
 import { bearerFromRequest, getSupabaseAuthed } from "@/lib/supabase/authed";
+import type { AsistanSource } from "@/lib/asistan/types";
 
 export const maxDuration = 60;
 
 const MSG_CAP = 8_000;
 const HISTORY_LIMIT = 20;
 const GROUNDING_CAP = 6_000;
+const SOURCE_SNIPPET = 420;
 
 export async function POST(req: Request) {
   try {
@@ -109,23 +113,46 @@ export async function POST(req: Request) {
 
     let groundingBlock = "";
     let citations: string[] = [];
-    try {
-      const g = await retrieveLegalGrounding({
+    let sources: AsistanSource[] = [];
+    const priorTurns = (history || []).map((m) => ({
+      role: String(m.role),
+      content: String(m.content),
+    }));
+
+    const [grounding, personal] = await Promise.all([
+      retrieveLegalGrounding({
         contractText: message,
         persona: "general",
-        mode: "light",
-      });
-      if (g.retrieved) {
-        groundingBlock = g.groundingBlock.slice(0, GROUNDING_CAP);
-        citations = g.allowedCites.slice(0, 6);
-      }
-    } catch (err) {
-      console.error("[asistan/chat] rag", err);
+        mode: "chat",
+        retrievalQuery: contextualizeQuery(priorTurns, message),
+      }).catch((err) => {
+        console.error("[asistan/chat] rag", err);
+        return null;
+      }),
+      buildPersonalContext(supabase, user.id).catch((err) => {
+        console.error("[asistan/chat] personal", err);
+        return "";
+      }),
+    ]);
+
+    if (grounding?.retrieved) {
+      groundingBlock = grounding.groundingBlock.slice(0, GROUNDING_CAP);
+      citations = grounding.allowedCites.slice(0, 6);
+      sources = grounding.hits.slice(0, 6).map((h) => ({
+        label: h.citeLabel,
+        kind: h.type,
+        snippet: h.content.replace(/\s+/g, " ").slice(0, SOURCE_SNIPPET),
+      }));
     }
 
-    const system = groundingBlock
-      ? `${ASISTAN_SYSTEM}\n\n${groundingBlock}`
-      : `${ASISTAN_SYSTEM}\n\n${RAG_ANALYSIS_OUTPUT_RULES}\n\n(Bu turda vektör DB dayanağı bulunamadı. Madde numarası uydurma.)`;
+    const system = [
+      ASISTAN_SYSTEM,
+      personal,
+      groundingBlock ||
+        `${RAG_ANALYSIS_OUTPUT_RULES}\n\n(Bu turda vektör DB dayanağı bulunamadı. Madde numarası uydurma.)`,
+    ]
+      .filter(Boolean)
+      .join("\n\n");
 
     const modelMessages = (history || [])
       .filter((m) => m.role === "user" || m.role === "assistant")
@@ -197,6 +224,7 @@ export async function POST(req: Request) {
     return Response.json({
       text,
       citations,
+      sources,
       message: saved ?? {
         id: `tmp-${Date.now()}`,
         thread_id: threadId,

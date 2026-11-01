@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import { Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { AppProviders } from "@/providers/AppProviders";
 import { SITE_NAME, SITE_URL } from "@/lib/seo/site";
+
+const legalSerif = Source_Serif_4({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-legal-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -56,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body
-        className={`${GeistSans.variable} min-h-screen font-sans antialiased`}
+        className={`${GeistSans.variable} ${legalSerif.variable} min-h-screen font-sans antialiased`}
       >
         <AppProviders>{children}</AppProviders>
       </body>

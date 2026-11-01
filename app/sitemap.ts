@@ -169,6 +169,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.91,
     },
+    {
+      url: `${SITE_URL}/karsilastir`,
+      lastModified: lastMod,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/haklarim/kontrol`,
+      lastModified: lastMod,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     ...HAKLARIM_SLUGS.map((slug) => ({
       url: `${SITE_URL}/haklarim/${slug}`,
       lastModified: lastMod,

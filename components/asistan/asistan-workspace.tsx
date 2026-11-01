@@ -15,6 +15,8 @@ import remarkGfm from "remark-gfm";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { Button } from "@/components/ui/button";
+import { StatuteChip } from "@/components/legal/statute-chip";
+import { VoiceInputButton } from "@/components/asistan/voice-input-button";
 import { useAuthSession } from "@/hooks/use-auth-session";
 import {
   archiveAsistanThread,
@@ -26,22 +28,24 @@ import {
 import {
   ASISTAN_EXAMPLE_PROMPTS,
   type AsistanMessage,
+  type AsistanSource,
   type AsistanThread,
 } from "@/lib/asistan/types";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { cn } from "@/lib/utils";
 
-export function AsistanWorkspace() {
+export function AsistanWorkspace({ initialQuestion }: { initialQuestion?: string } = {}) {
   const { isLoggedIn, loading: authLoading } = useAuthSession();
   const [threads, setThreads] = React.useState<AsistanThread[]>([]);
   const [activeId, setActiveId] = React.useState<string | null>(null);
   const [messages, setMessages] = React.useState<AsistanMessage[]>([]);
-  const [input, setInput] = React.useState("");
+  const [input, setInput] = React.useState(initialQuestion ?? "");
   const [busy, setBusy] = React.useState(false);
   const [loadingMsgs, setLoadingMsgs] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [citations, setCitations] = React.useState<string[]>([]);
+  const [sources, setSources] = React.useState<AsistanSource[]>([]);
   const messagesPaneRef = React.useRef<HTMLDivElement>(null);
   const [mobileShowChat, setMobileShowChat] = React.useState(false);
 
@@ -89,6 +93,7 @@ export function AsistanWorkspace() {
     setActiveId(t.id);
     setMessages([]);
     setCitations([]);
+    setSources([]);
     setMobileShowChat(true);
   };
 
@@ -146,6 +151,7 @@ export function AsistanWorkspace() {
         error?: string;
         text?: string;
         citations?: string[];
+        sources?: AsistanSource[];
         message?: AsistanMessage;
       };
 
@@ -163,6 +169,7 @@ export function AsistanWorkspace() {
       if (Array.isArray(data.citations)) {
         setCitations(data.citations);
       }
+      setSources(Array.isArray(data.sources) ? data.sources : []);
 
       const assistantMsg: AsistanMessage = data.message ?? {
         id: `local-a-${Date.now()}`,
@@ -380,14 +387,17 @@ export function AsistanWorkspace() {
             {citations.length > 0 &&
             messages.some((m) => m.role === "assistant") ? (
               <div className="flex flex-wrap gap-1.5">
-                {[...new Set(citations)].map((c) => (
-                  <span
-                    key={c}
-                    className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-medium text-slate-600"
-                  >
-                    {c}
-                  </span>
-                ))}
+                {[...new Set(citations)].map((c) => {
+                  const src = sources.find((s) => s.label === c);
+                  return (
+                    <StatuteChip
+                      key={c}
+                      label={c}
+                      snippet={src?.snippet}
+                      kind={src?.kind}
+                    />
+                  );
+                })}
               </div>
             ) : null}
             {busy ? (
@@ -417,7 +427,7 @@ export function AsistanWorkspace() {
                 onChange={(e) => setInput(e.target.value)}
                 rows={2}
                 placeholder="Hukuki sorunuzu yazın veya sözleşme parçası yapıştırın…"
-                className="min-h-[48px] flex-1 resize-none rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-800 outline-none ring-[#005BEA] placeholder:text-slate-400 focus:ring-2"
+                className="min-h-[48px] flex-1 resize-none rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-base text-slate-800 outline-none ring-[#005BEA] placeholder:text-slate-400 focus:ring-2 sm:text-sm"
                 disabled={busy}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
@@ -425,6 +435,12 @@ export function AsistanWorkspace() {
                     void send();
                   }
                 }}
+              />
+              <VoiceInputButton
+                disabled={busy}
+                onTranscript={(t) =>
+                  setInput((prev) => (prev.trim() ? `${prev.trim()} ${t}` : t))
+                }
               />
               <Button
                 type="submit"

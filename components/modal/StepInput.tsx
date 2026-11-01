@@ -3,7 +3,9 @@
 import * as React from "react";
 import {
   Briefcase,
+  Camera,
   FileUp,
+  Loader2,
   Home,
   Laptop,
   Search,
@@ -14,6 +16,9 @@ import type { PersonaId } from "@/lib/personas";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { PrivacyShieldLive } from "@/components/growth/privacy-shield-live";
+import { extractTextFromFile, isOcrFile } from "@/lib/scan/ocr-client";
+import { captureEvent } from "@/lib/analytics/capture";
+import { AnalyticsEvents } from "@/lib/analytics/events";
 
 const CONTEXT_BADGES: {
   id: PersonaId;
@@ -90,24 +95,45 @@ export function StepInput({
 }: Props) {
   const [drag, setDrag] = React.useState(false);
   const [fileHint, setFileHint] = React.useState<string | null>(null);
+  const [reading, setReading] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const cameraRef = React.useRef<HTMLInputElement>(null);
+
+  const applyText = (text: string) => {
+    onContractTextChange(text);
+    if (persona === "general") {
+      onPersonaChange(detectPersonaFromText(text));
+    }
+  };
 
   const handleFile = async (file: File | undefined) => {
-    if (!file || disabled) return;
+    if (!file || disabled || reading) return;
     setFileHint(null);
     onFileNameChange(file.name);
 
     const text = await readFileAsText(file);
     if (text?.trim()) {
-      onContractTextChange(text);
-      if (persona === "general") {
-        onPersonaChange(detectPersonaFromText(text));
+      applyText(text);
+      return;
+    }
+
+    if (isOcrFile(file)) {
+      setReading(true);
+      captureEvent(AnalyticsEvents.PHOTO_SCAN_STARTED, { type: file.type || "unknown" });
+      try {
+        const extracted = await extractTextFromFile(file);
+        applyText(extracted);
+        captureEvent(AnalyticsEvents.PHOTO_SCAN_COMPLETED, { chars: extracted.length });
+      } catch (err) {
+        setFileHint(err instanceof Error ? err.message : "Bu belgeyi okuyamadık.");
+      } finally {
+        setReading(false);
       }
       return;
     }
 
     setFileHint(
-      "Bu dosya türü için metin çıkarma henüz hazır değil. Metni yapıştırın veya örnek sözleşmeyle deneyin.",
+      "Word dosyalarını henüz okuyamıyoruz. Belgeyi PDF olarak kaydedin, fotoğrafını çekin ya da metni yapıştırın.",
     );
   };
 
@@ -126,12 +152,24 @@ export function StepInput({
           e.target.value = "";
         }}
       />
+      <input
+        ref={cameraRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        disabled={disabled}
+        onChange={(e) => {
+          void handleFile(e.target.files?.[0]);
+          e.target.value = "";
+        }}
+      />
 
       <PrivacyShieldLive text={contractText} />
 
       <button
         type="button"
-        disabled={disabled}
+        disabled={disabled || reading}
         onClick={() => inputRef.current?.click()}
         onDragOver={(e) => {
           e.preventDefault();
@@ -152,14 +190,22 @@ export function StepInput({
         )}
       >
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--cta-primary)] text-white shadow-lg shadow-[rgba(37,99,235,0.35)]">
-          <FileUp className="h-7 w-7" aria-hidden />
+          {reading ? (
+            <Loader2 className="h-7 w-7 motion-safe:animate-spin" aria-hidden />
+          ) : (
+            <FileUp className="h-7 w-7" aria-hidden />
+          )}
         </div>
-        <div>
+        <div aria-live="polite">
           <p className="text-base font-bold text-deep-navy">
-            Sözleşmenizi sürükleyin veya bilgisayarınızdan seçin
+            {reading
+              ? "Belgenizi okuyoruz…"
+              : "Sözleşmenizi sürükleyin veya bilgisayarınızdan seçin"}
           </p>
           <p className="mt-1 text-xs font-medium text-slate-500">
-            PDF, DOCX, PNG, JPG · max 10 MB
+            {reading
+              ? "Metin birkaç saniye içinde aşağıya gelecek; kişisel veriler sonra maskelenir."
+              : "PDF, fotoğraf (JPG, PNG) veya metin · en fazla 10 MB"}
           </p>
         </div>
         {fileName ? (
@@ -167,6 +213,16 @@ export function StepInput({
             {fileName}
           </span>
         ) : null}
+      </button>
+
+      <button
+        type="button"
+        disabled={disabled || reading}
+        onClick={() => cameraRef.current?.click()}
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-[var(--cta-primary)]/50 disabled:opacity-50 sm:hidden"
+      >
+        <Camera className="h-5 w-5 text-[var(--cta-primary)]" aria-hidden />
+        Sözleşmenin fotoğrafını çek
       </button>
 
       {fileHint ? (

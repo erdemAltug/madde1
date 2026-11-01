@@ -35,7 +35,10 @@ export default function GirisPage() {
     }
   }, [searchParams]);
 
-  const nextPath = safeInternalNext(searchParams.get("next"));
+  // Kayıt akışında hedef yoksa aktivasyon için asistana; girişte hesap sayfasına
+  const rawNext = searchParams.get("next");
+  const nextPath =
+    !rawNext && searchParams.get("kayit") === "1" ? "/asistan" : safeInternalNext(rawNext);
 
   const handleGoogleSignIn = async () => {
     setError(null);
@@ -140,6 +143,8 @@ export default function GirisPage() {
           full_name: name,
           user_type: userType,
         },
+        // E-posta onay bağlantısı kullanıcıyı geldiği yere döndürür
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`,
       },
     });
 
@@ -155,6 +160,13 @@ export default function GirisPage() {
         user_type: userType,
       });
       captureEvent(AnalyticsEvents.AUTH_SIGNUP_COMPLETED, { user_type: userType });
+    }
+
+    // E-posta onayı kapalıysa oturum hemen açılır: bekletmeden hedefe
+    if (signUpData.session) {
+      router.push(nextPath);
+      router.refresh();
+      return;
     }
 
     setError("Hesabınız oluşturuldu! E-posta adresinizi onaylayın ve giriş yapın.");
@@ -184,7 +196,7 @@ export default function GirisPage() {
           </h2>
           
           <p className="text-xl text-slate-300 max-w-md">
-            Sözleşmeni tara; kayıt olunca taramaların hesabında birikir. Kişisel hukuk asistanın — günde 10 analiz, PDF, envanter.
+            Ücretsiz hesapla kalıcı hukuk asistanın olur: sözleşmelerin arşivde, tarihlerin takvimde, sorularına sade cevaplar.
           </p>
           
           <div className="mt-12 grid grid-cols-2 gap-6 text-left max-w-md">

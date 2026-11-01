@@ -3,6 +3,8 @@ import tailwindAnimate from "tailwindcss-animate";
 import tailwindTypography from "@tailwindcss/typography";
 
 const config: Config = {
+  // Karanlık mod yalnız DarkScope ile sarılmış ekranlarda (panel, sonuç ekranları)
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,6 +14,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        /* Sözleşme maddesi ve kanun alıntıları — Clause yorumundan ayrışsın */
+        serif: ["var(--font-legal-serif)", "Georgia", "Times New Roman", "serif"],
       },
       colors: {
         madde: {

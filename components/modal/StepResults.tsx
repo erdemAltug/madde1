@@ -10,12 +10,16 @@ import { openPrintMarkdown } from "@/lib/print/open-print-markdown";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { KeyDatesCard } from "@/components/assistant/key-dates-card";
+import { ShareRiskCardButton } from "@/components/share/share-risk-card-button";
+import { TrustStrip } from "@/components/legal/trust-strip";
+import type { PersonaId } from "@/lib/personas";
 
 type Props = {
   teaser: TeaserData;
   /** Tarih çıkarma için taranan metin */
   contractText?: string;
   isLoggedIn?: boolean;
+  persona?: PersonaId;
   onAnalyzeAgain: () => void;
   onRequestFullReport: () => void;
 };
@@ -24,9 +28,15 @@ export function StepResults({
   teaser,
   contractText,
   isLoggedIn,
+  persona,
   onAnalyzeAgain,
   onRequestFullReport,
 }: Props) {
+  const score =
+    typeof teaser.securityScore === "number"
+      ? Math.round(teaser.securityScore)
+      : Math.max(0, 100 - teaser.criticalRiskCount * 12 - teaser.missingClauseCount * 8);
+
   const openPdf = () => {
     const md = buildOnIncelemeRaporuMarkdown({ teaser });
     openPrintMarkdown(md);
@@ -45,6 +55,13 @@ export function StepResults({
       />
 
       {contractText ? <KeyDatesCard contractText={contractText} /> : null}
+
+      <ShareRiskCardButton
+        score={score}
+        critical={teaser.criticalRiskCount}
+        missing={teaser.missingClauseCount}
+        persona={persona}
+      />
 
       {isLoggedIn ? (
         <Button
@@ -72,9 +89,7 @@ export function StepResults({
         Başka bir sözleşme tara
       </button>
 
-      <p className="text-center text-[11px] leading-relaxed text-slate-400">
-        Özet tahmindir; Clause avukatlık veya resmi danışmanlık vermez.
-      </p>
+      <TrustStrip />
     </div>
   );
 }

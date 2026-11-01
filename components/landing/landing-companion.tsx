@@ -72,7 +72,7 @@ export function LandingCompanion() {
               })
             }
           >
-            <Link href="/giris?kayit=1&next=/hesabim">
+            <Link href="/giris?kayit=1&next=/asistan">
               Kayıt ol
             </Link>
           </Button>
