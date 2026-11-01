@@ -128,6 +128,7 @@ export function StepInput({
         applyText(extracted);
         captureEvent(AnalyticsEvents.PHOTO_SCAN_COMPLETED, { chars: extracted.length });
       } catch (err) {
+        captureEvent(AnalyticsEvents.PHOTO_SCAN_FAILED, { type: file.type || "unknown" });
         setFileHint(err instanceof Error ? err.message : "Bu belgeyi okuyamadık.");
       } finally {
         setReading(false);

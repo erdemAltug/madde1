@@ -133,9 +133,8 @@ export function AsistanWorkspace({ initialQuestion }: { initialQuestion?: string
       return;
     }
 
-    captureEvent(AnalyticsEvents.HERO_CTA_CLICKED, {
-      source: "asistan_message_sent",
-    });
+    captureEvent(AnalyticsEvents.ASISTAN_MESSAGE_SENT, { chars: raw.length });
+    const sentAt = Date.now();
 
     try {
       const res = await fetch("/api/asistan/chat", {
@@ -170,6 +169,10 @@ export function AsistanWorkspace({ initialQuestion }: { initialQuestion?: string
         setCitations(data.citations);
       }
       setSources(Array.isArray(data.sources) ? data.sources : []);
+      captureEvent(AnalyticsEvents.ASISTAN_ANSWERED, {
+        citations: data.citations?.length ?? 0,
+        latency_ms: Date.now() - sentAt,
+      });
 
       const assistantMsg: AsistanMessage = data.message ?? {
         id: `local-a-${Date.now()}`,
@@ -188,6 +191,7 @@ export function AsistanWorkspace({ initialQuestion }: { initialQuestion?: string
 
       await refreshThreads();
     } catch (e) {
+      captureEvent(AnalyticsEvents.ASISTAN_FAILED, { reason: e instanceof Error ? e.message.slice(0, 80) : "unknown" });
       setError(e instanceof Error ? e.message : "Bir hata oluştu");
     } finally {
       setBusy(false);

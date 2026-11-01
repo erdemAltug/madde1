@@ -6,6 +6,7 @@ import { FaqSection } from "@/components/seo/faq-section";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
 import { RelatedToolsSection } from "@/components/seo/related-tools-section";
 import { SharePageButton } from "@/components/share/share-page-button";
+import { TrackToolOpen } from "@/components/analytics/track-tool-open";
 import type { FaqItem } from "@/lib/seo/rehber-pages";
 import {
   buildHowToJsonLd,
@@ -88,6 +89,7 @@ export function ToolPageShell({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
         />
       ))}
+      <TrackToolOpen tool={path.replace(/^\/araclar\//, "")} />
       <SiteNavbar />
       <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <Breadcrumbs
