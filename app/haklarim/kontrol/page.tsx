@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteNavbar } from "@/components/landing/site-navbar";
+import { TrackToolOpen } from "@/components/analytics/track-tool-open";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { DarkScope, ThemeToggle } from "@/components/theme/dark-scope";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
@@ -58,6 +59,7 @@ export default function HaklarimKontrolPage({ searchParams }: Props) {
 
   return (
     <div className="min-h-screen bg-[#FAFAF7]">
+      <TrackToolOpen tool="haklarim_kontrol" />
       <SiteNavbar />
       <DarkScope>
       <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12">

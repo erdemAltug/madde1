@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteNavbar } from "@/components/landing/site-navbar";
+import { TrackToolOpen } from "@/components/analytics/track-tool-open";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { ReplyComposer } from "@/components/assistant/reply-composer";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
@@ -26,6 +27,7 @@ type Props = { searchParams?: { senaryo?: string } };
 export default function CevapTaslagiPage({ searchParams }: Props) {
   return (
     <div className="min-h-screen bg-[#FAFAF7]">
+      <TrackToolOpen tool="cevap_taslagi" />
       <SiteNavbar />
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <header className="max-w-2xl">
