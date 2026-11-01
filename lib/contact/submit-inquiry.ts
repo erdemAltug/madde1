@@ -5,13 +5,21 @@ import { CONTACT_EMAIL } from "@/lib/site/contact";
 import { getSupabaseService } from "@/lib/supabase/service";
 import type { ContactInquiryInput } from "@/lib/contact/schema";
 
+/** Gelen kutusunda talep türü bir bakışta görünsün */
+const SUBJECT_LABEL: Record<string, string> = {
+  pricing_plus: "💳 PLUS ÜYELİK TALEBİ",
+  pricing_b2c: "Bireysel talep",
+  enterprise: "🏢 Kurumsal talep",
+};
+
 async function sendViaResend(input: ContactInquiryInput): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
 
   const from =
     process.env.RESEND_FROM_EMAIL ?? "Clause <onboarding@resend.dev>";
-  const subject = `[Clause] ${input.source ?? "İletişim"} — ${input.name}`;
+  const label = SUBJECT_LABEL[input.source ?? ""] ?? input.source ?? "İletişim";
+  const subject = `[Clause] ${label} — ${input.name} <${input.email}>`;
   const text = [
     `Kaynak: ${input.source ?? "web"}`,
     `Ad: ${input.name}`,
@@ -60,7 +68,14 @@ export async function submitContactInquiry(
   try {
     await persistInquiry(input);
 
-    await sendViaResend(input);
+    const mailed = await sendViaResend(input).catch(() => false);
+    if (!mailed) {
+      // Talep veritabanında ve PostHog'da kalır; e-posta gitmediyse görünür olsun
+      Sentry.captureMessage("Lead e-postası gönderilemedi (RESEND_API_KEY / gönderen alan adı?)", {
+        level: "error",
+        tags: { event: "contact_mail_failed", source: input.source ?? "web" },
+      });
+    }
 
     const lead = buildContactLeadProperties(
       {
