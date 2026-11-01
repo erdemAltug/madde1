@@ -89,7 +89,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       },
     ],
     primaryCta: {
-      href: "/giris?kayit=1",
+      href: "/giris?kayit=1&next=/asistan",
       label: "Ücretsiz kayıt — kira raporunu aç",
     },
     secondaryCta: {
@@ -166,7 +166,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
       },
     ],
     primaryCta: {
-      href: "/giris?kayit=1",
+      href: "/giris?kayit=1&next=/asistan",
       label: "Ücretsiz kayıt — iş sözleşmesini tara",
     },
     secondaryCta: {

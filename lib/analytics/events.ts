@@ -21,6 +21,17 @@ export const AnalyticsEvents = {
   SEO_TOOL_SIGNUP_CLICK: "Seo_Tool_Signup_Click",
   CONTACT_FORM_SUBMITTED: "Contact_Form_Submitted",
   CONTACT_FORM_ERROR: "Contact_Form_Error",
+  ASISTAN_VOICE_STARTED: "Asistan_Voice_Started",
+  RIGHTS_CHECK_STARTED: "Rights_Check_Started",
+  RIGHTS_CHECK_COMPLETED: "Rights_Check_Completed",
+  RIGHTS_CHECK_SHARED: "Rights_Check_Shared",
+  PHOTO_SCAN_STARTED: "Photo_Scan_Started",
+  PHOTO_SCAN_COMPLETED: "Photo_Scan_Completed",
+  CONTRACT_COMPARE_RUN: "Contract_Compare_Run",
+  RISK_CARD_SHARED: "Risk_Card_Shared",
+  PWA_INSTALL_PROMPTED: "Pwa_Install_Prompted",
+  PWA_INSTALLED: "Pwa_Installed",
+  REGULATION_ALERT_VIEWED: "Regulation_Alert_Viewed",
 } as const;
 
 export type FreeToolId =

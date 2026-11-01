@@ -26,6 +26,22 @@ export default function HaklarimHubPage() {
           </p>
         </header>
 
+        <Link
+          href="/haklarim/kontrol"
+          className="group mt-8 flex flex-col gap-3 rounded-2xl border border-[#005BEA]/30 bg-[#005BEA]/5 p-5 transition hover:bg-[#005BEA]/10 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <span>
+            <span className="block text-lg font-bold text-madde-ink">Haklarım Kontrolü</span>
+            <span className="mt-1 block text-sm text-slate-600">
+              4-5 soruyu yanıtlayın; hakkınızı, tahmini alacağınızı ve süreleri 1 dakikada görün.
+            </span>
+          </span>
+          <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#005BEA]">
+            Başla
+            <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+          </span>
+        </Link>
+
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {pages.map((page) =>
             page ? (

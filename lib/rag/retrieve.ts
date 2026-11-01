@@ -12,7 +12,12 @@ import {
   expandLegalQuery,
   parseStatuteRefs,
 } from "@/lib/rag/query-signals";
-import { blendRetrievalScore, lexicalOverlap } from "@/lib/rag/rerank";
+import {
+  blendRetrievalScore,
+  dedupeKey,
+  lexicalOverlap,
+  reciprocalRankFusion,
+} from "@/lib/rag/rerank";
 import type { LegalGrounding, RagHit, RagHitType } from "@/lib/rag/types";
 
 const MATCH_THRESHOLD = 0.42;
@@ -20,26 +25,40 @@ const LAW_PER_QUERY = 3;
 const EMSAL_PER_QUERY = 2;
 const MAX_TOTAL_HITS = 8;
 const MAX_CONTENT_CHARS = 1800;
+const FTS_COUNT = 6;
+/** RRF katkısının ağırlığı: iki kanalda da üstte çıkan kaynak ~+0.5 alır */
+const RRF_WEIGHT = 15;
 
 type MatchRow = {
   id: string;
   content?: string;
-  full_content?: string;
+  full_content?: string | null;
   metadata?: Record<string, unknown> | null;
   category?: string | null;
   source?: string | null;
   similarity: number;
 };
 
+type FtsRow = Omit<MatchRow, "similarity"> & {
+  source_table: "law_articles" | "legal_knowledge";
+  rank: number;
+};
+
 export type RetrieveOptions = {
   contractText: string;
   persona?: PersonaId;
-  /** "full" = clause + boost; "light" = tek gömme (teaser) */
-  mode?: "full" | "light";
+  /**
+   * "full" = clause + boost; "light" = tek gömme (teaser);
+   * "chat" = sohbet: bağlamlı soru + genişletme + tam metin kanalı
+   */
+  mode?: "full" | "light" | "chat";
+  /** chat modunda: önceki kullanıcı mesajlarıyla zenginleştirilmiş arama metni */
+  retrievalQuery?: string;
 };
 
 /**
- * Hibrit Legal RAG: sözleşme parçaları + persona boost → law_articles + legal_knowledge.
+ * Hibrit Legal RAG: vektör (law_articles + legal_knowledge) + tam metin (tsvector)
+ * + kanun/madde metadata eşleşmesi; Reciprocal Rank Fusion ile birleştirilir.
  * Embedding veya Supabase yoksa boş döner (analiz prompt-only devam eder).
  */
 export async function retrieveLegalGrounding(
@@ -59,24 +78,30 @@ export async function retrieveLegalGrounding(
   const mode = opts.mode ?? "full";
   const filterCategory = personaCategoryFilter(persona);
 
-  const statuteRefs = parseStatuteRefs(opts.contractText).slice(0, 3);
-  const expansion = expandLegalQuery(opts.contractText);
-  const queries =
+  const searchText = opts.retrievalQuery?.trim() || opts.contractText;
+  const statuteRefs = parseStatuteRefs(searchText).slice(0, 3);
+  const expansion = expandLegalQuery(searchText);
+  const queries = (
     mode === "light"
       ? [buildLightEmbedText(opts.contractText)]
-      : [
-          ...extractContractQueries(opts.contractText, { maxQueries: 3 }),
-          ...personaBoostQueries(persona).slice(0, expansion ? 1 : 2),
-          ...(expansion ? [expansion] : []),
-        ]
-          .filter((q) => q.trim().length > 0)
-          .slice(0, 5);
+      : mode === "chat"
+        ? [buildLightEmbedText(searchText), expansion]
+        : [
+            ...extractContractQueries(opts.contractText, { maxQueries: 3 }),
+            ...personaBoostQueries(persona).slice(0, expansion ? 1 : 2),
+            expansion,
+          ]
+  )
+    .filter((q) => q.trim().length > 0)
+    .slice(0, 5);
 
   if (queries.length === 0 && statuteRefs.length === 0) return empty;
 
   const hitMap = new Map<string, RagHit>();
+  /** Kanal sıralamaları (en iyiden kötüye id listeleri) — RRF girdisi */
+  const rankings: string[][] = [];
 
-  await Promise.all(
+  const exactChannel = Promise.all(
     statuteRefs.map(async (ref) => {
       const { data, error } = await supabase.rpc("lookup_law_articles_by_madde", {
         filter_kanun_no: ref.kanunNo,
@@ -93,7 +118,7 @@ export async function retrieveLegalGrounding(
     }),
   );
 
-  await Promise.all(
+  const vectorChannel = Promise.all(
     queries.map(async (q) => {
       const embedding = await embedText(q);
       if (!embedding) return;
@@ -120,30 +145,72 @@ export async function retrieveLegalGrounding(
         console.error("[rag] match_legal_knowledge", emsalRes.error.message);
       }
 
-      for (const row of (lawRes.data || []) as MatchRow[]) {
+      const lawRows = (lawRes.data || []) as MatchRow[];
+      const emsalRows = (emsalRes.data || []) as MatchRow[];
+      for (const row of lawRows) {
         mergeHit(hitMap, rowToHit(row, "kanun_maddesi", false));
       }
-      for (const row of (emsalRes.data || []) as MatchRow[]) {
+      for (const row of emsalRows) {
         mergeHit(hitMap, rowToHit(row, knowledgeHitType(row), false));
       }
+      rankings.push(
+        lawRows.map((r) => r.id),
+        emsalRows.map((r) => r.id),
+      );
     }),
   );
 
-  const rankQuery = `${opts.contractText.slice(0, 500)}\n${expansion}`;
+  const fullTextChannel = async () => {
+    if (mode === "light") return;
+    const ftsQuery = buildFtsQuery(searchText, expansion);
+    if (!ftsQuery) return;
+    const { data, error } = await supabase.rpc("search_legal_fulltext", {
+      query_text: ftsQuery,
+      match_count: FTS_COUNT,
+      filter_category: filterCategory,
+    });
+    if (error) {
+      // 013 migration uygulanmadıysa sessizce vektör-only devam
+      if (!/does not exist|could not find/i.test(error.message)) {
+        console.error("[rag] search_legal_fulltext", error.message);
+      }
+      return;
+    }
+    const rows = (data || []) as FtsRow[];
+    for (const row of rows) {
+      const asMatch: MatchRow = { ...row, similarity: MATCH_THRESHOLD };
+      const type: RagHitType =
+        row.source_table === "law_articles"
+          ? "kanun_maddesi"
+          : knowledgeHitType(asMatch);
+      // Tam metin skoru kosinüs ölçeğinde değil; benzerliğe taban değer verilir,
+      // sıralamaya katkısı RRF üzerinden gelir.
+      mergeHit(hitMap, rowToHit(asMatch, type, false));
+    }
+    rankings.push(rows.map((r) => r.id));
+  };
+
+  await Promise.all([exactChannel, vectorChannel, fullTextChannel()]);
+
+  const rankQuery = `${searchText.slice(0, 500)}\n${expansion}`;
+  const fused = reciprocalRankFusion(rankings);
+  const score = (h: RagHit) =>
+    blendRetrievalScore(
+      h.similarity,
+      lexicalOverlap(rankQuery, h.content),
+      Boolean(h.exact),
+    ) +
+    (fused.get(h.id) ?? 0) * RRF_WEIGHT;
+
+  const seen = new Set<string>();
   const hits = [...hitMap.values()]
-    .sort(
-      (a, b) =>
-        blendRetrievalScore(
-          b.similarity,
-          lexicalOverlap(rankQuery, b.content),
-          Boolean(b.exact),
-        ) -
-        blendRetrievalScore(
-          a.similarity,
-          lexicalOverlap(rankQuery, a.content),
-          Boolean(a.exact),
-        ),
-    )
+    .sort((a, b) => score(b) - score(a))
+    .filter((h) => {
+      const key = dedupeKey(h.citeLabel, h.content);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
     .slice(0, MAX_TOTAL_HITS);
 
   if (hits.length === 0) return empty;
@@ -157,6 +224,21 @@ export async function retrieveLegalGrounding(
     allowedCites,
     retrieved: true,
   };
+}
+
+/** websearch_to_tsquery için: anlamlı kelimeler "or" ile; kısa ve dolgu kelimeler atılır. */
+const FTS_STOP = new Set([
+  "için", "icin", "olan", "olarak", "gibi", "daha", "kadar", "veya", "ancak",
+  "benim", "bana", "nasıl", "nasil", "neden", "midir", "mıdır", "mudur", "müdür",
+  "şimdi", "simdi", "acaba", "lütfen", "lutfen", "hakkım", "hakkim", "yani",
+]);
+
+function buildFtsQuery(text: string, expansion: string): string {
+  const words = `${text.slice(0, 600)} ${expansion}`
+    .toLocaleLowerCase("tr-TR")
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((w) => w.length >= 4 && !FTS_STOP.has(w));
+  return [...new Set(words)].slice(0, 12).join(" or ");
 }
 
 function knowledgeHitType(row: MatchRow): RagHitType {
@@ -204,7 +286,9 @@ function rowToHit(
 function mergeHit(map: Map<string, RagHit>, hit: RagHit) {
   if (!hit.content) return;
   const prev = map.get(hit.id);
-  if (!prev || hit.similarity > prev.similarity) map.set(hit.id, hit);
+  if (!prev || hit.similarity > prev.similarity || (hit.exact && !prev.exact)) {
+    map.set(hit.id, hit);
+  }
 }
 
 function formatGroundingBlock(hits: RagHit[], allowedCites: string[]): string {

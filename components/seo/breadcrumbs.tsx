@@ -31,12 +31,12 @@ export function Breadcrumbs({ items }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav aria-label="Sayfa konumu" className="mb-6 text-sm text-slate-600">
+      <nav aria-label="Sayfa konumu" className="mb-6 text-sm text-slate-600 dark:text-slate-400">
         <ol className="flex flex-wrap items-center gap-1">
           <li>
             <Link
               href="/"
-              className="font-medium text-madde-blue hover:underline"
+              className="font-medium text-madde-blue hover:underline dark:text-blue-300"
             >
               {SITE_NAME}
             </Link>
@@ -45,11 +45,11 @@ export function Breadcrumbs({ items }: Props) {
             <li key={item.href} className="flex items-center gap-1">
               <ChevronRight className="h-3.5 w-3.5 shrink-0 opacity-50" />
               {item.href === items[items.length - 1]?.href ? (
-                <span className="font-semibold text-madde-ink">{item.name}</span>
+                <span className="font-semibold text-madde-ink dark:text-slate-100">{item.name}</span>
               ) : (
                 <Link
                   href={item.href}
-                  className="font-medium text-madde-blue hover:underline"
+                  className="font-medium text-madde-blue hover:underline dark:text-blue-300"
                 >
                   {item.name}
                 </Link>

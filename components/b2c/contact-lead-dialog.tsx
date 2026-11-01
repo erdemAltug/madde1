@@ -50,9 +50,9 @@ const COPY: Record<
     defaultSource: "enterprise",
   },
   b2c: {
-    title: "Teklif alın",
+    title: "Plus üyelik",
     description:
-      "Bireysel kullanım, paket veya özel destek için yazın. Kısa sürede dönüş yaparız.",
+      "Ödeme altyapımız açılırken Plus üyeliği e-postayla başlatıyoruz. Bilgilerinizi bırakın, kısa sürede dönüş yapalım.",
     nameLabel: "Adınız",
     namePlaceholder: "Ad Soyad",
     emailPlaceholder: "ornek@email.com",

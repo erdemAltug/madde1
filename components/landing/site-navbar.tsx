@@ -189,7 +189,7 @@ export function SiteNavbar() {
         className="shrink-0 rounded-lg bg-[var(--cta-primary)] font-semibold text-white hover:bg-[#1d4ed8]"
         asChild
       >
-        <Link href="/giris?kayit=1" prefetch={true}>
+        <Link href="/giris?kayit=1&next=/asistan" prefetch={true}>
           Kayıt ol
         </Link>
       </Button>
@@ -295,7 +295,7 @@ export function SiteNavbar() {
                   asChild
                 >
                   <Link
-                    href="/giris?kayit=1"
+                    href="/giris?kayit=1&next=/asistan"
                     onClick={closeMobile}
                     prefetch={true}
                   >

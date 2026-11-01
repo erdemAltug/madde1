@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { PLUS_PRICE_LABEL } from "@/lib/pricing";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, FileText, Scale, CheckCircle, Lock, Search, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -197,7 +198,7 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                           <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
                         <p className="mt-3 text-xs text-slate-500 font-medium">
-                          199₺/ay üyelik ile sınırsız analiz
+                          Plus üyelik ({PLUS_PRICE_LABEL}) ile sınırsız analiz
                         </p>
                       </div>
                     </motion.div>

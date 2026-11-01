@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import { getSupabaseService } from "@/lib/supabase/service";
 import { SITE_URL } from "@/lib/seo/site";
+import { sendPushToUser } from "@/lib/push/server";
+import { REGULATION_UPDATES, relevantUpdates } from "@/lib/legal/regulation-updates";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -10,6 +12,7 @@ type DueEvent = {
   id: string;
   user_id: string;
   title: string;
+  kind: string;
   due_date: string;
   notes: string | null;
   remind_days: number[] | null;
@@ -78,7 +81,7 @@ export async function GET(req: Request) {
 
   const { data, error } = await sb
     .from("legal_events")
-    .select("id, user_id, title, due_date, notes, remind_days, reminded_days")
+    .select("id, user_id, title, kind, due_date, notes, remind_days, reminded_days")
     .eq("done", false)
     .gte("due_date", today)
     .lte("due_date", horizon)
@@ -153,8 +156,16 @@ ${event.notes ? `<div style="font-size:13px;color:#64748b;margin-top:6px">${esca
 </div>`;
 
     try {
-      const ok = await sendEmail(email, subject, text, html);
-      if (!ok) {
+      const [mailed, pushed] = await Promise.all([
+        sendEmail(email, subject, text, html),
+        sendPushToUser(sb, userId, {
+          title: subject.replace(/^Hatırlatma: /, ""),
+          body: items.length === 1 ? formatTr(first.event.due_date) : lines[0]!.replace(/^• /, ""),
+          url: "/panel",
+          tag: "clause-reminder",
+        }),
+      ]);
+      if (!mailed && pushed === 0) {
         skipped += 1;
         continue;
       }
@@ -171,5 +182,90 @@ ${event.notes ? `<div style="font-size:13px;color:#64748b;margin-top:6px">${esca
     }
   }
 
-  return NextResponse.json({ today, users: byUser.size, sent, skipped });
+  const notices = await sendRegulationNotices(sb, today);
+
+  return NextResponse.json({ today, users: byUser.size, sent, skipped, notices });
+}
+
+/**
+ * Mevzuat değişikliği: ilgili türde açık tarihi olan kullanıcıya her güncelleme bir kez gider.
+ * Pazarlama bildirimi değildir — yalnızca kullanıcının kendi sözleşmesini etkileyen değişiklik.
+ */
+async function sendRegulationNotices(
+  sb: NonNullable<ReturnType<typeof getSupabaseService>>,
+  today: string,
+): Promise<number> {
+  const fresh = relevantUpdates(
+    REGULATION_UPDATES.flatMap((u) => u.affects),
+    new Date(`${today}T00:00:00Z`),
+  );
+  if (fresh.length === 0) return 0;
+
+  const { data: events } = await sb
+    .from("legal_events")
+    .select("user_id, kind")
+    .eq("done", false)
+    .gte("due_date", today)
+    .limit(5000);
+  const kindsByUser = new Map<string, Set<string>>();
+  for (const e of (events ?? []) as { user_id: string; kind: string }[]) {
+    const set = kindsByUser.get(e.user_id) ?? new Set<string>();
+    set.add(e.kind);
+    kindsByUser.set(e.user_id, set);
+  }
+
+  const { data: sentRows } = await sb
+    .from("regulation_notices_sent")
+    .select("user_id, notice_id")
+    .in("notice_id", fresh.map((u) => u.id));
+  const already = new Set((sentRows ?? []).map((r) => `${r.user_id}:${r.notice_id}`));
+
+  let count = 0;
+  for (const [userId, kinds] of Array.from(kindsByUser.entries())) {
+    const updates = relevantUpdates(kinds, new Date(`${today}T00:00:00Z`)).filter(
+      (u) => !already.has(`${userId}:${u.id}`),
+    );
+    if (updates.length === 0) continue;
+
+    const { data: userData } = await sb.auth.admin.getUserById(userId);
+    const email = userData?.user?.email;
+    const u = updates[0]!;
+    const url = `${SITE_URL}${u.cta.href}`;
+    const text = [
+      "Merhaba,",
+      "",
+      `Clause takviminizdeki bir sözleşmeyi etkileyen bir mevzuat değişikliği var: ${u.title}`,
+      "",
+      u.body,
+      `Kaynak: ${u.source}`,
+      "",
+      `${u.cta.label}: ${url}`,
+      "",
+      "Bu e-posta bilgilendirme amaçlıdır, hukuki tavsiye değildir.",
+    ].join("\n");
+    const html = `<div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:520px;margin:0 auto;color:#0f172a">
+<p style="font-size:15px">Merhaba,</p>
+<p style="font-size:15px">Clause takviminizdeki bir sözleşmeyi etkileyen bir mevzuat değişikliği var:</p>
+<div style="border:1px solid #e2e8f0;border-left:4px solid #005BEA;border-radius:12px;padding:12px 14px;margin:8px 0">
+<div style="font-weight:700;font-size:15px">${escapeHtml(u.title)}</div>
+<div style="font-size:14px;color:#475569;margin-top:6px">${escapeHtml(u.body)}</div>
+<div style="font-size:12px;color:#94a3b8;margin-top:6px">Kaynak: ${escapeHtml(u.source)}</div>
+</div>
+<p style="margin:20px 0"><a href="${url}" style="background:#005BEA;color:#fff;text-decoration:none;padding:12px 18px;border-radius:10px;font-weight:600;font-size:15px">${escapeHtml(u.cta.label)}</a></p>
+<p style="font-size:12px;color:#94a3b8">Bu e-posta bilgilendirme amaçlıdır, hukuki tavsiye değildir.</p>
+</div>`;
+
+    try {
+      const [mailed, pushed] = await Promise.all([
+        email ? sendEmail(email, `Mevzuat değişikliği: ${u.title}`, text, html) : Promise.resolve(false),
+        sendPushToUser(sb, userId, { title: u.title, body: u.body.slice(0, 120), url: u.cta.href, tag: u.id }),
+      ]);
+      if (!mailed && pushed === 0) continue;
+      await sb.from("regulation_notices_sent").insert({ user_id: userId, notice_id: u.id });
+      count += 1;
+    } catch (e) {
+      Sentry.captureException(e, { tags: { event: "regulation_notice_send" } });
+    }
+  }
+  return count;
 }

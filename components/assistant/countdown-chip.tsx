@@ -25,12 +25,12 @@ export function CountdownChip({ date, className }: { date: string; className?: s
   const days = daysUntil(date);
   const tone =
     days < 0
-      ? "border-slate-200 bg-slate-100 text-slate-500"
+      ? "border-slate-200 bg-slate-100 text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
       : days <= 7
-        ? "border-red-200 bg-red-50 text-red-700"
+        ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/50 dark:text-red-300"
         : days <= 30
-          ? "border-amber-200 bg-amber-50 text-amber-800"
-          : "border-slate-200 bg-white text-slate-600";
+          ? "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-900 dark:bg-amber-950/50 dark:text-amber-300"
+          : "border-slate-200 bg-white text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300";
 
   return (
     <span

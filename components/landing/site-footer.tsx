@@ -188,6 +188,30 @@ export function SiteFooter() {
                 </li>
                 <li>
                   <Link
+                    href="/haklarim/kontrol"
+                    className="text-slate-600 font-medium hover:text-deep-navy"
+                  >
+                    Haklarım Kontrolü
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/karsilastir"
+                    className="text-slate-600 font-medium hover:text-deep-navy"
+                  >
+                    Sözleşme sürümlerini karşılaştır
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/cevap-taslagi"
+                    className="text-slate-600 font-medium hover:text-deep-navy"
+                  >
+                    Karşı tarafa cevap taslağı
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/giris?kayit=1&next=/asistan"
                     prefetch={true}
                     className="font-semibold text-madde-blue hover:underline"

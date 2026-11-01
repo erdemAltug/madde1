@@ -80,7 +80,7 @@ export function LimitReachedDialog({
                 captureEvent(AnalyticsEvents.LIMIT_DIALOG_SIGNUP_CLICKED)
               }
             >
-              <Link href="/giris?kayit=1">
+              <Link href="/giris?kayit=1&next=/asistan">
                 <Sparkles className="mr-2 h-4 w-4" />
                 Ücretsiz kayıt ol — günde {registeredLimit} analiz
               </Link>

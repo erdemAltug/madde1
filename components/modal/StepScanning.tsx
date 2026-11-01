@@ -3,6 +3,7 @@
 import * as React from "react";
 import { ScanSearch } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { splitClauses } from "@/lib/compare/clause-diff";
 
 const STAGES = [
   "Sözleşme taranıyor...",
@@ -15,16 +16,29 @@ export const SCAN_DURATION_MS = 2600;
 
 type Props = {
   className?: string;
+  /** Verilirse çark yerine gerçek madde başlıkları sırayla "okunur" */
+  contractText?: string;
 };
 
-export function StepScanning({ className }: Props) {
+/** Sözleşmenin kendi madde başlıklarından okuma aşamaları üretir. */
+function stagesFromText(text?: string): string[] {
+  if (!text) return [...STAGES];
+  const titles = splitClauses(text)
+    .filter((c) => c.key.startsWith("m"))
+    .slice(0, 4)
+    .map((c) => `${c.title.slice(0, 48)} okunuyor…`);
+  return titles.length >= 2 ? [...titles, "Risk haritası çıkarılıyor…"] : [...STAGES];
+}
+
+export function StepScanning({ className, contractText }: Props) {
+  const stages = React.useMemo(() => stagesFromText(contractText), [contractText]);
   const [stageIndex, setStageIndex] = React.useState(0);
   const [progress, setProgress] = React.useState(6);
 
   React.useEffect(() => {
-    const stageMs = SCAN_DURATION_MS / STAGES.length;
+    const stageMs = SCAN_DURATION_MS / stages.length;
     const stageTimer = window.setInterval(() => {
-      setStageIndex((i) => Math.min(i + 1, STAGES.length - 1));
+      setStageIndex((i) => Math.min(i + 1, stages.length - 1));
     }, stageMs);
 
     const start = performance.now();
@@ -41,7 +55,7 @@ export function StepScanning({ className }: Props) {
       window.clearInterval(stageTimer);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [stages]);
 
   return (
     <div
@@ -54,15 +68,15 @@ export function StepScanning({ className }: Props) {
       aria-busy="true"
     >
       <div className="relative flex h-20 w-20 items-center justify-center">
-        <span className="absolute inset-0 animate-ping rounded-full bg-[var(--cta-primary)]/20" />
-        <span className="absolute inset-2 animate-pulse rounded-full bg-[var(--cta-primary)]/15" />
+        <span className="absolute inset-0 motion-safe:animate-ping rounded-full bg-[var(--cta-primary)]/20" />
+        <span className="absolute inset-2 motion-safe:animate-pulse rounded-full bg-[var(--cta-primary)]/15" />
         <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--cta-primary)] text-white shadow-[0_0_28px_rgba(37,99,235,0.45)]">
           <ScanSearch className="h-8 w-8" aria-hidden />
         </div>
       </div>
 
       <div className="w-full max-w-sm space-y-3">
-        <p className="text-base font-bold text-deep-navy">{STAGES[stageIndex]}</p>
+        <p className="text-base font-bold text-deep-navy">{stages[stageIndex]}</p>
         <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
           <div
             className="h-full rounded-full bg-gradient-to-r from-[var(--cta-primary)] to-[#60a5fa] transition-[width] duration-150 ease-out"

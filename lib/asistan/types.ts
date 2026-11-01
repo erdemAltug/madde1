@@ -15,6 +15,9 @@ export type AsistanMessage = {
   created_at: string;
 };
 
+/** RAG kaynağı — UI'da mevzuat çipinin açtığı özet */
+export type AsistanSource = { label: string; kind: string; snippet: string };
+
 export const ASISTAN_EXAMPLE_PROMPTS = [
   "Ev sahibi %80 zam istedi — yasal mı?",
   "İşten çıkarıldım, kıdem ve ihbar hakkım ne?",

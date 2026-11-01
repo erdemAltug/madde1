@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { FaqSection } from "@/components/seo/faq-section";
 import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
 import { RelatedToolsSection } from "@/components/seo/related-tools-section";
+import { SharePageButton } from "@/components/share/share-page-button";
 import type { FaqItem } from "@/lib/seo/rehber-pages";
 import {
   buildHowToJsonLd,
@@ -108,6 +109,8 @@ export function ToolPageShell({
         </header>
 
         {children}
+
+        <SharePageButton text={`${h1} — ücretsiz hesapla:`} path={path} className="mt-8" />
 
         <LegalAiDisclaimer className="mt-8" />
 

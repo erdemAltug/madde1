@@ -257,12 +257,13 @@ export function ContractAnalyzerModal({
             {step === "masking" ? (
               <StepPrivacyMask contractText={contractText} />
             ) : null}
-            {step === "scanning" ? <StepScanning /> : null}
+            {step === "scanning" ? <StepScanning contractText={contractText} /> : null}
             {step === "results" && teaser ? (
               <StepResults
                 teaser={teaser}
                 contractText={contractText}
                 isLoggedIn={isLoggedIn}
+                persona={persona}
                 onAnalyzeAgain={resetWizard}
                 onRequestFullReport={() => {
                   if (isLoggedIn) {

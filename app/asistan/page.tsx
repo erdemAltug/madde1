@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl("/asistan") },
 };
 
-export default function AsistanPage() {
-  return <AsistanWorkspace />;
+type Props = { searchParams?: { soru?: string } };
+
+export default function AsistanPage({ searchParams }: Props) {
+  const initialQuestion = searchParams?.soru?.slice(0, 500);
+  return <AsistanWorkspace initialQuestion={initialQuestion} />;
 }
