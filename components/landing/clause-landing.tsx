@@ -5,18 +5,15 @@ import { useSearchParams } from "next/navigation";
 import { ContractAnalyzerModal } from "@/components/clause/contract-analyzer-modal";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { LandingHero } from "@/components/landing/landing-hero";
+import { LandingStats } from "@/components/landing/landing-stats";
 import { LandingFollowUp } from "@/components/landing/landing-follow-up";
-import { LandingAsistanDemo } from "@/components/landing/landing-asistan-demo";
-import { LandingWhyAssistant } from "@/components/landing/landing-why-assistant";
-import { LandingSecurityStrip } from "@/components/landing/landing-security-strip";
-import { LandingTryStrip } from "@/components/landing/landing-try-strip";
-import { LandingHowItWorks } from "@/components/landing/landing-how-it-works";
-import { LandingCompanion } from "@/components/landing/landing-companion";
+import { LandingDoors } from "@/components/landing/landing-doors";
+import { LandingFaq } from "@/components/landing/landing-faq";
 import { PricingSection } from "@/components/marketing/pricing-section";
-import { FreeToolsSection } from "@/components/landing/free-tools-section";
 import { BottomCtaBand } from "@/components/landing/bottom-cta-band";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { CommonRisksSection } from "@/components/landing/common-risks-section";
+import { captureEvent } from "@/lib/analytics/capture";
+import { AnalyticsEvents } from "@/lib/analytics/events";
 import type { PersonaId } from "@/lib/personas";
 
 function parsePersona(raw: string | null): PersonaId {
@@ -31,18 +28,27 @@ function parsePersona(raw: string | null): PersonaId {
   return "general";
 }
 
+/**
+ * Ana sayfa: tek iş — ziyaretçiyi ilk taramaya, taramadan sonra ücretsiz hesaba götürmek.
+ * Hero (tara) → gerçek sayılar → taramadan sonra (takvim vaadi) → giriş kapıları → SSS + fiyat → tek kapanış.
+ */
 export function ClauseLanding() {
   const searchParams = useSearchParams();
   const initialPersona = parsePersona(searchParams.get("persona"));
   const [analyzerOpen, setAnalyzerOpen] = React.useState(false);
   const [persona, setPersona] = React.useState<PersonaId>(initialPersona);
+  const [file, setFile] = React.useState<File | null>(null);
 
-  const openAnalyzer = React.useCallback((next?: PersonaId) => {
+  const openAnalyzer = React.useCallback((next?: PersonaId, nextFile?: File) => {
     if (next) setPersona(next);
+    setFile(nextFile ?? null);
     setAnalyzerOpen(true);
   }, []);
 
   React.useEffect(() => {
+    captureEvent(AnalyticsEvents.LANDING_VIEWED, {
+      source: searchParams.get("utm_source") ?? undefined,
+    });
     if (searchParams.get("open") === "1" || searchParams.get("dene") === "1") {
       setAnalyzerOpen(true);
     }
@@ -53,16 +59,11 @@ export function ClauseLanding() {
       <SiteNavbar />
       <main id="ana-icerik" className="relative">
         <LandingHero onOpenAnalyzer={openAnalyzer} />
+        <LandingStats />
         <LandingFollowUp />
-        <LandingAsistanDemo />
-        <LandingWhyAssistant />
-        <LandingSecurityStrip />
-        <LandingTryStrip onOpenAnalyzer={() => openAnalyzer()} />
-        <LandingHowItWorks />
-        <LandingCompanion />
-        <CommonRisksSection />
-        <FreeToolsSection />
-        <div className="border-t border-slate-200/60 bg-gradient-to-b from-[#F8FAFC] via-slate-50/50 to-[#F8FAFC]">
+        <LandingDoors />
+        <LandingFaq />
+        <div className="bg-[#FAFAF7]">
           <PricingSection />
         </div>
         <BottomCtaBand onOpenAnalyzer={() => openAnalyzer()} />
@@ -70,9 +71,13 @@ export function ClauseLanding() {
       <SiteFooter />
       <ContractAnalyzerModal
         open={analyzerOpen}
-        onOpenChange={setAnalyzerOpen}
+        onOpenChange={(o) => {
+          setAnalyzerOpen(o);
+          if (!o) setFile(null);
+        }}
         sharePath="/analiz/kira-sozlesmesi"
         initialPersona={persona}
+        initialFile={file}
       />
     </div>
   );
