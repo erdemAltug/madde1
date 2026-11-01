@@ -39,6 +39,7 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   sharePath?: string;
   initialPersona?: PersonaId;
+  initialFile?: File | null;
 };
 
 const FALLBACK_TEASER: TeaserData = {
@@ -89,6 +90,7 @@ export function ContractAnalyzerModal({
   open,
   onOpenChange,
   initialPersona = "general",
+  initialFile = null,
 }: Props) {
   const [step, setStep] = React.useState<WizardStep>("input");
   const [persona, setPersona] = React.useState<PersonaId>(initialPersona);
@@ -251,6 +253,7 @@ export function ContractAnalyzerModal({
                 onFileNameChange={setFileName}
                 onStartDemo={onStartDemo}
                 onStartAnalysis={onStartAnalysis}
+                initialFile={initialFile}
                 error={error}
               />
             ) : null}
@@ -286,7 +289,7 @@ export function ContractAnalyzerModal({
         registeredLimit={dailyAnalysis.registeredLimit}
         isLoggedIn={isLoggedIn}
       />
-      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} context="save" next="/analiz" />
     </>
   );
 }

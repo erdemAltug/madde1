@@ -32,6 +32,7 @@ export const AnalyticsEvents = {
   PWA_INSTALL_PROMPTED: "Pwa_Install_Prompted",
   PWA_INSTALLED: "Pwa_Installed",
   REGULATION_ALERT_VIEWED: "Regulation_Alert_Viewed",
+  LANDING_VIEWED: "Landing_Viewed",
 } as const;
 
 export type FreeToolId =

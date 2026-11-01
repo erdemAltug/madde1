@@ -79,6 +79,8 @@ type Props = {
   onStartAnalysis: () => void;
   disabled?: boolean;
   error?: string | null;
+  /** Landing'deki fotoğraf butonundan gelen dosya: açılışta bir kez okunur */
+  initialFile?: File | null;
 };
 
 export function StepInput({
@@ -92,6 +94,7 @@ export function StepInput({
   onStartAnalysis,
   disabled,
   error,
+  initialFile,
 }: Props) {
   const [drag, setDrag] = React.useState(false);
   const [fileHint, setFileHint] = React.useState<string | null>(null);
@@ -136,6 +139,16 @@ export function StepInput({
       "Word dosyalarını henüz okuyamıyoruz. Belgeyi PDF olarak kaydedin, fotoğrafını çekin ya da metni yapıştırın.",
     );
   };
+
+  const consumedFile = React.useRef<File | null>(null);
+  React.useEffect(() => {
+    if (initialFile && consumedFile.current !== initialFile) {
+      consumedFile.current = initialFile;
+      void handleFile(initialFile);
+    }
+    // handleFile her render yeniden oluşur; yalnız yeni dosyada çalışsın
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialFile]);
 
   const canAnalyze = contractText.trim().length > 40;
 

@@ -156,7 +156,7 @@ export function KeyDatesCard({ contractText, analysisId = null, className }: Pro
         ) : null}
         {dates.length === 0 ? (
           <Button asChild variant="outline" className="h-11 flex-1 rounded-xl font-semibold">
-            <Link href={isLoggedIn ? "/panel#takvim" : "/giris?next=/panel"}>
+            <Link href={isLoggedIn ? "/panel#takvim" : "/giris?kayit=1&next=/panel"}>
               <Plus className="mr-2 h-4 w-4" aria-hidden />
               Tarih ekle
             </Link>
@@ -169,7 +169,7 @@ export function KeyDatesCard({ contractText, analysisId = null, className }: Pro
         </p>
       ) : null}
 
-      <AuthModal open={authOpen} onOpenChange={setAuthOpen} />
+      <AuthModal open={authOpen} onOpenChange={setAuthOpen} context="reminders" next="/panel#takvim" />
     </section>
   );
 }

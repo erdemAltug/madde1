@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TrustStrip } from "@/components/legal/trust-strip";
+import { AuthModal } from "@/components/auth/AuthModal";
+import { useAuthSession } from "@/hooks/use-auth-session";
 import {
   RIGHTS_SCENARIOS,
   computeRights,
@@ -58,6 +60,8 @@ export function RightsCheckWizard({ initialScenario }: Props) {
   const [answers, setAnswers] = React.useState<Answers>({});
   const [done, setDone] = React.useState(false);
   const resultRef = React.useRef<HTMLDivElement>(null);
+  const [authOpen, setAuthOpen] = React.useState(false);
+  const { isLoggedIn } = useAuthSession();
 
   const scenario = getRightsScenario(scenarioId);
   const question = scenario?.questions[step];
@@ -192,6 +196,17 @@ export function RightsCheckWizard({ initialScenario }: Props) {
           </>
         ) : null}
 
+        {!isLoggedIn && r.deadlines.length > 0 ? (
+          <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-[#005BEA]/30 bg-[#005BEA]/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-[15px] text-slate-800 dark:text-slate-200">
+              Bu süreleri kaçırmayın: ücretsiz hesap açın, son tarihlerinizi takviminize ekleyin, zamanı gelince hatırlatalım.
+            </p>
+            <Button type="button" onClick={() => setAuthOpen(true)} className="h-11 shrink-0 rounded-xl bg-[#005BEA] px-5 font-semibold text-white">
+              Süreleri hatırlat
+            </Button>
+          </div>
+        ) : null}
+
         <h3 className="mt-8 text-lg font-semibold text-slate-900 dark:text-slate-100">Şimdi ne yapabilirsiniz?</h3>
         <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {r.nextSteps.map((s) => (
@@ -223,6 +238,7 @@ export function RightsCheckWizard({ initialScenario }: Props) {
         </div>
 
         <TrustStrip className="mt-6" />
+        <AuthModal open={authOpen} onOpenChange={setAuthOpen} context="rights" next="/panel#takvim" />
       </div>
     );
   }

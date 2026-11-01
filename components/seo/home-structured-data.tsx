@@ -1,3 +1,4 @@
+import { HOME_FAQ } from "@/lib/seo/home-faq";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL, absoluteUrl } from "@/lib/seo/site";
 
 const sameAsRaw = process.env.NEXT_PUBLIC_ORGANIZATION_SAME_AS ?? "";
@@ -6,38 +7,7 @@ const sameAs = sameAsRaw
   .map((s) => s.trim())
   .filter(Boolean);
 
-const faq = [
-  {
-    question: "Yapay zeka sözleşme analizi güvenli mi?",
-    answer:
-      "Clause metninizi sunucuda işler; hukuki danışmanlık veya mahkeme sonucu vaat etmez. Kesin hukuki sonuç ve dava stratejisi için mutlaka bir avukata danışın.",
-  },
-  {
-    question: "Legal AI assistant (hukuk asistanı AI) nedir?",
-    answer:
-      "Legal AI assistant, sözleşme ve hukuki metinleri dil modelleriyle ön taramadan geçiren, riskleri özetleyen ve kullanıcıyı profesyonel hukuki yardıma yönlendiren bir yazılım katmanıdır. Clause bu kapsamda çalışır; karar yerine geçmez.",
-  },
-  {
-    question: "Clause nasıl çalışır?",
-    answer:
-      "Sözleşme metnini yapıştırırsınız; yapay zeka kira zammı, kıdem ve tuzak maddelerini ön tarar. Lansman döneminde kayıt ile detaylı risk raporu ve PDF ücretsizdir.",
-  },
-  {
-    question: "Kira sözleşmesi kontrolü ücretsiz mi?",
-    answer:
-      "Ön tarama ücretsizdir. Detaylı madde madde rapor ve PDF lansman döneminde hesap oluşturunca ücretsiz açılır; abonelik sonra gelir.",
-  },
-  {
-    question: "Sözleşme üretimi yapabilir miyim?",
-    answer:
-      "Evet; Clause içinde sözleşme taslağı oluşturma akışı ile freelance, kira ve danışmanlık şablonlarından çıkış alabilirsiniz. Çıktılar taslaktır, imzalamadan önce avukat onayı önerilir.",
-  },
-  {
-    question: "Kurumsal ekipler Clause kullanabilir mi?",
-    answer:
-      "Evet. KOBİ ve hukuk ekipleri standart sözleşmeleri toplu ön taramadan geçirmek, risk skorlarını hizalamak ve iç süreçlerde LegalTech verimliliği sağlamak için Clause analiz sayfalarını kullanabilir.",
-  },
-];
+const faq = HOME_FAQ;
 
 export function HomeStructuredData() {
   const logoUrl = absoluteUrl("/apple-icon");
