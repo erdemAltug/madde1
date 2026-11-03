@@ -14,9 +14,10 @@
     "kira-ihtarname-nasil",
     "is-istifa-kidem",
     "is-fazla-mesai-hesap",
-    "tuketici-ikinci-el"
+    "tuketici-ikinci-el",
+    "sozlesme-cezai-sart"
   ],
-  "lastGeneratedAt": "2026-10-30T12:24:43.742Z",
-  "lastSlug": "ikinci-el-arac-aliminda-sozlesme-tuzaklari-2",
-  "poolCursor": 1
+  "lastGeneratedAt": "2026-11-03T13:52:23.561Z",
+  "lastSlug": "sozlesmede-cezai-sart-ne-zaman-gecersiz-sayilir",
+  "poolCursor": 0
 }
