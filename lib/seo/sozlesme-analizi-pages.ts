@@ -27,7 +27,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "kira-sozlesmesi-analizi",
     navLabel: "Kira sözleşmesi",
     h1: "Kira sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Kira sözleşmesi analizi ve risk tespiti — Clause AI",
+    metaTitle: "Kira sözleşmesi analizi ve risk tespiti",
     metaDescription:
       "Kira bedeli artışı, depozito, tahliye ve fesih maddelerini TBK çerçevesinde yapay zeka ile tarayın. Riskleri erken görün, metninizi iyileştirin.",
     keywords: [
@@ -45,7 +45,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "is-sozlesmesi-riskleri",
     navLabel: "İş sözleşmesi",
     h1: "İş sözleşmesi analizi ve risk tespiti",
-    metaTitle: "İş sözleşmesi riskleri analizi — Clause",
+    metaTitle: "İş sözleşmesi riskleri analizi",
     metaDescription:
       "Fesih, ihbar, ücret, fazla mesai ve rekabet yasağı maddelerindeki dengesizlikleri İş Kanunu perspektifiyle ön taramadan geçirin.",
     keywords: [
@@ -81,7 +81,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "ev-satis-sozlesmesi",
     navLabel: "Ev satışı",
     h1: "Ev satış sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Ev satış sözleşmesi ön analizi — Clause",
+    metaTitle: "Ev satış sözleşmesi ön analizi",
     metaDescription:
       "Ön sözleşme, kapora, tapu teslimi ve ayıplı mal başlıklarında konut alım-satım metninizi risk açısından tarayın.",
     keywords: [
@@ -98,7 +98,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "gizlilik-sozlesmesi-nda",
     navLabel: "Gizlilik / NDA",
     h1: "Gizlilik sözleşmesi (NDA) analizi ve risk tespiti",
-    metaTitle: "Gizlilik sözleşmesi ve NDA analizi — Clause",
+    metaTitle: "Gizlilik sözleşmesi ve NDA analizi",
     metaDescription:
       "Tanım, istisna, süre ve ihlal sonuçları NDA metninizde dengeli mi? Yapay zeka ile ön kontrol.",
     keywords: [
@@ -132,7 +132,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "tedarik-sozlesmesi-risk-analizi",
     navLabel: "Tedarik",
     h1: "Tedarik sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Tedarik sözleşmesi risk analizi — Clause",
+    metaTitle: "Tedarik sözleşmesi risk analizi",
     metaDescription:
       "Teslim süreleri, kalite, garanti ve mücbir sebep maddelerinde tedarik sözleşmenizi kontrol edin.",
     keywords: [
@@ -166,7 +166,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "franchise-sozlesmesi-kontrol",
     navLabel: "Franchise",
     h1: "Franchise sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Franchise sözleşmesi kontrolü — Clause",
+    metaTitle: "Franchise sözleşmesi kontrolü",
     metaDescription:
       "Royalti, işletme standardı, eğitim ve fesih maddelerinde franchise metninizi tarayın.",
     keywords: [
@@ -183,7 +183,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "kvkk-aydinlatma-metni-analizi",
     navLabel: "KVKK aydınlatma",
     h1: "KVKK aydınlatma metni analizi ve risk tespiti",
-    metaTitle: "KVKK aydınlatma metni analizi — Clause",
+    metaTitle: "KVKK aydınlatma metni analizi",
     metaDescription:
       "Veri kategorileri, hukuki sebep, saklama süresi ve başvuru hakları aydınlatma metninizde eksik mi?",
     keywords: [
@@ -200,7 +200,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "calisan-adi-sozlesmesi",
     navLabel: "Çalışan adı",
     h1: "Çalışan adı sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Çalışan adı sözleşmesi analizi — Clause",
+    metaTitle: "Çalışan adı sözleşmesi analizi",
     metaDescription:
       "Hedefler, prim, gizlilik ve fesih maddelerinde çalışan adı sözleşmenizi risk açısından inceleyin.",
     keywords: [
@@ -217,7 +217,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "stajyer-sozlesmesi",
     navLabel: "Stajyer",
     h1: "Stajyer sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Stajyer sözleşmesi analizi — Clause",
+    metaTitle: "Stajyer sözleşmesi analizi",
     metaDescription:
       "Eğitim kapsamı, sigorta, gizlilik ve ücret başlıklarında stajyer sözleşmenizi kontrol edin.",
     keywords: [
@@ -233,7 +233,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "lojistik-hizmet-sozlesmesi",
     navLabel: "Lojistik",
     h1: "Lojistik hizmet sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Lojistik hizmet sözleşmesi analizi — Clause",
+    metaTitle: "Lojistik hizmet sözleşmesi analizi",
     metaDescription:
       "Teslimat süreleri, hasar, sigorta ve sorumluluk sınırı maddelerinde lojistik sözleşmenizi tarayın.",
     keywords: [
@@ -267,7 +267,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "ortaklik-sozlesmesi-taslak",
     navLabel: "Ortaklık",
     h1: "Ortaklık sözleşmesi taslağı analizi ve risk tespiti",
-    metaTitle: "Ortaklık sözleşmesi taslağı analizi — Clause",
+    metaTitle: "Ortaklık sözleşmesi taslağı analizi",
     metaDescription:
       "Sermaye, kar payı, yönetim ve çıkış maddelerinde ortaklık taslağınızı risk açısından tarayın.",
     keywords: [
@@ -318,7 +318,7 @@ const PAGES: SozlesmeAnaliziPageConfig[] = [
     slug: "arac-kira-sozlesmesi-risk",
     navLabel: "Araç kiralama",
     h1: "Araç kira sözleşmesi analizi ve risk tespiti",
-    metaTitle: "Araç kira sözleşmesi risk analizi — Clause",
+    metaTitle: "Araç kira sözleşmesi risk analizi",
     metaDescription:
       "Hasar, km limiti, sigorta ve depozito maddelerinde araç kiralama sözleşmenizi tarayın.",
     keywords: [

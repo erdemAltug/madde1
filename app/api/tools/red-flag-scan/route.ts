@@ -1,3 +1,4 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import { generateLegalText, resolveLegalModel } from "@/lib/ai/models";
@@ -31,6 +32,8 @@ function parseScan(raw: string): ScanResult {
 }
 
 export async function POST(req: Request) {
+  const limited = limitByIp(req, "red_flag", 20);
+  if (limited) return limited;
   try {
     if (!resolveLegalModel()) {
       return NextResponse.json(

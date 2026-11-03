@@ -4,7 +4,7 @@ import { TrackToolOpen } from "@/components/analytics/track-tool-open";
 import { absoluteUrl } from "@/lib/seo/site";
 
 export const metadata: Metadata = {
-  title: "Hukuk Asistanı | Clause",
+  title: "Hukuk Asistanı",
   description:
     "Üyelere özel hukuk sohbeti. Sohbetleriniz hesabınızda saklanır.",
   robots: { index: false, follow: false },

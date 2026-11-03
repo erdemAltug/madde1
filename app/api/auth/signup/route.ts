@@ -1,8 +1,11 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabaseService } from "@/lib/supabase/service";
 import * as Sentry from "@sentry/nextjs";
 
 export async function POST(request: NextRequest) {
+  const limited = limitByIp(request, "signup", 10);
+  if (limited) return limited;
   try {
     const body = await request.json();
     const { email, password, name, userType } = body;

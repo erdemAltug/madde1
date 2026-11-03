@@ -1,3 +1,4 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 import { generateLegalText, resolveLegalModel } from "@/lib/ai/models";
 import { retrieveLegalGrounding } from "@/lib/rag";
@@ -6,6 +7,8 @@ import type { PersonaId } from "@/lib/personas";
 export const maxDuration = 60;
 
 export async function POST(request: NextRequest) {
+  const limited = limitByIp(request, "admin_search", 20);
+  if (limited) return limited;
   try {
     if (!resolveLegalModel()) {
       return NextResponse.json(

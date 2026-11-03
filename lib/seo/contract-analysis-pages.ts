@@ -33,7 +33,7 @@ export const CONTRACT_ANALYSIS_PAGES: Record<string, ContractAnalysisPageConfig>
       "Kira bedeli artışı, temerrüt, depozito ve fesih maddelerindeki tipik riskleri legal AI assistant ile ön taramadan geçirin.",
   },
   "is-sozlesmesi": {
-    metaTitle: "İş sözleşmesi fesih ve risk analizi — Clause",
+    metaTitle: "İş sözleşmesi fesih ve risk analizi",
     metaDescription:
       "İş Kanunu ve TBK çerçevesinde iş sözleşmesi fesih maddesi, ücret, fazla mesai ve rekabet yasağı gibi başlıklarda AI destekli ön inceleme.",
     keywords: [

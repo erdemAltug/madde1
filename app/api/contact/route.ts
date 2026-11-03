@@ -1,3 +1,4 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 import { contactInquirySchema } from "@/lib/contact/schema";
 import { submitContactInquiry } from "@/lib/contact/submit-inquiry";
@@ -5,6 +6,8 @@ import { submitContactInquiry } from "@/lib/contact/submit-inquiry";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
+  const limited = limitByIp(request, "contact", 6);
+  if (limited) return limited;
   try {
     const body = await request.json();
     const parsed = contactInquirySchema.safeParse(body);

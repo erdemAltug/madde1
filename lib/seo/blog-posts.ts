@@ -393,7 +393,7 @@ const POSTS: BlogPostConfig[] = [
   blog({
     slug: "yapay-zeka-kira-sozlesmesi-blog",
     h1: "Yapay zeka ile kira sözleşmesi taraması",
-    metaTitle: "Yapay zeka kira sözleşmesi analizi — Clause",
+    metaTitle: "Yapay zeka kira sözleşmesi analizi",
     metaDescription:
       "Kira kontratını AI ile tarama: artış, depozito, tahliye. Ücretsiz deneme.",
     keywords: ["yapay zeka kira sözleşmesi", "ai kira kontratı"],

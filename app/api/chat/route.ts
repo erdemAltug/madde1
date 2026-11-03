@@ -1,3 +1,4 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { convertToModelMessages, type UIMessage } from "ai";
 import {
   TBK_CONTRACT_SYSTEM,
@@ -17,6 +18,8 @@ import { extractLastUserText } from "@/lib/rag/message-text";
 export const maxDuration = 60;
 
 export async function POST(req: Request) {
+  const limited = limitByIp(req, "chat", 40);
+  if (limited) return limited;
   try {
     const body = await req.json();
     const messages = body.messages as UIMessage[];

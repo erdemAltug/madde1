@@ -1,6 +1,9 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  const limited = limitByIp(request, "admin_upload", 20);
+  if (limited) return limited;
   try {
     const formData = await request.formData();
     const file = formData.get("file") as File;
