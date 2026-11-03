@@ -33,6 +33,10 @@ export const AnalyticsEvents = {
   PWA_INSTALLED: "Pwa_Installed",
   REGULATION_ALERT_VIEWED: "Regulation_Alert_Viewed",
   LANDING_VIEWED: "Landing_Viewed",
+  PHOTO_SCAN_FAILED: "Photo_Scan_Failed",
+  ASISTAN_MESSAGE_SENT: "Asistan_Message_Sent",
+  ASISTAN_ANSWERED: "Asistan_Answered",
+  ASISTAN_FAILED: "Asistan_Failed",
 } as const;
 
 export type FreeToolId =

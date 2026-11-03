@@ -27,7 +27,7 @@ import { maskSensitiveText } from "@/lib/security/mask-sensitive";
 import { useAuthSession } from "@/hooks/use-auth-session";
 import { useDailyAnalysis } from "@/hooks/use-daily-analysis";
 import type { PersonaId } from "@/lib/personas";
-import { captureEvent } from "@/lib/analytics/capture";
+import { captureEvent, captureToolOpened } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { buildInputAnalyticsProps } from "@/lib/analytics/input-props";
 import { cn } from "@/lib/utils";
@@ -117,6 +117,10 @@ export function ContractAnalyzerModal({
   React.useEffect(() => {
     if (open) setPersona(initialPersona);
   }, [open, initialPersona]);
+
+  React.useEffect(() => {
+    if (open) captureToolOpened("sozlesme_tarama");
+  }, [open]);
 
   React.useEffect(() => {
     if (!open) {

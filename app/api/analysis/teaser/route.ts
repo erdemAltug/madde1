@@ -1,3 +1,4 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import type { PersonaId } from "@/lib/personas";
@@ -48,6 +49,8 @@ function parseTeaserJson(raw: string): {
 }
 
 export async function POST(req: Request) {
+  const limited = limitByIp(req, "teaser", 30);
+  if (limited) return limited;
   try {
     if (!resolveLegalModel()) {
       return NextResponse.json(

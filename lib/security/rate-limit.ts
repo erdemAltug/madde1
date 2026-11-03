@@ -30,3 +30,19 @@ export function clientIp(req: Request): string {
   if (fwd) return fwd.split(",")[0]!.trim();
   return req.headers.get("x-real-ip") ?? "unknown";
 }
+
+const HOUR = 60 * 60 * 1000;
+
+/** Saatlik IP limiti; aşıldıysa hazır 429 yanıtı döner, aşılmadıysa null. */
+export function limitByIp(
+  req: Request,
+  name: string,
+  perHour: number,
+): Response | null {
+  const r = rateLimit(`${name}:${clientIp(req)}`, perHour, HOUR);
+  if (r.ok) return null;
+  return Response.json(
+    { error: "Kısa sürede çok fazla istek gönderildi. Biraz sonra tekrar deneyin." },
+    { status: 429, headers: { "Retry-After": String(r.retryAfterSec) } },
+  );
+}

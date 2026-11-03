@@ -1,6 +1,9 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  const limited = limitByIp(request, "admin_analyze", 20);
+  if (limited) return limited;
   const openaiApiKey = process.env.OPENAI_API_KEY;
 
   if (!openaiApiKey) {

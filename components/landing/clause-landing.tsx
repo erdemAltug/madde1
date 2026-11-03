@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useSearchParams } from "next/navigation";
 import { ContractAnalyzerModal } from "@/components/clause/contract-analyzer-modal";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { LandingHero } from "@/components/landing/landing-hero";
@@ -33,10 +32,8 @@ function parsePersona(raw: string | null): PersonaId {
  * Hero (tara) → gerçek sayılar → taramadan sonra (takvim vaadi) → giriş kapıları → SSS + fiyat → tek kapanış.
  */
 export function ClauseLanding() {
-  const searchParams = useSearchParams();
-  const initialPersona = parsePersona(searchParams.get("persona"));
   const [analyzerOpen, setAnalyzerOpen] = React.useState(false);
-  const [persona, setPersona] = React.useState<PersonaId>(initialPersona);
+  const [persona, setPersona] = React.useState<PersonaId>("general");
   const [file, setFile] = React.useState<File | null>(null);
 
   const openAnalyzer = React.useCallback((next?: PersonaId, nextFile?: File) => {
@@ -45,14 +42,18 @@ export function ClauseLanding() {
     setAnalyzerOpen(true);
   }, []);
 
+  // URL parametreleri mount sonrası okunur; useSearchParams sayfayı istemci tarafına düşürüp SSR HTML'ini boşaltıyordu.
   React.useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const p = searchParams.get("persona");
+    if (p) setPersona(parsePersona(p));
     captureEvent(AnalyticsEvents.LANDING_VIEWED, {
       source: searchParams.get("utm_source") ?? undefined,
     });
     if (searchParams.get("open") === "1" || searchParams.get("dene") === "1") {
       setAnalyzerOpen(true);
     }
-  }, [searchParams]);
+  }, []);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#FAFAF7]">

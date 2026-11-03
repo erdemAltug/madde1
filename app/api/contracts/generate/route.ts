@@ -1,3 +1,4 @@
+import { limitByIp } from "@/lib/security/rate-limit";
 import { NextResponse } from "next/server";
 import * as Sentry from "@sentry/nextjs";
 import {
@@ -9,6 +10,8 @@ import { generateLegalText, resolveLegalModel } from "@/lib/ai/models";
 export const maxDuration = 60;
 
 export async function POST(req: Request) {
+  const limited = limitByIp(req, "contract_gen", 15);
+  if (limited) return limited;
   try {
     if (!resolveLegalModel()) {
       return NextResponse.json(

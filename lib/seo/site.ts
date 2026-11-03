@@ -31,8 +31,9 @@ export function absoluteUrl(path: string): string {
 }
 
 export const defaultHomeMetadata: Metadata = {
-  title:
-    "Clause — Ücretsiz hukuk asistanı: sözleşme tara, dilekçe yaz 2026",
+  title: {
+    absolute: "Clause — Ücretsiz hukuk asistanı: sözleşme tara, dilekçe yaz 2026",
+  },
   description:
     "Sözleşme tuzaklarını tarayın, dilekçe taslağı alın, kira ve iş hesaplarını ücretsiz yapın. Clause kişisel hukuk asistanınız; kayıtla rapor ve arşiv sizde kalır.",
   keywords: [

@@ -38,7 +38,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
     category: "kira-sozlesmesi-analizi",
     h1: "Kira zammı yasal mı? Sözleşme + zam raporu 2026",
     metaTitle:
-      "Kira zammı yasal mı? 2026 tavan, zam raporu ve ücretsiz tarama | Clause",
+      "Kira zammı yasal mı? 2026 tavan, zam raporu ve ücretsiz tarama",
     metaDescription:
       "Ev sahibi yüksek zam mı istedi? Yasal tavan, kira artış raporu ve sözleşme tuzaklarını ücretsiz görün. Clause ile tarayın; kayıtla PDF alın.",
     keywords: [
@@ -115,7 +115,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
     category: "is-sozlesmesi-analizi",
     h1: "İş sözleşmesi risk taraması — cezai şart, kıdem, fesih",
     metaTitle:
-      "İş sözleşmesi analizi 2026 — cezai şart, kıdem, ücretsiz tarama | Clause",
+      "İş sözleşmesi analizi 2026 — cezai şart, kıdem, ücretsiz tarama",
     metaDescription:
       "Cezai şart, rekabet yasağı ve fesih maddelerini ücretsiz tarayın. Kıdem/ihbar hesabı ile birlikte; kayıtla detaylı rapor — Clause.",
     keywords: [
@@ -195,7 +195,7 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
     category: "dilekce-hazirlama",
     h1: "Ücretsiz dilekçe ve ihtarname — kira, depozito, tüketici",
     metaTitle:
-      "Ücretsiz dilekçe ve ihtarname 2026 — kira, depozito, tüketici | Clause",
+      "Ücretsiz dilekçe ve ihtarname 2026 — kira, depozito, tüketici",
     metaDescription:
       "Kira itirazı, depozito iadesi veya tüketici başvurusu için ücretsiz dilekçe taslağı. Soru-cevapla hazırlanır; avukat yerine geçmez.",
     keywords: [
