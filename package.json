@@ -10,7 +10,8 @@
     "db:migrate": "node scripts/db-migrate.mjs",
     "content:generate": "tsx scripts/generate-seo-post.ts",
     "content:probe": "tsx scripts/generate-seo-post.ts --probe",
-    "posthog:dashboard": "node scripts/posthog-dashboard.mjs"
+    "posthog:dashboard": "node scripts/posthog-dashboard.mjs",
+    "seo:thin": "node scripts/seo-thin-audit.mjs"
   },
   "dependencies": {
     "@ai-sdk/groq": "^3.0.31",

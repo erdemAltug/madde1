@@ -12,6 +12,7 @@ import {
   type InternalLink,
 } from "@/lib/seo/internal-links";
 import { buildArticleJsonLd } from "@/lib/seo/faq-schema";
+import { LEGAL_REVIEWER } from "@/lib/seo/reviewer";
 import { absoluteUrl } from "@/lib/seo/site";
 
 type Props = {
@@ -56,6 +57,19 @@ export function RehberPageLayout({
           <header>
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               Son güncelleme: {config.updatedAt}
+              {LEGAL_REVIEWER ? (
+                <>
+                  {" · "}İnceleyen:{" "}
+                  {LEGAL_REVIEWER.url ? (
+                    <a href={LEGAL_REVIEWER.url} rel="noopener" className="underline">
+                      {LEGAL_REVIEWER.name}
+                    </a>
+                  ) : (
+                    LEGAL_REVIEWER.name
+                  )}{" "}
+                  ({LEGAL_REVIEWER.credential})
+                </>
+              ) : null}
             </p>
             <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
               {config.h1}
