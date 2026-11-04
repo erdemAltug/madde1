@@ -440,7 +440,7 @@ export const REHBER_EXTRA_2_PAGES = [
   createRehberPage({
     slug: "sozlesme-iptal-cayma-farki",
     h1: "Sözleşme iptali ile cayma hakkı farkı",
-    metaTitle: "İptal ve cayma farkı — tüketici ve ticari",
+    metaTitle: "Cayma hakkı ile iptal farkı nedir? 14 gün kuralı ve istisnalar",
     metaDescription:
       "Cayma, fesih ve iptal kavramları arasındaki fark. Mesafeli satış ve abonelikler.",
     keywords: ["sözleşme iptal", "cayma hakkı farkı", "fesih iptal farkı"],

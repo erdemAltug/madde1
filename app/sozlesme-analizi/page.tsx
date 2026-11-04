@@ -8,6 +8,9 @@ import {
   getSozlesmeAnaliziConfig,
 } from "@/lib/seo/sozlesme-analizi-pages";
 import { YAPAY_ZEKA_HUKUK_LINKS } from "@/lib/seo/internal-links";
+import { FaqSection } from "@/components/seo/faq-section";
+import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
+import { SozlesmeAnaliziGuide, SOZLESME_ANALIZI_FAQS, sozlesmeAnaliziJsonLd } from "@/components/seo/sozlesme-analizi-guide";
 
 export default function SozlesmeAnaliziHubPage() {
   const pages = SOZLESME_ANALIZI_SLUGS.map((slug) =>
@@ -16,6 +19,9 @@ export default function SozlesmeAnaliziHubPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      {sozlesmeAnaliziJsonLd.map((ld, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
+      ))}
       <SiteNavbar />
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <Breadcrumbs
@@ -26,16 +32,32 @@ export default function SozlesmeAnaliziHubPage() {
             Yapay zeka · TBK uyumlu ön tarama
           </p>
           <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Yapay zeka sözleşme analizi — türüne göre risk taraması
+            Yapay zeka ile sözleşme analizi — imzalamadan önce riskleri görün
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Her sayfa bir sözleşme türüne özeldir: kira, iş, freelance, KVKK ve daha
-            fazlası. Metninizi yapıştırarak ücretsiz güven özeti alın; ardından detaylı
-            analize geçin. Hukuki danışmanlık yerine geçmez.
+            Sözleşmenizi yükleyin, yapıştırın ya da fotoğrafını çekin. Clause yapay zekası maddeleri Türk
+            mevzuatına göre tarar; haksız cezai şartı, eksik maddeyi ve kaçırmamanız gereken tarihleri kanun
+            maddesiyle birlikte gösterir. Ücretsiz, kayıt gerekmez.
           </p>
         </header>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            href="/?open=1"
+            className="rounded-lg bg-[#005BEA] px-5 py-3 text-sm font-semibold text-white hover:bg-[#004bc2]"
+          >
+            Sözleşmemi ücretsiz tara
+          </Link>
+          <Link
+            href="/araclar/sozlesme-tuzak-tarama"
+            className="rounded-lg border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+          >
+            Tek maddeyi kontrol et
+          </Link>
+        </div>
 
-        <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="mt-14 text-xl font-bold text-madde-ink">Sözleşme türüne göre analiz</h2>
+
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {pages.map((page) =>
             page ? (
               <li key={page.slug}>
@@ -60,6 +82,10 @@ export default function SozlesmeAnaliziHubPage() {
             ) : null,
           )}
         </ul>
+
+        <SozlesmeAnaliziGuide />
+        <FaqSection faqs={SOZLESME_ANALIZI_FAQS} />
+        <LegalAiDisclaimer className="mt-10" />
 
         <section className="mt-16 rounded-2xl border border-slate-200 bg-slate-50 p-6">
           <h2 className="text-lg font-bold text-madde-ink">Yapay zeka hukuk rehberleri</h2>

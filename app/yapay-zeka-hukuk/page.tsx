@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { SiteNavbar } from "@/components/landing/site-navbar";
@@ -8,19 +7,19 @@ import {
   YAPAY_ZEKA_HUKUK_SLUGS,
   getYapayZekaHukukConfig,
 } from "@/lib/seo/yapay-zeka-hukuk-pages";
-
-export const metadata: Metadata = {
-  robots: { index: false, follow: true },
-  title: "Yapay zeka hukuk",
-};
+import REDIRECTS from "@/lib/seo/redirect-map.json";
+import { FaqSection } from "@/components/seo/faq-section";
+import { LegalAiDisclaimer } from "@/components/legal/legal-ai-disclaimer";
+import { YapayZekaHukukGuide, YAPAY_ZEKA_HUKUK_FAQS, yapayZekaHukukJsonLd } from "@/components/seo/yapay-zeka-hukuk-guide";
 
 export default function YapayZekaHukukHubPage() {
-  const pages = YAPAY_ZEKA_HUKUK_SLUGS.map((slug) => getYapayZekaHukukConfig(slug)).filter(
+  const pages = YAPAY_ZEKA_HUKUK_SLUGS.filter((slug) => !(`/yapay-zeka-hukuk/${slug}` in REDIRECTS)).map((slug) => getYapayZekaHukukConfig(slug)).filter(
     Boolean,
   );
 
   return (
     <div className="min-h-screen bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(yapayZekaHukukJsonLd) }} />
       <SiteNavbar />
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <Breadcrumbs items={[{ name: "Yapay zeka hukuk", href: "/yapay-zeka-hukuk" }]} />
@@ -29,15 +28,16 @@ export default function YapayZekaHukukHubPage() {
             Legal AI · Türkiye
           </p>
           <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Yapay zeka hukuk rehberleri — sözleşme analizi ve hukuk asistanı
+            Yapay zeka ve hukuk — Türk hukuku için legal AI
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Günlük ve profesyonel aramalarda sık geçen yapay zeka + hukuk konularını sade
-            dille açıklıyoruz. Her sayfa ilgili ücretsiz araç veya sözleşme analizine bağlanır.
+            Sözleşmenizi analiz edin, hukuki sorunuzu sorun, dilekçenizi yazdırın. Clause her yanıtı Türk
+            mevzuatındaki kanun maddesine dayandırır; sade dille, ücretsiz.
           </p>
         </header>
 
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <h2 className="mt-12 text-xl font-bold text-madde-ink">Yapay zeka ve hukuk rehberleri</h2>
+        <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {pages.map((page) =>
             page ? (
               <li key={page.slug}>
@@ -61,6 +61,9 @@ export default function YapayZekaHukukHubPage() {
             ) : null,
           )}
         </ul>
+        <YapayZekaHukukGuide />
+        <FaqSection faqs={YAPAY_ZEKA_HUKUK_FAQS} />
+        <LegalAiDisclaimer className="mt-10" />
       </main>
       <SiteFooter />
     </div>

@@ -1,5 +1,6 @@
 import type { FaqItem } from "./rehber-pages";
 import { SITE_NAME, SITE_URL } from "@/lib/seo/site";
+import { LEGAL_REVIEWER } from "@/lib/seo/reviewer";
 
 export function buildFaqJsonLd(faqs: FaqItem[]) {
   return {
@@ -41,6 +42,16 @@ export function buildArticleJsonLd(opts: {
       "@type": "WebPage",
       "@id": opts.url,
     },
+    ...(LEGAL_REVIEWER
+      ? {
+          reviewedBy: {
+            "@type": "Person",
+            name: LEGAL_REVIEWER.name,
+            jobTitle: `Avukat — ${LEGAL_REVIEWER.credential}`,
+            ...(LEGAL_REVIEWER.url ? { url: LEGAL_REVIEWER.url } : {}),
+          },
+        }
+      : {}),
   };
 }
 

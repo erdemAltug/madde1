@@ -1,9 +1,8 @@
 name: Auto SEO Content Cron
 
 on:
-  schedule:
-    # Tuesday & Friday 06:00 UTC
-    - cron: "0 6 * * 2,5"
+  # Otomatik zamanlama kapatıldı (2026-11): sığ içerik sitenin genel kalitesini düşürüyor.
+  # Gerekirse Actions sekmesinden elle çalıştırılabilir.
   workflow_dispatch:
 
 permissions:

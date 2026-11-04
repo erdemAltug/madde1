@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SITE_NAME, absoluteUrl } from "@/lib/seo/site";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 
-const title = "Yapay zeka hukuk — AI sözleşme analizi ve hukuk asistanı";
+const title = "Yapay zeka ve hukuk 2026 — legal AI ile ücretsiz hukuki yardım";
 const description =
-  "Yapay zeka hukuk asistanı, sözleşme analizi AI ve Legal AI Türkiye rehberleri. Kira, iş ve ticari sözleşmeler için ücretsiz ön tarama — Clause.";
+  "Türk hukuku için legal AI: sözleşme analizi, hukuki soru-cevap, dilekçe yazma ve hak hesaplama. Her yanıt kanun maddesine dayanır. Ücretsiz deneyin.";
 
 export const metadata: Metadata = {
   title,
@@ -14,6 +14,8 @@ export const metadata: Metadata = {
     "yapay zeka hukuk asistanı",
     "yapay zeka sözleşme analizi",
     "legal AI Türkiye",
+    "legal ai",
+    "hukuk yapay zekası",
     "hukuk yapay zeka",
     "AI avukat",
     SITE_NAME,

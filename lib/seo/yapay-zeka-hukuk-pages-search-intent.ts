@@ -250,7 +250,7 @@ export const YAPAY_ZEKA_HUKUK_SEARCH_INTENT_PAGES = [
       },
     ],
     ctaLabel: "Sözleşme özetinizi ücretsiz çıkarın",
-    ctaHref: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    ctaHref: "/sozlesme-analizi",
     updatedAt: "2026-08-05",
   }),
 

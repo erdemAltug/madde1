@@ -90,7 +90,7 @@ export const YAPAY_ZEKA_HUKUK_LINKS: InternalLink[] = [
     description: "Ücretsiz ön tarama ve risk özeti.",
   },
   {
-    href: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    href: "/sozlesme-analizi",
     label: "Yapay zeka sözleşme analizi",
     description: "AI ile kontrat risk taraması.",
   },
@@ -105,7 +105,7 @@ export const YAPAY_ZEKA_HUKUK_LINKS: InternalLink[] = [
     description: "Fesih ve tazminat riskleri.",
   },
   {
-    href: "/yapay-zeka-hukuk/legal-ai-turkiye",
+    href: "/yapay-zeka-hukuk",
     label: "Legal AI Türkiye",
     description: "Hukuk teknolojisi rehberi.",
   },
@@ -276,7 +276,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   "e-ticaret-iade-haklari": ["/rehber/mesafeli-satis-cayma", "/rehber/online-alisveris-14-gun-cayma", "/rehber/pazaryeri-tuketici-sikayet", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
   "yazilim-telif-sozlesmesi": ["/rehber/freelance-sozlesme-rehberi", "/rehber/hizmet-sozlesmesi-rehberi", "/blog/freelance-sozlesme-turkiye-ipuclari", "/sozlesme-analizi/freelance-yazilim-kontrati"],
   "kira-sozlesmesi-damga-vergisi": ["/rehber/is-yeri-ticari-kira-rehberi", "/rehber/kira-sozlesmesi-ornek-maddeler", "/araclar/damga-vergisi-hesaplama", "/kira-sozlesmesi-analizi"],
-  "yapay-zeka-sozlesme-kontrolu": ["/rehber/ucretsiz-sozlesme-analizi-nasil", "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi", "/blog/yapay-zeka-sozlesme-analizi-nasil-calisir", "/blog/sozlesme-madde-madde-analiz"],
+  "yapay-zeka-sozlesme-kontrolu": ["/sozlesme-analizi", "/sozlesme-analizi", "/sozlesme-analizi", "/blog/sozlesme-madde-madde-analiz"],
   "kira-sozlesmesi-sure-uzatma": ["/rehber/otomatik-yenileme-sozlesme", "/rehber/kira-sozlesmesi-bildirim-sureleri", "/rehber/kira-sozlesmesi-fesih-bildirimi", "/rehber/kiraci-haklari"],
   "tuketici-arabuluculuk": ["/rehber/tuketici-sikayet-hatti-rehber", "/rehber/pazaryeri-tuketici-sikayet", "/rehber/tuketici-haklari", "/blog/tuketici-hakem-heyeti-basvuru-blog"],
   "isveren-yukumlulukleri": ["/rehber/is-kazasi-isveren-yukumluluk", "/rehber/kvkk-calisan-verisi", "/rehber/gizlilik-istihdam-sozlesmesi", "/rehber/isci-haklari"],
@@ -313,7 +313,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
   "is-sozlesmesi-ucret-kesintisi": ["/araclar/brut-net-maas-hesaplama", "/rehber/isci-haklari", "/rehber/fazla-mesai-ucreti", "/hukuki-analiz/ucret-kesintisi-anlasmazligi"],
   "tuketici-sikayet-hatti-rehber": ["/rehber/tuketici-haklari", "/rehber/pazaryeri-tuketici-sikayet", "/rehber/tuketici-arabuluculuk", "/blog/tuketici-sikayet-2026-adim-adim"],
   "online-alisveris-14-gun-cayma": ["/rehber/mesafeli-satis-cayma", "/rehber/e-ticaret-iade-haklari", "/rehber/pazaryeri-tuketici-sikayet", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
-  "yapay-zeka-hukuk-guvenilir-mi": ["/rehber/google-yapay-zeka-hukuk-arama", "/rehber/ucretsiz-sozlesme-analizi-nasil", "/yapay-zeka-hukuk/yapay-zeka-avukat-mi", "/blog/gunluk-hukuk-sorulari-yapay-zeka"],
+  "yapay-zeka-hukuk-guvenilir-mi": ["/rehber/google-yapay-zeka-hukuk-arama", "/sozlesme-analizi", "/yapay-zeka-hukuk/yapay-zeka-avukat-mi", "/blog/gunluk-hukuk-sorulari-yapay-zeka"],
   "miras-kira-sozlesmesi-devri": ["/rehber/aile-konutu-kirasi", "/rehber/kira-sozlesmesi-bosanma", "/rehber/kira-sozlesmesi-sure-uzatma", "/hukuki-analiz/kira-sozlesmesi-feshi"],
   "is-yeri-ticari-kira-rehberi": ["/rehber/kira-sozlesmesi-damga-vergisi", "/rehber/kira-garanti-mektubu", "/rehber/kira-artisi-haklari", "/araclar/damga-vergisi-hesaplama"],
   "hukuki-danismanlik-ucretsiz-secenekler": ["/rehber/gunluk-hukuk-ihtiyaclari", "/rehber/yapay-zeka-hukuk-guvenilir-mi", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/ucretsiz-hukuk-asistani-2026-karsilastirma"],
@@ -465,7 +465,7 @@ const REHBER_CLUSTER_MAP: Record<string, string[]> = {
 
 const YAPAY_ZEKA_CLUSTER_MAP: Record<string, string[]> = {
   "yapay-zeka-hukuk-asistani": [
-    "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    "/sozlesme-analizi",
     "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk",
     "/",
   ],
@@ -487,7 +487,7 @@ const YAPAY_ZEKA_CLUSTER_MAP: Record<string, string[]> = {
   ],
   "legal-ai-turkiye": [
     "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani",
-    "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    "/sozlesme-analizi",
     "/guvenlik",
   ],
   "ucretsiz-yapay-zeka-hukuk": ["/#dene", "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani", "/araclar"],
@@ -623,15 +623,15 @@ export function getRelatedLinksForRehber(slug: string): InternalLink[] {
 
 const BLOG_CLUSTER_MAP: Record<string, string[]> = {
   "kira-sozlesmesi-riskli-maddeler-2026": ["/rehber/kira-sozlesmesi-sablon-riskleri", "/rehber/kira-sozlesmesi-ornek-maddeler", "/rehber/kiraci-haklari", "/kira-sozlesmesi-analizi"],
-  "yapay-zeka-sozlesme-analizi-nasil-calisir": ["/rehber/yapay-zeka-sozlesme-kontrolu", "/rehber/ucretsiz-sozlesme-analizi-nasil", "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi", "/blog/sozlesme-madde-madde-analiz"],
+  "yapay-zeka-sozlesme-analizi-nasil-calisir": ["/rehber/yapay-zeka-sozlesme-kontrolu", "/sozlesme-analizi", "/sozlesme-analizi", "/blog/sozlesme-madde-madde-analiz"],
   "tahliye-taahhutnamesi-7-hata": ["/rehber/tahliye-taahhutnamesi-rehberi", "/rehber/tahliye-sureci", "/hukuki-analiz/tahliye-taahhutnamesi", "/araclar/tahliye-taahhudu-gecerlilik-kontrolu"],
   "is-sozlesmesi-imzalamadan-once-5-soru": ["/rehber/is-sozlesmesi-belirsiz-maddeler", "/rehber/sozlesme-imzalamadan-once", "/rehber/isci-haklari", "/is-sozlesmesi-analizi"],
   "tbk-kira-artisi-2026-pratik": ["/rehber/kira-artisi-haklari", "/rehber/kiraci-haklari", "/araclar/kira-sozlesmesi-artis-orani-hesaplama", "/blog/kira-artisi-2026-hesaplama-rehberi-blog"],
   "depozito-iadesi-reddedildi": ["/rehber/depozito-iadesi", "/rehber/depozito-ne-kadar-alinir", "/rehber/depozito-iadesi", "/hukuki-analiz/depozito-anlasmazligi"],
   "freelance-sozlesme-turkiye-ipuclari": ["/rehber/freelance-sozlesme-rehberi", "/rehber/yazilim-telif-sozlesmesi", "/blog/freelance-sozlesme-fatura-rehberi", "/sozlesme-analizi/freelance-yazilim-kontrati"],
   "kvkk-aydinlatma-metni-zorunlu-mu": ["/rehber/gizlilik-sozlesmesi-kvkk", "/rehber/kvkk-calisan-verisi", "/rehber/gizlilik-istihdam-sozlesmesi", "/sozlesme-analizi/kvkk-aydinlatma-metni-analizi"],
-  "legal-ai-turkiye-karsilastirma": ["/rehber/yapay-zeka-hukuk-guvenilir-mi", "/rehber/google-yapay-zeka-hukuk-arama", "/yapay-zeka-hukuk/legal-ai-turkiye", "/blog/clause-vs-genel-ai-chat"],
-  "ucretsiz-sozlesme-analizi-araclari": ["/rehber/ucretsiz-sozlesme-analizi-nasil", "/rehber/yapay-zeka-sozlesme-kontrolu", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/araclar"],
+  "legal-ai-turkiye-karsilastirma": ["/rehber/yapay-zeka-hukuk-guvenilir-mi", "/rehber/google-yapay-zeka-hukuk-arama", "/yapay-zeka-hukuk", "/blog/clause-vs-genel-ai-chat"],
+  "ucretsiz-sozlesme-analizi-araclari": ["/sozlesme-analizi", "/rehber/yapay-zeka-sozlesme-kontrolu", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/araclar"],
   "kobi-sozlesme-yonetimi": ["/rehber/ticari-sozlesmesi-kobi-rehberi", "/rehber/hizmet-sozlesmesi-rehberi", "/rehber/uyusmazlik-cozumu-tahkim", "/hukuki-analiz/sozlesme-risk-analizi"],
   "mesafeli-satis-iptal-rehberi": ["/rehber/mesafeli-satis-cayma", "/rehber/online-alisveris-14-gun-cayma", "/rehber/e-ticaret-iade-haklari", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
   "is-kanunu-fesih-sureleri-ozet": ["/rehber/isten-cikarilinca-ne-yapilir", "/rehber/kidem-ihbar-tazminati", "/rehber/iscinin-hakli-fesih-hakki", "/hukuki-analiz/is-cikarilma-tazminat"],
@@ -643,11 +643,11 @@ const BLOG_CLUSTER_MAP: Record<string, string[]> = {
   "depozito-kesinti-ornekleri": ["/rehber/depozito-iadesi", "/rehber/depozito-ne-kadar-alinir", "/hukuki-analiz/depozito-anlasmazligi", "/blog/depozito-iadesi-yazili-ihtar-ornek"],
   "tbk-609-kira-ozet-blog": ["/rehber/kiraci-haklari", "/rehber/kira-feshi-hakli-nedenler", "/rehber/kira-sozlesmesi-bildirim-sureleri", "/hukuki-analiz/kira-sozlesmesi-feshi"],
   "ucretsiz-hukuki-danismanlik-ai": ["/rehber/hukuki-danismanlik-ucretsiz-secenekler", "/rehber/gunluk-hukuk-ihtiyaclari", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/ucretsiz-hukuk-asistani-2026-karsilastirma"],
-  "sozlesme-imza-oncesi-checklist-blog": ["/rehber/sozlesme-imzalamadan-once", "/rehber/sozlesme-cezai-sart", "/rehber/sozlesme-iptal-cayma-farki", "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi"],
-  "ticari-sozlesme-ai-tarama": ["/rehber/ticari-sozlesmesi-kobi-rehberi", "/rehber/yapay-zeka-sozlesme-kontrolu", "/blog/kobi-sozlesme-yonetimi", "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi"],
+  "sozlesme-imza-oncesi-checklist-blog": ["/rehber/sozlesme-imzalamadan-once", "/rehber/sozlesme-cezai-sart", "/rehber/sozlesme-iptal-cayma-farki", "/sozlesme-analizi"],
+  "ticari-sozlesme-ai-tarama": ["/rehber/ticari-sozlesmesi-kobi-rehberi", "/rehber/yapay-zeka-sozlesme-kontrolu", "/blog/kobi-sozlesme-yonetimi", "/sozlesme-analizi"],
   "tahliye-davasi-sure-rehber-blog": ["/rehber/tahliye-sureci", "/rehber/tahliye-taahhutnamesi-rehberi", "/rehber/kira-sozlesmesi-bildirim-sureleri", "/hukuki-analiz/tahliye-taahhutnamesi"],
   "tuketici-hakem-heyeti-basvuru-blog": ["/rehber/tuketici-sikayet-hatti-rehber", "/rehber/tuketici-arabuluculuk", "/rehber/pazaryeri-tuketici-sikayet", "/rehber/tuketici-haklari"],
-  "clause-vs-genel-ai-chat": ["/rehber/yapay-zeka-hukuk-guvenilir-mi", "/rehber/google-yapay-zeka-hukuk-arama", "/yapay-zeka-hukuk/yapay-zeka-avukat-mi", "/yapay-zeka-hukuk/legal-ai-turkiye"],
+  "clause-vs-genel-ai-chat": ["/rehber/yapay-zeka-hukuk-guvenilir-mi", "/rehber/google-yapay-zeka-hukuk-arama", "/yapay-zeka-hukuk/yapay-zeka-avukat-mi", "/yapay-zeka-hukuk"],
   "kira-artisi-2026-ne-kadar": ["/rehber/kira-artisi-haklari", "/rehber/is-yeri-ticari-kira-rehberi", "/araclar/kira-sozlesmesi-artis-orani-hesaplama", "/blog/kira-artisi-2026-hesaplama-rehberi-blog"],
   "kira-takip-raporu-yapay-zeka-analizi": ["/rehber/kiraci-haklari", "/rehber/yapay-zeka-sozlesme-kontrolu", "/yapay-zeka-hukuk/yapay-zeka-kira-sozlesmesi", "/kira-sozlesmesi-analizi"],
   "kira-borcu-ne-zaman-tahliye": ["/rehber/kira-borcu-takibi-icra", "/rehber/kira-sozlesmesi-fesih-bildirimi", "/rehber/tahliye-sureci", "/hukuki-analiz/kira-borcu-takibi"],
@@ -661,7 +661,7 @@ const BLOG_CLUSTER_MAP: Record<string, string[]> = {
   "ucretsiz-hukuk-asistani-2026-karsilastirma": ["/rehber/hukuki-danismanlik-ucretsiz-secenekler", "/rehber/yapay-zeka-hukuk-guvenilir-mi", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/legal-ai-turkiye-karsilastirma"],
   "tuketici-cayma-hakki-istisnalar": ["/rehber/mesafeli-satis-cayma", "/rehber/online-alisveris-14-gun-cayma", "/rehber/e-ticaret-iade-haklari", "/sozlesme-analizi/mesafeli-satis-sozlesmesi"],
   "freelance-sozlesme-fatura-rehberi": ["/rehber/freelance-sozlesme-rehberi", "/rehber/hizmet-sozlesmesi-rehberi", "/rehber/yazilim-telif-sozlesmesi", "/sozlesme-analizi/freelance-yazilim-kontrati"],
-  "yapay-zeka-sozlesme-analizi-ucretsiz-rehber": ["/rehber/ucretsiz-sozlesme-analizi-nasil", "/rehber/yapay-zeka-sozlesme-kontrolu", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/ucretsiz-sozlesme-analizi-araclari"],
+  "yapay-zeka-sozlesme-analizi-ucretsiz-rehber": ["/sozlesme-analizi", "/rehber/yapay-zeka-sozlesme-kontrolu", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/sozlesme-analizi"],
   "gunluk-hukuk-isleri-yapay-zeka-2026": ["/rehber/gunluk-hukuk-ihtiyaclari", "/rehber/hukuki-danismanlik-ucretsiz-secenekler", "/yapay-zeka-hukuk/yapay-zeka-hukuk-asistani", "/araclar"],
   "kira-artisi-2026-hesaplama-rehberi-blog": ["/rehber/kira-artisi-haklari", "/rehber/kiraci-haklari", "/araclar/kira-sozlesmesi-artis-orani-hesaplama", "/blog/kira-artisi-2026-ne-kadar"],
   "isten-cikarildim-ilk-7-gun": ["/araclar/issizlik-maasi-hesaplama", "/rehber/isten-cikarilinca-ne-yapilir", "/araclar/kidem-tazminati-hesaplama", "/araclar/ihbar-tazminati-hesaplama"],
@@ -669,7 +669,7 @@ const BLOG_CLUSTER_MAP: Record<string, string[]> = {
   "sozlesme-okumadan-imzalamayin-kontrol": ["/rehber/sozlesme-imzalamadan-once", "/rehber/sozlesme-cezai-sart", "/rehber/yapay-zeka-sozlesme-kontrolu", "/hukuki-analiz/sozlesme-risk-analizi"],
   "kidem-mi-ihbar-mi-fark-nedir": ["/rehber/kidem-ihbar-tazminati", "/rehber/isten-cikarilinca-ne-yapilir", "/araclar/kidem-tazminati-hesaplama", "/araclar/ihbar-tazminati-hesaplama"],
   "tuketici-sikayet-2026-adim-adim": ["/rehber/tuketici-sikayet-hatti-rehber", "/rehber/pazaryeri-tuketici-sikayet", "/rehber/tuketici-arabuluculuk", "/blog/tuketici-hakem-heyeti-basvuru-blog"],
-  "neden-clause-ucretsiz-sozlesme-analizi": ["/rehber/ucretsiz-sozlesme-analizi-nasil", "/rehber/yapay-zeka-hukuk-guvenilir-mi", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/blog/yapay-zeka-sozlesme-analizi-ucretsiz-rehber"],
+  "neden-clause-ucretsiz-sozlesme-analizi": ["/sozlesme-analizi", "/rehber/yapay-zeka-hukuk-guvenilir-mi", "/yapay-zeka-hukuk/ucretsiz-yapay-zeka-hukuk", "/sozlesme-analizi"],
 };
 
 export function getRelatedLinksForBlog(slug: string): InternalLink[] {
@@ -677,7 +677,7 @@ export function getRelatedLinksForBlog(slug: string): InternalLink[] {
   if (cluster) return resolveLinks(cluster);
   return resolveLinks([
     "/rehber/sozlesme-imzalamadan-once",
-    "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    "/sozlesme-analizi",
     "/araclar",
     "/#dene",
   ]);

@@ -15,3 +15,12 @@ export const SEVERANCE_CEILING = {
   periodLabel: "1 Temmuz 2026 – 31 Aralık 2026",
   sourceLabel: "Hazine ve Maliye Bakanlığı, 2026 II. dönem kıdem tazminatı tavanı",
 } as const;
+
+/** İşsizlik ödeneği: günlük brüt kazancın %40'ı, aylık brüt asgari ücretin %80'ini aşamaz; yalnız damga vergisi kesilir. */
+export const UNEMPLOYMENT_2026 = {
+  minGrossWageTry: 33_030,
+  benefitRate: 0.4,
+  capRateOfMinWage: 0.8,
+  stampTaxRate: 0.00759,
+  periodLabel: "2026",
+} as const;

@@ -11,6 +11,7 @@ import { INTENT_PILLAR_CATEGORIES } from "@/lib/seo/intent-pillars";
 import { isNicheRegionalPath } from "@/lib/seo/niche-regional";
 import { isCanonicalLoser } from "@/lib/seo/canonical-winners";
 import { SITE_URL } from "@/lib/seo/site";
+import REDIRECTS from "@/lib/seo/redirect-map.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Sabit tarih: her build'de "şimdi" vermek lastmod sinyalini değersizleştirir.
@@ -189,6 +190,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  const redirected = new Set(Object.keys(REDIRECTS).map((p) => `${SITE_URL}${p}`));
   return [
     ...staticRoutes,
     ...araclar,
@@ -198,5 +200,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...analiz,
     ...sozlesmeAnalizi,
     ...blog,
-  ];
+  ].filter((e) => !redirected.has(e.url));
 }

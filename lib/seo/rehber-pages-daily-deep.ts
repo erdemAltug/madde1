@@ -752,7 +752,7 @@ export const REHBER_DAILY_DEEP_PAGES = [
   createRehberPage({
     slug: "dijital-abonelik-otomatik-yenileme-iptal",
     h1: "Dijital abonelikte otomatik yenileme ve iptal rehberi",
-    metaTitle: "Dijital abonelik otomatik yenileme iptali",
+    metaTitle: "Otomatik yenilenen abonelik nasıl iptal edilir? 2026 adım adım ve iade",
     metaDescription:
       "Uygulama, platform ve dijital hizmet aboneliklerinde otomatik yenileme, cayma, iptal kanıtı, kart çekimi ve tüketici başvurusu.",
     keywords: [

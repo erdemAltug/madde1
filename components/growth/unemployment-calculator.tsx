@@ -8,10 +8,11 @@ import { Label } from "@/components/ui/label";
 import { captureEvent } from "@/lib/analytics/capture";
 import { AnalyticsEvents } from "@/lib/analytics/events";
 import { ToolContractScanCta } from "@/components/growth/tool-contract-scan-cta";
+import { UNEMPLOYMENT_2026 } from "@/lib/legal/official-rates";
 
-const MIN_GROSS_2026 = 33_030;
-const MAX_GROSS_BENEFIT_2026 = MIN_GROSS_2026 * 0.8;
-const STAMP_TAX_RATE = 0.00759;
+const MIN_GROSS_2026 = UNEMPLOYMENT_2026.minGrossWageTry;
+const MAX_GROSS_BENEFIT_2026 = MIN_GROSS_2026 * UNEMPLOYMENT_2026.capRateOfMinWage;
+const STAMP_TAX_RATE = UNEMPLOYMENT_2026.stampTaxRate;
 
 function parseNumber(value: string): number {
   return Number(value.replace(/\./g, "").replace(",", ".")) || 0;

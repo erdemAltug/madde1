@@ -18,12 +18,21 @@ import {
   twitterSummaryLargeImage,
 } from "@/lib/seo/og";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
+import { UNEMPLOYMENT_2026 as U } from "@/lib/legal/official-rates";
+
+const fmt = (n: number) =>
+  new Intl.NumberFormat("tr-TR", { style: "currency", currency: "TRY", maximumFractionDigits: 0 }).format(n);
+const net = (gross: number) => gross * (1 - U.stampTaxRate);
+const MIN_GROSS_BENEFIT = U.minGrossWageTry * U.benefitRate;
+const MAX_GROSS_BENEFIT = U.minGrossWageTry * U.capRateOfMinWage;
+const benefitFor = (avgGross: number) => Math.min(avgGross * U.benefitRate, MAX_GROSS_BENEFIT);
+const EXAMPLES = [U.minGrossWageTry, 45_000, 60_000, 90_000];
 
 const path = ISSIZLIK_MAASI_TOOL_PATH;
 const canonical = absoluteUrl(path);
-const title = "İşsizlik maaşı hesaplama 2026 — ne kadar, kaç ay?";
+const title = "İşsizlik maaşı hesaplama 2026 — en az, en çok ne kadar, kaç ay?";
 const description =
-  "2026 işsizlik maaşı hesaplama: son dört aylık brüt kazanç ve prim gününe göre aylık ödenek, ödeme süresi ve toplam tahmini ücretsiz görün.";
+  `2026 işsizlik maaşı en az ${fmt(net(MIN_GROSS_BENEFIT))}, en çok ${fmt(net(MAX_GROSS_BENEFIT))} net. Brüt maaşınızı ve prim gününüzü girin; aylık tutarı, kaç ay alacağınızı ve toplamı hemen görün.`;
 
 export const metadata: Metadata = {
   title,
@@ -61,6 +70,10 @@ const howToLd = buildHowToJsonLd({
 });
 
 const faqs = [
+  {
+    question: "2026 en düşük ve en yüksek işsizlik maaşı ne kadar?",
+    answer: `2026'da asgari ücretle çalışan biri için aylık işsizlik maaşı yaklaşık ${fmt(net(MIN_GROSS_BENEFIT))} nettir. Kazanç ne kadar yüksek olursa olsun aylık ödenek ${fmt(net(MAX_GROSS_BENEFIT))} neti (brüt asgari ücretin %80'i) geçemez.`,
+  },
   {
     question: "İşsizlik maaşı 2026 nasıl hesaplanır?",
     answer:
@@ -119,6 +132,42 @@ export default function IssizlikMaasiHesaplamaPage() {
         <UnemploymentCalculator />
 
         <article className="prose prose-slate mt-12 max-w-none prose-p:text-[15px] prose-p:leading-relaxed">
+          <h2>2026 işsizlik maaşı ne kadar? (tablo)</h2>
+          <p>
+            Aylık ödenek, son dört ayın ortalama brüt kazancının %40&apos;ıdır; brüt asgari ücretin
+            %80&apos;ini ({fmt(MAX_GROSS_BENEFIT)}) aşamaz. Ödenekten yalnızca damga vergisi kesilir.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Son 4 ay ort. brüt maaş</th>
+                <th>Aylık brüt ödenek</th>
+                <th>Aylık net ödenek</th>
+                <th>600 gün primle 6 ay toplam (net)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {EXAMPLES.map((g) => (
+                <tr key={g}>
+                  <td>
+                    {fmt(g)}
+                    {g === U.minGrossWageTry ? " (asgari ücret)" : ""}
+                  </td>
+                  <td>{fmt(benefitFor(g))}</td>
+                  <td>{fmt(net(benefitFor(g)))}</td>
+                  <td>{fmt(net(benefitFor(g)) * 6)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p>
+            Formül:{" "}
+            <strong>aylık net ödenek = en düşük(ort. brüt × 0,40 ; brüt asgari ücret × 0,80) × (1 − 0,00759)</strong>.
+            Ödeme süresi prim gününe bağlıdır: 600 gün → 6 ay, 900 gün → 8 ay, 1080 gün → 10 ay. Önceki yıllar
+            (2023–2025) için aynı formül o yılın asgari ücretiyle uygulanır; bugün başvuruyorsanız 2026 rakamları
+            geçerlidir.
+          </p>
+
           <h2>İşsizlik maaşına hak kazanma şartları</h2>
           <p>
             Hesap tutarı kadar fesih nedeni de önemlidir. Kural olarak kişinin

@@ -504,7 +504,7 @@ export const REHBER_DAILY_WAVE_2_PAGES = [
   createDailyPage({
     slug: "internetten-alinan-urun-iade-edilmezse",
     h1: "İnternetten alınan ürünün iadesi kabul edilmezse ne yapılır?",
-    metaTitle: "Online ürün iadesi reddedildi: Adım adım hak arama",
+    metaTitle: "İnternetten alınan ürün iade edilmezse ne yapılır? 2026 adım adım",
     metaDescription:
       "Cayma bildirimi, iade kargosu, istisnalar, para iadesi ve satıcı reddinde saklanacak belgeler için güncel tüketici rehberi.",
     keywords: ["internetten alınan ürün iade edilmezse", "online alışveriş iade reddi", "cayma hakkı", "para iadesi yapılmadı"],

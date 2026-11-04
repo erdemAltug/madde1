@@ -85,7 +85,7 @@ export const FREE_TOOLS_NAV: FreeToolNavItem[] = [
   },
   {
     href: DILEKCE_TOOL_PATH,
-    label: "Dilekçe & ihtarname oluşturucu",
+    label: "Yapay zeka ile dilekçe yazma",
     description: "Tüketici, kira ve depozito taslakları.",
   },
   {

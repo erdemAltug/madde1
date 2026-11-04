@@ -277,7 +277,7 @@ export const BLOG_DAILY_DEEP_POSTS: BlogPostConfig[] = [
   blog({
     slug: "depozito-iadesi-yazili-ihtar-ornek",
     h1: "Depozito iadesi yazılı ihtar örneği — pratik adımlar",
-    metaTitle: "Depozito iadesi yazılı ihtar — örnek metin ve süreç",
+    metaTitle: "Depozito iadesi ihtarname örneği 2026 — hazır metin ve adımlar",
     metaDescription:
       "Depozito iade edilmedi mi? Yazılı talep nasıl hazırlanır, hangi bilgiler olmalı, hangi kanal kullanılır? Örnek metin ve takip adımları.",
     keywords: [
