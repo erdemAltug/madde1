@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { BellRing, FileDown, Loader2, Mail } from "lucide-react";
+import { BellRing, FileDown, Loader2, Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,7 +16,7 @@ import { identifyAuthUser } from "@/lib/analytics/identify";
 import { getSupabaseBrowser } from "@/lib/supabase/browser";
 
 /** Kayıt bir talep değil, bir hizmet olarak sunulur: başlık bağlama göre değişir. */
-export type AuthModalContext = "save" | "reminders" | "rights" | "default";
+export type AuthModalContext = "save" | "reminders" | "rights" | "ask" | "default";
 
 const COPY: Record<AuthModalContext, { title: string; body: string; icon: typeof FileDown }> = {
   reminders: {
@@ -28,6 +28,11 @@ const COPY: Record<AuthModalContext, { title: string; body: string; icon: typeof
     title: "Sonucunuzu kaydedin",
     body: "Ücretsiz hesapla detaylı rapor, PDF ve tüm taramalarınız tek yerde kalır. Kredi kartı gerekmez.",
     icon: FileDown,
+  },
+  ask: {
+    title: "Sorunuzu hemen yanıtlayalım",
+    body: "Ücretsiz hesapla asistan sorunuzu kanun maddesiyle yanıtlar; sohbetleriniz sizde kalır. 30 saniye, kredi kartı gerekmez.",
+    icon: MessageCircle,
   },
   rights: {
     title: "Haklarınızı ve sürelerinizi kaydedin",

@@ -216,6 +216,8 @@ export function AsistanWorkspace({ initialQuestion }: { initialQuestion?: string
   }
 
   if (!isLoggedIn) {
+    // Misafirin yazdığı soru kayıttan sonra kaybolmasın
+    const nextPath = initialQuestion ? `/asistan?soru=${encodeURIComponent(initialQuestion)}` : "/asistan";
     return (
       <div className="min-h-screen bg-[#F8FAFC]">
         <SiteNavbar />
@@ -229,10 +231,10 @@ export function AsistanWorkspace({ initialQuestion }: { initialQuestion?: string
             hesabınızda saklanır.
           </p>
           <Button asChild className="mt-6 rounded-xl bg-[#005BEA]">
-            <Link href="/giris?kayit=1&next=/asistan">Ücretsiz kayıt ol</Link>
+            <Link href={`/giris?kayit=1&next=${encodeURIComponent(nextPath)}`}>Ücretsiz kayıt ol</Link>
           </Button>
           <Button asChild variant="outline" className="mt-3 rounded-xl">
-            <Link href="/giris?next=/asistan">Giriş yap</Link>
+            <Link href={`/giris?next=${encodeURIComponent(nextPath)}`}>Giriş yap</Link>
           </Button>
         </main>
         <SiteFooter />

@@ -5,6 +5,8 @@ import { ContractAnalyzerModal } from "@/components/clause/contract-analyzer-mod
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { LandingHero } from "@/components/landing/landing-hero";
 import { LandingStats } from "@/components/landing/landing-stats";
+import { LandingForYou } from "@/components/landing/landing-for-you";
+import { LandingLifeMoments } from "@/components/landing/landing-life-moments";
 import { LandingFollowUp } from "@/components/landing/landing-follow-up";
 import { LandingDoors } from "@/components/landing/landing-doors";
 import { LandingFaq } from "@/components/landing/landing-faq";
@@ -60,6 +62,8 @@ export function ClauseLanding() {
       <SiteNavbar />
       <main id="ana-icerik" className="relative">
         <LandingHero onOpenAnalyzer={openAnalyzer} />
+        <LandingForYou />
+        <LandingLifeMoments />
         <LandingStats />
         <LandingFollowUp />
         <LandingDoors />
