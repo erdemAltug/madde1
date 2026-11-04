@@ -222,7 +222,7 @@ const PAGES: HukukiAnalizPageConfig[] = [
   {
     slug: "depozito-anlasmazligi",
     title: "Depozito anlaşmazlığı",
-    metaTitle: "Depozito anlaşmazlığı — eşya hasar depozitosu ve iade",
+    metaTitle: "Depozito iade edilmiyor mu? Hasar kesintisi ve iade için 5 adım",
     metaDescription:
       "Depozito iade edilmiyor mu? Eşya hasar depozitosu kesintileri ve kiracı-ev sahibi anlaşmazlığında yapılacaklar. Ücretsiz kira sözleşmesi analizi.",
     keywords: [

@@ -21,7 +21,7 @@ import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
 
 const path = BRUT_NET_MAAS_TOOL_PATH;
 const canonical = absoluteUrl(path);
-const title = "Brüt net maaş hesaplama 2026 — 12 aylık ücretsiz bordro";
+const title = "Brütten nete maaş hesaplama 2026 — aylık net maaş tablosu";
 const description =
   "2026 brüt maaştan net maaş hesaplama: SGK, işsizlik, kümülatif gelir vergisi, damga vergisi ve asgari ücret istisnasıyla 12 aylık ücretsiz tablo.";
 
