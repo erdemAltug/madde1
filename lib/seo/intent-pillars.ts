@@ -193,15 +193,16 @@ const PILLARS: Record<IntentPillarId, IntentPillarConfig> = {
 
   "dilekce-hazirlama": {
     category: "dilekce-hazirlama",
-    h1: "Ücretsiz dilekçe ve ihtarname — kira, depozito, tüketici",
+    h1: "Dilekçe ve ihtarname örnekleri — kira, depozito, tüketici",
     metaTitle:
-      "Ücretsiz dilekçe ve ihtarname 2026 — kira, depozito, tüketici",
+      "Dilekçe ve ihtarname örnekleri 2026 — kira, depozito, tüketici",
     metaDescription:
       "Kira itirazı, depozito iadesi veya tüketici başvurusu için ücretsiz dilekçe taslağı. Soru-cevapla hazırlanır; avukat yerine geçmez.",
     keywords: [
+      "dilekçe örnekleri",
+      "ihtarname örneği",
       "dilekçe hazırlama",
       "ihtarname oluşturucu",
-      "AI dilekçe",
       "kira itiraz dilekçesi",
       "depozito iadesi dilekçe",
       "tüketici hakem heyeti başvuru",
