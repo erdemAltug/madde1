@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { SITE_NAME, absoluteUrl } from "@/lib/seo/site";
 import { defaultOgAlt, openGraphArticleImages, twitterSummaryLargeImage } from "@/lib/seo/og";
 
-const title = "Yapay zeka sözleşme analizi — tüm sözleşme türleri";
+const title = "Yapay zeka ile sözleşme analizi 2026 — ücretsiz AI sözleşme kontrolü";
 const description =
-  "Kira, iş, freelance, KVKK ve ticari sözleşmeler için yapay zeka destekli analiz sayfaları. Ücretsiz ön tarama — Clause Legal AI.";
+  "Sözleşmenizi yapay zeka ile ücretsiz analiz edin: haksız cezai şart, eksik madde, riskli süre ve tarihler kanun maddesiyle. Kira, iş, freelance, ticari ve daha fazlası. Kayıt gerekmez.";
 
 export const metadata: Metadata = {
   title,
@@ -13,7 +13,11 @@ export const metadata: Metadata = {
     "sözleşme analizi yapay zeka",
     "yapay zeka sözleşme analizi",
     "AI kontrat analizi",
-    "programatik sözleşme analizi",
+    "sözleşme analizi",
+    "sözleşme analiz programı",
+    "ai sözleşme analizi",
+    "yapay zeka sözleşme inceleme",
+    "sözleşme risk analizi",
     SITE_NAME,
   ],
   alternates: { canonical: absoluteUrl("/sozlesme-analizi") },

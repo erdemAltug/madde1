@@ -1,3 +1,4 @@
+import { REHBER_DEEP } from "./rehber-deep";
 import { REHBER_EXTENDED_PAGES } from "@/lib/seo/rehber-pages-extended";
 import { REHBER_EXTRA_2_PAGES } from "@/lib/seo/rehber-pages-extra-2";
 import { REHBER_GSC_PAGES } from "@/lib/seo/rehber-pages-gsc";
@@ -529,5 +530,8 @@ export const REHBER_PAGES: Record<string, RehberPageConfig> = Object.fromEntries
 export const REHBER_SLUGS = PAGES.map((p) => p.slug);
 
 export function getRehberConfig(slug: string): RehberPageConfig | undefined {
-  return REHBER_PAGES[slug];
+  const base = REHBER_PAGES[slug];
+  if (!base) return undefined;
+  const deep = REHBER_DEEP[slug];
+  return deep ? { ...base, ...deep } : base;
 }

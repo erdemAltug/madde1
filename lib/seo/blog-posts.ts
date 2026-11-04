@@ -76,7 +76,7 @@ const POSTS: BlogPostConfig[] = [
         answer: "Güvenlik politikamızda analiz sonrası kalıcı saklama yapılmadığı belirtilir; güncel metni okuyun.",
       },
     ],
-    ctaHref: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    ctaHref: "/sozlesme-analizi",
   }),
   blog({
     slug: "tahliye-taahhutnamesi-7-hata",
@@ -258,7 +258,7 @@ const POSTS: BlogPostConfig[] = [
         answer: "Hayır; bilgilendirme ve ön tarama içindir.",
       },
     ],
-    ctaHref: "/yapay-zeka-hukuk/legal-ai-turkiye",
+    ctaHref: "/yapay-zeka-hukuk",
   }),
   blog({
     slug: "ucretsiz-sozlesme-analizi-araclari",

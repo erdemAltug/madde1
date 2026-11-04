@@ -462,7 +462,7 @@ export const REHBER_EXTENDED_PAGES = [
           "Özet bilgilendirme amaçlıdır; resmi hukuki görüş için avukata başvurun.",
       },
     ],
-    ctaHref: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    ctaHref: "/sozlesme-analizi",
     ctaLabel: "Ücretsiz AI analiz",
   }),
   createRehberPage({

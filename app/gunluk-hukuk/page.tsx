@@ -137,7 +137,7 @@ const clusters = [
         label: "İmzadan önce kontrol listesi",
       },
       {
-        href: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+        href: "/sozlesme-analizi",
         label: "Yapay zeka sözleşme analizi",
       },
       {

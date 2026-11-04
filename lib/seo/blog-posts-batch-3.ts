@@ -385,6 +385,6 @@ export const BLOG_BATCH_3_POSTS: BlogPostConfig[] = [
         answer: "Desteklenen formatlar ürün arayüzünde belirtilir; metin kopyalama her zaman çalışır.",
       },
     ],
-    ctaHref: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    ctaHref: "/sozlesme-analizi",
   }),
 ];

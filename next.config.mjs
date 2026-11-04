@@ -1,4 +1,8 @@
 import { withSentryConfig } from "@sentry/nextjs";
+import { readFileSync } from "node:fs";
+
+// Birleştirilen / yarışan sayfalar → kalan sayfa (lib/seo/redirect-map.json; sitemap da bunları dışlar)
+const SEO_REDIRECTS = JSON.parse(readFileSync(new URL("./lib/seo/redirect-map.json", import.meta.url), "utf8"));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -38,6 +42,11 @@ const nextConfig = {
   
   async redirects() {
     return [
+      ...Object.entries(SEO_REDIRECTS).map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
       {
         source: "/analiz/kira",
         destination: "/analiz/kira-sozlesmesi",

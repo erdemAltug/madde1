@@ -302,7 +302,7 @@ export const BLOG_EXTRA_POSTS: BlogPostConfig[] = [
         answer: "Evet; Clause ile risk tespiti, kritik maddelerde avukat yorumu önerilir.",
       },
     ],
-    ctaHref: "/yapay-zeka-hukuk/yapay-zeka-sozlesme-analizi",
+    ctaHref: "/sozlesme-analizi",
   }),
   blog({
     slug: "kira-artisi-2026-ne-kadar",
