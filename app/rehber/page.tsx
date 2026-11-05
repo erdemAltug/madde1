@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { PageHero } from "@/components/landing/page-hero";
 import { BookOpen, ArrowRight } from "lucide-react";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { REHBER_HUB_LINKS } from "@/lib/seo/internal-links";
 import { REHBER_SLUGS, getRehberConfig } from "@/lib/seo/rehber-pages";
 
@@ -12,21 +12,20 @@ export default function RehberHubPage() {
   return (
     <div className="min-h-screen bg-white">
       <SiteNavbar />
-      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <Breadcrumbs items={[{ name: "Hukuk rehberleri", href: "/rehber" }]} />
-        <header className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-wide text-[#005BEA]">
-            Herkes için hukuk bilgisi
-          </p>
-          <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Hukuk rehberleri — avukat olmadan önce bilmeniz gerekenler
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
-            Clause, profesyonel hukuk bürolarından önce sıradan insanların sözleşme ve hak
-            konularında yön bulması için hazırladığı rehberleri sunar. İçerikler bilgilendirme
-            amaçlıdır; kesin sonuç için avukata danışın.
-          </p>
-        </header>
+      <PageHero
+        crumbs={[{ name: "Hukuk rehberleri", href: "/rehber" }]}
+        emoji="📚"
+        eyebrow="Herkes için hukuk bilgisi"
+        title={<>Başınıza gelen durumu <span className="text-[#005BEA]">anlayın</span>, sonra adım atın</>}
+        lede="Kira, iş, tüketici ve sözleşme konularında gündelik dille yazılmış rehberler. Neye hakkınız olduğunu, hangi sürelere dikkat etmeniz gerektiğini ve ne zaman bir avukata danışmanın iyi olacağını anlatıyoruz."
+        chips={[
+          { label: "Depozito ne kadar alınır?", href: "/rehber/depozito-ne-kadar-alinir" },
+          { label: "Cayma ve iptal farkı", href: "/rehber/sozlesme-iptal-cayma-farki" },
+          { label: "Ev sahibi çıkarabilir mi?", href: "/blog/ev-sahibi-kiraciyi-cikarabilir-mi-2026" },
+          { label: "İşten çıkarılanın hakları", href: "/blog/isten-cikarilan-iscinin-haklari-2026" },
+        ]}
+      />
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
 
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {guides.map((guide) =>

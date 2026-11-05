@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import { PageHero } from "@/components/landing/page-hero";
 import Link from "next/link";
 import { Calculator, ArrowRight } from "lucide-react";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { FREE_TOOLS_NAV } from "@/lib/seo/free-tools-routes";
 import { REHBER_HUB_LINKS, SOZLESME_ANALIZI_FEATURED } from "@/lib/seo/internal-links";
 import { absoluteUrl, SITE_NAME } from "@/lib/seo/site";
@@ -42,17 +42,20 @@ export default function AraclarHubPage() {
   return (
     <div className="min-h-screen bg-white">
       <SiteNavbar />
-      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <Breadcrumbs items={[{ name: "Ücretsiz araçlar", href: "/araclar" }]} />
-        <header className="max-w-2xl">
-          <h1 className="text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Günlük hukuk ihtiyaçları için ücretsiz araçlar
-          </h1>
-          <p className="mt-4 text-base text-slate-600">
-            Kira, sözleşme ve tahliye gibi günlük hukuki ihtiyaçlarınız için hesaplayıcı ve ön
-            kontrol araçları. Sonuçlar tahminî olabilir; sözleşme metniniz için tam analize geçin.
-          </p>
-        </header>
+      <PageHero
+        crumbs={[{ name: "Hesaplayıcılar", href: "/araclar" }]}
+        emoji="🧮"
+        eyebrow="Ücretsiz, kayıt gerekmez"
+        title={<>Hakkınızı bir dakikada <span className="text-[#005BEA]">hesaplayın</span></>}
+        lede="Kira zammı yasal mı, kıdem tazminatınız ne kadar, işsizlik maaşı kaç lira? Güncel resmi oranlarla hesaplayın; sonucu nasıl kullanacağınızı da anlatalım."
+        chips={[
+          { label: "Kira zammı hesapla", href: "/araclar/kira-sozlesmesi-artis-orani-hesaplama" },
+          { label: "Kıdem tazminatı", href: "/araclar/kidem-tazminati-hesaplama" },
+          { label: "İşsizlik maaşı", href: "/araclar/issizlik-maasi-hesaplama" },
+          { label: "Brüt → net maaş", href: "/araclar/brut-net-maas-hesaplama" },
+        ]}
+      />
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
 
         <section className="mt-12" aria-labelledby="araclar-liste">
           <h2 id="araclar-liste" className="sr-only">
