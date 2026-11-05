@@ -412,6 +412,14 @@ function AskDemo() {
             <BookOpen className="mt-0.5 h-3.5 w-3.5 shrink-0 not-italic text-emerald-700" aria-hidden />
             &ldquo;İtiraz etmek istiyen borçlu, itirazını, ödeme emrinin tebliği tarihinden itibaren yedi gün içinde dilekçe ile veya sözlü olarak icra dairesine bildirmeye mecburdur.&rdquo;
           </p>
+          <a
+            href="https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=2004&MevzuatTur=1&MevzuatTertip=3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-emerald-800 ring-1 ring-emerald-200 hover:ring-emerald-400"
+          >
+            Kaynağı aç · mevzuat.gov.tr
+          </a>
         </div>
       </div>
     </div>
