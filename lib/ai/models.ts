@@ -7,7 +7,9 @@ import { openai } from "@ai-sdk/openai";
  * Resmi yedek: `openai/gpt-oss-120b` — https://console.groq.com/docs/deprecations
  */
 const DEFAULT_GROQ_LEGAL_MODEL = "openai/gpt-oss-120b";
-const DEFAULT_OPENAI_LEGAL_MODEL = "gpt-4o-mini";
+/** Hukuki cevap kalitesi için: gpt-4o-mini madde/kanun karıştırıyordu (bkz. scripts/eval-asistan.ts) */
+const DEFAULT_OPENAI_LEGAL_MODEL = "gpt-4.1";
+const DEFAULT_OPENAI_FAST_MODEL = "gpt-4.1-mini";
 
 export function groqLegalModelId(): string {
   const id = process.env.GROQ_LEGAL_MODEL?.trim();
@@ -31,16 +33,23 @@ function openaiLegalModelId(): string {
   return process.env.OPENAI_LEGAL_MODEL?.trim() || DEFAULT_OPENAI_LEGAL_MODEL;
 }
 
-/** Öncelik sırasıyla kullanılabilir modeller (Groq → OpenAI). */
+/**
+ * Öncelik sırasıyla kullanılabilir modeller. Varsayılan OpenAI → Groq;
+ * LEGAL_PROVIDER=groq ile eski sıraya dönülür.
+ */
 export function resolveLegalModelCandidates(): LanguageModel[] {
-  const models: LanguageModel[] = [];
-  if (process.env.GROQ_API_KEY?.trim()) {
-    models.push(groq(groqLegalModelId()));
-  }
+  const oa: LanguageModel[] = process.env.OPENAI_API_KEY?.trim() ? [openai(openaiLegalModelId())] : [];
+  const gq: LanguageModel[] = process.env.GROQ_API_KEY?.trim() ? [groq(groqLegalModelId())] : [];
+  return process.env.LEGAL_PROVIDER?.trim() === "groq" ? [...gq, ...oa] : [...oa, ...gq];
+}
+
+/** Kısa, yapılandırılmış işler (madde planlama) için hızlı model. */
+export function resolveFastModel(): LanguageModel | null {
   if (process.env.OPENAI_API_KEY?.trim()) {
-    models.push(openai(openaiLegalModelId()));
+    return openai(process.env.OPENAI_FAST_MODEL?.trim() || DEFAULT_OPENAI_FAST_MODEL);
   }
-  return models;
+  if (process.env.GROQ_API_KEY?.trim()) return groq(groqLegalModelId());
+  return null;
 }
 
 /** İlk aday (geriye uyum). Yoksa null. */
