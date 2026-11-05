@@ -89,7 +89,7 @@ export function CookieConsent() {
             <label htmlFor="cerez-analitik" className="cursor-pointer">
               <span className="block text-sm font-semibold">Analitik</span>
               <span className="block text-xs text-slate-600">
-                PostHog ile sayfa ve tıklama ölçümü, maskeli oturum kaydı. Reklam için kullanılmaz.
+                Hangi sayfaların ve özelliklerin kullanıldığını ölçmemize yardımcı olur. Reklam için kullanılmaz.
               </span>
             </label>
             <button
