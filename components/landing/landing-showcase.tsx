@@ -10,7 +10,9 @@ import {
   CheckCircle2,
   FileSearch,
   FileText,
+  Map,
   MessageCircle,
+  PenLine,
   ShieldCheck,
   XCircle,
 } from "lucide-react";
@@ -26,11 +28,50 @@ const kidem = Math.min(SAMPLE_GROSS, SEVERANCE_CEILING.annualGrossTry) * SAMPLE_
 const ihbar = (SAMPLE_GROSS / 30) * 56; // 3 yıldan fazla: 8 hafta
 const izin = (SAMPLE_GROSS / 30) * 9;
 
-type TabId = "scan" | "rights" | "petition" | "ask";
+type TabId = "roadmap" | "draft" | "petition" | "scan" | "rights" | "ask";
+type GroupId = "create" | "check";
 
-const TABS: { id: TabId; label: string; icon: React.ElementType; title: string; body: string; href: string; cta: string }[] = [
+const ROADMAP_Q = "Ev kiralayacağım, nereden başlamalıyım?";
+const DRAFT_Q = "Freelance web tasarım işi aldım, beni koruyan bir hizmet sözleşmesi hazırlar mısın?";
+
+const GROUPS: { id: GroupId; label: string; hint: string }[] = [
+  { id: "create", label: "Sıfırdan birlikte yapalım", hint: "Elinizde hiçbir şey yokken" },
+  { id: "check", label: "Elinizdekini kontrol edelim", hint: "Sözleşme, hesap, soru" },
+];
+
+const TABS: {
+  id: TabId;
+  group: GroupId;
+  label: string;
+  icon: React.ElementType;
+  title: string;
+  body: string;
+  href: string;
+  cta: string;
+}[] = [
+  {
+    id: "roadmap",
+    group: "create",
+    label: "Yol haritası",
+    icon: Map,
+    title: "Ne yapacağınızı bilmiyorsanız buradan başlayın",
+    body: "Taşınmak, iş değiştirmek, bir işe başlamak… Durumunuzu tek cümleyle yazın; Clause adım adım ne yapmanız gerektiğini, hangi belgeyi isteyeceğinizi ve hangi tarihe dikkat edeceğinizi sırayla çıkarsın.",
+    href: `/asistan?soru=${encodeURIComponent(ROADMAP_Q)}`,
+    cta: "Yol haritamı çıkar",
+  },
+  {
+    id: "draft",
+    group: "create",
+    label: "Sözleşme hazırla",
+    icon: PenLine,
+    title: "Sözleşmeniz yoksa, sizi koruyanını birlikte yazalım",
+    body: "Kiraya veriyor, freelance iş alıyor ya da birine borç veriyorsanız anlatın; Clause sizin lehinize maddeleri ekleyerek sözleşmeyi baştan hazırlasın. Ödeme, teslim, fesih ve fikri haklar unutulmaz.",
+    href: `/asistan?soru=${encodeURIComponent(DRAFT_Q)}`,
+    cta: "Sözleşmemi hazırla",
+  },
   {
     id: "scan",
+    group: "check",
     label: "Sözleşme tarama",
     icon: FileSearch,
     title: "İmzalamadan önce tuzakları görün",
@@ -40,6 +81,7 @@ const TABS: { id: TabId; label: string; icon: React.ElementType; title: string; 
   },
   {
     id: "rights",
+    group: "check",
     label: "Haklarım hesabı",
     icon: Calculator,
     title: "Alacağınızı kuruşu kuruşuna görün",
@@ -49,6 +91,7 @@ const TABS: { id: TabId; label: string; icon: React.ElementType; title: string; 
   },
   {
     id: "petition",
+    group: "create",
     label: "Dilekçe",
     icon: FileText,
     title: "Gönderilmeye hazır, resmi formatta",
@@ -58,6 +101,7 @@ const TABS: { id: TabId; label: string; icon: React.ElementType; title: string; 
   },
   {
     id: "ask",
+    group: "check",
     label: "Soru-cevap",
     icon: MessageCircle,
     title: "Net cevap, resmi kanun metniyle",
@@ -68,8 +112,10 @@ const TABS: { id: TabId; label: string; icon: React.ElementType; title: string; 
 ];
 
 export function LandingShowcase() {
-  const [tab, setTab] = React.useState<TabId>("scan");
+  const [tab, setTab] = React.useState<TabId>("roadmap");
   const active = TABS.find((t) => t.id === tab)!;
+  const group = active.group;
+  const pickGroup = (g: GroupId) => setTab(TABS.find((t) => t.group === g)!.id);
 
   return (
     <section className="relative overflow-hidden bg-[#0B1B3A] py-16 text-white sm:py-24" aria-labelledby="showcase-baslik">
@@ -81,11 +127,33 @@ export function LandingShowcase() {
           <h2 id="showcase-baslik" className="mt-2 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
             Clause size tam olarak ne verir?
           </h2>
-          <p className="mt-3 text-lg text-slate-300">Gerçek çıktıların örnekleri. Kendi durumunuz için birkaç saniyede aynısını alırsınız.</p>
+          <p className="mt-3 text-lg text-slate-300">
+            Sadece elinizdekini yorumlamayız: elinizde hiçbir şey yokken de yol gösterir, belgenizi baştan hazırlarız.
+          </p>
         </div>
 
-        <div role="tablist" aria-label="Örnek çıktılar" className="mt-8 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
-          {TABS.map((t) => (
+        <div className="mt-8 grid w-full grid-cols-2 gap-1 rounded-2xl bg-white/5 p-1 ring-1 ring-white/10 sm:inline-grid sm:w-auto">
+          {GROUPS.map((g) => (
+            <button
+              key={g.id}
+              type="button"
+              onClick={() => pickGroup(g.id)}
+              aria-pressed={group === g.id}
+              className={cn(
+                "rounded-xl px-3 py-2.5 text-left transition sm:px-5",
+                group === g.id ? "bg-amber-400 text-[#0B1B3A]" : "text-slate-200 hover:bg-white/10",
+              )}
+            >
+              <span className="block text-sm font-bold">{g.label}</span>
+              <span className={cn("block text-xs", group === g.id ? "text-[#0B1B3A]/70" : "text-slate-400")}>
+                {g.hint}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div role="tablist" aria-label="Örnek çıktılar" className="mt-4 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
+          {TABS.filter((t) => t.group === group).map((t) => (
             <button
               key={t.id}
               role="tab"
@@ -122,6 +190,8 @@ export function LandingShowcase() {
               <span className="absolute right-4 top-4 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-500">
                 Örnek çıktı
               </span>
+              {tab === "roadmap" ? <RoadmapDemo /> : null}
+              {tab === "draft" ? <DraftDemo /> : null}
               {tab === "scan" ? <ScanDemo /> : null}
               {tab === "rights" ? <RightsDemo /> : null}
               {tab === "petition" ? <PetitionDemo /> : null}
@@ -131,6 +201,89 @@ export function LandingShowcase() {
         </div>
       </div>
     </section>
+  );
+}
+
+function RoadmapDemo() {
+  const steps = [
+    { t: "Ev sahibinin gerçekten malik olduğunu doğrulayın", d: "Tapu fotokopisini isteyin, kimliğindeki adla eşleştirin. Vekil ise vekâletnameyi görün.", tag: "İmzadan önce" },
+    { t: "Depozito en fazla 3 aylık kira olabilir", d: "Fazlasını istemek geçersiz; para olarak verilirse sizin adınıza vadeli hesaba yatırılır.", tag: "TBK m.342" },
+    { t: "Sözleşmeyi imzalamadan taratın", d: "Artış oranı, tahliye taahhüdü ve tamir maddelerini birlikte kontrol edelim.", tag: "2 dakika" },
+    { t: "Teslimde tutanak ve fotoğraf", d: "Mevcut hasarları tarihli fotoğraflarla kayda alın; çıkışta depozitonuzu bu korur.", tag: "Taşınma günü" },
+    { t: "Kira artış tarihini takvime ekleyin", d: "Yenileme ayında yasal tavanı hesaplayıp size hatırlatırız.", tag: "Hatırlatma" },
+  ];
+  return (
+    <div>
+      <div className="flex justify-end pt-6 sm:pr-24 sm:pt-0">
+        <p className="max-w-[85%] rounded-2xl rounded-br-md bg-[#005BEA] px-4 py-2.5 text-sm text-white">{ROADMAP_Q}</p>
+      </div>
+      <p className="mt-4 text-sm font-bold">Ev kiralama yol haritanız · 5 adım</p>
+      <ol className="mt-3 space-y-2">
+        {steps.map((s, i) => (
+          <li key={s.t} className="flex gap-3 rounded-2xl border border-slate-200 p-3">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#005BEA] text-xs font-bold text-white">
+              {i + 1}
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="text-sm font-semibold">{s.t}</span>
+                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-900">{s.tag}</span>
+              </span>
+              <span className="mt-0.5 block text-[13px] leading-snug text-slate-600">{s.d}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function DraftDemo() {
+  const added = [
+    "%50 peşin, kalanı teslimde",
+    "Gecikmede faiz",
+    "2 tur revizyon sınırı",
+    "Fikri haklar ödemeyle devredilir",
+    "Erken fesihte yapılan iş ödenir",
+  ];
+  return (
+    <div>
+      <p className="pr-20 text-sm font-bold">Hizmet sözleşmesi · web tasarım (freelance)</p>
+      <div className="mt-3 flex flex-wrap gap-1.5">
+        {added.map((a) => (
+          <span
+            key={a}
+            className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[12px] font-semibold text-emerald-800 ring-1 ring-emerald-200"
+          >
+            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />
+            {a}
+          </span>
+        ))}
+      </div>
+      <div className="mt-4 max-h-[300px] overflow-hidden rounded-2xl border border-slate-200 bg-[#FCFCFA] p-4 font-serif text-[13px] leading-relaxed text-slate-800 [mask-image:linear-gradient(to_bottom,black_75%,transparent)] sm:p-5">
+        <p className="text-center font-bold tracking-wide">HİZMET SÖZLEŞMESİ</p>
+        <p className="mt-3">
+          <span className="font-semibold">Madde 1 — Taraflar.</span> [Müşteri] ile [Adınız] (Hizmet Veren) arasında aşağıdaki
+          şartlarla akdedilmiştir.
+        </p>
+        <p className="mt-2">
+          <span className="font-semibold">Madde 2 — İşin konusu ve teslim.</span> 5 sayfalık kurumsal web sitesinin tasarımı;
+          teslim tarihi [tarih]. Müşteri kaynaklı gecikmeler teslim süresine eklenir.
+        </p>
+        <p className="mt-2">
+          <span className="font-semibold">Madde 3 — Ücret ve ödeme.</span> Toplam ücret [tutar] ₺&apos;dir. %50&apos;si imzada,
+          kalanı teslimde ödenir. Geciken ödemelere yasal faiz uygulanır.
+        </p>
+        <p className="mt-2">
+          <span className="font-semibold">Madde 4 — Revizyon.</span> Ücrete iki tur revizyon dahildir; ek talepler ayrıca
+          ücretlendirilir.
+        </p>
+        <p className="mt-2">
+          <span className="font-semibold">Madde 5 — Fikri haklar.</span> Eser üzerindeki mali haklar, ücretin tamamı ödendiğinde
+          Müşteri&apos;ye devredilir.
+        </p>
+      </div>
+    </div>
   );
 }
 
