@@ -7,7 +7,7 @@ const AUDIENCES = [
   { icon: Briefcase, who: "Çalışan", what: "Kıdem, ihbar, fazla mesai, izin ve işsizlik maaşı" },
   { icon: ShoppingBag, who: "Tüketici", what: "İade, cayma hakkı, abonelik iptali ve şikâyet" },
   { icon: Laptop, who: "Serbest çalışan", what: "Hizmet sözleşmesi, ödeme vadesi, fikri haklar" },
-  { icon: Gavel, who: "Hukukçular", what: "Hızlı ön tarama ve müvekkile sade dilde özet" },
+  { icon: Gavel, who: "Hukuk profesyonelleri", what: "Hızlı ön tarama ve müvekkile sade dilde özet" },
 ] as const;
 
 export function LandingForYou() {
@@ -21,7 +21,7 @@ export function LandingForYou() {
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-slate-600">
             Hayatınızdaki hukuki anların çoğu bir dava değildir: bir zam talebi, bir iş teklifi, iade edilmeyen bir
-            ürün. Clause bu anlarda ilk adımı kolaylaştırır; gerektiğinde bir hukukçuyla daha hazırlıklı görüşmenizi
+            ürün. Clause bu anlarda ilk adımı kolaylaştırır; gerektiğinde bir avukatla daha hazırlıklı görüşmenizi
             sağlar.
           </p>
         </Reveal>
