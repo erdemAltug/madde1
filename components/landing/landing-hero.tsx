@@ -83,7 +83,7 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
               />
               <button
                 type="submit"
-                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl bg-[#005BEA] px-4 text-sm font-semibold text-white transition hover:bg-[#004BC4] disabled:opacity-50 sm:px-5"
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl bg-[#005BEA] px-4 text-sm font-semibold text-white transition hover:bg-[#004BC4] disabled:cursor-not-allowed disabled:opacity-80 sm:px-5"
                 disabled={!question.trim()}
               >
                 <span className="hidden sm:inline">Sor</span>

@@ -14,6 +14,8 @@ const MOMENTS = [
   { emoji: "📩", when: "Bir ihtarname geldiğinde", what: "Ne diyor, ne cevap vermelisiniz?", href: "/cevap-taslagi" },
 ] as const;
 
+const TINTS = ["bg-amber-100", "bg-sky-100", "bg-emerald-100", "bg-rose-100", "bg-violet-100", "bg-orange-100", "bg-teal-100", "bg-indigo-100"];
+
 export function LandingLifeMoments() {
   return (
     <section className="border-b border-slate-200/70 bg-[#FAFAF7] py-16 sm:py-20" aria-labelledby="anlar-baslik">
@@ -34,7 +36,7 @@ export function LandingLifeMoments() {
                   href={m.href}
                   className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-[#005BEA]/40 hover:shadow-md"
                 >
-                  <span className="text-2xl" aria-hidden>
+                  <span className={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl ${TINTS[i % TINTS.length]}`} aria-hidden>
                     {m.emoji}
                   </span>
                   <span className="mt-3 text-base font-bold text-slate-900">{m.when}</span>
