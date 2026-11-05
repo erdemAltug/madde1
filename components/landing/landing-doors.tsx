@@ -46,9 +46,9 @@ export function LandingDoors() {
     <section className="border-b border-slate-200/70 bg-[#FAFAF7] py-14 sm:py-20" aria-labelledby="kapilar-baslik">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <h2 id="kapilar-baslik" className="text-balance text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-          Sözleşmeniz yanınızda değil mi? Buradan başlayın
+          Ücretsiz hukuk araçları
         </h2>
-        <p className="mt-2 text-base text-slate-600">Hepsi ücretsiz, kayıt gerekmez.</p>
+        <p className="mt-2 text-base text-slate-600">Hesaplayın, kontrol edin, cevabınızı hazırlayın. Hepsi ücretsiz, kayıt gerekmez.</p>
         <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {DOORS.map((d) => (
             <li key={d.href}>

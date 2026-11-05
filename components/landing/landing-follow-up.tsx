@@ -38,9 +38,9 @@ export function LandingFollowUp() {
     <section className="border-b border-slate-200/70 bg-white py-16 sm:py-20" aria-labelledby="takip-baslik">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8">
         <Reveal>
-          <p className="text-sm font-semibold text-[#005BEA]">Taradıktan sonra da yanınızda</p>
+          <p className="text-sm font-semibold text-[#005BEA]">Her zaman yanınızda</p>
           <h2 id="takip-baslik" className="mt-2 text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-            Hukuki takviminizi sizin yerinize tutalım
+            Sorun çıkmadan önce biz haber veririz
           </h2>
           <ul className="mt-8 space-y-6">
             {PROMISES.map((p) => (
