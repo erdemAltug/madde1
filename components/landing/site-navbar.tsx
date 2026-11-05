@@ -7,22 +7,18 @@ import { ChevronDown, Menu, X, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ClauseLogo } from "@/components/brand/clause-logo";
 import { cn } from "@/lib/utils";
-import {
-  DILEKCE_TOOL_PATH,
-  FREELANCE_CHECKLIST_TOOL_PATH,
-  SOZLESME_TUZAK_TOOL_PATH,
-} from "@/lib/seo/free-tools-routes";
+import { DILEKCE_TOOL_PATH, SOZLESME_TUZAK_TOOL_PATH } from "@/lib/seo/free-tools-routes";
 import { getSupabaseBrowser } from "@/lib/supabase/browser";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
+/** Kullanıcının niyetine göre: sor → haklarını öğren → belgeyle ilgilen → hesapla → oku */
 const primaryLinks = [
-  { href: "/araclar", label: "Ücretsiz Araçlar" },
-  { href: SOZLESME_TUZAK_TOOL_PATH, label: "Sözleşme Taraması" },
-  {
-    href: FREELANCE_CHECKLIST_TOOL_PATH,
-    label: "Serbest Çalışan Paketi",
-  },
-  { href: DILEKCE_TOOL_PATH, label: "Dilekçeler" },
+  { href: "/asistan", label: "Soru Sor" },
+  { href: "/haklarim", label: "Haklarım" },
+  { href: SOZLESME_TUZAK_TOOL_PATH, label: "Sözleşme Tara" },
+  { href: DILEKCE_TOOL_PATH, label: "Dilekçe" },
+  { href: "/araclar", label: "Hesaplayıcılar" },
+  { href: "/rehber", label: "Rehberler" },
 ] as const;
 
 function NavLink({

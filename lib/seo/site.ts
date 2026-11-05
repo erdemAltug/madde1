@@ -32,12 +32,18 @@ export function absoluteUrl(path: string): string {
 
 export const defaultHomeMetadata: Metadata = {
   title: {
-    absolute: "Clause — Ücretsiz gündelik hukuk asistanınız: sorun, haklarınızı öğrenin",
+    absolute: "Clause — Ücretsiz hukuk asistanı: hukuki sorunuzu sorun, haklarınızı öğrenin",
   },
   description:
-    "Sözleşme tuzaklarını tarayın, dilekçe taslağı alın, kira ve iş hesaplarını ücretsiz yapın. Clause kişisel hukuk asistanınız; kayıtla rapor ve arşiv sizde kalır.",
+    "Kira zammı, işten çıkarılma, iade, depozito, sözleşme… Hukuki sorunuzu kendi cümlelerinizle sorun; kanun dayanağıyla sade bir yanıt, ücretsiz hesaplayıcı ve dilekçe alın. Sadece profesyoneller için değil, herkes için.",
   keywords: [
     "ücretsiz hukuk asistanı",
+    "hukuki soru sor",
+    "ücretsiz hukuki danışma",
+    "yapay zeka hukuk asistanı",
+    "haklarımı öğrenmek istiyorum",
+    "kira zammı yasal mı",
+    "işten çıkarıldım haklarım",
     "ücretsiz sözleşme analizi",
     "sözleşme tuzakları",
     "dilekçe hazırlama",
@@ -48,9 +54,9 @@ export const defaultHomeMetadata: Metadata = {
   },
   openGraph: {
     title:
-      "Ücretsiz hukuk asistanı: sözleşme tara, dilekçe yaz 2026 | Clause",
+      "Clause — Herkes için ücretsiz hukuk asistanı",
     description:
-      "Sözleşme tuzaklarını tarayın, dilekçe taslağı alın, kira ve iş hesaplarını ücretsiz yapın.",
+      "Kira, iş, tüketici ve sözleşme sorularınızı sorun; haklarınızı kanun dayanağıyla, sade bir dille öğrenin.",
     url: absoluteUrl("/"),
     siteName: SITE_NAME,
     locale: "tr_TR",
@@ -60,15 +66,15 @@ export const defaultHomeMetadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} — Yapay Zeka Hukuk Asistanı`,
+        alt: `${SITE_NAME} — Herkes için yapay zeka hukuk asistanı`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Clause — Ücretsiz hukuk asistanı 2026",
+    title: "Clause — Herkes için ücretsiz hukuk asistanı",
     description:
-      "Sözleşme tarama, dilekçe ve ücretsiz hukuk hesaplayıcıları — Clause.",
+      "Hukuki sorunuzu sorun, haklarınızı öğrenin: kira, iş, tüketici, sözleşme.",
     images: ["/opengraph-image"],
   },
 };

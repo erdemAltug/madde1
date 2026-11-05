@@ -497,7 +497,7 @@ export default function PanelPage() {
         )}
       </main>
       </DarkScope>
-      <SiteFooter />
+      <SiteFooter showAsk={false} />
     </div>
   );
 }

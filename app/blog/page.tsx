@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageHero } from "@/components/landing/page-hero";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { BLOG_SLUGS, getBlogPost } from "@/lib/seo/blog-posts";
@@ -37,24 +38,18 @@ export default function BlogIndexPage() {
   return (
     <div className="min-h-screen bg-white">
       <SiteNavbar />
-      <main className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
-        <header>
-          <h1 className="text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Clause blog
-          </h1>
-          <p className="mt-4 text-base font-medium leading-relaxed text-slate-600">
-            <strong>Yapay zeka sözleşme analizi</strong>, kira ve iş hukuku, TBK
-            pratikleri ve LegalTech. Uzun kuyruk sorulara net, arama motoru dostu
-            yanıtlar.
-          </p>
-          <p className="mt-3 text-sm text-slate-500">
-            Daha derin rehberler için{" "}
-            <Link href="/rehber" className="font-semibold text-indigo-600 hover:underline">
-              hukuk rehberleri
-            </Link>{" "}
-            bölümüne bakın.
-          </p>
-        </header>
+      <PageHero
+        emoji="📰"
+        eyebrow="Gündelik hukuk yazıları"
+        title={<>Hayatın içinden <span className="text-[#005BEA]">hukuk soruları</span>, net cevaplar</>}
+        lede={<>Kira, iş, tüketici ve sözleşme konularında en çok sorulan soruları güncel kanun ve rakamlarla yanıtlıyoruz. Daha kapsamlı anlatımlar için <Link href="/rehber" className="font-semibold text-[#005BEA] hover:underline">hukuk rehberlerine</Link> bakın.</>}
+        chips={[
+          { label: "Yıllık izin kaç gün?", href: "/blog/yillik-izin-hakki-kac-gun-2026" },
+          { label: "Kira sözleşmesi yaparken", href: "/blog/kira-sozlesmesi-yaparken-dikkat-edilmesi-gerekenler" },
+          { label: "İşten çıkarılanın hakları", href: "/blog/isten-cikarilan-iscinin-haklari-2026" },
+        ]}
+      />
+      <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
 
         <ul className="mt-10 divide-y divide-slate-200">
           {posts.map((post) => (

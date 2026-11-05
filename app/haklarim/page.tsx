@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { PageHero } from "@/components/landing/page-hero";
 import { Scale, ArrowRight } from "lucide-react";
 import { SiteNavbar } from "@/components/landing/site-navbar";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { HAKLARIM_SLUGS, getHaklarimConfig } from "@/lib/seo/haklarim-pages";
 
 export default function HaklarimHubPage() {
@@ -11,20 +11,19 @@ export default function HaklarimHubPage() {
   return (
     <div className="min-h-screen bg-white">
       <SiteNavbar />
-      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <Breadcrumbs items={[{ name: "Haklarım", href: "/haklarim" }]} />
-        <header className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-wide text-[#005BEA]">
-            Senaryoya göre haklar
-          </p>
-          <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight text-madde-ink sm:text-4xl">
-            Haklarım — günlük hukuk senaryoları
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-slate-600">
-            &quot;İşten atıldım haklarım ne?&quot;, &quot;depozito iade hakkım&quot; gibi aramalara
-            net yanıt. Bilgilendirme amaçlıdır; dava ve icra için avukata danışın.
-          </p>
-        </header>
+      <PageHero
+        crumbs={[{ name: "Haklarım", href: "/haklarim" }]}
+        emoji="⚖️"
+        eyebrow="Senaryoya göre haklar"
+        title={<>Ne yaşıyorsanız seçin, <span className="text-[#005BEA]">haklarınızı</span> öğrenin</>}
+        lede="İşten mi çıkarıldınız, ev sahibi çıkmanızı mı istiyor, depozitonuz mu geri verilmiyor? Durumunuzu seçin; alacaklarınızı, sürelerinizi ve ilk adımınızı sade bir dille gösterelim."
+        chips={[
+          { label: "5 soruda haklarımı öğren", href: "/haklarim/kontrol" },
+          { label: "İşten çıkarıldım", href: "/haklarim/kontrol?durum=isten-cikarildim" },
+          { label: "Ev sahibi çık diyor", href: "/haklarim/kontrol?durum=ev-sahibi-cikin-diyor" },
+        ]}
+      />
+      <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
 
         <Link
           href="/haklarim/kontrol"

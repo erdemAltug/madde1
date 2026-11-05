@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AskBand } from "@/components/landing/ask-band";
 import { ClauseLogo } from "@/components/brand/clause-logo";
 import { ModelProviderLogos } from "@/components/landing/model-provider-logos";
 import { FREE_TOOLS_NAV } from "@/lib/seo/free-tools-routes";
@@ -61,8 +62,10 @@ const POPULAR_SEARCHES = [
   },
 ];
 
-export function SiteFooter() {
+export function SiteFooter({ showAsk = true }: { showAsk?: boolean } = {}) {
   return (
+    <>
+    {showAsk ? <AskBand /> : null}
     <footer className="border-t border-slate-200/60 bg-slate-50 py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mb-8 border-b border-slate-200/60 pb-8">
@@ -344,5 +347,6 @@ export function SiteFooter() {
         </p>
       </div>
     </footer>
+    </>
   );
 }
