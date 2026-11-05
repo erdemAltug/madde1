@@ -73,7 +73,7 @@ export function ClauseLanding() {
         </div>
         <BottomCtaBand onOpenAnalyzer={() => openAnalyzer()} />
       </main>
-      <SiteFooter />
+      <SiteFooter showAsk={false} />
       <ContractAnalyzerModal
         open={analyzerOpen}
         onOpenChange={(o) => {
