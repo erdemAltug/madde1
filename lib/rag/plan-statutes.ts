@@ -31,6 +31,8 @@ Yalnızca şu kanunlardan seç: 6098 TBK, 4857 İş Kanunu, 6502 TKHK, 2004 İİ
 - işten çıkarılma, kıdem/ihbar → 1475 m.14 (kıdem burada, 4857'de değil), İşK 17, İşK 18, İşK 25
 - mesafeli satış iade / cayma → TKHK 48; ayıplı mal → TKHK 8, TKHK 11
 - işsizlik maaşı → 4447 m.50, 4447 m.51
+- freelance / serbest iş (tasarım, yazılım, çeviri) → eser sözleşmesi TBK 470, 474, 479, 484 (bağımsız çalışma; TBK 393 hizmet sözleşmesi DEĞİL — o bağımlı iş ilişkisidir); danışmanlık/temsil → vekâlet TBK 502
+- yeni ev kiralama → TBK 299, TBK 342, TBK 346, TBK 316
 Önce olayın hukuki niteliğini belirle, sonra o niteliği düzenleyen maddeyi seç. Emin olmadığın maddeyi yazma. En fazla 6 madde.
 Yalnızca JSON döndür: {"refs":[{"kanun":"6098","madde":"315"}]}`;
 
