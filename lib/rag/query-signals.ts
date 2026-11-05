@@ -12,6 +12,10 @@ const LAW_DETECTORS: Array<{ re: RegExp; kanunNo: string; short: string }> = [
   { re: /\b(ttk|6102|ticaret kanunu)\b/i, kanunNo: "6102", short: "TTK" },
   { re: /\b(kvkk|6698)\b/i, kanunNo: "6698", short: "KVKK" },
   { re: /\b(tkhk|6502|tüketicinin korunması)\b/i, kanunNo: "6502", short: "TKHK" },
+  { re: /(\biik\b|İİK|\b2004 sayılı|icra ve iflas)/i, kanunNo: "2004", short: "İİK" },
+  { re: /\b(hmk|6100|hukuk muhakemeleri)\b/i, kanunNo: "6100", short: "HMK" },
+  { re: /\b(tmk|4721|medeni kanun)/i, kanunNo: "4721", short: "TMK" },
+  { re: /\b(kmk|634 sayılı|kat mülkiyeti)/i, kanunNo: "634", short: "KMK" },
 ];
 
 const SHORT_TO_LAW: Record<string, LawHit> = {
@@ -28,7 +32,22 @@ const SHORT_TO_LAW: Record<string, LawHit> = {
   "iş kanunu": { kanunNo: "4857", short: "İşK" },
   "is kanunu": { kanunNo: "4857", short: "İşK" },
   "4857": { kanunNo: "4857", short: "İşK" },
+  "iş k.": { kanunNo: "4857", short: "İşK" },
+  iik: { kanunNo: "2004", short: "İİK" },
+  "2004": { kanunNo: "2004", short: "İİK" },
+  hmk: { kanunNo: "6100", short: "HMK" },
+  "6100": { kanunNo: "6100", short: "HMK" },
+  tmk: { kanunNo: "4721", short: "TMK" },
+  "4721": { kanunNo: "4721", short: "TMK" },
+  kmk: { kanunNo: "634", short: "KMK" },
+  "634": { kanunNo: "634", short: "KMK" },
+  "1475": { kanunNo: "1475", short: "1475 s. İşK" },
 };
+
+/** "İİK" → "iik", "İş  K." → "iş k." — Türkçe büyük/küçük harf farklarını tek anahtara indirger. */
+function lawKey(raw: string): string {
+  return raw.toLocaleLowerCase("tr-TR").replace(/ı/g, "i").replace(/\s+/g, " ").trim();
+}
 
 const EXPANSIONS: Array<{ re: RegExp; phrase: string }> = [
   {
@@ -55,7 +74,8 @@ export function parseStatuteRefs(text: string): StatuteRef[] {
   const seen = new Set<string>();
 
   const push = (law: LawHit, maddeNo: string) => {
-    if (!/^\d{1,4}$/.test(maddeNo)) return;
+    maddeNo = maddeNo.toLocaleLowerCase("tr-TR").replace(/\s+/g, "");
+    if (!/^\d{1,4}(\/[a-zçğıöşü])?$/u.test(maddeNo)) return;
     if (maddeNo === law.kanunNo) return;
     const key = `${law.kanunNo}:${maddeNo}`;
     if (seen.has(key)) return;
@@ -63,15 +83,15 @@ export function parseStatuteRefs(text: string): StatuteRef[] {
     refs.push({ kanunNo: law.kanunNo, maddeNo, short: law.short });
   };
 
-  const near = /(TBK|TTK|KVKK|TKHK|İşK|İş\s*Kanunu|Is\s*Kanunu|6098|4857|6102|6698|6502)(?:\s*sayılı)?[^\d\n]{0,48}?m(?:adde)?\.?\s*(\d{1,4})/giu;
+  const near = /(TBK|TTK|KVKK|TKHK|İİK|IIK|HMK|TMK|KMK|İşK|İş\s*K\.|İş\s*Kanunu|Is\s*Kanunu|6098|4857|6102|6698|6502|2004|6100|4721|634|1475)(?:\s*sayılı)?[^\d\n]{0,48}?m(?:adde)?\.?\s*(\d{1,4}(?:\s*\/\s*[a-zçğıöşü])?)/giu;
   for (const m of text.matchAll(near)) {
-    const law = SHORT_TO_LAW[m[1]!.toLocaleLowerCase("tr-TR").replace(/\s+/g, " ")];
+    const law = SHORT_TO_LAW[lawKey(m[1]!)];
     if (law) push(law, m[2]!);
   }
 
-  const bare = /\b(TBK|TTK|KVKK|TKHK|İşK)\s+(\d{1,3})\b/giu;
+  const bare = /(?<!\p{L})(TBK|TTK|KVKK|TKHK|İİK|HMK|TMK|KMK|İşK)\s+(\d{1,3}(?:\/[a-zçğıöşü])?)(?!\d)/giu;
   for (const m of text.matchAll(bare)) {
-    const law = SHORT_TO_LAW[m[1]!.toLocaleLowerCase("tr-TR")];
+    const law = SHORT_TO_LAW[lawKey(m[1]!)];
     if (law) push(law, m[2]!);
   }
 

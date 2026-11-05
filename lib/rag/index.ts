@@ -1,4 +1,5 @@
-export { retrieveLegalGrounding } from "@/lib/rag/retrieve";
+export { retrieveLegalGrounding, lookupStatutes } from "@/lib/rag/retrieve";
+export { planStatuteRefs } from "@/lib/rag/plan-statutes";
 export type { RetrieveOptions } from "@/lib/rag/retrieve";
 export type { LegalGrounding, RagHit } from "@/lib/rag/types";
 export { verifyCitations, extractCitedRefs } from "@/lib/rag/cite";
