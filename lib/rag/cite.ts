@@ -11,9 +11,11 @@ export function buildCiteLabel(input: {
   const kanunNo = pickStr(md, ["kanun_no", "kanunNo"]);
   const maddeNo = pickStr(md, ["madde_no", "maddeNo", "madde"]);
   const kanunAdi = pickStr(md, ["kanun_adi", "kanunAdi"]);
+  const mdShort = pickStr(md, ["short"]);
 
   if (input.type === "kanun_maddesi" && maddeNo) {
     const short =
+      mdShort ||
       shortLawName(kanunAdi) ||
       shortLawName(input.source) ||
       shortLawName(input.category) ||
@@ -62,6 +64,11 @@ function shortLawName(raw?: string | null): string | null {
   if (s.includes("ticaret") || s.includes("6102") || /\bttk\b/.test(s))
     return "TTK";
   if (s.includes("kvkk") || s.includes("6698")) return "KVKK";
+  if (s.includes("tüketici") || s.includes("6502")) return "TKHK";
+  if (s.includes("icra ve iflas") || s.includes("2004")) return "İİK";
+  if (s.includes("hukuk muhakemeleri") || s.includes("6100")) return "HMK";
+  if (s.includes("medeni") || s.includes("4721")) return "TMK";
+  if (s.includes("kat mülkiyeti") || s.includes("634")) return "KMK";
   return null;
 }
 
@@ -82,18 +89,31 @@ function parseMaddeFromText(content: string): string | null {
 /** Model çıktısındaki olası madde atıflarını yakala. */
 export function extractCitedRefs(text: string): string[] {
   const refs = new Set<string>();
-  const patterns = [
-    /\b(TBK|TTK|KVKK|İşK|IsK)\s*m(?:adde)?\.?\s*(\d+)/gi,
-    /\b(6098|4857|6102|6698)\s*(?:sayılı)?[^\n]{0,20}?[Mm]adde\s*(\d+)/g,
-    /\bMadde\s*(\d+)\b/g,
+  // Sıra önemli: "1475 s. İşK m.14" önce yakalanır ve maskelenir; yoksa içindeki
+  // "İşK m.14" (4857 — çağrı üzerine çalışma) ayrı bir atıf sanılır.
+  const patterns: Array<[RegExp, (m: RegExpExecArray) => string]> = [
+    [
+      /\b1475\s*(?:s\.|sayılı)?\s*(?:İşK|İş\s*Kanunu(?:'nun)?|Kanun(?:'un|un)?)?[^\n\d]{0,20}?m(?:adde)?\.?\s*(\d+)/giu,
+      (m) => `1475 m.${m[1]}`,
+    ],
+    [
+      /(?<!\p{L})(TBK|TTK|KVKK|TKHK|İİK|HMK|TMK|KMK|İşK|IsK|İş\s*K\.)\s*m(?:adde)?\.?\s*(\d+(?:\/[a-zçğıöşü])?)/giu,
+      (m) => `${m[1]} m.${m[2]}`,
+    ],
+    [
+      /\b(6098|4857|6102|6698|6502|2004|6100|4721|634)\s*(?:sayılı)?[^\n]{0,40}?[Mm](?:adde|\.)\s*(\d+(?:\/[a-zçğıöşü])?)/gu,
+      (m) => `${m[1]} m.${m[2]}`,
+    ],
+    [/\bMadde\s*(\d+)\b/g, (m) => `Madde ${m[1]}`],
   ];
-  for (const re of patterns) {
-    let m: RegExpExecArray | null;
-    const r = new RegExp(re.source, re.flags);
-    while ((m = r.exec(text)) !== null) {
-      if (m[2]) refs.add(`${m[1]} m.${m[2]}`.replace(/\s+/g, " "));
-      else if (m[1] && !m[2]) refs.add(`Madde ${m[1]}`);
-    }
+  let rest = text;
+  for (const [re, label] of patterns) {
+    rest = rest.replace(new RegExp(re.source, re.flags), (...args) => {
+      const groups = args.slice(0, -2) as string[];
+      const m = Object.assign([...groups], { index: 0, input: "" }) as unknown as RegExpExecArray;
+      refs.add(label(m).replace(/\s+/g, " "));
+      return " ".repeat(groups[0]!.length);
+    });
   }
   return [...refs];
 }
@@ -109,7 +129,7 @@ export function verifyCitations(
   for (const c of cited) {
     const n = normalizeCite(c);
     const ok = normAllowed.some(
-      (a) => a === n || a.includes(n) || n.includes(a) || shareMadde(a, n),
+      (a) => a === n || shareMadde(a, n),
     );
     if (ok) grounded.push(c);
     else ungrounded.push(c);
@@ -117,16 +137,40 @@ export function verifyCitations(
   return { grounded, ungrounded };
 }
 
+const LAW_ALIASES: Array<[RegExp, string]> = [
+  [/^(6098|tbk)/, "tbk"],
+  [/^(1475)/, "1475"],
+  [/^(4857|işk|isk|işk\.|iş k\.)/, "isk"],
+  [/^(6502|tkhk)/, "tkhk"],
+  [/^(2004|iik)/, "iik"],
+  [/^(6100|hmk)/, "hmk"],
+  [/^(4721|tmk)/, "tmk"],
+  [/^(634|kmk)/, "kmk"],
+  [/^(6102|ttk)/, "ttk"],
+  [/^(6698|kvkk)/, "kvkk"],
+];
+
 function normalizeCite(s: string): string {
-  return s
-    .toLowerCase()
-    .replace(/işk|isk/g, "isk")
+  const t = s
+    .toLocaleLowerCase("tr-TR")
+    .replace(/ı/g, "i")
+    .replace(/sayılı|s\.\s/g, "")
     .replace(/madde\.?/g, "m.")
     .replace(/\s+/g, "");
+  return t;
 }
 
+function lawOf(norm: string): string | null {
+  for (const [re, key] of LAW_ALIASES) if (re.test(norm)) return key;
+  return null;
+}
+
+/** Aynı kanun + aynı madde (harf eki dahil). Kanunu belirsiz "Madde N" yalnız madde ile eşleşir. */
 function shareMadde(a: string, b: string): boolean {
-  const ma = a.match(/m\.?(\d+)/);
-  const mb = b.match(/m\.?(\d+)/);
-  return Boolean(ma && mb && ma[1] === mb[1]);
+  const ma = a.match(/m\.?(\d+(?:\/[a-zçğıöşü])?)/u);
+  const mb = b.match(/m\.?(\d+(?:\/[a-zçğıöşü])?)/u);
+  if (!ma || !mb || ma[1] !== mb[1]) return false;
+  const la = lawOf(a);
+  const lb = lawOf(b);
+  return !la || !lb || la === lb;
 }

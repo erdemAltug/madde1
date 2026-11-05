@@ -11,6 +11,7 @@ import {
   buildLightEmbedText,
   expandLegalQuery,
   parseStatuteRefs,
+  type StatuteRef,
 } from "@/lib/rag/query-signals";
 import {
   blendRetrievalScore,
@@ -54,7 +55,35 @@ export type RetrieveOptions = {
   mode?: "full" | "light" | "chat";
   /** chat modunda: önceki kullanıcı mesajlarıyla zenginleştirilmiş arama metni */
   retrievalQuery?: string;
+  /** Planlayıcının önerdiği maddeler — resmi metinden birebir çekilir */
+  extraRefs?: StatuteRef[];
 };
+
+/** Kanun no + madde no ile resmi metni birebir getirir (planlayıcı / atıf doğrulama). */
+export async function lookupStatutes(refs: StatuteRef[]): Promise<RagHit[]> {
+  const supabase = getSupabaseService();
+  if (!supabase || refs.length === 0) return [];
+  const out: RagHit[] = [];
+  await Promise.all(
+    refs.map(async (ref) => {
+      const { data, error } = await supabase.rpc("lookup_law_articles_by_madde", {
+        filter_kanun_no: ref.kanunNo,
+        filter_madde_no: ref.maddeNo,
+        match_count: 2,
+      });
+      if (error) {
+        console.error("[rag] lookup", error.message);
+        return;
+      }
+      const rows = (data || []) as MatchRow[];
+      // Resmi kaynak (mevzuat.gov.tr) önce
+      rows.sort((a, b) => Number(b.metadata?.origin === "mevzuat.gov.tr") - Number(a.metadata?.origin === "mevzuat.gov.tr"));
+      const row = rows[0];
+      if (row) out.push(rowToHit(row, "kanun_maddesi", true));
+    }),
+  );
+  return out;
+}
 
 /**
  * Hibrit Legal RAG: vektör (law_articles + legal_knowledge) + tam metin (tsvector)
@@ -79,7 +108,7 @@ export async function retrieveLegalGrounding(
   const filterCategory = personaCategoryFilter(persona);
 
   const searchText = opts.retrievalQuery?.trim() || opts.contractText;
-  const statuteRefs = parseStatuteRefs(searchText).slice(0, 3);
+  const statuteRefs = dedupeRefs([...parseStatuteRefs(searchText).slice(0, 3), ...(opts.extraRefs ?? [])]).slice(0, 8);
   const expansion = expandLegalQuery(searchText);
   const queries = (
     mode === "light"
@@ -101,22 +130,9 @@ export async function retrieveLegalGrounding(
   /** Kanal sıralamaları (en iyiden kötüye id listeleri) — RRF girdisi */
   const rankings: string[][] = [];
 
-  const exactChannel = Promise.all(
-    statuteRefs.map(async (ref) => {
-      const { data, error } = await supabase.rpc("lookup_law_articles_by_madde", {
-        filter_kanun_no: ref.kanunNo,
-        filter_madde_no: ref.maddeNo,
-        match_count: 2,
-      });
-      if (error) {
-        console.error("[rag] lookup_law_articles_by_madde", error.message);
-        return;
-      }
-      for (const row of (data || []) as MatchRow[]) {
-        mergeHit(hitMap, rowToHit(row, "kanun_maddesi", true));
-      }
-    }),
-  );
+  const exactChannel = lookupStatutes(statuteRefs).then((hits) => {
+    for (const h of hits) mergeHit(hitMap, h);
+  });
 
   const vectorChannel = Promise.all(
     queries.map(async (q) => {
@@ -200,7 +216,9 @@ export async function retrieveLegalGrounding(
       lexicalOverlap(rankQuery, h.content),
       Boolean(h.exact),
     ) +
-    (fused.get(h.id) ?? 0) * RRF_WEIGHT;
+    (fused.get(h.id) ?? 0) * RRF_WEIGHT +
+    // Resmi güncel metin, eski soru-cevap veri setinden önce gelir
+    (h.metadata?.origin === "mevzuat.gov.tr" ? 0.15 : 0);
 
   const seen = new Set<string>();
   const hits = [...hitMap.values()]
@@ -224,6 +242,16 @@ export async function retrieveLegalGrounding(
     allowedCites,
     retrieved: true,
   };
+}
+
+function dedupeRefs(refs: StatuteRef[]): StatuteRef[] {
+  const seen = new Set<string>();
+  return refs.filter((r) => {
+    const k = `${r.kanunNo}:${r.maddeNo}`;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
 }
 
 /** websearch_to_tsquery için: anlamlı kelimeler "or" ile; kısa ve dolgu kelimeler atılır. */
