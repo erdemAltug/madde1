@@ -1,3 +1,4 @@
+import { ConsentPreferencesLink } from "@/components/consent/consent-preferences-link";
 import Link from "next/link";
 import { AskBand } from "@/components/landing/ask-band";
 import { ClauseLogo } from "@/components/brand/clause-logo";
@@ -298,6 +299,7 @@ export function SiteFooter({ showAsk = true }: { showAsk?: boolean } = {}) {
               >
                 Gizlilik politikası
               </Link>
+              <ConsentPreferencesLink className="block text-left text-slate-600 font-medium hover:text-deep-navy" />
               <Link
                 href="/guvenlik"
                 prefetch={true}

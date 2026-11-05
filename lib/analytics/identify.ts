@@ -1,6 +1,7 @@
 import posthog from "posthog-js";
 import { getOrCreateDeviceId } from "@/lib/device-id";
 import { getDeviceContext } from "@/lib/analytics/device-context";
+import { readConsent } from "@/lib/consent/store";
 
 let bootstrapped = false;
 
@@ -8,6 +9,8 @@ export function bootstrapPostHogIdentity(): void {
   if (typeof window === "undefined") return;
   if (!process.env.NEXT_PUBLIC_POSTHOG_KEY) return;
   if (bootstrapped) return;
+  // Analitik izni yoksa kimlik eşleme yapılmaz; izin gelince ConsentSync tekrar çağırır
+  if (!readConsent()?.analytics) return;
 
   try {
     const deviceId = getOrCreateDeviceId();

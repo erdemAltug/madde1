@@ -18,8 +18,9 @@ const sections = [
     body: "TC kimlik, IBAN ve telefon gibi desenler otomatik maskeleme ile işlenir. Kritik belgelerde manuel kontrol önerilir.",
   },
   {
+    id: "cerezler",
     title: "Çerezler ve analitik",
-    body: "Site performansı ve ürün iyileştirmesi için anonim analitik araçlar kullanılabilir. Tarayıcı ayarlarınızdan çerez tercihlerinizi yönetebilirsiniz.",
+    body: "Zorunlu çerezler ve tarayıcı kayıtları (oturum, güvenlik, ücretsiz kullanım hakkı ve çerez tercihiniz) sitenin çalışması için kullanılır ve izne bağlı değildir. Analitik ölçüm (PostHog: sayfa görüntüleme, tıklama ve form alanları maskelenmiş oturum kaydı) yalnızca çerez bildiriminde açık rızanızla başlar; rıza vermezseniz hiçbir analitik veri gönderilmez. Analitik veriler PostHog’un yurt dışındaki sunucularında işlenir ve reklam amacıyla kullanılmaz. Tercihinizi sayfanın altındaki “Çerez tercihleri” bağlantısından istediğiniz zaman değiştirebilir veya geri alabilirsiniz.",
   },
   {
     title: "Haklarınız",
@@ -59,7 +60,7 @@ export function GizlilikPage() {
 
         <div className="mt-10 space-y-8">
           {sections.map((s) => (
-            <section key={s.title}>
+            <section key={s.title} id={"id" in s ? s.id : undefined} className="scroll-mt-24">
               <h2 className="text-lg font-bold text-madde-ink">{s.title}</h2>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.body}</p>
             </section>
