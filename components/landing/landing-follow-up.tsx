@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BellRing, CalendarClock, FolderOpen, Reply } from "lucide-react";
+import { ArrowRight, BellRing, CalendarClock, FolderOpen, Reply } from "lucide-react";
 import { Reveal } from "@/components/landing/reveal";
 
 /** Örnek takvim satırları — ürünün "taramadan sonra da yanınızda" vaadini gösterir */
@@ -55,12 +55,16 @@ export function LandingFollowUp() {
               </li>
             ))}
           </ul>
-          <Link
-            href="/panel"
-            className="mt-8 inline-flex h-11 items-center rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800"
-          >
-            Panelimi oluştur — ücretsiz
-          </Link>
+          <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link
+              href="/giris?kayit=1&next=/panel"
+              className="group inline-flex h-12 items-center gap-2 rounded-xl bg-slate-900 px-6 text-sm font-semibold text-white shadow-lg shadow-slate-900/15 transition hover:bg-slate-800"
+            >
+              Takibe başla
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+            </Link>
+            <span className="text-sm text-slate-500">Sözleşmeni ekle, tarihleri biz çıkaralım.</span>
+          </div>
         </Reveal>
 
         <Reveal delay={0.08}>
