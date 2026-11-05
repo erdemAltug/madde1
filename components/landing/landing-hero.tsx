@@ -51,7 +51,7 @@ export function LandingHero({ onOpenAnalyzer }: Props) {
         <div className="flex flex-col justify-center">
           <p className="inline-flex w-fit items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-sm font-medium text-amber-900">
             <span aria-hidden>👋</span>
-            Avukatlar için değil — sizin için
+            Herkes için, sade Türkçe
           </p>
           <h1 className="mt-5 text-balance text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]">
             Gündelik hukuk asistanınız.{" "}

@@ -1,58 +1,46 @@
-import { Check, Minus } from "lucide-react";
+import { Briefcase, Gavel, Home, Laptop, ShoppingBag } from "lucide-react";
 import { Reveal } from "@/components/landing/reveal";
 
-const ROWS = [
-  ["Kimin için?", "Avukatlar, hukuk büroları", "Kiracı, çalışan, tüketici, serbest çalışan — herkes"],
-  ["Nasıl konuşur?", "Hukuk dili, içtihat listeleri", "Sade Türkçe, ne yapacağınızı adım adım"],
-  ["Nasıl başlarsınız?", "Demo talebi, deneme süresi", "Hemen, ücretsiz — tarama ve araçlar kayıtsız"],
-  ["Fiyat", "Aylık yüzlerce lira", "Ücretsiz; isterseniz Plus"],
-  ["Hesaplama araçları", "Yok", "Kıdem, ihbar, kira artışı, işsizlik maaşı…"],
-  ["Sizin yerinize takip", "Yok", "Kira artışı, bildirim ve itiraz tarihlerinde hatırlatma"],
+/** Konumlanma: herkes için gündelik hukuk asistanı — kimseyi dışlamadan */
+const AUDIENCES = [
+  { icon: Home, who: "Kiracı ve ev sahibi", what: "Kira artışı, depozito, tahliye ve sözleşme maddeleri" },
+  { icon: Briefcase, who: "Çalışan", what: "Kıdem, ihbar, fazla mesai, izin ve işsizlik maaşı" },
+  { icon: ShoppingBag, who: "Tüketici", what: "İade, cayma hakkı, abonelik iptali ve şikâyet" },
+  { icon: Laptop, who: "Serbest çalışan", what: "Hizmet sözleşmesi, ödeme vadesi, fikri haklar" },
+  { icon: Gavel, who: "Hukukçular", what: "Hızlı ön tarama ve müvekkile sade dilde özet" },
 ] as const;
 
-/** Konumlanma: B2B hukuk yazılımlarından ayrıştığımız tek cümle — "sizin için" */
 export function LandingForYou() {
   return (
-    <section className="border-b border-slate-200/70 bg-white py-16 sm:py-20" aria-labelledby="sizin-icin-baslik">
+    <section className="border-b border-slate-200/70 bg-white py-16 sm:py-20" aria-labelledby="herkes-icin-baslik">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal className="max-w-2xl">
-          <p className="text-sm font-semibold text-[#005BEA]">Hukuk sadece avukatların işi değil</p>
-          <h2 id="sizin-icin-baslik" className="mt-2 text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-            Hukuk yapay zekâları avukatlar için yapıldı. Clause sizin için.
+          <p className="text-sm font-semibold text-[#005BEA]">Hukuk hayatın bir parçası</p>
+          <h2 id="herkes-icin-baslik" className="mt-2 text-balance text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            Hukuk herkes için anlaşılır olmalı
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-slate-600">
             Hayatınızdaki hukuki anların çoğu bir dava değildir: bir zam talebi, bir iş teklifi, iade edilmeyen bir
-            ürün. Bunlar için avukat randevusu beklemenize gerek yok — ama yalnız da kalmamalısınız.
+            ürün. Clause bu anlarda ilk adımı kolaylaştırır; gerektiğinde bir hukukçuyla daha hazırlıklı görüşmenizi
+            sağlar.
           </p>
         </Reveal>
 
-        <Reveal delay={0.06}>
-          <div className="mt-10 overflow-hidden rounded-3xl border border-slate-200">
-            <div className="grid grid-cols-[0.9fr_1fr_1.15fr] bg-slate-50 text-sm font-semibold text-slate-500 sm:text-[15px]">
-              <span className="px-4 py-3.5 sm:px-6" />
-              <span className="px-3 py-3.5 sm:px-6">Profesyonel hukuk yazılımları</span>
-              <span className="flex items-center gap-2 bg-[#005BEA] px-3 py-3.5 text-white sm:px-6">Clause</span>
-            </div>
-            <dl>
-              {ROWS.map(([k, them, us], i) => (
-                <div
-                  key={k}
-                  className={`grid grid-cols-[0.9fr_1fr_1.15fr] text-sm sm:text-[15px] ${i % 2 ? "bg-white" : "bg-[#FAFAF7]"}`}
-                >
-                  <dt className="px-4 py-4 font-semibold text-slate-900 sm:px-6">{k}</dt>
-                  <dd className="flex items-start gap-2 px-3 py-4 text-slate-500 sm:px-6">
-                    <Minus className="mt-0.5 hidden h-4 w-4 shrink-0 text-slate-300 sm:block" aria-hidden />
-                    {them}
-                  </dd>
-                  <dd className="flex items-start gap-2 bg-[#005BEA]/[0.04] px-3 py-4 font-medium text-slate-900 sm:px-6">
-                    <Check className="mt-0.5 hidden h-4 w-4 shrink-0 text-[#005BEA] sm:block" aria-hidden />
-                    {us}
-                  </dd>
+        <ul className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {AUDIENCES.map(({ icon: Icon, who, what }, i) => (
+            <li key={who}>
+              <Reveal delay={0.04 * i} className="h-full">
+                <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-[#FAFAF7] p-5">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#005BEA]/10 text-[#005BEA]">
+                    <Icon className="h-5 w-5" aria-hidden />
+                  </span>
+                  <span className="mt-4 text-base font-bold text-slate-900">{who}</span>
+                  <span className="mt-1 text-[15px] leading-snug text-slate-600">{what}</span>
                 </div>
-              ))}
-            </dl>
-          </div>
-        </Reveal>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
