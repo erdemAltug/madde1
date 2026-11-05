@@ -32,7 +32,7 @@ type TabId = "roadmap" | "draft" | "petition" | "scan" | "rights" | "ask";
 type GroupId = "create" | "check";
 
 const ROADMAP_Q = "Ev kiralayacağım, nereden başlamalıyım?";
-const DRAFT_Q = "Freelance web tasarım işi aldım, beni koruyan bir hizmet sözleşmesi hazırlar mısın?";
+const DRAFT_Q = "Freelance web tasarım işi aldım, beni koruyan bir sözleşme hazırlar mısın?";
 
 const GROUPS: { id: GroupId; label: string; hint: string }[] = [
   { id: "create", label: "Sıfırdan birlikte yapalım", hint: "Elinizde hiçbir şey yokken" },
@@ -248,7 +248,7 @@ function DraftDemo() {
   ];
   return (
     <div>
-      <p className="pr-20 text-sm font-bold">Hizmet sözleşmesi · web tasarım (freelance)</p>
+      <p className="pr-20 text-sm font-bold">Eser sözleşmesi · freelance web tasarım (TBK m.470)</p>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {added.map((a) => (
           <span
@@ -261,9 +261,9 @@ function DraftDemo() {
         ))}
       </div>
       <div className="mt-4 max-h-[300px] overflow-hidden rounded-2xl border border-slate-200 bg-[#FCFCFA] p-4 font-serif text-[13px] leading-relaxed text-slate-800 [mask-image:linear-gradient(to_bottom,black_75%,transparent)] sm:p-5">
-        <p className="text-center font-bold tracking-wide">HİZMET SÖZLEŞMESİ</p>
+        <p className="text-center font-bold tracking-wide">ESER SÖZLEŞMESİ</p>
         <p className="mt-3">
-          <span className="font-semibold">Madde 1 — Taraflar.</span> [Müşteri] ile [Adınız] (Hizmet Veren) arasında aşağıdaki
+          <span className="font-semibold">Madde 1 — Taraflar.</span> [Müşteri] (İşsahibi) ile [Adınız] (Yüklenici) arasında aşağıdaki
           şartlarla akdedilmiştir.
         </p>
         <p className="mt-2">
@@ -272,7 +272,7 @@ function DraftDemo() {
         </p>
         <p className="mt-2">
           <span className="font-semibold">Madde 3 — Ücret ve ödeme.</span> Toplam ücret [tutar] ₺&apos;dir. %50&apos;si imzada,
-          kalanı teslimde ödenir. Geciken ödemelere yasal faiz uygulanır.
+          kalanı teslimde ödenir (TBK m.479). Geciken ödemelere yasal faiz uygulanır.
         </p>
         <p className="mt-2">
           <span className="font-semibold">Madde 4 — Revizyon.</span> Ücrete iki tur revizyon dahildir; ek talepler ayrıca
@@ -280,7 +280,7 @@ function DraftDemo() {
         </p>
         <p className="mt-2">
           <span className="font-semibold">Madde 5 — Fikri haklar.</span> Eser üzerindeki mali haklar, ücretin tamamı ödendiğinde
-          Müşteri&apos;ye devredilir.
+          İşsahibine devredilir.
         </p>
       </div>
     </div>
