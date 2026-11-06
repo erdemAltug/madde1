@@ -2,119 +2,208 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Check, Building2, ArrowRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Check, CheckCircle2, Loader2, Sparkles } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Reveal } from "@/components/landing/reveal";
-import { ContactLeadDialog } from "@/components/b2c/contact-lead-dialog";
-import { FREE_PLAN_FEATURES, PLUS_PLAN_FEATURES, PLUS_PRICE_LABEL } from "@/lib/pricing";
+import { PLANS, type Plan, type PaidPlanId } from "@/lib/pricing";
+import { cn } from "@/lib/utils";
 
-function FeatureList({ items, tone }: { items: readonly string[]; tone: "blue" | "dark" }) {
-  return (
-    <ul className="flex-1 space-y-3">
-      {items.map((f) => (
-        <li
-          key={f}
-          className={`flex items-start gap-3 text-sm font-medium ${tone === "dark" ? "text-slate-300" : "text-slate-700"}`}
-        >
-          <Check className={`mt-0.5 h-4 w-4 shrink-0 ${tone === "dark" ? "text-slate-400" : "text-[#005BEA]"}`} />
-          {f}
-        </li>
-      ))}
-    </ul>
-  );
+async function sendInterest(body: Record<string, string | undefined>) {
+  const res = await fetch("/api/plan-interest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const d = (await res.json().catch(() => ({}))) as { error?: string };
+    throw new Error(d.error ?? "Gönderilemedi, lütfen tekrar deneyin.");
+  }
 }
 
 export function PricingSection() {
-  const [enterpriseOpen, setEnterpriseOpen] = React.useState(false);
-  const [plusOpen, setPlusOpen] = React.useState(false);
+  const [picked, setPicked] = React.useState<Plan | null>(null);
+
+  const choose = (plan: Plan) => {
+    setPicked(plan);
+    // Tıklamanın kendisi de bir talep: e-posta bırakmasa da haberimiz olsun
+    void sendInterest({ plan: plan.id, page: window.location.pathname }).catch(() => {});
+  };
 
   return (
-    <section className="space-y-8 py-16 sm:py-20" id="fiyatlandirma">
-      <ContactLeadDialog open={enterpriseOpen} onOpenChange={setEnterpriseOpen} variant="enterprise" />
-      <ContactLeadDialog open={plusOpen} onOpenChange={setPlusOpen} variant="b2c" source="pricing_plus" />
-
+    <section className="py-16 sm:py-24" id="fiyatlandirma" aria-labelledby="paketler-baslik">
       <Reveal>
         <div className="mx-auto max-w-2xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-semibold tracking-tight text-deep-navy sm:text-3xl">
-            Ücretsiz başlayın, ihtiyacınız olursa yükseltin
+          <h2 id="paketler-baslik" className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            İhtiyacınız kadar
           </h2>
           <p className="mt-3 text-base text-slate-600">
-            Hatırlatıcılar ve takvim her zaman ücretsiz. Ödediğiniz şey derinlik: detaylı rapor ve resmi yazılar.
+            Tek bir sorun için de, her gün için de, şirketiniz için de bir paket var.
           </p>
         </div>
       </Reveal>
 
-      <div className="mx-auto grid max-w-5xl grid-cols-1 items-stretch gap-6 px-4 sm:px-6 md:grid-cols-3 lg:px-8">
-        <Reveal delay={0.04}>
-          <Card className="flex h-full flex-col border border-slate-200 bg-white shadow-sm">
-            <CardHeader className="p-6 pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-navy">Ücretsiz</CardTitle>
-              <p className="mt-2 text-3xl font-bold text-deep-navy">0 ₺</p>
-              <p className="mt-1 text-sm text-slate-500">Kredi kartı gerekmez</p>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col p-6 pt-2">
-              <FeatureList items={FREE_PLAN_FEATURES} tone="blue" />
-              <Button asChild className="mt-6 w-full rounded-xl bg-[#005BEA] py-4 font-semibold text-white hover:bg-[#004BC4]">
-                <Link href="/giris?kayit=1&next=/panel">
-                  Ücretsiz hesap aç
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
-        </Reveal>
-
-        <Reveal delay={0.08}>
-          <Card className="relative flex h-full flex-col border-2 border-[#005BEA] bg-white shadow-md">
-            <span className="absolute -top-3 left-6 rounded-full bg-[#005BEA] px-3 py-0.5 text-xs font-semibold text-white">
-              Bireysel
-            </span>
-            <CardHeader className="p-6 pb-4">
-              <CardTitle className="text-lg font-semibold text-deep-navy">Plus</CardTitle>
-              <p className="mt-2 text-3xl font-bold text-deep-navy">{PLUS_PRICE_LABEL}</p>
-              <p className="mt-1 text-sm text-slate-500">İstediğiniz zaman bırakın</p>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col p-6 pt-2">
-              <p className="mb-3 text-sm font-semibold text-slate-700">Ücretsiz plandaki her şey, ek olarak:</p>
-              <FeatureList items={PLUS_PLAN_FEATURES} tone="blue" />
-              <Button
-                type="button"
-                onClick={() => setPlusOpen(true)}
-                className="mt-6 w-full rounded-xl bg-deep-navy py-4 font-semibold text-white hover:bg-deep-navy/90"
-              >
-                Plus&apos;a geç
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </CardContent>
-          </Card>
-        </Reveal>
-
-        <Reveal delay={0.12}>
-          <Card className="flex h-full flex-col border border-slate-800 bg-slate-900 text-white shadow-sm">
-            <CardHeader className="p-6 pb-4">
-              <div className="flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-slate-400" />
-                <CardTitle className="text-lg font-semibold text-white">Kurumsal</CardTitle>
-              </div>
-              <p className="mt-2 text-3xl font-bold text-white">Teklif</p>
-              <p className="mt-1 text-sm text-slate-400">Ekipler ve hukuk büroları</p>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col p-6 pt-2">
-              <FeatureList
-                items={["Sınırsız analiz", "Çoklu kullanıcı", "Kurumsal raporlama", "Özel entegrasyon desteği"]}
-                tone="dark"
-              />
-              <Button
-                onClick={() => setEnterpriseOpen(true)}
-                className="mt-6 w-full rounded-xl border border-slate-700 bg-slate-800 py-4 font-semibold text-white hover:bg-slate-700"
-              >
-                İletişime geçin
-              </Button>
-            </CardContent>
-          </Card>
-        </Reveal>
+      <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-5 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+        {PLANS.map((plan, i) => (
+          <Reveal key={plan.id} delay={0.04 * i}>
+            <PlanCard plan={plan} onChoose={choose} />
+          </Reveal>
+        ))}
       </div>
+
+      <p className="mx-auto mt-8 max-w-2xl px-4 text-center text-xs text-slate-500">
+        Ücretli paketler kısa süre içinde açılıyor. Adil kullanım politikası geçerlidir.
+      </p>
+
+      <InterestDialog plan={picked} onClose={() => setPicked(null)} />
     </section>
+  );
+}
+
+function PlanCard({ plan, onChoose }: { plan: Plan; onChoose: (p: Plan) => void }) {
+  const hl = plan.highlighted;
+  const btn = cn(
+    "mt-6 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl text-sm font-semibold transition",
+    hl ? "bg-[#005BEA] text-white hover:bg-[#004BC4]" : "bg-slate-900 text-white hover:bg-slate-800",
+  );
+
+  return (
+    <div
+      className={cn(
+        "relative flex h-full flex-col rounded-2xl bg-white p-6",
+        hl ? "border-2 border-[#005BEA] shadow-xl shadow-[#005BEA]/10" : "border border-slate-200 shadow-sm",
+      )}
+    >
+      {hl ? (
+        <span className="absolute -top-3 left-6 inline-flex items-center gap-1 rounded-full bg-[#005BEA] px-3 py-0.5 text-xs font-semibold text-white">
+          <Sparkles className="h-3 w-3" aria-hidden />
+          Önerilen
+        </span>
+      ) : null}
+      <h3 className="text-lg font-bold text-slate-900">{plan.name}</h3>
+      <p className="mt-1 text-sm text-slate-500">{plan.audience}</p>
+      <p className="mt-5 flex items-baseline gap-1.5">
+        <span className="text-4xl font-bold tracking-tight text-slate-900">{plan.price}</span>
+        <span className="text-sm text-slate-500">{plan.period}</span>
+      </p>
+      <ul className="mt-6 flex-1 space-y-2.5">
+        {plan.features.map((f) => (
+          <li key={f} className="flex items-start gap-2.5 text-sm text-slate-700">
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#005BEA]" aria-hidden />
+            {f}
+          </li>
+        ))}
+      </ul>
+      {plan.id === "free" ? (
+        <Link href="/giris?kayit=1&next=/panel" className={cn(btn, "bg-white text-slate-900 ring-1 ring-slate-300 hover:bg-slate-50")}>
+          {plan.cta}
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </Link>
+      ) : (
+        <button type="button" onClick={() => onChoose(plan)} className={btn}>
+          {plan.cta}
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </button>
+      )}
+    </div>
+  );
+}
+
+function InterestDialog({ plan, onClose }: { plan: Plan | null; onClose: () => void }) {
+  const [email, setEmail] = React.useState("");
+  const [note, setNote] = React.useState("");
+  const [state, setState] = React.useState<"idle" | "sending" | "done">("idle");
+  const [error, setError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (plan) {
+      setState("idle");
+      setError(null);
+    }
+  }, [plan]);
+
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!plan) return;
+    setState("sending");
+    setError(null);
+    try {
+      const company = (new FormData(e.currentTarget).get("company") as string) || undefined;
+      await sendInterest({
+        plan: plan.id as PaidPlanId,
+        email,
+        note: note || undefined,
+        page: window.location.pathname,
+        company,
+      });
+      setState("done");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Gönderilemedi.");
+      setState("idle");
+    }
+  };
+
+  return (
+    <Dialog open={Boolean(plan)} onOpenChange={(o) => (!o ? onClose() : undefined)}>
+      <DialogContent className="sm:max-w-md">
+        {state === "done" ? (
+          <div className="py-4 text-center">
+            <CheckCircle2 className="mx-auto h-10 w-10 text-emerald-500" aria-hidden />
+            <DialogTitle className="mt-3 text-lg">Listedesiniz</DialogTitle>
+            <DialogDescription className="mt-2">
+              {plan?.name} paketi açıldığında ilk size haber vereceğiz. O zamana kadar ücretsiz planı dilediğiniz gibi
+              kullanabilirsiniz.
+            </DialogDescription>
+          </div>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle>{plan?.name} paketi çok yakında</DialogTitle>
+              <DialogDescription>
+                Paketleri ilk kullanıcılarımızla birlikte açıyoruz. E-postanızı bırakın, açıldığı gün size ulaşalım.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={submit} className="mt-2 space-y-3">
+              <input name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+              <label className="block">
+                <span className="text-sm font-medium text-slate-700">E-posta</span>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="ornek@eposta.com"
+                  className="mt-1 h-11 w-full rounded-xl border border-slate-300 px-3 text-sm outline-none focus:border-[#005BEA] focus:ring-2 focus:ring-[#005BEA]/20"
+                />
+              </label>
+              <label className="block">
+                <span className="text-sm font-medium text-slate-700">
+                  Ne için kullanmak istersiniz? <span className="font-normal text-slate-400">(isteğe bağlı)</span>
+                </span>
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  rows={3}
+                  maxLength={1000}
+                  placeholder="Örn. ev sahibimle kira artışı konusunda anlaşmazlık var"
+                  className="mt-1 w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:border-[#005BEA] focus:ring-2 focus:ring-[#005BEA]/20"
+                />
+              </label>
+              {error ? <p className="text-sm text-red-600">{error}</p> : null}
+              <button
+                type="submit"
+                disabled={state === "sending"}
+                className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-70"
+              >
+                {state === "sending" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : null}
+                Açılınca haber ver
+              </button>
+              <p className="text-center text-xs text-slate-500">
+                E-postanızı yalnızca bu paketle ilgili bilgilendirme için kullanırız.
+              </p>
+            </form>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }

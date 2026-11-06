@@ -10,7 +10,17 @@ const SUBJECT_LABEL: Record<string, string> = {
   pricing_plus: "💳 PLUS ÜYELİK TALEBİ",
   pricing_b2c: "Bireysel talep",
   enterprise: "🏢 Kurumsal talep",
+  plan_single: "🎯 PAKET TALEBİ — Tek Seferlik",
+  plan_personal: "🎯 PAKET TALEBİ — Bireysel",
+  plan_business: "🎯 PAKET TALEBİ — Şirketim",
 };
+
+/** Talepler bu adrese gider (Vercel'de LEAD_NOTIFY_EMAIL); yoksa genel iletişim adresi */
+function leadRecipients(): string[] {
+  const raw = process.env.LEAD_NOTIFY_EMAIL?.trim();
+  const list = raw ? raw.split(",").map((s) => s.trim()).filter(Boolean) : [];
+  return list.length ? list : [CONTACT_EMAIL];
+}
 
 async function sendViaResend(input: ContactInquiryInput): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -36,7 +46,7 @@ async function sendViaResend(input: ContactInquiryInput): Promise<boolean> {
     },
     body: JSON.stringify({
       from,
-      to: [CONTACT_EMAIL],
+      to: leadRecipients(),
       reply_to: input.email,
       subject,
       text,

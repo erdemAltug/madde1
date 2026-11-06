@@ -4,7 +4,7 @@ import { PLUS_PRICE_LABEL } from "@/lib/pricing";
 export const HOME_FAQ = [
   {
     question: "Clause ücretsiz mi?",
-    answer: `Sözleşme ön taraması, tüm hesaplama araçları, Haklarım Kontrolü, hukuki takvim ve hatırlatıcılar ücretsizdir; kredi kartı istemez. Sınırsız tarama, madde madde detaylı rapor ve resmi yazı taslakları için Plus üyelik ${PLUS_PRICE_LABEL}.`,
+    answer: `Sözleşme ön taraması, tüm hesaplama araçları, Haklarım Kontrolü, hukuki takvim ve hatırlatıcılar ücretsizdir; kredi kartı istemez. Sınırsız tarama, madde madde detaylı rapor ve resmi yazı taslakları için Bireysel paket ${PLUS_PRICE_LABEL}.`,
   },
   {
     question: "Sözleşmem ve kişisel verilerim ne oluyor?",
