@@ -198,7 +198,7 @@ export function LandingTryStrip({ onOpenAnalyzer }: Props) {
                           <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
                         <p className="mt-3 text-xs text-slate-500 font-medium">
-                          Plus üyelik ({PLUS_PRICE_LABEL}) ile sınırsız analiz
+                          Bireysel paket ({PLUS_PRICE_LABEL}) ile sınırsız analiz
                         </p>
                       </div>
                     </motion.div>
